@@ -1,0 +1,6 @@
+[submodule "intervey-api"]
+	path = intervey-api
+	url = git@github.com:anvlkv/intervey-api.git
+[submodule "intervey-app"]
+	path = intervey-app
+	url = git@github.com:anvlkv/intervey-app.git
