@@ -2,5 +2,5 @@
 	path = intervey-api
 	url = git@github.com:anvlkv/intervey-api.git
 [submodule "intervey-app"]
-	path = intervey-app
+	path = intervey-api/src/client
 	url = git@github.com:anvlkv/intervey-app.git
