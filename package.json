@@ -4,7 +4,9 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "./node_modules/.bin/cpx ./intervey-app/dist/**/*.* ./intervey-api/src/client --watch"
+    "dev": "concurrently --kill-others \"npm run watch:build\" \"npm run watch:models\"",
+    "watch:build": "./node_modules/.bin/cpx \"./intervey-app/dist/**/*.*\" \"./intervey-api/src/client\" -vw",
+    "watch:models": "./node_modules/.bin/cpx \"./intervey-api/src/entity/**/*.*\" \"./intervey-app/src/models\" -vw"
   },
   "repository": {
     "type": "git",
@@ -17,6 +19,7 @@
   },
   "homepage": "https://github.com/anvlkv/intervey#readme",
   "devDependencies": {
+    "concurrently": "^3.5.1",
     "cpx": "^1.5.0"
   }
 }
