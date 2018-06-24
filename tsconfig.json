@@ -7,7 +7,7 @@
     "declarationDir": "intervey-app/types/"
   },
   "include": [
-    "intervey-api/src/models"
+    "intervey-server/src/models"
   ],
   "exclude": [
     "node_modules",

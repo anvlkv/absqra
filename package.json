@@ -2,11 +2,11 @@
   "name": "intervey",
   "version": "1.0.0",
   "description": "",
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently --kill-others \"npm run watch:build\" \"npm run watch:models\"",
-    "watch:build": "./node_modules/.bin/cpx \"./intervey-app/dist/**/*.*\" \"./intervey-api/src/client\" -vw",
-    "watch:models": "./node_modules/.bin/cpx \"./intervey-api/src/entity/**/*.*\" \"./intervey-app/src/models\" -vw"
+    "dev": "concurrently --allow-restart --restart-tries 4 --kill-others-on-fail \"npm run build:watch --prefix intervey-app\" \"npm run build:watch --prefix intervey-api\" \"nodemon --config nodemon.json\"",
+    "copy:dev": "nodemon --config nodemon.json"
   },
   "repository": {
     "type": "git",
@@ -18,8 +18,13 @@
     "url": "https://github.com/anvlkv/intervey/issues"
   },
   "homepage": "https://github.com/anvlkv/intervey#readme",
-  "devDependencies": {
+  "devDependencies": {},
+  "dependencies": {
     "concurrently": "^3.5.1",
-    "cpx": "^1.5.0"
+    "cpy-cli": "^1.0.1",
+    "delete": "^1.1.0",
+    "nodemon": "^1.17.3",
+    "parallel-loop": "^3.0.0",
+    "recursive-copy": "^2.0.9"
   }
 }
