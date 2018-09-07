@@ -2,10 +2,17 @@ const cpy = require('recursive-copy');
 
 const del = require('delete');
 
+const src = {
+	entity: 'intervey-api/lib/types/entity',
+	enums: 'intervey-api/src/entity/enums',
+	clientDist: 'intervey-app/dist',
+	routes: 'intervey-api/lib/router'
+}
+
 const dest = {
-	apiModels: 'intervey-app/src/api-models',
-	apiEnums: 'intervey-app/src/api-models/enums',
-	apiRoutes: 'intervey-app/src/api-routes',
+	apiModels: 'intervey-app/src/models/api-models',
+	apiEnums: 'intervey-app/src/models/api-models/enums',
+	apiRoutes: 'intervey-app/src/models/api-routes',
 	clientDist: 'intervey-api/src/client'
 };
 
@@ -16,7 +23,7 @@ del([`${dest.apiModels}/**/*.*`, `${dest.apiRoutes}/**/*.*` , `${dest.clientDist
 	else {
 		console.log('clean dest');
 
-		cpy('intervey-api/lib/types/entity', dest.apiModels, {
+		cpy(src.entity, dest.apiModels, {
 			filter: [
 				'*.ts',
 				/!enums\/*/,
@@ -29,7 +36,7 @@ del([`${dest.apiModels}/**/*.*`, `${dest.apiRoutes}/**/*.*` , `${dest.clientDist
 			console.error('waiting for entities');
 		});
 
-		cpy('intervey-api/src/entity/enums', dest.apiEnums, {
+		cpy(src.enums, dest.apiEnums, {
 			rename: basename => basename.replace('.d.ts', '.ts')
 		}).then(() => {
 			console.log('copied enums');
@@ -37,13 +44,13 @@ del([`${dest.apiModels}/**/*.*`, `${dest.apiRoutes}/**/*.*` , `${dest.clientDist
 			console.error('waiting for enums');
 		});
 
-		cpy('intervey-app/dist', dest.clientDist).then(() => {
+		cpy(src.clientDist, dest.clientDist).then(() => {
 			console.log('copied client dist');
 		}).catch(()=>{
 			console.error('waiting for client dist');
 		});
 
-		cpy('intervey-api/lib/router', dest.apiRoutes).then(() => {
+		cpy(src.routes, dest.apiRoutes).then(() => {
 			console.log('copied api routes');
 		}).catch(()=>{
 			console.error('waiting for api routes');
