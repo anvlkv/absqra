@@ -2,5 +2,5 @@
   "watch": ["intervey-app/dist", "intervey-api/lib", "main.js"],
   "ignore": ["**/index.*", "intervey-api/src/**/*.*", "intervey-app/src/**/*.*"],
   "exec": "node main.js",
-  "delay": 1000
+  "delay": 1500
 }
