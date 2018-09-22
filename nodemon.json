@@ -1,6 +1,6 @@
 {
-  "watch": ["intervey-app/dist", "intervey-api/lib", "main.js"],
+  "watch": ["intervey-app/dist", "intervey-api/lib/**/*.*", "gulpfile.js", "nodemon.json"],
   "ignore": ["**/index.*", "intervey-api/src/**/*.*", "intervey-app/src/**/*.*"],
-  "exec": "node main.js",
-  "delay": 1500
+  "exec": "gulp",
+  "delay": 2000
 }
