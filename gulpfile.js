@@ -1,12 +1,13 @@
 const gulp = require('gulp');
 const $ = require('gulp-load-plugins')();
 const log = require('fancy-log');
+const print = require('gulp-print').default;
 
 const src = {
 	entity: 'intervey-api/lib/types/entity',
-	clientDist: 'intervey-app/dist',
+	apiEnums: 'intervey-api/src/entity/enums',
 	routes: 'intervey-api/lib/router',
-	apiEnums: 'intervey-api/src/entity/enums'
+	clientDist: 'intervey-app/dist'
 }
 
 const dest = {
@@ -16,21 +17,34 @@ const dest = {
 	clientDist: 'intervey-api/src/client'
 };
 
-gulp.task('clear', () => {
-	return gulp.src([
-			`${dest.apiModels}/**/*.*`,
-			`${dest.apiRoutes}/**/*.*` ,
-			`${dest.clientDist}/**/*.*`
-		], { read: false })
+gulp.task('clean:apiModels', () => {
+	return gulp.src([`${dest.apiModels}/**/*.*`, `!${dest.apiEnums}`], {read: false})
 		.pipe($.rm());
 });
 
-gulp.task('cp:entity', () => {
-	const multipartEntityFilter = $.filter((file) => !/.*entity\.d\.ts/.test(file.path), {restore: true});
+gulp.task('clean:apiRoutes', () => {
+	return gulp.src(`${dest.apiRoutes}/**/*.*`, {read: false})
+		.pipe($.rm());
+});
 
+gulp.task('clean:clientDist', () => {
+	return gulp.src(`${dest.clientDist}/**/*.*`, {read: false})
+		.pipe($.rm());
+});
+
+gulp.task('clean:apiEnums', () => {
+	return gulp.src(`${dest.apiEnums}/**/*.*`, {read: false})
+		.pipe($.rm());
+});
+
+gulp.task('clean', (cb) => {
+	return $.sequence(['clean:apiModels', 'clean:apiRoutes', 'clean:clientDist'])(cb);
+});
+
+gulp.task('cp:apiModels', () => {
+	const multipartEntityFilter = $.filter((file) => !/.*entity\.d\.ts/.test(file.path), {restore: true});
 	return $.merge(
-			gulp.src(`${src.entity}/**/*.*`)
-				.pipe($.filter((file) => !/.*enums\.d\.ts/.test(file.path)))
+			gulp.src([`${src.entity}/**/*.*`, `!${src.apiEnums}`])
 				.pipe($.filter((file) => !/.*transform\.d\.ts/.test(file.path)))
 				.pipe($.rename((path) => {
 					path.basename = path.basename.replace(/\.d$/, '');
@@ -42,14 +56,17 @@ gulp.task('cp:entity', () => {
 				.pipe($.replace(/\/entity.*/gm, '\';'))
 				.pipe($.replace(/^(.*)(\/transform.*)/gm, ''))
 				.pipe(multipartEntityFilter)
-				.pipe($.replace(/(\.\.\/)(\w)/gm, './$2')),
+					.pipe($.replace(/(\.\.\/)(\w)/gm, './$2')),
 			multipartEntityFilter.restore
 		)
+		.pipe(print())
 		.pipe(gulp.dest(dest.apiModels));
 });
 
-gulp.task('cp:enums', () => {
+gulp.task('cp:apiEnums', () => {
 	return gulp.src(`${src.apiEnums}/**/*.*`)
+		.pipe(print())
+		.pipe($.replace('export declare enum', 'export enum'))
 		.pipe(gulp.dest(dest.apiEnums));
 });
 
@@ -57,16 +74,52 @@ gulp.task('cp:enums', () => {
 
 gulp.task('cp:apiRoutes', () => {
 	return gulp.src(`${src.routes}/**/*.*`)
+		.pipe(print())
 		.pipe(gulp.dest(dest.apiRoutes));
 });
 
 gulp.task('cp:clientDist', () => {
 	return gulp.src(`${src.clientDist}/**/*.*`)
+		.pipe($.filesize())
 		.pipe(gulp.dest(dest.clientDist));
 });
 
-gulp.task('cp', ['cp:entity', 'cp:apiRoutes', 'cp:enums', 'cp:clientDist']);
+gulp.task('cp', ['cp:apiModels', 'cp:apiRoutes', 'cp:apiEnums', 'cp:clientDist']);
 
 gulp.task('default', (cb) => {
-	return $.sequence('clear', 'cp')(cb)
+	return $.sequence('clean', 'cp')(cb);
 });
+
+function createWatcher(path, tasks, delay = 1500) {
+	let lastChangeTimeout;
+	return $.watch(path, (e) => {
+		if (lastChangeTimeout) {
+			clearTimeout(lastChangeTimeout);
+		}
+
+		lastChangeTimeout = setTimeout(() => {
+			$.sequence(...tasks)();
+		}, delay);
+
+		return e;
+	});
+}
+
+gulp.task('watch:apiModels', (cb) => {
+	return createWatcher([`${src.entity}/**/*.*`, `!${src.apiEnums}`], ['clean:apiModels', 'cp:apiModels']);
+});
+
+gulp.task('watch:clientDist', () => {
+	return createWatcher(`${src.clientDist}/**/*.*`, ['clean:clientDist', 'cp:clientDist'], 2500);
+});
+
+gulp.task('watch:apiRoutes', () => {
+	return createWatcher(`${src.routes}/**/*.*`, ['clean:apiRoutes', 'cp:apiRoutes']);
+});
+
+gulp.task('watch:apiEnums', () => {
+	return createWatcher(`${src.apiEnums}/**/*.*`, ['clean:apiEnums', 'cp:apiEnums'], 2500)
+})
+
+gulp.task('watch', ['default', 'watch:apiModels', 'watch:apiRoutes', 'watch:clientDist']);
+
