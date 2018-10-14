@@ -18,7 +18,7 @@ const dest = {
 };
 
 gulp.task('clean:apiModels', () => {
-	return gulp.src([`${dest.apiModels}/**/*.*`, `!${dest.apiEnums}`], {read: false})
+	return gulp.src([`${dest.apiModels}/**/*.*`, `!${dest.apiEnums}/**/*.*`], {read: false})
 		.pipe($.rm());
 });
 
@@ -44,7 +44,7 @@ gulp.task('clean', (cb) => {
 gulp.task('cp:apiModels', () => {
 	const multipartEntityFilter = $.filter((file) => !/.*entity\.d\.ts/.test(file.path), {restore: true});
 	return $.merge(
-			gulp.src([`${src.entity}/**/*.*`, `!${src.apiEnums}`])
+			gulp.src([`${src.entity}/**/*.*`, `!${src.entity}/enums/**/*.*`])
 				.pipe($.filter((file) => !/.*transform\.d\.ts/.test(file.path)))
 				.pipe($.rename((path) => {
 					path.basename = path.basename.replace(/\.d$/, '');
@@ -106,7 +106,7 @@ function createWatcher(path, tasks, delay = 1500) {
 }
 
 gulp.task('watch:apiModels', (cb) => {
-	return createWatcher([`${src.entity}/**/*.*`, `!${src.apiEnums}`], ['clean:apiModels', 'cp:apiModels']);
+	return createWatcher([`${src.entity}/**/*.*`, `!${src.entity}/enums`], ['clean:apiModels', 'cp:apiModels']);
 });
 
 gulp.task('watch:clientDist', () => {
