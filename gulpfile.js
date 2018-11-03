@@ -106,11 +106,11 @@ function createWatcher(path, tasks, delay = 1500) {
 }
 
 gulp.task('watch:apiModels', (cb) => {
-	return createWatcher([`${src.entity}/**/*.*`, `!${src.entity}/enums`], ['clean:apiModels', 'cp:apiModels']);
+	return createWatcher([`${src.entity}/**/*.*`, `!${src.entity}/enums`], ['clean:apiModels', 'cp:apiModels'], 2000);
 });
 
 gulp.task('watch:clientDist', () => {
-	return createWatcher(`${src.clientDist}/**/*.*`, ['clean:clientDist', 'cp:clientDist'], 2500);
+	return createWatcher(`${src.clientDist}/**/*.*`, ['clean:clientDist', 'cp:clientDist']);
 });
 
 gulp.task('watch:apiRoutes', () => {
@@ -118,8 +118,8 @@ gulp.task('watch:apiRoutes', () => {
 });
 
 gulp.task('watch:apiEnums', () => {
-	return createWatcher(`${src.apiEnums}/**/*.*`, ['clean:apiEnums', 'cp:apiEnums'], 2500)
+	return createWatcher(`${src.apiEnums}/**/*.*`, ['clean:apiEnums', 'cp:apiEnums'])
 })
 
-gulp.task('watch', ['default', 'watch:apiModels', 'watch:apiRoutes', 'watch:clientDist']);
+gulp.task('watch', ['default', 'watch:apiEnums', 'watch:apiModels', 'watch:apiRoutes', 'watch:clientDist']);
 
