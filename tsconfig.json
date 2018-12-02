@@ -1,16 +1,24 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "lib": [
+      "es6"
+    ],
     "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "./build",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "sourceMap": true,
     "declaration": true,
-    "declarationDir": "intervey-app/types/"
+    "declarationDir": "lib/types",
+    "typeRoots": [
+      "node_modules/@types",
+      "src/typings"
+    ]
   },
-  "include": [
-    "intervey-server/src/models"
-  ],
   "exclude": [
-    "node_modules",
-    "**/node_modules"
+    "lib",
+    "node_modules"
   ]
 }

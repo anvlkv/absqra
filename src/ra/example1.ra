@@ -1,0 +1,60 @@
+spammer: Sequence  // this is single line comment and start of Declaration Block
+	question respondentName // Block type Question with name respondentName for it's output
+		>text // input type text
+		!required // Validator type required
+		!minLength=3 // Validator type minLength with parameter 3
+		// between pair of ` there's content code by default MD
+		`
+			#What is your name?
+		`
+	question respondentAge
+		>number
+		!required
+		!minValue=18
+		`
+			#What is your age?
+		`
+	question respondentFamilyMembers
+		>list
+		!minCount=2
+		`
+			#Please add names of your family members.
+		`
+
+	if respondentFamilyMembers // this If Block checks that respondentFamilyMembers is valid and has value
+		question familyMembersEmails
+			>multiple
+			>assignment
+			!format=email
+			+respondentFamilyMembers // + sign is for options
+			`
+				#Please add emails of your family members.
+			`
+
+		// this Content Block doesn't have a name it is then simply there in Sequence, not anywhere else
+		content
+			`
+				###Thank you so much!
+				##Please [enjoy this video](http://youtube.com/hdjkfhskfhwir)
+			`
+		task
+			// first thing a Task does is selecting environment as input type
+			>server
+			// then it selects contextually available Task mailer and provides it with argument
+			>mailer = `
+				Please [participate in our survey](https://absqra.io/vx2zh32g5c)! Your dear {{respondentName}} already did!
+			`
+			+familyMembersEmails
+	else // make them struggle in this else Block
+		sequence
+			>spammer
+
+mailer: Task
+	// code here is in typescript
+	`lang=typescript
+		// some code sending mail here...
+		function(content: string) {
+			console.log(content)
+			// yeah that's how we send mail
+		}
+	`

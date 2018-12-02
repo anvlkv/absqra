@@ -1,0 +1,6 @@
+declaredName: Sequence // with comment
+    question outputName /* and multi line comment
+                           closing like so */
+        >text
+content `some text` unexpectedVar
+textVar = `some other text`
