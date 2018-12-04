@@ -1,13 +1,14 @@
-import * as fs from 'fs';
-import { RaLineStream } from './ra-line-stream';
-import { expect } from 'chai';
 import { RaInputStream } from '../input-stream/ra-input-stream';
+import * as fs from "fs";
 import { exampleLineOutput } from '../example.line-output.spec';
+import { expect } from 'chai';
+import { VirtualLineStream } from './virtual-line-stream';
+import { RaLine } from './line';
 
 
-describe('RaLineStream', () => {
+describe('VirtualLineStream', () => {
     let inputStream: RaInputStream;
-    let lineStream: RaLineStream;
+    let lineStream: VirtualLineStream;
     let fileContent: string;
 
     before((done) => {
@@ -20,7 +21,15 @@ describe('RaLineStream', () => {
 
     beforeEach((d) => {
         inputStream = new RaInputStream(fileContent);
-        lineStream = new RaLineStream(inputStream);
+        lineStream = new VirtualLineStream(exampleLineOutput.map(mock => {
+            return new RaLine(
+                mock.indent,
+                mock._value,
+                // @ts-ignore
+                mock.start,
+                mock.end
+            )
+        }));
         d();
     });
 
@@ -28,22 +37,12 @@ describe('RaLineStream', () => {
         expect(lineStream, 'stream created').to.exist;
     });
 
-    it('should parse lines as expected', () => {
+    it('should read lines', () => {
         let lines = [];
         while (!lineStream.eof()){
             lines.push(lineStream.next());
         }
-        expect(lines.map(l => {
-            const {
-                _tokens,
-                skipParsing,
-                ...line
-            } = l;
-
-            return line;
-        })).to.deep.equal(exampleLineOutput);
-
-        expect(lines[0].span).to.be.equal(1);
+        expect(lines.length, 'lines count').to.be.equal(8);
     });
 
     it('should have parsed tokens', () => {
@@ -52,6 +51,14 @@ describe('RaLineStream', () => {
             lines.push(lineStream.next());
         }
         expect(lines[1]._tokens).to.exist;
+    });
+
+    it('should read indents', () => {
+        let lines = [];
+        while (!lineStream.eof()){
+            lines.push(lineStream.next());
+        }
+        expect(lines.map(l => l.indent), 'lines count').to.deep.equal([ 0, 1, 1, 1, 2, 1, 0, 0 ]);
     });
 
     it('should peek line', () => {

@@ -1,6 +1,6 @@
 import { RaInputStream } from '../input-stream/ra-input-stream';
 import { RaToken, TokenType } from './token';
-import { LineColumnAddress } from '../block-stream/block';
+import { LineColumnAddress } from '../line-column-address';
 
 
 export class RaTokenStream {
@@ -106,43 +106,7 @@ export class RaTokenStream {
         );
     }
 
-    // readIndent(start: LineColumnAddress) {
-    //     const indent = this.readWhile((ch) => ch === Environment.indentationCharacter);
-    //     return new RaToken(
-    //         start,
-    //         [this.input.line, this.input.col],
-    //         TokenType.INDENT,
-    //         indent.length / Environment.indentationWidth
-    //     )
-    // }
-
-    // peekIndent(): number {
-    //
-    // }
-
-    // readContent(start: LineColumnAddress): RaToken {
-    //     let isMultiLine = false;
-    //     let content = '';
-    //     let contentHeader;
-    //     this.input.next();
-    //     while (!this.input.eof()) {
-    //         let ch = this.input.next();
-    //         content += ch;
-    //         if (ch === '`' && !isMultiLine) {
-    //             break;
-    //         }
-    //         if (this.input.eoLine() && !isMultiLine) {
-    //             isMultiLine = true;
-    //         }
-    //
-    //         if (this.input.col > 0 || this.peekIndent()) {
-    //             content += ch;
-    //         }
-    //         // el
-    //     }
-    // }
-
-    skipComment() {
+    skipComment(start: LineColumnAddress) {
         const commentType = this.input.peek(1);
         let multiLineCommentClosed = true;
         if (commentType === '/') {
@@ -162,11 +126,14 @@ export class RaTokenStream {
         else {
             this.croak(`Invalid comment: expected * or /, got [${commentType}]`)
         }
-
-        if (!multiLineCommentClosed) {
-            this.croak(`Multi line comment not closed`);
-        }
         this.input.next();
+
+        return multiLineCommentClosed ? this.readNext() : new RaToken(
+            TokenType.ML_COMMENT_START,
+            null,
+            start,
+            [this.input.line, this.input.col]
+        );
     }
 
 
@@ -178,8 +145,7 @@ export class RaTokenStream {
         const start: LineColumnAddress = [this.input.line, this.input.col];
 
         if (ch === '/') {
-            this.skipComment();
-            return this.readNext();
+            return this.skipComment(start)
         }
         if (this.isDigit(ch)) {
             return this.readNumber(start);

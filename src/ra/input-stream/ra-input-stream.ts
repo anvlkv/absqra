@@ -1,10 +1,10 @@
-import { LineColumnAddress } from '../block-stream/block';
+import { LineColumnAddress } from '../line-column-address';
 
 
 export class RaInputStream {
     public pos = 0;
     public line = 1;
-    public col = 0;
+    public col = 1;
     constructor(
         private input: string,
         ctx?: LineColumnAddress,
@@ -23,9 +23,9 @@ export class RaInputStream {
         const ch = this.input.charAt(this.pos++);
         if (ch === '\n') {
             this.line++;
-            this.col = 0;
+            this.col = 1;
         } else {
-            this.col++;
+            this.col += ch === '\t' ? 4 : 1;
         }
         return ch;
     }

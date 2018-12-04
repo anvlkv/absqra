@@ -6,11 +6,11 @@ export const example2TokenizerOutput: RaToken[] = [
     {
         start: [
             1,
-            0
+            1
         ],
         end:[
             1,
-            12
+            13
         ],
         tokenType:TokenType.VAR,
         value: 'declaredName',
@@ -19,11 +19,11 @@ export const example2TokenizerOutput: RaToken[] = [
     {
         start: [
             1,
-            12
+            13
         ],
         end:[
             1,
-            13
+            14
         ],
         tokenType:TokenType.OP,
         value: ':',
@@ -32,11 +32,11 @@ export const example2TokenizerOutput: RaToken[] = [
     {
         start: [
             1,
-            14
+            15
         ],
         end:[
             1,
-            22
+            23
         ],
         tokenType:TokenType.VAR,
         value: 'Sequence',
@@ -45,11 +45,11 @@ export const example2TokenizerOutput: RaToken[] = [
     {
         start: [
             2,
-            4
+            5
         ],
         end:[
             2,
-            12
+            13
         ],
         tokenType:TokenType.KW,
         value: 'question',
@@ -58,11 +58,11 @@ export const example2TokenizerOutput: RaToken[] = [
     {
         start: [
             2,
-            13
+            14
         ],
         end:[
             2,
-            23
+            24
         ],
         tokenType:TokenType.VAR,
         value: 'outputName',
@@ -71,11 +71,11 @@ export const example2TokenizerOutput: RaToken[] = [
     {
         start: [
             4,
-            8
+            9
         ],
         end:[
             4,
-            9
+            10
         ],
         tokenType:TokenType.OP,
         value: '>',
@@ -84,11 +84,11 @@ export const example2TokenizerOutput: RaToken[] = [
     {
         start: [
             4,
-            9
+            10
         ],
         end:[
             4,
-            13
+            14
         ],
         tokenType:TokenType.VAR,
         value: 'text',
@@ -97,11 +97,11 @@ export const example2TokenizerOutput: RaToken[] = [
     {
         end: [
             5,
-            7
+            8
         ],
         start: [
             5,
-            0
+            1
         ],
         tokenType: TokenType.VAR,
         type: RaTypes.TOKEN,
@@ -110,11 +110,11 @@ export const example2TokenizerOutput: RaToken[] = [
     {
         end: [
             5,
-            19
+            20
         ],
         start: [
             5,
-            8
+            9
         ],
         tokenType: TokenType.INLINE_CONTENT,
         type: RaTypes.TOKEN,
@@ -123,11 +123,11 @@ export const example2TokenizerOutput: RaToken[] = [
     {
         end: [
             5,
-            33
+            34
         ],
         start: [
             5,
-            20
+            21
         ],
         tokenType: TokenType.VAR,
         type: RaTypes.TOKEN,
@@ -136,11 +136,11 @@ export const example2TokenizerOutput: RaToken[] = [
     {
         end: [
             6,
-            7
+            8
         ],
         start: [
             6,
-            0
+            1
         ],
         tokenType: TokenType.VAR,
         type: RaTypes.TOKEN,
@@ -149,11 +149,11 @@ export const example2TokenizerOutput: RaToken[] = [
     {
         end: [
             6,
-            9
+            10
         ],
         start: [
             6,
-            8
+            9
         ],
         tokenType: TokenType.OP,
         type: RaTypes.TOKEN,
@@ -162,11 +162,11 @@ export const example2TokenizerOutput: RaToken[] = [
     {
         end: [
             6,
-            27
+            28
         ],
         start: [
             6,
-            10
+            11
         ],
         tokenType: TokenType.INLINE_CONTENT,
         type: RaTypes.TOKEN,

@@ -1,32 +1,27 @@
-import { RaInputStream } from '../input-stream/ra-input-stream';
-import { BlockType, LineColumnAddress, RaBlock } from './block';
-import { Environment } from '../environment/ra.environment';
+import { BlockType, RaBlock } from './block';
 import { RaToken, TokenType } from '../token-stream/token';
 // import { RaTokenStream } from '../token-stream/ra-token-stream';
 import { RaLineStream } from '../line-stream/ra-line-stream';
+import { VirtualLineStream } from '../line-stream/virtual-line-stream';
+import { LineColumnAddress } from '../line-column-address';
 import { RaLine } from '../line-stream/line';
-import { RaTokenStream } from '../token-stream/ra-token-stream';
 
 
 export class RaBlockStream {
-    private blocks: RaBlock[] = [];
     private pos = 1;
-    private current: Partial<RaBlock>;
-
-
-    get count() {
-        return this.blocks.length;
-    }
+    private current: RaBlock;
+    private lineStart: LineColumnAddress;
 
     constructor(
-        private input: RaLineStream
+        private input: RaLineStream | VirtualLineStream,
+        private level = 0
     ){}
 
-    private isInvocationBlock(tokens: RaToken[]): boolean {
+    static isInvocationBlock(tokens: RaToken[]): boolean {
         let result = false;
 
         if(!tokens.length){
-            return false;
+            return result;
         }
         else if(tokens[0].tokenType === TokenType.KW) {
             result = true;
@@ -38,7 +33,7 @@ export class RaBlockStream {
         return result;
     }
 
-    private isDeclarationBlock(tokens: RaToken[]): boolean {
+    static isDeclarationBlock(tokens: RaToken[]): boolean {
         let result = false;
 
         if(!tokens.length){
@@ -56,69 +51,155 @@ export class RaBlockStream {
         return result;
     }
 
-    private isContentBlock(tokens: RaToken[] | string): boolean {
-        if (typeof tokens === 'string') {
-            tokens = this.tokenizeLine(tokens);
-        }
-        tokens = (<RaToken[]>tokens);
+    static isContentBlocTick(tokens: RaToken[]): boolean {
         return tokens.length &&
-            tokens[0].tokenType === TokenType.PUNCT &&
-            tokens[0].value === '`';
+            tokens.filter(t => t.tokenType === TokenType.PUNCT && t.value === '`').length === 1;
     }
 
-    private tokenizeLine(line: string): RaToken[] {
-        const lineStream = new RaInputStream(line, [this.input.line, this.input.col]);
-        const tokenStream = new RaTokenStream(lineStream);
-        const tokens: RaToken[] = [];
-        while (!tokenStream.eof()) {
-            tokens.push(tokenStream.next())
+    static endsWithComma(tokens: RaToken[]): boolean {
+        let result = false;
+        if (tokens.length) {
+            const lastToken = tokens[tokens.length - 1];
+            if (lastToken.tokenType === TokenType.PUNCT && lastToken.value === ',') {
+                result = true;
+            }
         }
-        return tokens;
+        return result;
+    }
+
+    static endsWithMLCommentOpening(tokens: RaToken[]): boolean {
+        let result = false;
+        if (tokens.length) {
+            const lastToken = tokens[tokens.length - 1];
+            if (lastToken.tokenType === TokenType.ML_COMMENT_START) {
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    private blockTye(tokens: RaToken[]): BlockType {
+        if (RaBlockStream.isContentBlocTick(tokens)) {
+            return BlockType.CONTENT;
+        }
+        else if (tokens.length === 1 && tokens[0].tokenType === TokenType.INLINE_CONTENT) {
+            return BlockType.CONTENT;
+        }
+        else if (RaBlockStream.isDeclarationBlock(tokens)) {
+            return BlockType.DECLARE;
+        }
+        else if (RaBlockStream.isInvocationBlock(tokens)) {
+            return BlockType.INVOKE;
+        }
+        else if (tokens.length) {
+            const text = tokens.map(t => `[${t.value}]:[${t.tokenType}]`).join(' ');
+            this.croak(`Invalid block start [${text}]`);
+        }
+    }
+
+    private readContent(start: LineColumnAddress): RaBlock {
+        const head = this.readBlockOpening();
+        const content = [];
+        let end;
+
+        while (!this.eof()) {
+            const line = this.input.peek();
+            if (line.indent > this.level) {
+                content.push(this.input.next(true));
+            }
+            else if (RaBlockStream.isContentBlocTick(line.tokens)) {
+                content.push(this.input.next());
+                end = [this.input.line, this.input.col];
+                break;
+            }
+            else {
+                this.croak(`Indentation err: content block parsing failed [indent: ${line.indent}]`);
+            }
+        }
+
+        return new RaBlock(
+            BlockType.CONTENT,
+            [head, ...content],
+            start,
+            end
+        )
+    }
+
+    private readBlockOpening(line?: RaLine): RaLine {
+        line = line || this.input.next();
+
+        if (RaBlockStream.endsWithComma(line.tokens)) {
+            line.concat(
+                this.input.concatUntil((ln) => !RaBlockStream.endsWithComma(ln.tokens))
+            );
+        }
+        else if (RaBlockStream.endsWithMLCommentOpening(line.tokens)) {
+            line = this.skipComment(line);
+            return this.readBlockOpening(line);
+        }
+
+        return line;
+    }
+
+    private readBlock(start: LineColumnAddress): RaBlock {
+        const head = this.readBlockOpening();
+        const content = [];
+
+        while (!this.eof()) {
+            const line = this.input.peek();
+            if (line.indent > this.level) {
+                content.push(this.input.next());
+            }
+            else if (line.tokens.length) {
+                break;
+            }
+            else {
+                this.input.next();
+            }
+        }
+
+        return new RaBlock(
+            this.blockTye(head.tokens),
+            [head, ...content],
+            start,
+            [this.input.line, this.input.col]
+        )
+    }
+
+    private skipComment(line: RaLine): RaLine {
+        while (RaBlockStream.endsWithMLCommentOpening(line.tokens)){
+            line.concat(this.input.next());
+        }
+
+        return line;
     }
 
     readNext(): RaBlock {
         const start: LineColumnAddress = [this.input.line, this.input.col];
-        const initialIndent = this.input.peek().indent;
-        const content = [];
+
         while (!this.input.eof()) {
             const line = this.input.peek();
-            if (line.indent >= initialIndent) {
-                if (line.indent === initialIndent ) {
-                    if (!content.length || this.isContentBlock(line.value)) {
-                        content.push(this.input.next());
-                    }
-                    else {
-                        break;
-                    }
-                }
-                else {
-                    content.push(this.input.next());
+            if (line.indent === this.level && line.tokens) {
+                switch (this.blockTye(line.tokens)) {
+                    case BlockType.CONTENT:
+                        return this.readContent(start);
+                    default:
+                        return this.readBlock(start);
                 }
             }
-            else {
-                break;
+            else if(line.tokens) {
+                this.croak(`Expected block with indentation level : [${this.level}], got [${line.indent}]`)
             }
+            this.input.next();
         }
-
-        if (!content.length) {
-            this.croak(`No content`);
-        } else {
-            this.pos++;
-            return new RaBlock(
-                content,
-                start,
-                [this.input.line, this.input.col],
-            )
-        }
-
     }
 
-    next() {
-        const tok = this.current;
+    next(): RaBlock {
+        const current = this.current;
         this.current = null;
-        return tok || this.readNext();
+        return current || this.readNext();
     }
-    peek(): Partial<RaBlock> {
+    peek(): RaBlock {
         return this.current || (this.current = this.readNext());
     }
     eof(): boolean {

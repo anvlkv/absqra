@@ -1,13 +1,20 @@
-import { LineColumnAddress } from '../block-stream/block';
 import { RaInputStream } from '../input-stream/ra-input-stream';
 import { RaLine } from './line';
 import { Environment } from '../environment/ra.environment';
 import { EnvironmentUtils } from '../environment/environment-utils';
+import { LineColumnAddress } from '../line-column-address';
 
+export interface LineStream {
+    line: number;
+    col: number;
+    concatUntil(fn: (current: RaLine) => boolean): RaLine;
+    peek(shift: number): Partial<RaLine>;
+    next(): RaLine;
+    eof(): boolean;
+    croak(msg: string): void;
+}
 
-export class RaLineStream {
-
-
+export class RaLineStream implements LineStream{
     get line() {
         return this.input.line;
     }
@@ -20,18 +27,22 @@ export class RaLineStream {
     ) {
     }
 
-    private lineIndent(line: string): number {
-        if (this.isIndented(line)) {
-            return Math.floor(EnvironmentUtils.indentationRegExp.exec(line)[0].length / Environment.indentationWidth);
+    concatUntil(fn: (current: RaLine) => boolean): RaLine {
+        const output = this.next();
+        const lines = [];
+        while (!this.eof()) {
+            const line = this.next();
+            lines.push(line);
+            if (fn(line)) {
+                break;
+            }
         }
-        return 0;
+        output.concat(...lines);
+
+        return output;
     }
 
-    private isIndented(line: string): boolean {
-        return EnvironmentUtils.indentationCharacterRegExp.test(line);
-    }
-
-    peek(shift = 0): Partial<RaLine> {
+    peek(shift = 0): RaLine {
         let line = '';
         let chShift = 0;
         let lines = -1;
@@ -39,31 +50,33 @@ export class RaLineStream {
             while (!this.input.eoLine(chShift)) {
                 line += this.input.peek(chShift++);
             }
+            line += this.input.peek(chShift++);
             lines ++;
             if (lines === shift) {
                 break;
             }
-            chShift++;
             line = '';
         }
-        return {
-            indent: this.lineIndent(line),
-            value: line
-        };
+        return new RaLine(
+            lineIndent(line),
+            line
+        );
     }
 
-    next(): RaLine {
+    next(skipParsing?: boolean): RaLine {
         const start: LineColumnAddress = [this.input.line, this.input.col];
         let line = '';
         while (!this.input.eoLine()) {
             line += this.input.next();
         }
+        const end: LineColumnAddress = [this.input.line, this.input.col];
         line += this.input.next();
         return new RaLine(
-            this.lineIndent(line),
+            lineIndent(line),
             line,
             start,
-            [this.input.line, this.input.col]
+            end,
+            skipParsing
         );
     }
 
@@ -74,4 +87,14 @@ export class RaLineStream {
     croak(msg: string) {
         this.input.croak(msg);
     }
+}
+
+export function isIndented(line: string): boolean {
+    return EnvironmentUtils.indentationCharacterRegExp.test(line);
+}
+export function lineIndent(line: string): number {
+    if (isIndented(line)) {
+        return Math.floor(EnvironmentUtils.indentationRegExp.exec(line)[0].length / Environment.indentationWidth);
+    }
+    return 0;
 }

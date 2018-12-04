@@ -1,16 +1,17 @@
 import { RaTypes } from '../types.enum';
-import { LineColumnAddress } from '../block-stream/block';
+import { LineColumnAddress } from '../line-column-address';
+
 
 
 export enum TokenType {
-   INDENT = 'indent',
+   ML_COMMENT_START = 'ml',
    INLINE_CONTENT = 'inline',
    NUM = 'num',
    PUNCT = 'punct',
    KW = 'kw',
    VAR = 'var',
    OP = 'op',
-   BLK = 'block'
+   // BLK = 'block'
 }
 
 export class RaToken {

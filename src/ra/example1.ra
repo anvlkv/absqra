@@ -27,17 +27,21 @@ spammer: Sequence  // this is single line comment and start of Declaration Block
 			>assignment
 			!format=email
 			+respondentFamilyMembers // + sign is for options
-			`
+			`ln=En
 				#Please add emails of your family members.
+			`
+			`ln=Ru
+				#Пожалуйста укажите адреса электропочты членов вашей семьи.
 			`
 
 		// this Content Block doesn't have a name it is then simply there in Sequence, not anywhere else
-		content
+		content /* try comment */
 			`
 				###Thank you so much!
 				##Please [enjoy this video](http://youtube.com/hdjkfhskfhwir)
 			`
-		task
+		task /* try comment
+		        one more time */
 			// first thing a Task does is selecting environment as input type
 			>server
 			// then it selects contextually available Task mailer and provides it with argument

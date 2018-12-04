@@ -28,7 +28,7 @@ describe('RaTokenStream', () => {
         expect(tokenStream, 'stream created').to.exist;
     });
 
-    it('should tokenize stream', () => {
+    it('should tokenize stream as expected', () => {
         let tokens = [];
         while (!tokenStream.eof()){
             tokens.push(tokenStream.next());
