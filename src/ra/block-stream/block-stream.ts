@@ -1,62 +1,57 @@
-import { BlockType, RaBlock } from './block';
-import { RaToken, TokenType } from '../token-stream/token';
-// import { RaTokenStream } from '../token-stream/ra-token-stream';
-import { RaLineStream } from '../line-stream/ra-line-stream';
-import { VirtualLineStream } from '../line-stream/virtual-line-stream';
+import { Block, BlockType } from './block';
+import { Token, TokenType } from '../token-stream/token';
+// import { TokenStream } from '../token-stream/ra-token-stream';
+import { RaLineStream } from '../line-stream/line-stream';
 import { LineColumnAddress } from '../line-column-address';
-import { RaLine } from '../line-stream/line';
+import { Line } from '../line-stream/line';
 
 
-export class RaBlockStream {
+export class BlockStream {
     private pos = 1;
-    private current: RaBlock;
-    private lineStart: LineColumnAddress;
+    private current: Block;
 
     constructor(
-        private input: RaLineStream | VirtualLineStream,
+        private input: RaLineStream,
         private level = 0
     ){}
 
-    static isInvocationBlock(tokens: RaToken[]): boolean {
-        let result = false;
-
+    static isInvocationBlock(tokens: Token[]): boolean {
         if(!tokens.length){
-            return result;
+            return false;
         }
         else if(tokens[0].tokenType === TokenType.KW) {
-            result = true;
+            return true;
+        }
+        else if(tokens[0].tokenType === TokenType.VAR && !BlockStream.isDeclarationBlock(tokens)) {
+            return true;
         }
         else if(tokens[0].tokenType === TokenType.OP) {
-            result = true;
+            return true;
         }
 
-        return result;
+        return false;
     }
 
-    static isDeclarationBlock(tokens: RaToken[]): boolean {
+    static isDeclarationBlock(tokens: Token[]): boolean {
         let result = false;
 
         if(!tokens.length){
             return false;
         }
         else if (tokens[0].tokenType === TokenType.VAR) {
-            result = tokens.length && (!tokens[1] || tokens[1].tokenType !== TokenType.OP)  ||
-                (
-                    tokens.length === 3 &&
-                    tokens[1].tokenType === TokenType.OP &&
-                    tokens[2].tokenType === TokenType.VAR
-                );
+            result = tokens.length >= 3 &&
+                tokens[1].tokenType === TokenType.OP;
         }
 
         return result;
     }
 
-    static isContentBlocTick(tokens: RaToken[]): boolean {
-        return tokens.length &&
+    static isContentBlocTick(tokens: Token[]): boolean {
+        return tokens && tokens.length &&
             tokens.filter(t => t.tokenType === TokenType.PUNCT && t.value === '`').length === 1;
     }
 
-    static endsWithComma(tokens: RaToken[]): boolean {
+    static endsWithComma(tokens: Token[]): boolean {
         let result = false;
         if (tokens.length) {
             const lastToken = tokens[tokens.length - 1];
@@ -67,7 +62,7 @@ export class RaBlockStream {
         return result;
     }
 
-    static endsWithMLCommentOpening(tokens: RaToken[]): boolean {
+    static endsWithMLCommentOpening(tokens: Token[]): boolean {
         let result = false;
         if (tokens.length) {
             const lastToken = tokens[tokens.length - 1];
@@ -78,36 +73,33 @@ export class RaBlockStream {
         return result;
     }
 
-    private blockTye(tokens: RaToken[]): BlockType {
-        if (RaBlockStream.isContentBlocTick(tokens)) {
+    private blockTye(tokens: Token[]): BlockType {
+        if (BlockStream.isContentBlocTick(tokens) &&
+            tokens.findIndex(t => t.tokenType === TokenType.PUNCT && t.value === '`') === 0
+        ) {
             return BlockType.CONTENT;
         }
         else if (tokens.length === 1 && tokens[0].tokenType === TokenType.INLINE_CONTENT) {
             return BlockType.CONTENT;
         }
-        else if (RaBlockStream.isDeclarationBlock(tokens)) {
+        else if (BlockStream.isDeclarationBlock(tokens)) {
             return BlockType.DECLARE;
         }
-        else if (RaBlockStream.isInvocationBlock(tokens)) {
+        else if (BlockStream.isInvocationBlock(tokens)) {
             return BlockType.INVOKE;
-        }
-        else if (tokens.length) {
-            const text = tokens.map(t => `[${t.value}]:[${t.tokenType}]`).join(' ');
-            this.croak(`Invalid block start [${text}]`);
         }
     }
 
-    private readContent(start: LineColumnAddress): RaBlock {
-        const head = this.readBlockOpening();
+    private readContent(start: LineColumnAddress, head = this.readBlockOpening()): Block {
         const content = [];
         let end;
 
         while (!this.eof()) {
             const line = this.input.peek();
-            if (line.indent > this.level) {
+            if (line.indent > head.indent) {
                 content.push(this.input.next(true));
             }
-            else if (RaBlockStream.isContentBlocTick(line.tokens)) {
+            else if (BlockStream.isContentBlocTick(line.tokens)) {
                 content.push(this.input.next());
                 end = [this.input.line, this.input.col];
                 break;
@@ -117,40 +109,24 @@ export class RaBlockStream {
             }
         }
 
-        return new RaBlock(
+        return new Block(
             BlockType.CONTENT,
-            [head, ...content],
-            start,
-            end
+            [head, ...content]
         )
     }
 
-    private readBlockOpening(line?: RaLine): RaLine {
-        line = line || this.input.next();
-
-        if (RaBlockStream.endsWithComma(line.tokens)) {
-            line.concat(
-                this.input.concatUntil((ln) => !RaBlockStream.endsWithComma(ln.tokens))
-            );
-        }
-        else if (RaBlockStream.endsWithMLCommentOpening(line.tokens)) {
-            line = this.skipComment(line);
-            return this.readBlockOpening(line);
-        }
-
-        return line;
-    }
-
-    private readBlock(start: LineColumnAddress): RaBlock {
-        const head = this.readBlockOpening();
+    private readBlock(start: LineColumnAddress, head = this.readBlockOpening()): Block {
         const content = [];
+        const hasContentBlock = BlockStream.isContentBlocTick(head.tokens);
 
         while (!this.eof()) {
             const line = this.input.peek();
-            if (line.indent > this.level) {
+            if (line.indent > this.level ||
+                (hasContentBlock && line.indent === this.level && BlockStream.isContentBlocTick(line.tokens))
+            ) {
                 content.push(this.input.next());
             }
-            else if (line.tokens.length) {
+            else if (line.tokens && line.tokens.length) {
                 break;
             }
             else {
@@ -158,23 +134,45 @@ export class RaBlockStream {
             }
         }
 
-        return new RaBlock(
+        return new Block(
             this.blockTye(head.tokens),
-            [head, ...content],
-            start,
-            [this.input.line, this.input.col]
+            [head, ...content]
         )
     }
 
-    private skipComment(line: RaLine): RaLine {
-        while (RaBlockStream.endsWithMLCommentOpening(line.tokens)){
-            line.concat(this.input.next());
+    private readBlockOpening(line?: Line): Line {
+        line = line || this.input.next();
+
+        if (BlockStream.endsWithComma(line.tokens)) {
+            line.concat(
+                this.input.concatUpTo((ln) => {
+                    return !BlockStream.endsWithComma(ln.tokens) || BlockStream.endsWithMLCommentOpening(ln.tokens);
+                })
+            );
         }
+
+        if (BlockStream.endsWithMLCommentOpening(line.tokens)) {
+            line = this.readBlockOpening(this.skipComment(line));
+        }
+        else if (!line.tokens.length) {
+            line = this.readBlockOpening(this.input.next());
+        }
+
 
         return line;
     }
 
-    readNext(): RaBlock {
+    private skipComment(line: Line): Line {
+        line = this.input.concatUpTo((ln) => {
+            return !/^.*\*\/.*/m.test(ln.value);
+        }, line);
+
+        line.commentSkipped();
+
+        return line;
+    }
+
+    readNext(): Block {
         const start: LineColumnAddress = [this.input.line, this.input.col];
 
         while (!this.input.eof()) {
@@ -183,8 +181,13 @@ export class RaBlockStream {
                 switch (this.blockTye(line.tokens)) {
                     case BlockType.CONTENT:
                         return this.readContent(start);
-                    default:
+                    case BlockType.INVOKE:
+                    case BlockType.DECLARE:
                         return this.readBlock(start);
+                    default:
+                        if (line.tokens.length) {
+                            this.croak(`Mixed block not supported: [${line.value}]`)
+                        }
                 }
             }
             else if(line.tokens) {
@@ -194,12 +197,12 @@ export class RaBlockStream {
         }
     }
 
-    next(): RaBlock {
+    next(): Block {
         const current = this.current;
         this.current = null;
         return current || this.readNext();
     }
-    peek(): RaBlock {
+    peek(): Block {
         return this.current || (this.current = this.readNext());
     }
     eof(): boolean {

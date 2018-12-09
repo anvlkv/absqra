@@ -6,24 +6,35 @@
   "readme": "README.md",
   "scripts": {
     "test": "mocha --require ts-node/register $NODE_DEBUG_OPTION src/main.ts --watch-extensions ts 'src/**/*.spec.ts'",
-    "start": "ts-node $NODE_DEBUG_OPTION src/main.ts"
+    "start": "ts-node $NODE_DEBUG_OPTION src/main.ts",
+    "barrels": "barrelsby --delete -c=barrelsby.conf.json"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/anvlkv/absqra.git"
   },
   "author": "anvlkv",
-  "license": "CC-BY-SA4.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/anvlkv/absqra/issues"
   },
   "homepage": "https://github.com/anvlkv/absqra#readme",
   "devDependencies": {
     "@types/chai": "^4.1.7",
+    "@types/chai-spies": "^1.0.0",
     "@types/mocha": "^5.2.5",
     "@types/node": "^10.12.11",
+    "barrelsby": "^1.0.2",
     "chai": "^4.2.0",
+    "chai-exclude": "^1.0.12",
+    "chai-json-equal": "git://github.com/anvlkv/chai-json-equal.git",
+    "chai-spies": "^1.0.0",
+    "gulp": "^4.0.0",
+    "gulp-exec": "^3.0.2",
+    "gulp-merge": "^0.1.1",
+    "merge-stream": "^1.0.1",
     "mocha": "^5.2.0",
+    "path": "^0.12.7",
     "ts-node": "^7.0.1",
     "typescript": "^3.2.1"
   },

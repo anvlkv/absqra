@@ -1,4 +1,5 @@
 export const Environment = {
     indentationWidth: 1,
-    indentationCharacter: '\t'
+    indentationCharacter: '\t',
+    tabWidth: 4
 };

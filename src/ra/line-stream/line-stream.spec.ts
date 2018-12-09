@@ -1,13 +1,15 @@
 import * as fs from 'fs';
-import { RaLineStream } from './ra-line-stream';
+import { LineStream } from './line-stream';
 import { expect } from 'chai';
-import { RaInputStream } from '../input-stream/ra-input-stream';
-import { exampleLineOutput } from '../example.line-output.spec';
+import { InputStream } from '../input-stream/input-stream';
+import { exampleLineOutput } from './example.line-output.spec';
+import chaiExclude  = require('chai-exclude');
+import { use } from 'chai';
+use(chaiExclude);
 
-
-describe('RaLineStream', () => {
-    let inputStream: RaInputStream;
-    let lineStream: RaLineStream;
+describe('LineStream', () => {
+    let inputStream: InputStream;
+    let lineStream: LineStream;
     let fileContent: string;
 
     before((done) => {
@@ -19,8 +21,8 @@ describe('RaLineStream', () => {
     });
 
     beforeEach((d) => {
-        inputStream = new RaInputStream(fileContent);
-        lineStream = new RaLineStream(inputStream);
+        inputStream = new InputStream(fileContent);
+        lineStream = new LineStream(inputStream);
         d();
     });
 
@@ -33,15 +35,7 @@ describe('RaLineStream', () => {
         while (!lineStream.eof()){
             lines.push(lineStream.next());
         }
-        expect(lines.map(l => {
-            const {
-                _tokens,
-                skipParsing,
-                ...line
-            } = l;
-
-            return line;
-        })).to.deep.equal(exampleLineOutput);
+        expect(lines).excluding(['_tokens', 'skipParsing']).to.deep.equal(exampleLineOutput);
 
         expect(lines[0].span).to.be.equal(1);
     });
@@ -64,7 +58,7 @@ describe('RaLineStream', () => {
     });
 
     it('should concatenate lines', () => {
-        const line = lineStream.concatUntil((ln) => ln.end[0] === 3);
+        const line = lineStream.concatUpTo((ln) => ln.end[0] === 3);
         expect(line.span).to.be.equal(3);
         expect(line.value).to.be.equal(exampleLineOutput.reduce((total, ln) => {
             if(ln.end[0] <= 3) {

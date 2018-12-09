@@ -1,8 +1,8 @@
-import { RaToken, TokenType } from './token-stream/token';
-import { RaTypes } from './types.enum';
+import { Token, TokenType } from './token';
+import { RaTypes } from '../types.enum';
 
 
-export const example2TokenizerOutput: RaToken[] = [
+export const example2TokenizerOutput: Token[] = [
     {
         start: [
             1,
@@ -51,7 +51,7 @@ export const example2TokenizerOutput: RaToken[] = [
             2,
             13
         ],
-        tokenType:TokenType.KW,
+        tokenType:TokenType.VAR,
         value: 'question',
         type: RaTypes.TOKEN
     },
@@ -118,7 +118,7 @@ export const example2TokenizerOutput: RaToken[] = [
         ],
         tokenType: TokenType.INLINE_CONTENT,
         type: RaTypes.TOKEN,
-        value: '`some text`',
+        value: 'some text',
     },
     {
         end: [
@@ -162,7 +162,7 @@ export const example2TokenizerOutput: RaToken[] = [
     {
         end: [
             6,
-            28
+            30
         ],
         start: [
             6,
@@ -170,6 +170,19 @@ export const example2TokenizerOutput: RaToken[] = [
         ],
         tokenType: TokenType.INLINE_CONTENT,
         type: RaTypes.TOKEN,
-        value: '`some other text`',
+        value: 'some othe`r text',
+    },
+    {
+        end: [
+            7,
+            33
+        ],
+        start: [
+            7,
+            1
+        ],
+        tokenType: TokenType.REG_EXP,
+        type: RaTypes.TOKEN,
+        value: '/[0-9][a-z].*^&?!Reg\\\\E\\/**\\/xp/'
     }
 ];

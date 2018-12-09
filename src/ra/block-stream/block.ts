@@ -1,9 +1,9 @@
-import { RaBlockStream } from './ra-block-stream';
+import { BlockStream } from './block-stream';
 import { RaTypes } from '../types.enum';
-import { RaLine } from '../line-stream/line';
+import { Line } from '../line-stream/line';
 import { VirtualLineStream } from '../line-stream/virtual-line-stream';
 import { LineColumnAddress } from '../line-column-address';
-import { RaToken } from '../token-stream/token';
+import { Token } from '../token-stream/token';
 
 export enum BlockType {
     CONTENT = 'content',
@@ -11,21 +11,27 @@ export enum BlockType {
     INVOKE = 'invoke'
 }
 
-export class RaBlock {
+export class Block {
     public type = RaTypes.BLOCK;
 
     public readonly level: number;
-    public readonly children: RaBlock[];
+    public readonly children: Block[];
 
-    public get tokens(): RaToken[] {
+    public get tokens(): Token[] {
         return this.content[0].tokens;
+    }
+
+    public get start(): LineColumnAddress {
+        return this.content[0].start;
+    }
+
+    public get end(): LineColumnAddress {
+        return this.content[this.content.length - 1].end;
     }
 
     constructor(
         public readonly blockType: BlockType,
-        public readonly content: RaLine[],
-        public readonly start: LineColumnAddress,
-        public readonly end: LineColumnAddress
+        public readonly content: Line[]
     ) {
         this.level = this.content[0].indent;
 
@@ -36,7 +42,7 @@ export class RaBlock {
 
     private parseChildren() {
         const virtualLineStream = new VirtualLineStream(this.content.slice(1, this.content.length));
-        const childrenStream = new RaBlockStream(virtualLineStream, this.level + 1);
+        const childrenStream = new BlockStream(virtualLineStream, this.level + 1);
         const children = [];
         while (!childrenStream.eof()) {
             children.push(childrenStream.next())

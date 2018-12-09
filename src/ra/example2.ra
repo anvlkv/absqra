@@ -3,4 +3,5 @@ declaredName: Sequence // with comment
 						   closing like so */
 		>text
 content `some text` unexpectedVar
-textVar = `some other text`
+textVar = `some othe\`r text`
+/[0-9][a-z].*^&?!Reg\\E\/**\/xp/ // btw it is invalid reg exp

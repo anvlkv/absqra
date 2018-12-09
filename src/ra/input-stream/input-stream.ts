@@ -1,7 +1,8 @@
 import { LineColumnAddress } from '../line-column-address';
+import { Environment } from '..';
 
 
-export class RaInputStream {
+export class InputStream {
     public pos = 0;
     public line = 1;
     public col = 1;
@@ -25,7 +26,7 @@ export class RaInputStream {
             this.line++;
             this.col = 1;
         } else {
-            this.col += ch === '\t' ? 4 : 1;
+            this.col += ch === '\t' ? Environment.tabWidth : 1;
         }
         return ch;
     }
@@ -36,6 +37,6 @@ export class RaInputStream {
         return this.eof(shift) || this.peek(shift) === '\n';
     }
     croak(msg: string) {
-        throw new Error(`${this.errPrefix ? this.errPrefix : ''}${msg} [${this.line}:${this.col}]`);
+        throw new SyntaxError(`${this.errPrefix ? this.errPrefix : ''}${msg} [${this.line}:${this.col}]`);
     }
 }

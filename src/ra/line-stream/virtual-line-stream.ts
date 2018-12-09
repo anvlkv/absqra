@@ -1,9 +1,9 @@
-import { RaInputStream } from '../input-stream/ra-input-stream';
-import { RaLine } from './line';
-import { LineStream, RaLineStream } from './ra-line-stream';
+import { InputStream } from '../input-stream/input-stream';
+import { Line } from './line';
+import { RaLineStream, LineStream } from './line-stream';
 
 
-export class VirtualLineStream implements LineStream {
+export class VirtualLineStream implements RaLineStream {
 
     get line(): number {
         if (!this.eof()) {
@@ -25,23 +25,35 @@ export class VirtualLineStream implements LineStream {
     private pos = 0;
 
     constructor(
-        private lines: RaLine[],
+        private lines: Line[],
     ) {}
 
-    concatUntil(fn: (current: RaLine) => boolean): RaLine {
-        return RaLineStream.prototype.concatUntil.call(this, fn);
+    concatUpTo(fn: (current: Line) => boolean, ln?): Line {
+        return LineStream.prototype.concatUpTo.call(this, fn, ln);
     }
     
-    next(): RaLine {
+    next(skipParsing?: boolean): Line {
         return this.lines[this.pos++];
     }
 
-    peek(shift = 0): Partial<RaLine> {
+    peek(shift = 0): Partial<Line> {
         return this.lines[this.pos + shift];
     }
 
+    /*
+    * peek() {
+        return this.current || (this.current = this.readNext());
+    }
+
+    next(): Token {
+        const tok = this.current;
+        this.current = null;
+        return tok || this.readNext();
+    }
+    * */
+
     croak(msg: string): void {
-        throw new Error(`${msg} [${this.line}:${this.col}]`)
+        throw new SyntaxError(`${msg} [${this.line}:${this.col}]`)
     }
 
     eof(shift?): boolean {

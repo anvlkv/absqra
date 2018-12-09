@@ -1,10 +1,15 @@
 import { expect } from 'chai';
 
 
-export function expectDeeperThanDeepEqual(blocks, exampleBlockOutput) {
+export function expectDeeperThanDeepEqual(
+    blocks: Array<any>,
+    exampleBlockOutput: Array<any>,
+    expectation: (val: any, i: number, prop: string) => void,
+    done?: Function) {
     exampleBlockOutput.forEach((b, i) => {
         Object.keys(b).forEach(prop => {
-            expect(blocks[i][prop]).to.deep.equal(exampleBlockOutput[i][prop]);
+            expectation(blocks[i][prop], i, prop);
         });
     });
+    done();
 }

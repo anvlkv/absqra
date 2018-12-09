@@ -1,13 +1,13 @@
-import { RaInputStream } from '../input-stream/ra-input-stream';
+import { InputStream } from '../input-stream/input-stream';
 import * as fs from "fs";
-import { exampleLineOutput } from '../example.line-output.spec';
+import { exampleLineOutput } from './example.line-output.spec';
 import { expect } from 'chai';
 import { VirtualLineStream } from './virtual-line-stream';
-import { RaLine } from './line';
+import { Line } from './line';
 
 
 describe('VirtualLineStream', () => {
-    let inputStream: RaInputStream;
+    let inputStream: InputStream;
     let lineStream: VirtualLineStream;
     let fileContent: string;
 
@@ -20,10 +20,10 @@ describe('VirtualLineStream', () => {
     });
 
     beforeEach((d) => {
-        inputStream = new RaInputStream(fileContent);
+        inputStream = new InputStream(fileContent);
         lineStream = new VirtualLineStream(exampleLineOutput.map(mock => {
-            return new RaLine(
-                mock.indent,
+            return new Line(
+                mock._indent,
                 mock._value,
                 // @ts-ignore
                 mock.start,
@@ -71,7 +71,7 @@ describe('VirtualLineStream', () => {
     });
 
     it('should concatenate lines', () => {
-        const line = lineStream.concatUntil((ln) => ln.end[0] === 3);
+        const line = lineStream.concatUpTo((ln) => ln.end[0] === 3);
         expect(line.span).to.be.equal(3);
         expect(line.value).to.be.equal(exampleLineOutput.reduce((total, ln) => {
             if(ln.end[0] <= 3) {

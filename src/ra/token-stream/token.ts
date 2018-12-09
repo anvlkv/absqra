@@ -4,17 +4,17 @@ import { LineColumnAddress } from '../line-column-address';
 
 
 export enum TokenType {
+   REG_EXP = 'regexp',
    ML_COMMENT_START = 'ml',
    INLINE_CONTENT = 'inline',
    NUM = 'num',
    PUNCT = 'punct',
    KW = 'kw',
    VAR = 'var',
-   OP = 'op',
-   // BLK = 'block'
+   OP = 'op'
 }
 
-export class RaToken {
+export class Token {
     type = RaTypes.TOKEN;
 
     constructor(

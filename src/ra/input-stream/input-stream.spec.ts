@@ -1,11 +1,11 @@
 import * as fs from 'fs';
-import { RaInputStream } from './ra-input-stream';
+import { InputStream } from './input-stream';
 import { expect } from 'chai';
-import { RaLineStream } from '../line-stream/ra-line-stream';
+import { LineStream } from '../line-stream/line-stream';
 
 
-describe('RaInputStream', () => {
-    let inputStream: RaInputStream;
+describe('InputStream', () => {
+    let inputStream: InputStream;
     let fileContent: string;
 
     before((done) => {
@@ -17,7 +17,7 @@ describe('RaInputStream', () => {
     });
 
     beforeEach((d) => {
-        inputStream = new RaInputStream(fileContent);
+        inputStream = new InputStream(fileContent);
         d();
     });
 

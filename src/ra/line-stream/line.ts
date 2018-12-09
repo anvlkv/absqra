@@ -1,19 +1,20 @@
 
-import { RaToken } from '../token-stream/token';
-import { RaInputStream } from '../input-stream/ra-input-stream';
-import { RaTokenStream } from '../token-stream/ra-token-stream';
+import { Token } from '../token-stream/token';
+import { InputStream } from '../input-stream/input-stream';
+import { TokenStream } from '../token-stream/token-stream';
 import { LineColumn, LineColumnAddress } from '../line-column-address';
+import { Environment } from '..';
 
 
-export class RaLine {
-    private _tokens: RaToken[];
+export class Line {
+    private _tokens: Token[];
     public readonly isPreview: boolean;
 
     public get value(): string {
         return this._value;
     }
 
-    public get tokens(): RaToken[] {
+    public get tokens(): Token[] {
         return this._tokens;
     }
 
@@ -21,8 +22,24 @@ export class RaLine {
         return this.end[0] - this.start[0] + 1;
     }
 
+    public get indent(): number {
+        return this._indent;
+    }
+
+    public set indent(v: number) {
+        if (v !== this.indent) {
+            const newIndent = new Array(v * Environment.indentationWidth).join(Environment.indentationCharacter);
+            const oldIndent = new Array(this.indent * Environment.indentationWidth).join(Environment.indentationCharacter);
+            this._value.replace(
+                new RegExp('^' + oldIndent, 'gm'),
+                    newIndent
+            );
+            this._indent = v;
+        }
+    }
+
     constructor(
-        public readonly indent: number,
+        private _indent: number,
         private _value: string,
         public start?: LineColumnAddress,
         public end?: LineColumnAddress,
@@ -41,7 +58,7 @@ export class RaLine {
             return;
         }
 
-        let tokens: RaToken[] = [];
+        let tokens: Token[] = [];
 
         try {
             tokens = this.parse();
@@ -52,7 +69,7 @@ export class RaLine {
         this._tokens = tokens;
     }
 
-    concat(...lines: RaLine[]) {
+    concat(...lines: Line[]) {
         while (lines.length) {
             const line  = lines.splice(0, 1)[0];
             if (LineColumn.isBehind(this.end, line.start)) {
@@ -60,20 +77,47 @@ export class RaLine {
                 this._value += line.value;
             }
             else {
-                throw new Error(`Will not concat lines from behind [${this.end[0]}:${this.end[1]}] : [${line.start[0]}:${line.start[1]}]`);
+                throw new EvalError(`Will not concat lines from behind [${this.end[0]}:${this.end[1]}] : [${line.start[0]}:${line.start[1]}]`);
             }
         }
         this.tryParseTokens();
     }
 
-    parse(): RaToken[] {
-        let tokens: RaToken[] = [];
-        const lineStream = new RaInputStream(this.value, this.start);
-        const tokenStream = new RaTokenStream(lineStream);
+    parse(): Token[] {
+        let tokens: Token[] = [];
+        const lineStream = new InputStream(this.value, this.start);
+        const tokenStream = new TokenStream(lineStream);
         while (!tokenStream.eof()) {
             tokens.push(tokenStream.next())
         }
 
         return tokens;
+    }
+
+    commentSkipped() {
+        this._value = this.tokens.reduce((val, tok) => {
+            val += tok.value ? tok.value : ' ';
+            return val;
+        }, '');
+        this.tryParseTokens();
+    }
+
+    splitAt(tickPosition: number): [Line, Line] {
+        const aPart = this.tokens.slice(0, tickPosition);
+        const bPart = this.tokens.slice(tickPosition, this.tokens.length);
+        const aLine = new Line(
+            this.indent,
+            aPart.map(t => t.value).join(' '),
+            aPart[0].start,
+            aPart[aPart.length - 1].end
+        );
+        const bLine = new Line(
+            this.indent,
+            bPart.map(t => t.value).join(' '),
+            bPart[0].start,
+            bPart[bPart.length - 1].end
+        );
+
+        return [aLine, bLine];
     }
 }

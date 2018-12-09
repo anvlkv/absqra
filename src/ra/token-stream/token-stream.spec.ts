@@ -1,13 +1,13 @@
 import * as fs from 'fs';
-import { RaTokenStream } from './ra-token-stream';
+import { TokenStream } from './token-stream';
 import { expect } from 'chai';
-import { RaInputStream } from '../input-stream/ra-input-stream';
-import { example2TokenizerOutput } from '../example2.tokenizer-output.spec';
+import { InputStream } from '../input-stream/input-stream';
+import { example2TokenizerOutput } from './example2.tokenizer-output.spec';
 
 
-describe('RaTokenStream', () => {
-    let inputStream: RaInputStream;
-    let tokenStream: RaTokenStream;
+describe('TokenStream', () => {
+    let inputStream: InputStream;
+    let tokenStream: TokenStream;
     let fileContent: string;
 
     before((done) => {
@@ -19,8 +19,8 @@ describe('RaTokenStream', () => {
     });
 
     beforeEach((d) => {
-        inputStream = new RaInputStream(fileContent);
-        tokenStream = new RaTokenStream(inputStream);
+        inputStream = new InputStream(fileContent);
+        tokenStream = new TokenStream(inputStream);
         d();
     });
 

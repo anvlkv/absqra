@@ -1,20 +1,20 @@
-import { RaInputStream } from '../input-stream/ra-input-stream';
-import { RaLine } from './line';
+import { InputStream } from '../input-stream/input-stream';
+import { Line } from './line';
 import { Environment } from '../environment/ra.environment';
 import { EnvironmentUtils } from '../environment/environment-utils';
 import { LineColumnAddress } from '../line-column-address';
 
-export interface LineStream {
+export interface RaLineStream {
     line: number;
     col: number;
-    concatUntil(fn: (current: RaLine) => boolean): RaLine;
-    peek(shift: number): Partial<RaLine>;
-    next(): RaLine;
+    concatUpTo(fn: (current: Line) => boolean, line?: Line): Line;
+    peek(shift?: number): Partial<Line>;
+    next(skipParsing?: boolean): Line;
     eof(): boolean;
     croak(msg: string): void;
 }
 
-export class RaLineStream implements LineStream{
+export class LineStream implements RaLineStream{
     get line() {
         return this.input.line;
     }
@@ -23,12 +23,12 @@ export class RaLineStream implements LineStream{
     }
 
     constructor(
-        private input: RaInputStream
+        private input: InputStream
     ) {
     }
 
-    concatUntil(fn: (current: RaLine) => boolean): RaLine {
-        const output = this.next();
+    concatUpTo(fn: (current: Line) => boolean, ln?: Line): Line {
+        const output = ln || this.next();
         const lines = [];
         while (!this.eof()) {
             const line = this.next();
@@ -42,7 +42,7 @@ export class RaLineStream implements LineStream{
         return output;
     }
 
-    peek(shift = 0): RaLine {
+    peek(shift = 0): Line {
         let line = '';
         let chShift = 0;
         let lines = -1;
@@ -57,13 +57,13 @@ export class RaLineStream implements LineStream{
             }
             line = '';
         }
-        return new RaLine(
+        return new Line(
             lineIndent(line),
             line
         );
     }
 
-    next(skipParsing?: boolean): RaLine {
+    next(skipParsing?: boolean): Line {
         const start: LineColumnAddress = [this.input.line, this.input.col];
         let line = '';
         while (!this.input.eoLine()) {
@@ -71,7 +71,7 @@ export class RaLineStream implements LineStream{
         }
         const end: LineColumnAddress = [this.input.line, this.input.col];
         line += this.input.next();
-        return new RaLine(
+        return new Line(
             lineIndent(line),
             line,
             start,

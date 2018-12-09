@@ -41,19 +41,23 @@ spammer: Sequence  // this is single line comment and start of Declaration Block
 				##Please [enjoy this video](http://youtube.com/hdjkfhskfhwir)
 			`
 		task /* try comment
-		        one more time */
+	one more time indentation shouldn't make much difference */
 			// first thing a Task does is selecting environment as input type
 			>server
-			// then it selects contextually available Task mailer and provides it with argument
-			>mailer = `
+			// then it selects contextually available Task mailer
+			>mailer
+			// it uses
+			+familyMembersEmails
+			`
 				Please [participate in our survey](https://absqra.io/vx2zh32g5c)! Your dear {{respondentName}} already did!
 			`
-			+familyMembersEmails
 	else // make them struggle in this else Block
 		sequence
 			>spammer
 
-mailer: Task
+mailer: Task (body: Content = defaultMessage,
+	recipients: Options=1,
+	=`bcc: myownmailbox@domain.com`)
 	// code here is in typescript
 	`lang=typescript
 		// some code sending mail here...
@@ -61,4 +65,8 @@ mailer: Task
 			console.log(content)
 			// yeah that's how we send mail
 		}
+	`
+defaultMessage: Content
+	`ln=ru
+		Привет. Это вам почта такая.
 	`
