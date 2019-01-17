@@ -15,7 +15,7 @@ export const example2TokenizerOutput: Token[] = [
         tokenType:TokenType.VAR,
         value: 'declaredName',
         type: RaTypes.TOKEN
-    },
+    }, // 0
     {
         start: [
             1,
@@ -28,7 +28,7 @@ export const example2TokenizerOutput: Token[] = [
         tokenType:TokenType.OP,
         value: ':',
         type: RaTypes.TOKEN
-    },
+    }, // 1
     {
         start: [
             1,
@@ -41,7 +41,7 @@ export const example2TokenizerOutput: Token[] = [
         tokenType:TokenType.VAR,
         value: 'Sequence',
         type: RaTypes.TOKEN
-    },
+    }, // 2
     {
         start: [
             2,
@@ -54,7 +54,7 @@ export const example2TokenizerOutput: Token[] = [
         tokenType:TokenType.VAR,
         value: 'question',
         type: RaTypes.TOKEN
-    },
+    }, // 3
     {
         start: [
             2,
@@ -67,7 +67,7 @@ export const example2TokenizerOutput: Token[] = [
         tokenType:TokenType.VAR,
         value: 'outputName',
         type: RaTypes.TOKEN
-    },
+    }, // 4
     {
         start: [
             4,
@@ -80,7 +80,7 @@ export const example2TokenizerOutput: Token[] = [
         tokenType:TokenType.OP,
         value: '>',
         type: RaTypes.TOKEN
-    },
+    }, // 5
     {
         start: [
             4,
@@ -93,7 +93,7 @@ export const example2TokenizerOutput: Token[] = [
         tokenType:TokenType.VAR,
         value: 'text',
         type: RaTypes.TOKEN
-    },
+    }, // 6
     {
         end: [
             5,
@@ -106,7 +106,7 @@ export const example2TokenizerOutput: Token[] = [
         tokenType: TokenType.VAR,
         type: RaTypes.TOKEN,
         value: 'content',
-    },
+    }, // 7
     {
         end: [
             5,
@@ -119,7 +119,7 @@ export const example2TokenizerOutput: Token[] = [
         tokenType: TokenType.INLINE_CONTENT,
         type: RaTypes.TOKEN,
         value: 'some text',
-    },
+    }, // 8
     {
         end: [
             5,
@@ -132,7 +132,7 @@ export const example2TokenizerOutput: Token[] = [
         tokenType: TokenType.VAR,
         type: RaTypes.TOKEN,
         value: 'unexpectedVar',
-    },
+    }, // 9
     {
         end: [
             6,
@@ -145,7 +145,7 @@ export const example2TokenizerOutput: Token[] = [
         tokenType: TokenType.VAR,
         type: RaTypes.TOKEN,
         value: 'textVar',
-    },
+    }, // 10
     {
         end: [
             6,
@@ -158,7 +158,7 @@ export const example2TokenizerOutput: Token[] = [
         tokenType: TokenType.OP,
         type: RaTypes.TOKEN,
         value:'=',
-    },
+    }, // 11
     {
         end: [
             6,
@@ -171,7 +171,7 @@ export const example2TokenizerOutput: Token[] = [
         tokenType: TokenType.INLINE_CONTENT,
         type: RaTypes.TOKEN,
         value: 'some othe`r text',
-    },
+    }, // 12
     {
         end: [
             7,
@@ -184,5 +184,5 @@ export const example2TokenizerOutput: Token[] = [
         tokenType: TokenType.REG_EXP,
         type: RaTypes.TOKEN,
         value: '/[0-9][a-z].*^&?!Reg\\\\E\\/**\\/xp/'
-    }
+    } //13
 ];

@@ -2,6 +2,32 @@ import { InputStream } from '../input-stream/input-stream';
 import { Token, TokenType } from './token';
 import { LineColumnAddress } from '../line-column-address';
 import { keyWords } from '../kw';
+import { RParenthesisToken } from './tokens/r-parenthesis';
+import { LParenthesisToken } from './tokens/l-parenthesis';
+import { CommaToken } from './tokens/comma';
+import { BackTickToken } from './tokens/back-tick';
+import { FWDSlashToken } from './tokens/fwd-slash';
+import { GTToken } from './tokens/gt';
+import { LSToken } from './tokens/ls';
+import { PipeToken } from './tokens/pipe';
+import { AsteriskToken } from './tokens/asterisk';
+import { BKWSlashToken } from './tokens/bkw-slash';
+import { EXCLToken } from './tokens/excl';
+import { PercentToken } from './tokens/percent';
+import { EQToken } from './tokens/eq';
+import { MINToken } from './tokens/min';
+import { PlusToken } from './tokens/plus';
+import { ColonToken } from './tokens/colon';
+import { AtToken } from './tokens/at';
+import { IfToken } from './tokens/if';
+import { ElseToken } from './tokens/else';
+import { SwitchToken } from './tokens/switch';
+import { CaseToken } from './tokens/case';
+import { DefaultToken } from './tokens/default';
+import { FalseToken } from './tokens/false';
+import { TrueToken } from './tokens/true';
+import { LnToken } from './tokens/ln';
+import { LangToken } from './tokens/lang';
 
 
 export class TokenStream {
@@ -30,10 +56,10 @@ export class TokenStream {
     }
 
     private  isOpChar(ch) {
-        return '><|*/!%=-+:@'.indexOf(ch) >= 0;
+        return '><|*\\!%=-+:@'.indexOf(ch) >= 0;
     }
 
-    private  isPunc(ch) {
+    private  isPunct(ch) {
         return ',`/()'.indexOf(ch) >= 0;
     }
 
@@ -107,17 +133,7 @@ export class TokenStream {
         return false;
     }
 
-    readWhile(fn: (ch: string, total?: string) => boolean, peekShift?) {
-        let str = '';
-        while (!this.input.eof() &&
-            fn(this.input.peek(peekShift), str)
-        ) {
-            str += this.input.next();
-        }
-        return str;
-    }
-
-    readNumber(start: LineColumnAddress): Token {
+    private readNumber(start: LineColumnAddress): Token {
         let hasDot = false;
         const number = this.readWhile((ch) => {
             if (ch === '.') {
@@ -135,17 +151,54 @@ export class TokenStream {
         );
     }
 
-    readIdentity(start: LineColumnAddress): Token {
+    private readIdentity(start: LineColumnAddress): Token {
         const id = this.readWhile(this.isId.bind(this));
+        const end: LineColumnAddress = [this.input.line, this.input.col];
+        if (this.isKeyword(id)) {
+            let tok: Token;
+            switch (id) {
+                case 'if':
+                    tok = new IfToken(start, end);
+                    break;
+                case 'else':
+                    tok = new ElseToken(start, end);
+                    break;
+                case 'switch':
+                    tok = new SwitchToken(start, end);
+                    break;
+                case 'case':
+                    tok = new CaseToken(start, end);
+                    break;
+                case 'default':
+                    tok = new DefaultToken(start, end);
+                    break;
+                case 'false':
+                    tok = new FalseToken(start, end);
+                    break;
+                case 'true':
+                    tok = new TrueToken(start, end);
+                    break;
+                case 'ln':
+                    tok = new LnToken(start, end);
+                    break;
+                case 'lang':
+                    tok = new LangToken(start, end);
+                    break;
+                default:
+                    this.croak(`Unsupported keyword [${id}]`);
+            }
+            return tok;
+        }
+
         return new Token(
-            this.isKeyword(id) ? TokenType.KW : TokenType.VAR,
+            TokenType.VAR,
             id,
             start,
-            [this.input.line, this.input.col],
+            end
         );
     }
 
-    skipComment(start: LineColumnAddress) {
+    private skipComment(start: LineColumnAddress) {
         const commentType = this.input.peek(1);
         let multiLineCommentClosed = true;
         if (commentType === '/') {
@@ -175,6 +228,91 @@ export class TokenStream {
         );
     }
 
+    private readPunct(start: LineColumnAddress): Token {
+        const val = this.input.next();
+        const end: LineColumnAddress = [this.input.line, this.input.col];
+        let token: Token;
+
+        switch (val) {
+            case ')':
+                token = new RParenthesisToken(start, end);
+                break;
+            case '(':
+                token = new LParenthesisToken(start, end);
+                break;
+            case ',':
+                token = new CommaToken(start, end);
+                break;
+            case '`':
+                token = new BackTickToken(start, end);
+                break;
+            case '/':
+                token = new FWDSlashToken(start, end);
+                break;
+            default:
+                this.croak(`Unsupported punctuation: [${val}]`);
+        }
+        return token;
+    }
+
+    private readOpChar(start: LineColumnAddress): Token {
+        const val = this.input.next();
+        const end: LineColumnAddress = [this.input.line, this.input.col];
+        let token: Token;
+
+        switch (val) {
+            case '>':
+                token = new GTToken(start, end);
+                break;
+            case '<':
+                token = new LSToken(start, end);
+                break;
+            case '|':
+                token = new PipeToken(start, end);
+                break;
+            case '*':
+                token = new AsteriskToken(start, end);
+                break;
+            case '\\':
+                token = new BKWSlashToken(start, end);
+                break;
+            case '!':
+                token = new EXCLToken(start, end);
+                break;
+            case '%':
+                token = new PercentToken(start, end);
+                break;
+            case '=':
+                token = new EQToken(start, end);
+                break;
+            case '-':
+                token = new MINToken(start, end);
+                break;
+            case '+':
+                token = new PlusToken(start, end);
+                break;
+            case ':':
+                token = new ColonToken(start, end);
+                break;
+            case '@':
+                token = new AtToken(start, end);
+                break;
+            default:
+                this.croak(`Unsupported operator: [${val}]`);
+        }
+        return token;
+    }
+
+    readWhile(fn: (ch: string, total?: string) => boolean, peekShift?) {
+        let str = '';
+        while (!this.input.eof() &&
+            fn(this.input.peek(peekShift), str)
+            ) {
+            str += this.input.next();
+        }
+        return str;
+    }
+
     readNext(): Token {
         this.readWhile(this.isWhitespace.bind(this));
         if (this.input.eof()) return null;
@@ -193,27 +331,17 @@ export class TokenStream {
         if (this.isIdStart(ch)) {
             return this.readIdentity(start);
         }
-        if (this.isPunc(ch)){
+        if (this.isPunct(ch)){
             if (this.isInlineLineContent(ch)) {
                 return this.readInlineContent(start);
             }
             else {
-                return new Token(
-                    TokenType.PUNCT,
-                    this.input.next(),
-                    start,
-                    [this.input.line, this.input.col],
-                );
+                return this.readPunct(start);
             }
         }
 
         if (this.isOpChar(ch)) {
-            return new Token(
-                TokenType.OP,
-                this.readWhile(this.isOpChar.bind(this)),
-                start,
-                [this.input.line, this.input.col]
-            );
+            return this.readOpChar(start);
         }
 
         if (!this.isWhitespace(ch)) {

@@ -19,18 +19,18 @@ export class LogicalExpr extends Expr {
                 if (UnaryExpr.isUnaryExpr(expr)) {
                     return true;
                 }
-                else if (BinaryExpr.isBinaryExpr(expr)) {
-                    return true;
-                }
-                else if (GroupingExpr.isGroupingExpr(expr) && [ExpressionTypes.UNARY, ExpressionTypes.BINARY].indexOf(GroupingExpr.groupingType(expr)) >= 0) {
-                    return true
-                }
+                // else if (BinaryExpr.isBinaryExpr(expr)) {
+                //     return true;
+                // }
+                // else if (GroupingExpr.isGroupingExpr(expr) && [ExpressionTypes.UNARY, ExpressionTypes.BINARY].indexOf(GroupingExpr.groupingType(expr)) >= 0) {
+                //     return true
+                // }
                 return false;
             })());
     }
 
     accept(visitor: Visitor) {
-        visitor.visitLogicalExpr(this);
+        // visitor.visitLogicalExpr(this);
     }
 
 }

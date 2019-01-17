@@ -2,14 +2,20 @@ import { Block, BlockType } from '../block-stream/block';
 import { BlockStream } from '../block-stream/block-stream';
 import { Program } from './program';
 import { ContentExpr } from '../expr/content';
-import { TokenType } from '..';
+import {
+    ColonToken, EQToken,
+    EXCLToken,
+    Expr,
+    GTToken,
+    LParenthesisToken,
+    LSToken,
+    PipeToken,
+    PlusToken,
+    Token,
+    TokenType,
+} from '..';
 import { DeclareExpr } from '../expr/declare';
 import { GroupingExpr } from '../expr/grouping';
-import { InvokeExpr } from '../expr/invoke';
-import { ChoiceExpr } from '../expr/choice';
-import { AssignExpr } from '../expr/assign';
-import { ValidatorExpr } from '../expr/validator';
-import { LogicalExpr } from '../expr/logical';
 
 
 export class Parser {
@@ -18,7 +24,9 @@ export class Parser {
 
 
     private parseContentBlock(block: Block): Program {
-        const contentExpr = new ContentExpr(...block.tokens);
+        const contentExpr = new ContentExpr(
+            ...block.tokens,
+        );
         if (block.tokens.length === 1 && block.tokens[0].tokenType === TokenType.INLINE_CONTENT) {
             contentExpr.value = block.tokens[0].value;
         }
@@ -42,60 +50,57 @@ export class Parser {
         }
     }
 
-    private parseDeclarationBloc(block: Block): Program {
-        let args = null;
-        if (block.tokens.length > 3) {
-            const exprTokens = block.tokens.slice(3, block.tokens.length);
-            if (GroupingExpr.isGroupingExpr(exprTokens)) {
-                args = new GroupingExpr(...exprTokens);
-            }
-            else {
-                throw new SyntaxError(`Unexpected statement after block declaration: [${exprTokens.map(t => t.value).join(' ')}] [${block.start[0]}:${block.start[1]}]`)
-            }
-        }
-        const declarationExpr = new DeclareExpr(
-            args,
-            ...block.tokens
-        );
-
-        const program = new Program();
-        program.root = declarationExpr;
-        program.children = this.parseChildren(block);
-
-        return program;
-    }
-
-    private parseInvocationBlock(block: Block): Program {
-        const program = new Program();
-        if (InvokeExpr.isInvokeExpr(block.tokens)) {
-            program.root = new InvokeExpr(...block.tokens)
-        }
-        else if (ChoiceExpr.isChoiceExpr(block.tokens)) {
-            program.root = new ChoiceExpr(...block.tokens);
-        }
-        else if (ValidatorExpr.isValidatorExpr(block.tokens)) {
-            let assignment: AssignExpr = null;
-            const valueTokens = block.tokens.slice(1, block.tokens.length);
-            if (AssignExpr.isAssignExpr(valueTokens)) { // ! minLength = 1
-                assignment = new AssignExpr(...valueTokens);
-            }
-            program.root = new ValidatorExpr(
-                assignment,
-                ...block.tokens
-            )
-        }
-        else if (LogicalExpr.isLogicalExpr(block.tokens)) {
-
-        }
-
-        program.children = this.parseChildren(block);
-
-
-        return program;
-    }
-
     private parseChildren(block: Block): Program[] {
         return block.children ? block.children.map(child => this.parseBlock(child)) : null;
+    }
+
+
+    private parseGroupingExpr(tokens: Token[]): Expr<any> {
+        throw new Error('Method not implemented.');
+    }
+
+    private parseChoiceExpr(tokens: Token[]): Expr<any> {
+        throw new Error('Method not implemented.');
+    }
+
+    private parsePipeExpr(tokens: Token[]): Expr<any> {
+        throw new Error('Method not implemented.');
+    }
+
+    private parseOptionsExpr(tokens: Token[]): Expr<any> {
+        throw new Error('Method not implemented.');
+    }
+
+    private parseValidatorExpr(tokens: Token[]) {
+        return undefined;
+    }
+
+    private parseBinaryExpr(tokens: Token[]) {
+        return undefined;
+    }
+
+    private parseShortHand(tokens: Token[]): Expr {
+        const tok = tokens[0];
+        switch (true) {
+            case tok instanceof GTToken: // > something
+                return this.parseChoiceExpr(tokens);
+            case tok instanceof PlusToken: // + something
+                return this.parseOptionsExpr(tokens);
+            case tok instanceof EXCLToken: // ! something
+                return this.parseValidatorExpr(tokens);
+            case tok instanceof PipeToken: // | something
+                return this.parsePipeExpr(tokens);
+            default:
+                throw new SyntaxError(`Unsupported shorthand [${tok.errPrint()}]`)
+        }
+    }
+
+    private parseDeclareExpr(tokens: Token[]) {
+        return undefined;
+    }
+
+    private parseUnaryExpr(tokens: Token[]) {
+        return undefined;
     }
 
     parseProgram(blockStream: BlockStream): Program {
@@ -109,15 +114,51 @@ export class Parser {
     }
 
     parseBlock(block: Block): Program {
-        switch (block.blockType) {
-            case BlockType.CONTENT:
-                return this.parseContentBlock(block);
-            case BlockType.DECLARE:
-                return this.parseDeclarationBloc(block);
-            case BlockType.INVOKE:
-                return this.parseInvocationBlock(block);
-            default:
-                throw new TypeError(`Unexpected type of block: [${block.type}] [${block.start[0]}:${block.start[1]}]`)
+        const tokens = block.tokens;
+        let i = 0;
+        const program = new Program();
+        while (i < tokens.length) {
+            let expr: Expr;
+            const tok = tokens[i];
+            switch (true) {
+                case tok instanceof LParenthesisToken:
+                    expr = this.parseGroupingExpr(tokens);
+                    break;
+                case tok.tokenType === TokenType.VAR:
+                    break;
+                case tok instanceof ColonToken:
+                    if (i !== 0) {
+                        expr =  this.parseDeclareExpr(tokens);
+                        break;
+                    }
+                case tok instanceof EXCLToken:
+                    if (i !== 0) {
+                        expr = this.parseUnaryExpr(tokens);
+                    }
+                case tok instanceof GTToken:
+                case tok instanceof PlusToken:
+                case tok instanceof PipeToken:
+                case tok instanceof EQToken:
+                case tok instanceof LSToken:
+                    if (i === 0) {
+                        expr = this.parseShortHand(tokens);
+                    }
+                    else {
+                        expr = this.parseBinaryExpr(tokens);
+                    }
+                    break;
+                default:
+                    throw new SyntaxError(`Unexpected token: ${tok.errPrint()}`);
+            }
+
+            if (!program.root && expr) {
+                program.root = expr;
+            }
+            else if (expr) {
+                throw new EvalError(`Program root is already defined: ${tok.errPrint()}`);
+            }
+
+            i += expr ? expr.tokens.length : 1;
         }
     }
 }

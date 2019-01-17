@@ -14,7 +14,10 @@ export const bool = [
 export const content = [
     'ln',
     'lang'
-]
+];
+
+/* TODO:'if', 'else', 'switch','case','default''false'ln'lang'
+ */
 
 export const keyWords = [
     ...bool,

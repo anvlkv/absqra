@@ -23,4 +23,8 @@ export class Token {
         public start: LineColumnAddress,
         public end: LineColumnAddress,
     ){}
+
+    public errPrint() {
+        return `[${this.value}:${this.tokenType}] [${this.start[0]}:${this.start[1]}]`;
+    }
 }

@@ -95,7 +95,7 @@ describe ('BlockStream', () => {
                 blocks.push(blockStream.next());
             }
 
-            expect(blocks.length).to.be.equal(2);
+            expect(blocks.length).to.be.equal(3);
         });
 
         it('should parse blocks as expected', () => {

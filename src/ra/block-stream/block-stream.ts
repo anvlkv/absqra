@@ -4,6 +4,8 @@ import { Token, TokenType } from '../token-stream/token';
 import { RaLineStream } from '../line-stream/line-stream';
 import { LineColumnAddress } from '../line-column-address';
 import { Line } from '../line-stream/line';
+import { BackTickToken } from '../token-stream/tokens/back-tick';
+import { CommaToken } from '../token-stream/tokens/comma';
 
 
 export class BlockStream {
@@ -48,18 +50,11 @@ export class BlockStream {
 
     static isContentBlocTick(tokens: Token[]): boolean {
         return tokens && tokens.length &&
-            tokens.filter(t => t.tokenType === TokenType.PUNCT && t.value === '`').length === 1;
+            tokens.filter(t => t instanceof BackTickToken).length === 1;
     }
 
     static endsWithComma(tokens: Token[]): boolean {
-        let result = false;
-        if (tokens.length) {
-            const lastToken = tokens[tokens.length - 1];
-            if (lastToken.tokenType === TokenType.PUNCT && lastToken.value === ',') {
-                result = true;
-            }
-        }
-        return result;
+        return tokens.length && tokens[0] instanceof CommaToken;
     }
 
     static endsWithMLCommentOpening(tokens: Token[]): boolean {
@@ -75,7 +70,7 @@ export class BlockStream {
 
     private blockTye(tokens: Token[]): BlockType {
         if (BlockStream.isContentBlocTick(tokens) &&
-            tokens.findIndex(t => t.tokenType === TokenType.PUNCT && t.value === '`') === 0
+            tokens[0] instanceof BackTickToken
         ) {
             return BlockType.CONTENT;
         }

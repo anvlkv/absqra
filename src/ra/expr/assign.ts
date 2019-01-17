@@ -1,5 +1,5 @@
 import { Expr, ExpressionTypes, Visitor } from './expr';
-import { Token, TokenType } from '..';
+import { LiteralExpr, Token, TokenType } from '..';
 
 
 export class AssignExpr extends Expr {

@@ -12,11 +12,11 @@ export class ContentExpr extends Expr {
 
     constructor(...tokens: Token[]){
         super(...tokens);
-        const ln = tokens.findIndex(t => t.tokenType === TokenType.KW && t.value === 'ln');
-        const lang = tokens.findIndex(t => t.tokenType === TokenType.KW && t.value === 'lang');
-        if (ln) {
+        // const ln = tokens.findIndex(t => t.tokenType === TokenType.KW && t.value === 'ln');
+        // const lang = tokens.findIndex(t => t.tokenType === TokenType.KW && t.value === 'lang');
+        // if (ln) {
             // this.ln = ;
-        }
+        // }
     }
 
     accept(visitor: Visitor) {

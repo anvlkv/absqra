@@ -12,7 +12,7 @@ import { ValidatorExpr } from './validator';
 import { PipeExpr } from './pipe';
 import { OptionsExpr } from './options';
 import { ContentExpr } from './content';
-import { LineColumnAddress, Token } from '..';
+import { LineColumnAddress, Token, Tree } from '..';
 import { DeclareExpr } from './declare';
 
 export enum ExpressionTypes {
@@ -49,11 +49,12 @@ export interface Visitor {
     visitDeclareExpr(expr: DeclareExpr);
 }
 
-export abstract class Expr {
-    protected tokens: Token[];
+export abstract class Expr<T extends Expr<T> = any> {
+    public readonly tokens: Token[];
     public readonly type = RaTypes.EXPR;
     public abstract readonly exprType: ExpressionTypes;
     public abstract accept(visitor: Visitor);
+    public tree: Tree<T>;
 
     get start(): LineColumnAddress {
         return this.tokens[0].start;
@@ -66,6 +67,7 @@ export abstract class Expr {
     protected constructor(
         ...tokens: Token[]
     ){
+        this.tree = new Tree();
         if (tokens) {
             this.tokens = tokens;
         }
