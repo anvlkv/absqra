@@ -2,7 +2,7 @@ import { Token, TokenType } from './token';
 import { RaTypes } from '../types.enum';
 
 
-export const example2TokenizerOutput: Token[] = [
+export const example2TokenizerOutput = [
     {
         start: [
             1,

@@ -3,6 +3,7 @@ import { BlockStream } from '../block-stream/block-stream';
 import { Program } from './program';
 import { ContentExpr } from '../expr/content';
 import {
+    BackTickToken,
     ColonToken, EQToken,
     EXCLToken,
     Expr,
@@ -23,7 +24,7 @@ export class Parser {
 
 
 
-    private parseContentBlock(block: Block): Program {
+    private parseContentBlock(block: Block): ContentExpr {
         const contentExpr = new ContentExpr(
             ...block.tokens,
         );
@@ -38,16 +39,8 @@ export class Parser {
             }, '');
         }
 
-        if (contentExpr.value) {
-            const program = new Program();
+        return contentExpr;
 
-            program.root = contentExpr;
-
-            return program;
-        }
-        else {
-            throw new TypeError(`Empty content not allowed [${block.start[0]}:${block.start[1]}]`);
-        }
     }
 
     private parseChildren(block: Block): Program[] {
@@ -147,6 +140,14 @@ export class Parser {
                         expr = this.parseBinaryExpr(tokens);
                     }
                     break;
+                case tok instanceof BackTickToken:
+                    if (i === 0) {
+                        expr = this.parseContentBlock(block);
+                    }
+                    else {
+                        // expr = block
+                    }
+                    break;
                 default:
                     throw new SyntaxError(`Unexpected token: ${tok.errPrint()}`);
             }
@@ -160,5 +161,7 @@ export class Parser {
 
             i += expr ? expr.tokens.length : 1;
         }
+
+        return program;
     }
 }

@@ -51,20 +51,23 @@ describe ('BlockStream', () => {
         });
 
         it('should parse blocks as expected', (done) => {
-            const blocks = [];
+            const result = {
+                blocks: []
+            };
 
             while (!blockStream.eof()) {
-                blocks.push(blockStream.next());
+                result.blocks.push(blockStream.next());
             }
-            // expect(blocks).to.deep.equal(example1BlockOutput);
-            expectDeeperThanDeepEqual(blocks, exampleBlockOutput, (val, i, prop) => {
-                if (prop === 'content') {
-                    expect(blocks[i][prop], `${i}:${prop}`).excluding('_tokens').to.deep.equal(exampleBlockOutput[i][prop]);
-                }
-                else {
-                    expect(blocks[i][prop], `${i}:${prop}`).to.deep.equal(exampleBlockOutput[i][prop]);
-                }
-            }, done);
+            expect(result, 'JSON result').to.be.jsonEqual(example1Output);
+            // // expect(blocks).to.deep.equal(example1BlockOutput);
+            // expectDeeperThanDeepEqual(blocks, exampleBlockOutput, (val, i, prop) => {
+            //     if (prop === 'content') {
+            //         expect(blocks[i][prop], `${i}:${prop}`).excluding('_tokens').to.deep.equal(exampleBlockOutput[i][prop]);
+            //     }
+            //     else {
+            //         expect(blocks[i][prop], `${i}:${prop}`).to.deep.equal(exampleBlockOutput[i][prop]);
+            //     }
+            // }, done);
         });
     });
 
