@@ -20,6 +20,6 @@
   "exclude": [
     "lib",
     "node_modules",
-    "src/absqra-client"
+    "beamer"
   ]
 }

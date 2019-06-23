@@ -1,0 +1,110 @@
+primary sequence
+	Intro
+	if Consent
+		Trial
+			Participation
+		Sign up
+			Returning user @anonimous/auth
+		if Returning user
+			Participation 
+			Debriefing
+	`
+		# Thank you!
+	`
+
+Intro sequence
+	`
+		# Disclaimer!
+		This is not yet what it pretends to be. this is a design prototype
+
+		# absQra demo
+
+		In this demo we'll pretend you're trying an app that collects data about urban environment from first hand. It offers users a conscious moment in exchange for participation
+
+		## Have fun!
+
+		### For the fast runners
+		You have to complete it three times in this demo to go through all steps.
+
+	`
+
+	Returning user @anonimous/auth
+		`Already have an account`
+		`Try first!`
+
+	if Returning user
+		skip to Iterative participation
+
+	`
+		You agree to participate...
+		I promise to delete your data upon request, if we are lucky and something is stored
+	`
+	Consent boolean
+
+Iterative participation sequence
+	iterate 2 @iterators/every day
+		Participation
+
+Participation sequence
+	`Please enter your current location`
+	Location @geo/device-pin
+
+	`How would you rate your mood at this place?`
+	Mood integer
+		`
+			![rate 1](image1.jpg)
+		`
+		`
+			![rate 2](image2.jpg)
+		`
+		`
+			![rate 3](image3.jpg)
+		`
+		`
+			![rate 4](image4.jpg)
+		`
+		`
+			![rate 5](image5.jpg)
+		`
+
+	`What are your feelings from this place?`
+	Place feelings [string]
+		> Participation.data/Place feelings
+		!min 2
+
+	Completed breathing exercise @project/breathing Mood
+
+	`How helpful was the breathing exercise for your mood `
+	Mood 2 integer
+					`
+			![rate 1](image1.jpg)
+		`
+		`
+			![rate 2](image2.jpg)
+		`
+		`
+			![rate 3](image3.jpg)
+		`
+		`
+			![rate 4](image4.jpg)
+		`
+		`
+			![rate 5](image5.jpg)
+		`
+
+	`What best describes your general mood today?`
+	Today feelings [string]
+		> Participation.data/Today emotions
+		
+Debriefing sequence
+	`
+		# so it's over now!
+		Thank you so much for trying out
+	`
+	Shared link @project/debriefing Participation.data
+
+
+
+
+
+

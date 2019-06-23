@@ -1,7 +1,0 @@
-question respondentAge
-	>number
-	!required
-	!minValue=18
-	`
-		#What is your age?
-	`
