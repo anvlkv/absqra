@@ -20,6 +20,6 @@
   "exclude": [
     "lib",
     "node_modules",
-    "beamer"
+    "src/beamer"
   ]
 }

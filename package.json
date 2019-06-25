@@ -7,7 +7,7 @@
   "scripts": {
     "barrels": "barrelsby --delete -c=barrelsby.conf.json",
     "lint": "tslint --project tsconfig.json --format stylish",
-    "build": "tsc",
+    "build": "rm -rf build && rm -rf lib && tsc",
     "serve": "ts-node src/server.ts",
     "start": "nodemon"
   },
@@ -36,6 +36,7 @@
     "nodemon": "^1.19.1",
     "path": "^0.12.7",
     "ts-node": "^7.0.1",
+    "tslint": "^5.18.0",
     "typescript": "^3.5.2"
   },
   "dependencies": {

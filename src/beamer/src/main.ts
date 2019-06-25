@@ -133,27 +133,27 @@ I promise to delete your data upon request, if we are lucky and something is sto
     }
 
     async function stepIntro(container: HTMLElement, ctx: any) {
-        async function step1(container: HTMLElement, ctx: any) {
-            const html = converter.makeHtml(ctx[1]);
+        async function step1(stepContainer: HTMLElement, stepCtx: any) {
+            const html = converter.makeHtml(stepCtx[1]);
             const output1 = document.createElement('div');
             output1.innerHTML = html;
-            container.appendChild(output1);
+            stepContainer.appendChild(output1);
 
             const input1 = document.createElement('div');
-            container.appendChild(input1);
+            stepContainer.appendChild(input1);
 
-            return ctx['ReturningUser'](input1);
+            return stepCtx['ReturningUser'](input1);
         }
 
-        async function step2(container: HTMLElement, ctx: any) {
-            const html = converter.makeHtml(ctx[3]);
+        async function innerStep2(stepContainer: HTMLElement, stepCtx: any) {
+            const html = converter.makeHtml(stepCtx[3]);
             const output1 = document.createElement('div');
             output1.innerHTML = html;
-            container.appendChild(output1);
+            stepContainer.appendChild(output1);
 
             const input1 = document.createElement('div');
-            container.appendChild(input1);
-            resolutionsProxy['Consent'] = await ctx['Consent'](input1);
+            stepContainer.appendChild(input1);
+            resolutionsProxy['Consent'] = await stepCtx['Consent'](input1);
             return resolutions['Consent'];
         }
 
@@ -167,7 +167,7 @@ I promise to delete your data upon request, if we are lucky and something is sto
         }
         else {
             console.log('continue');
-            return step2(container, ctx);
+            return innerStep2(container, ctx);
         }
     }
 
@@ -214,3 +214,42 @@ I promise to delete your data upon request, if we are lucky and something is sto
         console.error(e);
     });
 })();
+
+class Runtime {
+
+}
+
+class DeliveryMedium {
+    public readonly rootEl: HTMLElement;
+    constructor(
+        el: HTMLElement
+    ) {
+        this.rootEl = document.createElement('div');
+        this.rootEl.setAttribute('id', 'delivery-root');
+        el.appendChild(this.rootEl);
+    }
+
+    send(content: HTMLElement) {
+        this.rootEl.innerHTML = '';
+        this.rootEl.appendChild(content);
+    }
+
+    async request(req: (c: HTMLElement) => Promise<any>) {
+        const reqEl = document.createElement('div');
+        reqEl.setAttribute('id', 'request-root');
+        this.send(reqEl);
+        return req(reqEl);
+    }
+}
+
+class Pair<T> {
+    constructor(
+       public readonly container: T
+    ) {
+
+    }
+
+    send<I1, I2>(...items: [I1, I2]) {
+
+    }
+}

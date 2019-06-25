@@ -14,18 +14,19 @@ const config: webpack.Configuration = {
               test: /\.scss$/,
               use: [
                   {
-                      loader: "style-loader"
+                      loader: 'style-loader'
                   }, {
-                      loader: "css-loader"
+                      loader: 'css-loader'
                   }, {
-                      loader: "sass-loader"
+                      loader: 'sass-loader'
                   }
               ]
           },
           {
               test: /\.ts$/,
               use: [
-                  'awesome-typescript-loader'
+                  'awesome-typescript-loader',
+                  'tslint-loader'
               ]
           },
           {
