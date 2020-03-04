@@ -1,0 +1,150 @@
+// this is single line comment
+
+/*
+* this
+* is
+* multiline
+* comment
+*/
+
+this is a block name // blocks map output and define structure
+
+this block is a variable `content` // same as block but already has a value
+
+contents might have multiple definitions // e.g. translations
+  `lang=EN
+    This is content in english
+  `
+  `lang = RU
+    Этот контент на русском
+  `
+
+option B
+  `lang=EN
+    Option B
+  `
+  `lang=RU
+    Вариант Б
+  `
+
+this block provides choices
+  > `An option` // static
+  > option B // or using a variable
+
+THIS BLOCK PROVIDES A TEXT INPUT // in caps just for fun
+  >
+
+this block provides a number input
+  >
+    !number
+
+this block provides a number input with constraints
+  >
+    !number:max=100:min=20
+
+this block provides a number input with constraints and a default value
+  > 42
+    !number:max=100:min=20
+
+this block provides an email input
+  >
+    !pattern:email
+
+block can be nested to create a sequence
+  a property // any string
+    >
+  b property // string, with 42 as its maximum length
+    >
+      !length:max=24
+
+lists can be created as well // maximum of 3 emails
+  +>
+    !count:max=3
+    !format:email=true
+
+block that refers to another sequence // fill in basic demographics but only once
+  >@basic.demographics
+    !iterate:once
+
+// following example shows how to reuse data between blocks
+
+my initial block // list of 1 to 30 strings
+ +>
+  !count:min=1:max=30
+
+another block // enter number from 0 to 10 for each of the items, default 6
+  ...my initial block // ellipsis operator will iterate over values from "my initial block" in current context
+    > 6
+      !number:min=0:max=10
+
+/*
+* Declaring your own rules
+*/
+
+:my rule // yes colon at the start of the line means it's a rule definition
+  argument 1 // arguments are blocks
+    >
+      !number // with validated inputs
+  argument 2
+    > `default`
+  // content below will be executed in a sandbox
+  `ln=typescript
+    export default function(
+      in /* "in" will prepare the inputs */,
+      out /* "out" should be called with valid inputs */,
+      arg1, arg2 /* "arg1" and "arg2" are your arguments */
+    ) {
+      in((el, context) => {
+        // create UI things here
+
+        // call out with the value if valid
+        out('my value');
+      });
+    }
+  `
+
+block that uses the rule
+  >
+  !my rule : argument 1 = 10 : argument 2 = `something`
+
+// следубщий блок использует логический оператор, сравнение и метаданные
+// об одном из предыдущих блоков
+
+conditioned block
+  !if:my initial block.count > 3
+    `
+      ## Какой элемент лишний?
+    `
+    ...my initial block
+      >
+        !choice:multiple
+        !count:min=(my initial block.count - 3)
+  !else
+    `Все отлично!`
+
+switching block
+  !switch // without a parameter will evaluate expressions for each case
+    !case:conditioned block.count <> 0 // :case accepts exactly one argument "case", so the argument assignment can be omitted
+    `Самый неподходящий варинат?`
+      ...conditioned block
+        >
+          !choice:multiple
+    !default
+      `Спасибо большое`
+
+another switching block
+  !switch:conditioned block.count
+    !case:case=0 // or a more verbose way same as writing !case:0
+      `че то вы ничо нам не написали... :-(`
+    !default
+      `ну все на этом :-)`
+
+{1:1} // is switching contexts. 1:1 is default one and stands for one entry at once
+
+{N:1} // is common for many apps - multiple enries at once. For example in a note taking app there are N notes for one user
+
+{1:N} // collaborate on one entry
+
+{M:N} // is multiple collaborations
+
+

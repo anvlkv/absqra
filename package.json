@@ -1,9 +1,8 @@
 {
   "name": "absqra",
-  "version": "2.0.0",
-  "description": "",
-  "main": "main.js",
+  "version": "0.0.1",
   "readme": "README.md",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/anvlkv/absqra.git"
@@ -16,5 +15,5 @@
   "bugs": {
     "url": "https://github.com/anvlkv/absqra/issues"
   },
-  "homepage": "https://github.com/anvlkv/absqra#readme",
+  "homepage": "https://github.com/anvlkv/absqra#readme"
 }

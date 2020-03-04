@@ -1,0 +1,10 @@
+{
+  "name": "@absqra/ra",
+  "version": "0.0.1",
+  "dependencies": {
+    "typescript": "^3.7.4"
+  },
+  "devDependencies": {
+    "ava": "^3.2.0"
+  }
+}
