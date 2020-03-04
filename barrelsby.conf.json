@@ -1,9 +1,0 @@
-{
-  "singleQuotes": true,
-  "directory": "src",
-  "delete": true,
-  "location": "replace",
-  "exclude": [
-    "^.*\\.spec\\.ts"
-  ]
-}

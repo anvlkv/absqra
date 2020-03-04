@@ -1,5 +1,0 @@
-{
-  "watch": ["src"],
-  "exec": "npm run lint && npm run serve",
-  "ext": "ts"
-}
