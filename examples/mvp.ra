@@ -1,0 +1,32 @@
+// this file is my todo list and also should render like one
+
+parse blocks
+    `parse blocks`
+    `and funny chars too 😠`
+    `₰`
+    `Ͽ`
+        >
+            !choice:multiple
+
+parse different types of blocks
+    `comments`
+    `var declaration`
+    `rule declaraion`
+    `applied rule`
+    `input block`
+    `context switches`
+    `content block`
+        >
+            !choice:multiple
+
+generate runtime
+    `render content`
+    `render inputs`
+    `group inputs as long as there no dependecy on previous step`
+    `execute logic`
+    `apply rules`
+        >
+            !choice:multiple
+
+
+

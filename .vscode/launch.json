@@ -1,0 +1,45 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'absQra'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=absQra",
+                    "--package=absQra"
+                ],
+                "filter": {
+                    "name": "absQra",
+                    "kind": "bin"
+                }
+            },
+            "args": ["examples/mvp.ra"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'absQra'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=absQra",
+                    "--package=absQra"
+                ],
+                "filter": {
+                    "name": "absQra",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}

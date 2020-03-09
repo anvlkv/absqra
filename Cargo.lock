@@ -3,3 +3,10 @@
 [[package]]
 name = "absQra"
 version = "0.1.0"
+dependencies = [
+ "ra_lexer",
+]
+
+[[package]]
+name = "ra_lexer"
+version = "0.1.0"
