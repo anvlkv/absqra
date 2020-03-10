@@ -269,16 +269,23 @@ impl Cursor<'_> {
         let initial_line = self.position.0;
         let mut buffer = String::new();
         let start_consumed = self.len_consumed() - 1; // add 1 for first token
-
+        let mut block_closed = false;
         while let Some(ch) = self.bump() {
             match ch {
-                c if self.level == initial_level && c == '`' => break,
+                c if self.level == initial_level && c == '`' => {
+                    block_closed = true;
+                    break
+                },
                 c if self.level > initial_level => {
                     content_block.content.push(c);
                     content_block.len += 1;
                 },
                 c => buffer.push(c)
             }
+        }
+
+        if !block_closed {
+            panic!(LexerError::UnexpectedEndOfInput);
         }
 
         if initial_line == self.position.0 {
@@ -520,6 +527,13 @@ mod tests {
             len: 13,
             level: 0
         });
+    }
+
+    #[test]
+    #[should_panic]
+    fn it_should_paninc_when_content_block_is_not_closed() {
+        let mut stream = tokenize("`ln=en\n\tabc`");
+        stream.next();
     }
 
     #[test]
