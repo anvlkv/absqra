@@ -3,37 +3,6 @@ use cursor::{Cursor, Position, is_end_of_line, EOF_CHAR};
 mod errors;
 use errors::LexerError;
 
-#[derive(Debug, PartialEq, Clone)]
-pub enum ContentEnv {
-    Consumer,
-    Wire,
-    Publisher
-}
-
-
-impl Default for ContentEnv {
-    fn default() -> Self {ContentEnv::Consumer}
-}
-
-#[derive(Debug, PartialEq, Clone)]
-pub enum ContentKind {
-    Text,
-    Code,
-    Audio,
-    Video
-}
-
-impl Default for ContentKind {
-    fn default() -> Self {ContentKind::Text}
-}
-
-#[derive(Debug, Default, PartialEq, Clone)]
-pub struct ContentConfig {
-    ln: String,
-    lang: String,
-    env: ContentEnv,
-    kind: ContentKind
-}
 
 #[derive(Debug, PartialEq, Clone)]
 pub enum TokenKind {
@@ -71,7 +40,7 @@ pub enum TokenKind {
     Question,
     Identifier,
     Number(char, char),
-    ContentBlock(ContentConfig),
+    ContentBlock(Vec<Token>),
     Undetermined
 }
 
@@ -97,7 +66,7 @@ impl Default for Token {
 }
 
 pub fn tokenize(input: &str) -> impl Iterator<Item = Token> + '_ {
-    let mut cursor = Cursor::new(input);
+    let mut cursor = Cursor::new(input, Position(1, 0), 0);
 
     std::iter::from_fn(move || {
         if input.is_empty() {
@@ -317,9 +286,13 @@ impl Cursor<'_> {
             content_block.len = buffer.len();
         }
         else {
-            // let buffer_tokens: Vec<&String> = buffer.split('=').collect();
-            // buffer.find("ln")
-            panic!("Multi line blocks not inmplemented");
+            let mut buffer_cursor = Cursor::new(&buffer, Position(start_position.0, start_position.1 + 1), initial_level);
+            let mut content_block_initialization_tokens: Vec<Token> = Vec::new();
+            while !buffer_cursor.is_eof() {
+                content_block_initialization_tokens.push(buffer_cursor.advance_token());
+            }
+
+            content_block.kind = TokenKind::ContentBlock(content_block_initialization_tokens);
         }
 
         content_block.position = (start_position, self.position.clone());
@@ -397,7 +370,7 @@ impl Cursor<'_> {
 
 #[cfg(test)]
 mod tests {
-    use super::{tokenize, Token, TokenKind, Position, ContentConfig, ContentEnv, ContentKind};
+    use super::{tokenize, Token, TokenKind, Position};
     // use cursor::{};
 
     #[test]
@@ -525,10 +498,26 @@ mod tests {
     fn it_should_parse_content_blocks() {
         let mut stream = tokenize("`abc`");
         assert_eq!(stream.next().unwrap(), Token{
-            kind: TokenKind::ContentBlock(ContentConfig{..Default::default()}),
+            kind: TokenKind::ContentBlock(vec![]),
             content: String::from("abc"), 
             position: (Position(1, 0), Position(1, 5)),
             len: 5,
+            level: 0
+        });
+    }
+
+    #[test]
+    fn it_should_parse_content_blocks_with_initialization_tokens() {
+        let mut stream = tokenize("`ln=en\n\tabc\n`");
+        assert_eq!(stream.next().unwrap(), Token{
+            kind: TokenKind::ContentBlock(vec![
+                    Token{level: 0, kind: TokenKind::Identifier, content: String::from("ln"), position: (Position(1,1), Position(1,3)), len:2},
+                    Token{level: 0 ,kind: TokenKind::Equal, content: String::new(), position: (Position(1,3), Position(1,4)), len:1},
+                    Token{level: 0, kind: TokenKind::Identifier, content: String::from("en"), position: (Position(1,4), Position(1,6)), len:2},
+                ]),
+            content: String::from("abc"), 
+            position: (Position(1, 0), Position(3, 1)),
+            len: 13,
             level: 0
         });
     }
