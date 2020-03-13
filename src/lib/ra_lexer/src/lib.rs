@@ -1,7 +1,8 @@
 mod cursor;
-use cursor::{Cursor, Position, is_end_of_line, EOF_CHAR};
+use cursor::{Cursor, Position, is_end_of_line, is_whitespace, EOF_CHAR};
 mod errors;
 use errors::LexerError;
+
 
 
 #[derive(Debug, PartialEq, Clone)]
@@ -11,8 +12,10 @@ pub enum TokenKind {
     Dot,
     Colon,
     Greater,
+    GreaterOrEquals,
     Less,
-    Equal,
+    LessOrEequals,
+    Equals,
     Plus,
     Minus,
     Exclamation,
@@ -27,8 +30,6 @@ pub enum TokenKind {
     CloseCurlyBrace,
     CloseSquareBrace,
     CloseParentheses,
-    SingleQuote,
-    DoubleQuote,
     At,
     HashPound,
     Asterisk,
@@ -39,6 +40,7 @@ pub enum TokenKind {
     Tilda,
     Question,
     Identifier,
+    StringLiteral,
     Number(char, char),
     ContentBlock(Vec<Token>),
     Undetermined
@@ -88,25 +90,29 @@ impl Cursor<'_> {
             start_position = Position(self.position.0, self.position.1 - 1); // adjust position for after line change
         }
 
-        match self.token(first_char, start_position) {
+        match self.static_token(first_char, start_position) {
             Some(t) => t,
             None => {
                 match first_char {
                     c if c.is_alphabetic() => self.identifier(c, start_position),
                     c if c.is_numeric() => self.number(c, start_position),
+                    c if c == '\'' => self.string_literal(c, start_position),
+                    c if c == '"' => self.string_literal(c, start_position),
                     _ => panic!(LexerError::UnexpectedCharacter)
                 }
             }
         }
     }
 
-    fn token(&mut self, c: char, start_position: Position) -> Option<Token> {
+    fn static_token(&mut self, c: char, start_position: Position) -> Option<Token> {
+        let initial_len = self.len_consumed();
 
-        let single_char_token = |kind: TokenKind| -> Token  {
+        let generate_token = |kind: TokenKind| -> Token  {
             Token {
                 kind, 
                 position: (start_position, self.position.clone()),
-                level: self.level.clone(), 
+                level: self.level.clone(),
+                len: self.len_consumed() - initial_len + 1,
                 ..Default::default()
             }
         };
@@ -120,43 +126,100 @@ impl Cursor<'_> {
                     self.multi_line_comment(start_position.clone())
                 },
                 _ => {
-                    single_char_token(TokenKind::Slash)
+                    generate_token(TokenKind::Slash)
                 },
             },
+            '>' => match self.first_ahead() {
+                '=' => {
+                    self.two_characters_token(c, self.position.clone())
+                },
+                _ => generate_token(TokenKind::Greater)
+            },
+            '<' => match self.first_ahead() {
+                '=' => {
+                    self.two_characters_token(c, self.position.clone())
+                },
+                _ => generate_token(TokenKind::Less)
+            },
             '`' => self.content_block(start_position.clone()),
-            '!' => single_char_token(TokenKind::Exclamation),
-            '?' => single_char_token(TokenKind::Question),
-            '>' => single_char_token(TokenKind::Greater),
-            '<' => single_char_token(TokenKind::Less),
-            '{' => single_char_token(TokenKind::OpenCurlyBrace),
-            '[' => single_char_token(TokenKind::OpenSquareBrace),
-            '(' => single_char_token(TokenKind::OpenParentheses),
-            '}' => single_char_token(TokenKind::CloseCurlyBrace),
-            ']' => single_char_token(TokenKind::CloseSquareBrace),
-            ')' => single_char_token(TokenKind::CloseParentheses),
-            ':' => single_char_token(TokenKind::Colon),
-            ',' => single_char_token(TokenKind::Coma),
-            '.' => single_char_token(TokenKind::Dot),
-            '+' => single_char_token(TokenKind::Plus),
-            '-' => single_char_token(TokenKind::Minus),
-            '=' => single_char_token(TokenKind::Equal),
-            ';' => single_char_token(TokenKind::SemiColon),
-            '\'' => single_char_token(TokenKind::SingleQuote),
-            '"' => single_char_token(TokenKind::DoubleQuote),
-            '&' => single_char_token(TokenKind::Ampersand),
-            '#' => single_char_token(TokenKind::HashPound),
-            '@' => single_char_token(TokenKind::At),
-            '\\' => single_char_token(TokenKind::ForwardSlash),
-            '|' => single_char_token(TokenKind::Pipe),
-            '_' => single_char_token(TokenKind::Underscore),
-            '%' => single_char_token(TokenKind::Percent),
-            '$' => single_char_token(TokenKind::Dollar),
-            '^' => single_char_token(TokenKind::Power),
-            '~' => single_char_token(TokenKind::Tilda),
+            '!' => generate_token(TokenKind::Exclamation),
+            '?' => generate_token(TokenKind::Question),
+            '{' => generate_token(TokenKind::OpenCurlyBrace),
+            '[' => generate_token(TokenKind::OpenSquareBrace),
+            '(' => generate_token(TokenKind::OpenParentheses),
+            '}' => generate_token(TokenKind::CloseCurlyBrace),
+            ']' => generate_token(TokenKind::CloseSquareBrace),
+            ')' => generate_token(TokenKind::CloseParentheses),
+            ':' => generate_token(TokenKind::Colon),
+            ',' => generate_token(TokenKind::Coma),
+            '.' => generate_token(TokenKind::Dot),
+            '+' => generate_token(TokenKind::Plus),
+            '-' => generate_token(TokenKind::Minus),
+            '=' => generate_token(TokenKind::Equals),
+            ';' => generate_token(TokenKind::SemiColon),
+            '&' => generate_token(TokenKind::Ampersand),
+            '#' => generate_token(TokenKind::HashPound),
+            '@' => generate_token(TokenKind::At),
+            '\\' => generate_token(TokenKind::ForwardSlash),
+            '|' => generate_token(TokenKind::Pipe),
+            '_' => generate_token(TokenKind::Underscore),
+            '%' => generate_token(TokenKind::Percent),
+            '$' => generate_token(TokenKind::Dollar),
+            '^' => generate_token(TokenKind::Power),
+            '~' => generate_token(TokenKind::Tilda),
             _ => return None
         };
 
         Some(tok)
+    }
+
+    fn two_characters_token(&mut self, first_character: char, start_position: Position) -> Token {
+        match first_character {
+            '>' => {
+                match self.bump().unwrap() {
+                    '=' => Token{kind: TokenKind::GreaterOrEquals, len: 2, position: (start_position, self.position.clone()), ..Default::default()},
+                    _ => panic!(LexerError::UnexpectedCharacter)
+                }
+            },
+            '<' => {
+                match self.bump().unwrap() {
+                    '=' => Token{kind: TokenKind::LessOrEequals, len: 2, position: (start_position, self.position.clone()), ..Default::default()},
+                    _ => panic!(LexerError::UnexpectedCharacter)
+                }
+            },
+            _ => panic!(LexerError::UnexpectedCharacter)
+        }
+    }
+
+    fn string_literal(&mut self, opening_quote: char, start_position: Position) -> Token {
+        let mut string_literal = Token {
+            kind: TokenKind::StringLiteral,
+            ..Default::default()
+        };
+
+        let initial_len = self.len_consumed() - 1;
+
+        loop {
+            if self.position.0 > start_position.0 {
+                panic!(LexerError::UnexpectedEndOfLine)   
+            }
+
+            match self.bump() {
+                Some(c) => {
+                    match c {
+                        ch if ch == opening_quote => break,
+                        ch => string_literal.content.push(ch)
+                    }
+                }
+                None => panic!(LexerError::UnexpectedEndOfInput)
+            }
+        }
+
+        string_literal.level = self.level.clone();
+        string_literal.position = (start_position, self.position.clone());
+        string_literal.len = self.len_consumed() - initial_len;
+
+        string_literal
     }
 
     fn number(&mut self, c: char, start_position: Position) -> Token {
@@ -176,7 +239,7 @@ impl Cursor<'_> {
                 break;
             }
             else {
-                match self.token(next_character, start_position) {
+                match self.static_token(next_character, start_position) {
                     Some(t) => {
                         match t.kind {
                             TokenKind::Dot | TokenKind::Coma => {
@@ -195,11 +258,13 @@ impl Cursor<'_> {
                         }
                     },
                     None => {
-                        if next_character.is_numeric() {
-                            number.content.push(self.bump().unwrap())
-                        }
-                        else {
-                            panic!(LexerError::UnexpectedCharacter(next_character))
+                        match next_character {
+                            c if c.is_numeric() => number.content.push(self.bump().unwrap()),
+                            c if is_whitespace(c) => {
+                                self.bump();
+                                break
+                            },
+                            _ => panic!(LexerError::UnexpectedCharacter(next_character))
                         }
                     }
                 }
@@ -246,7 +311,7 @@ impl Cursor<'_> {
                 break;
             }
             else {
-                match self.token(next_character, start_position) {
+                match self.static_token(next_character, start_position) {
                     Some(_) => break,
                     None => identifier.content.push(self.bump().unwrap())
                 }
@@ -271,6 +336,10 @@ impl Cursor<'_> {
         let start_consumed = self.len_consumed() - 1; // add 1 for first token
         let mut block_closed = false;
         while let Some(ch) = self.bump() {
+            if self.level < initial_level {
+                panic!(LexerError::UnexepectedIndentLevel);
+            }
+            
             match ch {
                 c if self.level == initial_level && c == '`' => {
                     block_closed = true;
@@ -519,7 +588,7 @@ mod tests {
         assert_eq!(stream.next().unwrap(), Token{
             kind: TokenKind::ContentBlock(vec![
                     Token{level: 0, kind: TokenKind::Identifier, content: String::from("ln"), position: (Position(1,1), Position(1,3)), len:2},
-                    Token{level: 0 ,kind: TokenKind::Equal, content: String::new(), position: (Position(1,3), Position(1,4)), len:1},
+                    Token{level: 0 ,kind: TokenKind::Equals, content: String::new(), position: (Position(1,3), Position(1,4)), len:1},
                     Token{level: 0, kind: TokenKind::Identifier, content: String::from("en"), position: (Position(1,4), Position(1,6)), len:2},
                 ]),
             content: String::from("abc"), 
@@ -578,6 +647,30 @@ mod tests {
             position: (Position(2, 1), Position(2, 4)),
             len: 3,
             level: 1,
+        })
+    }
+
+    #[test]
+    fn it_should_parse_two_character_tokens() {
+        let mut stream = tokenize("123 >= abc");
+        stream.next();
+        assert_eq!(stream.next().unwrap(), Token{
+            kind: TokenKind::GreaterOrEquals,
+            len: 2,
+            position: (Position(1, 5), Position(1, 6)),
+            ..Default::default()
+        })
+    }
+
+    #[test]
+    fn it_should_parse_string_literals() {
+        let mut stream = tokenize("\"some\"");
+        assert_eq!(stream.next().unwrap(), Token{
+            kind: TokenKind::StringLiteral,
+            content: String::from("some"),
+            len: 6,
+            position: (Position(1, 0), Position(1, 6)),
+            ..Default::default()
         })
     }
 }

@@ -148,7 +148,7 @@ impl <'a> Cursor<'a> {
 
 #[cfg(test)]
 mod tests {
-    use super::{Cursor, EOF_CHAR, Position};
+    use super::{Cursor, Position};
     #[test]
     fn it_should_create() {
         Cursor::new("abc", Position(1, 0), 0);

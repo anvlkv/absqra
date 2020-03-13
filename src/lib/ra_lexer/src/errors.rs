@@ -2,5 +2,6 @@
 pub enum LexerError {
     UnexepectedIndentLevel,
     UnexpectedCharacter(char),
-    UnexpectedEndOfInput
+    UnexpectedEndOfInput,
+    UnexpectedEndOfLine
 }
