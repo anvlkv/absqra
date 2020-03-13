@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "/Users/anvlkv/Projects/absQra"
+		}
+	],
+	"settings": {
+		"markdownlint.config": {
+			"MD033": {"allowed_elements": ["table", "td", "tr", "i"]}
+		}
+	}
+}
