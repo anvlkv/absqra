@@ -6,7 +6,8 @@
 	],
 	"settings": {
 		"markdownlint.config": {
-			"MD033": {"allowed_elements": ["table", "td", "tr", "i"]}
+			"MD033": {"allowed_elements": ["table", "td", "tr", "i"]},
+			"MD024": false
 		}
 	}
 }
