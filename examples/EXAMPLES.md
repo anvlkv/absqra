@@ -72,6 +72,7 @@ It should register noise pollution data sets as following:
 - timestamp
 - level of noise
 - information about device used for collection
+- number of people passed by in 30 seconds
 
 It should show cumulative results on a map.
 
@@ -81,7 +82,11 @@ It should inform the user about data being collected.
 
 It should show instruction on how to collect noise pollution data (e.g. don't close your mic).
 
-It should collect all data needed with one click of a button.
+It should collect noise pollution level, location, timestamp, device information data with one click of a button.
+
+It should show instruction on how to count people passed by.
+
+It should show a button that user can click several times during 30s period. They'll do one click per person they see around them.
 
 It should transition to cumulative results.
 
