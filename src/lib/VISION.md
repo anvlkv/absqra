@@ -31,7 +31,8 @@
 1. structure is everything
 2. program either accepts or moderates input
 3. output requires input
-4. conten is anything
+4. output is content
+5. content is anything
 
 ### __ra__.functional units
 
