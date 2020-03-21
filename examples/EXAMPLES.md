@@ -7,13 +7,13 @@
   - [A data entry app](#a-data-entry-app)
     - [functional description](#functional-description-1)
     - [UI requirements](#ui-requirements-1)
-  - [An anthropological study](#an-anthropological-study)
+  - [An ethnographic  study](#an-ethnographic-study)
     - [functional description](#functional-description-2)
     - [UI requirements](#ui-requirements-2)
 
 ## An information sharing website
 
-Imagine a simple website meant to provide some information on a given topic.
+Imagine a simple website meant for information sharing on a given topic.
 
 Say it'd be about food recipes.
 
@@ -90,7 +90,7 @@ It should show a button that user can click several times during 30s period. The
 
 It should transition to cumulative results.
 
-## An anthropological study
+## An ethnographic  study
 
 Imagine an app where a volunteer surveyor could register themselves and collect data for social network study.
 
