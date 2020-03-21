@@ -50,7 +50,7 @@ It should be multilingual.
 
 It should be convenient to use on both small and large screens.
 
-It should have navigation allowing to reach for the 3 different categorizations, publication and your user account overview.
+It should have navigation allowing to reach for the 3 different categorizations, publication and user's account overview.
 
 It should have a simple search.
 
