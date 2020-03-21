@@ -1,0 +1,40 @@
+{N:1}
+navigation,
+    >
+        !options:..@resources.navigationItems
+        !select:single
+    search
+        > :placeholder=@resources.searchPlaceholder
+            !text
+    !if:user
+        >   
+            !options:..@resources.userItems
+            !select:single
+        !else
+            @resources.userItems.addRecipe
+                >
+                    !select:single
+!switch:navigation
+    !default
+        // show landing page
+    !case:navigationItems.meals
+        mealTypeFilter
+            >
+                !options:..mealsTypes
+                !select:single
+    !case:navigationItems.countries
+        countryFilter
+            >
+                !options:..countries
+                !select:single
+    !case:navigationItems.restrictions
+        restrictionFilter
+            >
+                !options:..foodRestrictions
+                !select:single
+    !case:search
+        @recipe
+    !case:userItems.addRecipe
+        recipe
+    !case:userItems.myAccount
+        @basic.user-account
