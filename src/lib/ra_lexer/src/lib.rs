@@ -60,8 +60,8 @@ impl Default for Token {
             len: 1,
             content: String::new(),
             position: (Position(0, 0), Position(0, 1)),
-            kind: TokenKind::Undetermined,
-            level: 0
+            level: 0,
+            kind: TokenKind::Undetermined
         }
     }
 }
@@ -209,7 +209,6 @@ impl Cursor<'_> {
 
     fn number(&mut self, c: char, start_position: Position) -> Token {
         let mut number = Token {
-            kind: TokenKind::Undetermined,
             content: c.to_string(),
             ..Default::default()
         };
