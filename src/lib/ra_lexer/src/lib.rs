@@ -34,7 +34,6 @@ pub enum TokenKind {
     HashPound,
     Asterisk,
     Percent,
-    Underscore,
     Dollar,
     Power,
     Tilde,
@@ -90,21 +89,6 @@ impl Cursor<'_> {
             start_position = Position(self.position.0, self.position.1 - 1); // adjust position for after line change
         }
 
-        match self.static_token(first_char, start_position) {
-            Some(t) => t,
-            None => {
-                match first_char {
-                    c if c.is_alphabetic() => self.identifier(c, start_position),
-                    c if c.is_numeric() => self.number(c, start_position),
-                    c if c == '\'' => self.string_literal(c, start_position),
-                    c if c == '"' => self.string_literal(c, start_position),
-                    _ => panic!(LexerError::UnexpectedCharacter)
-                }
-            }
-        }
-    }
-
-    fn static_token(&mut self, c: char, start_position: Position) -> Option<Token> {
         let initial_len = self.len_consumed();
 
         let generate_token = |kind: TokenKind| -> Token  {
@@ -117,7 +101,7 @@ impl Cursor<'_> {
             }
         };
 
-        let tok = match c {
+        match first_char {
             '/' => match self.first_ahead() {
                 '/' => {
                     self.single_line_comment(start_position.clone())
@@ -131,13 +115,13 @@ impl Cursor<'_> {
             },
             '>' => match self.first_ahead() {
                 '=' => {
-                    self.two_characters_token(c, self.position.clone())
+                    self.two_characters_token(first_char, self.position.clone())
                 },
                 _ => generate_token(TokenKind::Greater)
             },
             '<' => match self.first_ahead() {
                 '=' => {
-                    self.two_characters_token(c, self.position.clone())
+                    self.two_characters_token(first_char, self.position.clone())
                 },
                 _ => generate_token(TokenKind::Less)
             },
@@ -162,15 +146,16 @@ impl Cursor<'_> {
             '@' => generate_token(TokenKind::At),
             '\\' => generate_token(TokenKind::ForwardSlash),
             '|' => generate_token(TokenKind::Pipe),
-            '_' => generate_token(TokenKind::Underscore),
             '%' => generate_token(TokenKind::Percent),
             '$' => generate_token(TokenKind::Dollar),
             '^' => generate_token(TokenKind::Power),
             '~' => generate_token(TokenKind::Tilde),
-            _ => return None
-        };
-
-        Some(tok)
+            c if c.is_alphabetic() || c == '_' => self.identifier(c, start_position),
+            c if c.is_numeric() => self.number(c, start_position),
+            c if c == '\'' => self.string_literal(c, start_position),
+            c if c == '"' => self.string_literal(c, start_position),
+            _ => panic!(LexerError::UnexpectedCharacter)
+        }
     }
 
     fn two_characters_token(&mut self, first_character: char, start_position: Position) -> Token {
@@ -229,8 +214,8 @@ impl Cursor<'_> {
             ..Default::default()
         };
 
-        let mut first_separator: TokenKind = TokenKind::Undetermined;
-        let mut second_separator: TokenKind = TokenKind::Undetermined;
+        let mut first_separator: char = ' ';
+        let mut second_separator: char = ' ';
         let start_consumed = self.len_consumed() - 1; // add 1 for first token
 
         loop {
@@ -239,53 +224,44 @@ impl Cursor<'_> {
                 break;
             }
             else {
-                match self.static_token(next_character, start_position) {
-                    Some(t) => {
-                        match t.kind {
-                            TokenKind::Dot | TokenKind::Coma => {
-                                if first_separator == TokenKind::Undetermined{
-                                    first_separator = t.kind;
-                                }
-                                else if first_separator != t.kind && second_separator == TokenKind::Undetermined {
-                                    second_separator = t.kind;
-                                }
-                                else if second_separator == t.kind && first_separator != TokenKind::Undetermined {
-                                    panic!(LexerError::UnexpectedCharacter(next_character))
-                                }
-                                number.content.push(self.bump().unwrap())
-                            }
-                            _ => break
+                match next_character {
+                    '.'|',' => {
+                        if first_separator == ' ' {
+                            first_separator = next_character;
                         }
-                    },
-                    None => {
-                        match next_character {
-                            c if c.is_numeric() => number.content.push(self.bump().unwrap()),
-                            c if is_whitespace(c) => {
-                                self.bump();
-                                break
-                            },
-                            _ => panic!(LexerError::UnexpectedCharacter(next_character))
+                        else if first_separator != next_character && second_separator == ' ' {
+                            second_separator = next_character;
                         }
+                        else if second_separator == next_character && first_separator != ' ' {
+                            panic!(LexerError::UnexpectedCharacter(next_character))
+                        }
+                        number.content.push(self.bump().unwrap())
                     }
+                    c if c.is_numeric() => number.content.push(self.bump().unwrap()),
+                    c if is_whitespace(c) => {
+                        self.bump();
+                        break
+                    },
+                    _ => panic!(LexerError::UnexpectedCharacter(next_character))
                 }
             }
         }
 
         number.kind = TokenKind::Number(
             match second_separator {
-                TokenKind::Coma => ',',
-                TokenKind::Dot => '.',
+                ',' => ',',
+                '.' => '.',
                 _ => {
                     match first_separator {
-                        TokenKind::Coma => '.',
-                        TokenKind::Dot => ',',
+                        ',' => '.',
+                        '.' => ',',
                         _ => ','
                     }
                 }
             },
             match first_separator {
-                TokenKind::Coma => ',',
-                TokenKind::Dot => '.',
+                ',' => ',',
+                '.' => '.',
                 _ => '.'
             }
         );
@@ -307,14 +283,9 @@ impl Cursor<'_> {
 
         loop {
             let next_character = self.first_ahead();
-            if is_end_of_line(next_character) || next_character == EOF_CHAR {
-                break;
-            }
-            else {
-                match self.static_token(next_character, start_position) {
-                    Some(_) => break,
-                    None => identifier.content.push(self.bump().unwrap())
-                }
+            match next_character {
+                c if c.is_alphabetic() || c.is_numeric() || c == '_' => identifier.content.push(self.bump().unwrap()),
+                _ => break
             }
         }
 
@@ -469,12 +440,12 @@ mod tests {
 
     #[test]
     fn it_should_parse_multi_line_comments() {
-        let mut stream = tokenize("/*abc\nbca*/");
+        let mut stream = tokenize("/*abc\nSOME*/");
         assert_eq!(stream.next().unwrap(), Token{
             kind: TokenKind::Comment,
-            content: String::from("abc\nbca"), 
-            position: (Position(1, 0), Position(2, 5)),
-            len: 11,
+            content: String::from("abc\nSOME"), 
+            position: (Position(1, 0), Position(2, 6)),
+            len: 12,
             level: 0
         });
     }
