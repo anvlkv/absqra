@@ -198,25 +198,25 @@ mod tests {
     }
 
     #[test]
-    fn it_should_not_panic_when_encoutering_funny_characters() {
+    fn it_should_not_panic_when_encountering_funny_characters() {
         let mut cur = Cursor::new("🚬", Position(1, 0), 0);
         assert_eq!(cur.bump().unwrap(), '🚬');
     }
 
     #[test]
     fn it_should_track_position() {
-        let mut cur = Cursor::new("abc\nbca", Position(1, 0), 0);
+        let mut cur = Cursor::new("abc\nSOME", Position(1, 0), 0);
         assert_eq!(cur.bump().unwrap(), 'a');
         assert_eq!(cur.position, Position(1, 1));
         assert_eq!(cur.bump().unwrap(), 'b');
         assert_eq!(cur.position, Position(1, 2));
         assert_eq!(cur.bump().unwrap(), 'c');
         assert_eq!(cur.position, Position(1, 3));
-        assert_eq!(cur.bump().unwrap(), 'b');
+        assert_eq!(cur.bump().unwrap(), 'S');
         assert_eq!(cur.position, Position(2, 1));
-        assert_eq!(cur.bump().unwrap(), 'c');
+        assert_eq!(cur.bump().unwrap(), 'O');
         assert_eq!(cur.position, Position(2, 2));
-        assert_eq!(cur.bump().unwrap(), 'a');
+        assert_eq!(cur.bump().unwrap(), 'M');
         assert_eq!(cur.position, Position(2, 3));
     }
 
