@@ -14,7 +14,7 @@ pub enum TokenKind {
     Greater,
     GreaterOrEquals,
     Less,
-    LessOrEequals,
+    LessOrEquals,
     Equals,
     Plus,
     Minus,
@@ -37,7 +37,7 @@ pub enum TokenKind {
     Underscore,
     Dollar,
     Power,
-    Tilda,
+    Tilde,
     Question,
     Identifier,
     StringLiteral,
@@ -166,7 +166,7 @@ impl Cursor<'_> {
             '%' => generate_token(TokenKind::Percent),
             '$' => generate_token(TokenKind::Dollar),
             '^' => generate_token(TokenKind::Power),
-            '~' => generate_token(TokenKind::Tilda),
+            '~' => generate_token(TokenKind::Tilde),
             _ => return None
         };
 
@@ -183,7 +183,7 @@ impl Cursor<'_> {
             },
             '<' => {
                 match self.bump().unwrap() {
-                    '=' => Token{kind: TokenKind::LessOrEequals, len: 2, position: (start_position, self.position.clone()), ..Default::default()},
+                    '=' => Token{kind: TokenKind::LessOrEquals, len: 2, position: (start_position, self.position.clone()), ..Default::default()},
                     _ => panic!(LexerError::UnexpectedCharacter)
                 }
             },
@@ -337,7 +337,7 @@ impl Cursor<'_> {
         let mut block_closed = false;
         while let Some(ch) = self.bump() {
             if self.level < initial_level {
-                panic!(LexerError::UnexepectedIndentLevel);
+                panic!(LexerError::UnexpectedIndentLevel);
             }
             
             match ch {
@@ -528,7 +528,7 @@ mod tests {
     }
 
     #[test]
-    fn it_should_parse_numbers_with_decimal_and_thouthands_separator() {
+    fn it_should_parse_numbers_with_decimal_and_thousands_separator() {
         let mut stream = tokenize("123.321,456");
         assert_eq!(stream.next().unwrap(), Token{
             kind: TokenKind::Number(',', '.'),
@@ -540,7 +540,7 @@ mod tests {
     }
 
     #[test]
-    fn it_should_parse_numbers_with_decimal_and_multiple_thouthands_separator() {
+    fn it_should_parse_numbers_with_decimal_and_multiple_thousands_separator() {
         let mut stream = tokenize("123.321.123,456");
         assert_eq!(stream.next().unwrap(), Token{
             kind: TokenKind::Number(',', '.'),
@@ -552,7 +552,7 @@ mod tests {
     }
 
     #[test]
-    fn it_should_parse_numbers_with_another_decimal_and_multiple_thouthands_separator() {
+    fn it_should_parse_numbers_with_another_decimal_and_multiple_thousands_separator() {
         let mut stream = tokenize("123,321,123.456");
         assert_eq!(stream.next().unwrap(), Token{
             kind: TokenKind::Number('.', ','),
@@ -565,7 +565,7 @@ mod tests {
 
     #[test]
     #[should_panic]
-    fn it_should_paninc_when_encountering_multiple_decimal_separators() {
+    fn it_should_panic_when_encountering_multiple_decimal_separators() {
         let mut stream = tokenize("123.321.123,456,654");
         stream.next();
     }
@@ -600,7 +600,7 @@ mod tests {
 
     #[test]
     #[should_panic]
-    fn it_should_paninc_when_content_block_is_not_closed() {
+    fn it_should_panic_when_content_block_is_not_closed() {
         let mut stream = tokenize("`ln=en\n\tabc`");
         stream.next();
     }
