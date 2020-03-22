@@ -146,8 +146,9 @@ Referring __sequence__ may use a reference in a modified __context__.
 #### experimentation
 
 1. The __references__ to sequences are meant to mix, match and contribute.
-2. The __contents__ are pieces of any code that can be run
-3. The __contexts__ allowing different modes of entry and collaboration
+2. The __contents__ are pieces of any code that can be run.
+3. The __contexts__ are allowing different modes of entry and collaboration.
+4. When __sequence__ changes storage creates new __epoch__. Data collection can go on, previous data is still available
 
 ## __abs__ - _abstract_ - the runtime
 
