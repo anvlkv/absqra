@@ -114,7 +114,7 @@ It should collect following data:
 - Hobbies
 - Values
 
-It should ask the user to feel in data once for themselves.
+It should ask the user to fill in data once for themselves.
 
 It should collect additional data about the volunteer:
 
