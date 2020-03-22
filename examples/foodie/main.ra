@@ -1,0 +1,113 @@
+{N:{
+    !sort: recipe: recipe.rating / recipe.votesCount : desc
+}}
+
+:searchInput
+    > :placeholder=@resources.searchPlaceholder
+        !text
+
+{1:N}
+navigation,
+    >
+        !options:@resources.navigationItems
+        !select:single
+    search >
+        !searchInput
+        
+    !if:user
+        >   
+            !options:@resources.userItems
+            !select:single
+        !else
+            @resources.userItems.addRecipe
+                >
+                    !select:single
+
+!switch:navigation
+    !default
+        // show landing page
+    !case:navigationItems.meals
+            mealTypeFilter >
+                !options:mealsTypes
+                !select:single
+    !case:navigationItems.countries
+            countryFilter >
+                !options:countries
+                !select:single
+    !case:navigationItems.restrictions
+            restrictionFilter >
+                !options:foodRestrictions
+                !select:single
+    !case:search|mealTypeFilter|countryFilter|restrictionFilter
+        selectedRecipe
+            search >,
+                !searchInput
+            mealTypeFilter >,
+                !options:mealsTypes
+                !select:multiple
+            countryFilter >,
+                !options:countries
+                !select:multiple
+            restrictionFilter >,
+                !options:foodRestrictions
+                !select:multiple
+            > :item = `
+                    ### {{recipe.name}}
+
+                    ![{{recipe.name}}]({{recipe.pictures.1}})
+
+                    - {{recipe.kindOfMeal}}
+                    - {{recipe.countryOfOrigin}}
+                    - {{recipe.restrictions}}
+                `
+                !options: {1:{
+                    !if: search
+                        !includes: recipe.name : search
+                    !if: mealTypeFilter
+                        !includes: mealTypeFilter : recipe.kindOfMeal
+                    !if: countryFilter
+                        !includes: countryFilter : recipe.countryOfOrigin
+                    !if: restrictionFilter
+                        !includes: recipe.restrictions : restrictionFilter
+                }} recipe
+                !select:single
+    !case:userItems.addRecipe
+        @recipe
+    !case:userItems.myAccount
+        @basic.user-account
+    !case:selectedRecipe
+        `
+            ## {{selectedRecipe.name}}
+        `,
+        `
+            ![{{selectedRecipe.name}}]({{selectedPicture}})
+        `,
+        selectedPicture >,
+            !select:single
+            !options:selectedRecipe.pictures
+        `
+            ### {{selectedRecipe.kindOfMeal}} | {{selectedRecipe.countryOfOrigin}}
+
+            {{
+                restriction ..selectedRecipe.restrictions
+                    `
+                        - {{restriction}}
+                    `
+            }}
+        `,
+        (step, index) ..selectedRecipe.preparationSteps,
+            `
+                #### {{index + 1}}
+
+                ![{{step.description}}]({{step.picture}})
+
+                {{step.description}}
+            `
+        !if: user
+            {N:1}
+            recipe
+                rating >
+                    !select:single
+                    !options:1..6
+                votesCount
+                    += 1

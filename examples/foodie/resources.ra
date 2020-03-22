@@ -1,4 +1,4 @@
-navigationItems
+:navigationItems
     meals
         `ln = en
             Meals
@@ -21,7 +21,7 @@ navigationItems
             Предпочтения
         `
     
-userItems
+:userItems
     addRecipe
         `kind = image
             http://path.to.image
@@ -40,7 +40,7 @@ userItems
             Мой аккаунт
         `
 
-searchPlaceholder
+:searchPlaceholder
     `ln =en
         Find a recipe
     `
@@ -48,7 +48,7 @@ searchPlaceholder
         Найти рецепт
     `
     
-pictureLabel
+:pictureLabel
     `ln = en
         Picture
     `
