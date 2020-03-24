@@ -1,5 +1,6 @@
 use std::str::Chars;
 use std::fmt;
+use super::errors::LexerError;
 pub(crate) const EOF_CHAR: char = '\0';
 pub(crate) const EOL_CHAR: char = '\n';
 
@@ -7,7 +8,8 @@ pub(crate) struct Cursor<'a> {
     initial_len: usize,
     chars: Chars<'a>,
     pub position: Position,
-    pub level: usize
+    pub level: usize,
+    pub indent_width: usize
 }
 
 #[derive(Copy, Clone, PartialEq)]
@@ -18,7 +20,6 @@ impl fmt::Debug for Position {
         write!(f, "[{}:{}]", self.0, self.1)
     }
 }
-
 
 
 /// True if `c` is considered a whitespace
@@ -57,12 +58,13 @@ pub fn is_end_of_line(c: char) -> bool {
 }
 
 impl <'a> Cursor<'a> {
-    pub(crate)fn new(input: &'a str, position: Position, level: usize) -> Cursor<'a> {
+    pub(crate)fn new(input: &'a str, position: Position, level: usize, indent_width: usize) -> Cursor<'a> {
         Cursor {
             initial_len: input.len(),
             chars: input.chars(),
             position,
-            level
+            level,
+            indent_width
         }
     }
 
@@ -102,22 +104,19 @@ impl <'a> Cursor<'a> {
         let character = self.chars.next();
         match character {
             Some(ch) => {
-                match ch {
-                    c if is_end_of_line(c) => {
-                        self.position.0 += 1;
-                        self.consume_indent();
-                        self.position.1 = self.level;
-                        self.bump()
-                    }
-                    c => {
-                        self.position.1 += 1;
-                        Some(c)
-                    }
+                if is_end_of_line(ch) {
+                    self.position.0 += 1;
+                    self.consume_indent();
+                    self.position.1 = self.level * self.indent_width;
+                    self.bump()
+                }
+                else {
+                    self.position.1 += 1;
+                    Some(ch)
                 }
             },
             None => None
         }
-        
     }
 
     /// Returns amount of already consumed symbols.
@@ -127,17 +126,29 @@ impl <'a> Cursor<'a> {
 
     /// Consumes indent level and returns indentation level
     fn consume_indent(&mut self) {
-        self.level = self.eat_while(|c| is_whitespace(c));
+        if self.indent_width == 0 {
+            self.level = 1;
+            self.indent_width = self.eat_while(|c, _| is_whitespace(c));
+        }
+        else {
+            let inner_width = self.eat_while(|c, _| is_whitespace(c));
+            if inner_width % self.indent_width == 0 {
+                self.level =  inner_width / self.indent_width;
+            } 
+            else {
+                panic!(LexerError::UnexpectedIndentLevel);
+            }
+        }
     }
 
     /// Eats symbols while predicate returns true or until the end of file is reached.
     /// Returns amount of eaten symbols.
     fn eat_while<F>(&mut self, mut predicate: F) -> usize
     where
-        F: FnMut(char) -> bool,
+        F: FnMut(char, &usize) -> bool,
     {
         let mut eaten: usize = 0;
-        while predicate(self.first_ahead()) && !self.is_eof() {
+        while predicate(self.first_ahead(), &eaten) && !self.is_eof() {
             eaten += 1;
             self.bump();
         }
@@ -151,37 +162,37 @@ mod tests {
     use super::{Cursor, Position};
     #[test]
     fn it_should_create() {
-        Cursor::new("abc", Position(1, 0), 0);
+        Cursor::new("abc", Position(1, 0), 0, 0);
     }
 
     #[test]
     fn it_should_give_first_char() {
-        let cur = Cursor::new("abc", Position(1, 0), 0);
+        let cur = Cursor::new("abc", Position(1, 0), 0, 0);
         assert_eq!(cur.first_ahead(), 'a');
     }
 
     #[test]
     fn it_should_give_second_char() {
-        let cur = Cursor::new("abc", Position(1, 0), 0);
+        let cur = Cursor::new("abc", Position(1, 0), 0, 0);
         assert_eq!(cur.second_ahead(), 'b');
     }
 
     #[test]
     fn it_should_return_next_char() {
-        let mut cur = Cursor::new("a", Position(1, 0), 0);
+        let mut cur = Cursor::new("a", Position(1, 0), 0, 0);
         assert_eq!(cur.bump().unwrap(), 'a');
     }
 
     #[test]
     fn it_should_return_none_at_end_of_input() {
-        let mut cur = Cursor::new("a", Position(1, 0), 0);
+        let mut cur = Cursor::new("a", Position(1, 0), 0, 0);
         cur.bump();
         assert_eq!(cur.bump(), None);
     }
 
     #[test]
     fn it_should_confirm_eof() {
-        let mut cur = Cursor::new("a", Position(1, 0), 0);
+        let mut cur = Cursor::new("a", Position(1, 0), 0, 0);
         cur.bump();
         cur.bump();
         cur.bump();
@@ -190,7 +201,7 @@ mod tests {
 
     #[test]
     fn it_should_return_amount_of_consumed_symbols() {
-        let mut cur = Cursor::new("abc", Position(1, 0), 0);
+        let mut cur = Cursor::new("abc", Position(1, 0), 0, 0);
         cur.bump();
         cur.bump();
         cur.bump();
@@ -199,13 +210,13 @@ mod tests {
 
     #[test]
     fn it_should_not_panic_when_encountering_funny_characters() {
-        let mut cur = Cursor::new("🚬", Position(1, 0), 0);
+        let mut cur = Cursor::new("🚬", Position(1, 0), 0, 0);
         assert_eq!(cur.bump().unwrap(), '🚬');
     }
 
     #[test]
     fn it_should_track_position() {
-        let mut cur = Cursor::new("abc\nSOME", Position(1, 0), 0);
+        let mut cur = Cursor::new("abc\nSOME", Position(1, 0), 0, 0);
         assert_eq!(cur.bump().unwrap(), 'a');
         assert_eq!(cur.position, Position(1, 1));
         assert_eq!(cur.bump().unwrap(), 'b');
@@ -222,7 +233,7 @@ mod tests {
 
     #[test]
     fn it_should_track_indent_level() {
-        let mut cur = Cursor::new("a\n\tb\n\t\tc\nd", Position(1, 0), 0);
+        let mut cur = Cursor::new("a\n\tb\n\t\tc\nd", Position(1, 0), 0, 0);
         assert_eq!(cur.bump().unwrap(), 'a');
         assert_eq!(cur.level, 0);
         assert_eq!(cur.bump().unwrap(), 'b');
