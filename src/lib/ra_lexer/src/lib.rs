@@ -67,7 +67,7 @@ impl Default for Token {
 }
 
 pub fn tokenize(input: &str) -> impl Iterator<Item = Token> + '_ {
-    let mut cursor = Cursor::new(input, Position(1, 0), 0);
+    let mut cursor = Cursor::new(input, Position(1, 0), 0, 0);
 
     std::iter::from_fn(move || {
         if input.is_empty() {
@@ -154,6 +154,7 @@ impl Cursor<'_> {
             c if c.is_numeric() => self.number(c, start_position),
             c if c == '\'' => self.string_literal(c, start_position),
             c if c == '"' => self.string_literal(c, start_position),
+            c if is_whitespace(c) || is_end_of_line(c) => self.advance_token(),
             _ => panic!(LexerError::UnexpectedCharacter)
         }
     }
@@ -237,11 +238,7 @@ impl Cursor<'_> {
                         number.content.push(self.bump().unwrap())
                     }
                     c if c.is_numeric() => number.content.push(self.bump().unwrap()),
-                    c if is_whitespace(c) => {
-                        self.bump();
-                        break
-                    },
-                    _ => panic!(LexerError::UnexpectedCharacter(next_character))
+                    _ => break
                 }
             }
         }
@@ -332,7 +329,8 @@ impl Cursor<'_> {
             content_block.len = buffer.len();
         }
         else {
-            let mut buffer_cursor = Cursor::new(&buffer, Position(start_position.0, start_position.1 + 1), initial_level);
+            println!("{:?}", &buffer);
+            let mut buffer_cursor = Cursor::new(&buffer, Position(start_position.0, start_position.1 + 1), initial_level, self.indent_width);
             let mut content_block_initialization_tokens: Vec<Token> = Vec::new();
             while !buffer_cursor.is_eof() {
                 content_block_initialization_tokens.push(buffer_cursor.advance_token());
@@ -378,6 +376,7 @@ impl Cursor<'_> {
         self.bump();
         let mut comment = Token{
             kind: TokenKind::Comment,
+            level: self.level.clone(),
             ..Default::default()
         };
 
@@ -408,7 +407,6 @@ impl Cursor<'_> {
 
         comment.position = (start_position, self.position.clone());
         comment.len = self.len_consumed() - start_consumed + 2; // add 2 for "/*"
-        comment.level = self.level.clone();
 
         comment
     }
@@ -563,6 +561,18 @@ mod tests {
                 ]),
             content: String::from("abc"), 
             position: (Position(1, 0), Position(3, 1)),
+            len: 13,
+            level: 0
+        });
+    }
+
+    #[test]
+    fn it_should_keep_inner_indents_when_parsing_content() {
+        let mut stream = tokenize("`\n\tabc\n\t\tabc\n`");
+        assert_eq!(stream.next().unwrap(), Token{
+            kind: TokenKind::ContentBlock(vec![]),
+            content: String::from("abc\n\tabc"), 
+            position: (Position(1, 0), Position(4, 1)),
             len: 13,
             level: 0
         });
