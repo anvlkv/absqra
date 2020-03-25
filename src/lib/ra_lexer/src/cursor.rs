@@ -7,9 +7,10 @@ pub(crate) const EOL_CHAR: char = '\n';
 pub(crate) struct Cursor<'a> {
     initial_len: usize,
     chars: Chars<'a>,
+    is_reading_continuous_block_at: (bool, usize),
     pub position: Position,
     pub level: usize,
-    pub indent_width: usize
+    pub indent_width: usize,
 }
 
 #[derive(Copy, Clone, PartialEq)]
@@ -64,7 +65,8 @@ impl <'a> Cursor<'a> {
             chars: input.chars(),
             position,
             level,
-            indent_width
+            indent_width,
+            is_reading_continuous_block_at: (false, 0)
         }
     }
 
@@ -99,6 +101,16 @@ impl <'a> Cursor<'a> {
         self.chars.as_str().is_empty()
     }
 
+    pub(crate) fn start_reading_continuous_block(&mut self) {
+        if !self.is_reading_continuous_block_at.0 {
+            self.is_reading_continuous_block_at = (true, self.level);
+        }
+    }
+
+    pub(crate) fn end_reading_continuous_block(&mut self) {
+        self.is_reading_continuous_block_at = (false, 0)
+    }
+
     /// Moves to the next character.
     pub(crate) fn bump(&mut self) -> Option<char> {
         let character = self.chars.next();
@@ -106,9 +118,17 @@ impl <'a> Cursor<'a> {
             Some(ch) => {
                 if is_end_of_line(ch) {
                     self.position.0 += 1;
-                    self.consume_indent();
+                    self.consume_indent(match self.is_reading_continuous_block_at.0 {
+                        true => Some(self.is_reading_continuous_block_at.1),
+                        false => None
+                    });
                     self.position.1 = self.level * self.indent_width;
-                    self.bump()
+                    if self.is_reading_continuous_block_at.0 {
+                        Some(ch)
+                    }
+                    else {
+                        self.bump()
+                    }
                 }
                 else {
                     self.position.1 += 1;
@@ -125,13 +145,24 @@ impl <'a> Cursor<'a> {
     }
 
     /// Consumes indent level and returns indentation level
-    fn consume_indent(&mut self) {
+    fn consume_indent(&mut self, limit: Option<usize>) {
         if self.indent_width == 0 {
             self.level = 1;
-            self.indent_width = self.eat_while(|c, _| is_whitespace(c));
+            self.indent_width = self.eat_while(|c, eaten| is_whitespace(c) && match limit {
+                Some(l) => eaten <= &l,
+                None => true
+            });
         }
         else {
-            let inner_width = self.eat_while(|c, _| is_whitespace(c));
+            let indent_width = self.indent_width;
+            let inner_width = self.eat_while(|c, eaten| is_whitespace(c) && match limit {
+                Some(l) => {
+                    println!("{:?}", l);
+                    println!("{:?}", eaten);
+                    eaten < &(l * indent_width)
+                },
+                None => true
+            });
             if inner_width % self.indent_width == 0 {
                 self.level =  inner_width / self.indent_width;
             } 

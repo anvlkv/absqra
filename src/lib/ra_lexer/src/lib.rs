@@ -306,17 +306,23 @@ impl Cursor<'_> {
             if self.level < initial_level {
                 panic!(LexerError::UnexpectedIndentLevel);
             }
-            
-            match ch {
-                c if self.level == initial_level && c == '`' => {
-                    block_closed = true;
-                    break
-                },
-                c if self.level > initial_level => {
-                    content_block.content.push(c);
-                    content_block.len += 1;
-                },
-                c => buffer.push(c)
+
+            if self.level == initial_level && ch == '`' {
+                block_closed = true;
+                self.end_reading_continuous_block();
+                break;
+            }
+            else if self.level > initial_level {
+                self.start_reading_continuous_block();
+                // self.is_reading_continuous_block = true;
+                content_block.content.push(ch);
+                content_block.len += 1;
+            }
+            else {
+                match ch {
+                    c if is_end_of_line(c) => self.end_reading_continuous_block(),
+                    c => buffer.push(c)
+                }
             }
         }
 
@@ -329,6 +335,8 @@ impl Cursor<'_> {
             content_block.len = buffer.len();
         }
         else {
+            println!("{:?}", &buffer);
+            println!("{:?}", &content_block.content);
             let mut buffer_cursor = Cursor::new(&buffer, Position(start_position.0, start_position.1 + 1), initial_level, self.indent_width);
             let mut content_block_initialization_tokens: Vec<Token> = Vec::new();
             while !buffer_cursor.is_eof() {
@@ -380,14 +388,9 @@ impl Cursor<'_> {
         };
 
         let start_consumed = self.len_consumed();
-
-        let mut keep_lines = self.position.0;
-
+        self.start_reading_continuous_block();
         while let Some(ch) = self.bump() {
-            if keep_lines < self.position.0 {
-                keep_lines = self.position.0;
-                comment.content.push('\n');
-            }
+
             match ch {
                 '*' => match self.first_ahead() {
                     '/' => {
@@ -403,6 +406,7 @@ impl Cursor<'_> {
                 }
             }
         };
+        self.end_reading_continuous_block();
 
         comment.position = (start_position, self.position.clone());
         comment.len = self.len_consumed() - start_consumed + 2; // add 2 for "/*"
@@ -572,7 +576,7 @@ mod tests {
             kind: TokenKind::ContentBlock(vec![]),
             content: String::from("abc\n\tabc"), 
             position: (Position(1, 0), Position(4, 1)),
-            len: 13,
+            len: 14,
             level: 0
         });
     }
