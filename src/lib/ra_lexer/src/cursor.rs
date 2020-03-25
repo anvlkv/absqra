@@ -156,11 +156,7 @@ impl <'a> Cursor<'a> {
         else {
             let indent_width = self.indent_width;
             let inner_width = self.eat_while(|c, eaten| is_whitespace(c) && match limit {
-                Some(l) => {
-                    println!("{:?}", l);
-                    println!("{:?}", eaten);
-                    eaten < &(l * indent_width)
-                },
+                Some(l) => eaten < &(l * indent_width),
                 None => true
             });
             if inner_width % self.indent_width == 0 {

@@ -335,8 +335,6 @@ impl Cursor<'_> {
             content_block.len = buffer.len();
         }
         else {
-            println!("{:?}", &buffer);
-            println!("{:?}", &content_block.content);
             let mut buffer_cursor = Cursor::new(&buffer, Position(start_position.0, start_position.1 + 1), initial_level, self.indent_width);
             let mut content_block_initialization_tokens: Vec<Token> = Vec::new();
             while !buffer_cursor.is_eof() {
