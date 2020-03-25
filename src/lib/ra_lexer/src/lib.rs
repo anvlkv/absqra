@@ -67,93 +67,86 @@ impl Default for Token {
 }
 
 pub fn tokenize(input: &str) -> impl Iterator<Item = Token> + '_ {
-    let mut cursor = Cursor::new(input, Position(1, 0), 0, 0);
+    tokenize_cursor(Cursor::new(input, Position(1, 0), 0, 0))
+}
 
+fn tokenize_cursor(mut cursor: Cursor<'_>) -> impl Iterator<Item = Token> + '_ {
     std::iter::from_fn(move || {
-        if input.is_empty() {
+        if cursor.is_eof() {
             return None;
         }
-        debug_assert!(!input.is_empty());
-        let token = cursor.advance_token();
-        Some(token)
+        cursor.advance_token()
     })
 }
 
 
 impl Cursor<'_> {
-    fn advance_token(&mut self) -> Token {
+    fn advance_token(&mut self) -> Option<Token> {
         let mut start_position = self.position.clone();
-        let first_char = self.bump().unwrap();
-        
+        let first_char = match self.bump() {
+            Some(ch) => ch,
+            None => return None
+        };
+ 
         if self.position.0 > start_position.0 {
             start_position = Position(self.position.0, self.position.1 - 1); // adjust position for after line change
         }
 
         let initial_len = self.len_consumed();
 
-        let generate_token = |kind: TokenKind| -> Token  {
-            Token {
+        let generate_some_token = |kind: TokenKind| -> Option<Token>  {
+            Some(Token {
                 kind, 
                 position: (start_position, self.position.clone()),
                 level: self.level.clone(),
                 len: self.len_consumed() - initial_len + 1,
                 ..Default::default()
-            }
+            })
         };
 
         match first_char {
             '/' => match self.first_ahead() {
-                '/' => {
-                    self.single_line_comment(start_position.clone())
-                },
-                '*' => {
-                    self.multi_line_comment(start_position.clone())
-                },
-                _ => {
-                    generate_token(TokenKind::Slash)
-                },
+                '/' => Some(self.single_line_comment(start_position.clone())),
+                '*' => Some(self.multi_line_comment(start_position.clone())),
+                _ => generate_some_token(TokenKind::Slash),
             },
             '>' => match self.first_ahead() {
-                '=' => {
-                    self.two_characters_token(first_char, self.position.clone())
-                },
-                _ => generate_token(TokenKind::Greater)
+                '=' => Some(self.two_characters_token(first_char, self.position.clone())),
+                _ => generate_some_token(TokenKind::Greater)
             },
             '<' => match self.first_ahead() {
-                '=' => {
-                    self.two_characters_token(first_char, self.position.clone())
-                },
-                _ => generate_token(TokenKind::Less)
+                '=' => Some(self.two_characters_token(first_char, self.position.clone())),
+                _ => generate_some_token(TokenKind::Less)
             },
-            '`' => self.content_block(start_position.clone()),
-            '!' => generate_token(TokenKind::Exclamation),
-            '?' => generate_token(TokenKind::Question),
-            '{' => generate_token(TokenKind::OpenCurlyBrace),
-            '[' => generate_token(TokenKind::OpenSquareBrace),
-            '(' => generate_token(TokenKind::OpenParentheses),
-            '}' => generate_token(TokenKind::CloseCurlyBrace),
-            ']' => generate_token(TokenKind::CloseSquareBrace),
-            ')' => generate_token(TokenKind::CloseParentheses),
-            ':' => generate_token(TokenKind::Colon),
-            ',' => generate_token(TokenKind::Coma),
-            '.' => generate_token(TokenKind::Dot),
-            '+' => generate_token(TokenKind::Plus),
-            '-' => generate_token(TokenKind::Minus),
-            '=' => generate_token(TokenKind::Equals),
-            ';' => generate_token(TokenKind::SemiColon),
-            '&' => generate_token(TokenKind::Ampersand),
-            '#' => generate_token(TokenKind::HashPound),
-            '@' => generate_token(TokenKind::At),
-            '\\' => generate_token(TokenKind::ForwardSlash),
-            '|' => generate_token(TokenKind::Pipe),
-            '%' => generate_token(TokenKind::Percent),
-            '$' => generate_token(TokenKind::Dollar),
-            '^' => generate_token(TokenKind::Power),
-            '~' => generate_token(TokenKind::Tilde),
-            c if c.is_alphabetic() || c == '_' => self.identifier(c, start_position),
-            c if c.is_numeric() => self.number(c, start_position),
-            c if c == '\'' => self.string_literal(c, start_position),
-            c if c == '"' => self.string_literal(c, start_position),
+            '`' => Some(self.content_block(start_position.clone())),
+            '!' => generate_some_token(TokenKind::Exclamation),
+            '?' => generate_some_token(TokenKind::Question),
+            '{' => generate_some_token(TokenKind::OpenCurlyBrace),
+            '[' => generate_some_token(TokenKind::OpenSquareBrace),
+            '(' => generate_some_token(TokenKind::OpenParentheses),
+            '}' => generate_some_token(TokenKind::CloseCurlyBrace),
+            ']' => generate_some_token(TokenKind::CloseSquareBrace),
+            ')' => generate_some_token(TokenKind::CloseParentheses),
+            ':' => generate_some_token(TokenKind::Colon),
+            ',' => generate_some_token(TokenKind::Coma),
+            '.' => generate_some_token(TokenKind::Dot),
+            '+' => generate_some_token(TokenKind::Plus),
+            '-' => generate_some_token(TokenKind::Minus),
+            '=' => generate_some_token(TokenKind::Equals),
+            ';' => generate_some_token(TokenKind::SemiColon),
+            '&' => generate_some_token(TokenKind::Ampersand),
+            '#' => generate_some_token(TokenKind::HashPound),
+            '@' => generate_some_token(TokenKind::At),
+            '\\' => generate_some_token(TokenKind::ForwardSlash),
+            '|' => generate_some_token(TokenKind::Pipe),
+            '%' => generate_some_token(TokenKind::Percent),
+            '$' => generate_some_token(TokenKind::Dollar),
+            '^' => generate_some_token(TokenKind::Power),
+            '~' => generate_some_token(TokenKind::Tilde),
+            c if c.is_alphabetic() || c == '_' => Some(self.identifier(c, start_position)),
+            c if c.is_numeric() => Some(self.number(c, start_position)),
+            c if c == '\'' => Some(self.string_literal(c, start_position)),
+            c if c == '"' => Some(self.string_literal(c, start_position)),
             c if is_whitespace(c) || is_end_of_line(c) => self.advance_token(),
             _ => panic!(LexerError::UnexpectedCharacter)
         }
@@ -335,10 +328,10 @@ impl Cursor<'_> {
             content_block.len = buffer.len();
         }
         else {
-            let mut buffer_cursor = Cursor::new(&buffer, Position(start_position.0, start_position.1 + 1), initial_level, self.indent_width);
+            let mut buffer_tokens = tokenize_cursor(Cursor::new(&buffer, Position(start_position.0, start_position.1 + 1), initial_level, self.indent_width));
             let mut content_block_initialization_tokens: Vec<Token> = Vec::new();
-            while !buffer_cursor.is_eof() {
-                content_block_initialization_tokens.push(buffer_cursor.advance_token());
+            while let Some(t) = buffer_tokens.next() {
+                content_block_initialization_tokens.push(t);
             }
 
             content_block.kind = TokenKind::ContentBlock(content_block_initialization_tokens);
