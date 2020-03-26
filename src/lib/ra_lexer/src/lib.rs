@@ -3,8 +3,6 @@ use cursor::{Cursor, Position, is_end_of_line, is_whitespace, EOF_CHAR};
 mod errors;
 use errors::LexerError;
 
-
-
 #[derive(Debug, PartialEq, Clone)]
 pub enum TokenKind {
     SemiColon,
@@ -47,11 +45,11 @@ pub enum TokenKind {
 
 #[derive(Debug, PartialEq, Clone)]
 pub struct Token {
-    kind: TokenKind,
-    len: usize,
-    content: String,
-    position: (Position, Position),
-    level: usize
+    pub kind: TokenKind,
+    pub len: usize,
+    pub content: String,
+    pub position: (Position, Position),
+    pub level: usize
 }
 
 impl Default for Token {
@@ -297,17 +295,21 @@ impl Cursor<'_> {
         let mut block_closed = false;
         while let Some(ch) = self.bump() {
             if self.level < initial_level {
-                panic!(LexerError::UnexpectedIndentLevel);
+                if is_end_of_line(ch) {
+                    content_block.content.push(ch);
+                    content_block.len += 1;
+                }
+                else {
+                    panic!(LexerError::UnexpectedIndentLevel);
+                }
             }
-
-            if self.level == initial_level && ch == '`' {
+            else if self.level == initial_level && ch == '`' {
                 block_closed = true;
                 self.end_reading_continuous_block();
                 break;
             }
             else if self.level > initial_level {
                 self.start_reading_continuous_block();
-                // self.is_reading_continuous_block = true;
                 content_block.content.push(ch);
                 content_block.len += 1;
             }

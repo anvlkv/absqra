@@ -4,15 +4,6 @@ use super::errors::LexerError;
 pub(crate) const EOF_CHAR: char = '\0';
 pub(crate) const EOL_CHAR: char = '\n';
 
-pub(crate) struct Cursor<'a> {
-    initial_len: usize,
-    chars: Chars<'a>,
-    is_reading_continuous_block_at: (bool, usize),
-    pub position: Position,
-    pub level: usize,
-    pub indent_width: usize,
-}
-
 #[derive(Copy, Clone, PartialEq)]
 pub struct Position(pub usize, pub usize);
 
@@ -20,6 +11,15 @@ impl fmt::Debug for Position {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "[{}:{}]", self.0, self.1)
     }
+}
+
+pub(crate) struct Cursor<'a> {
+    initial_len: usize,
+    chars: Chars<'a>,
+    is_reading_continuous_block_at: (bool, usize),
+    pub position: Position,
+    pub level: usize,
+    pub indent_width: usize,
 }
 
 
