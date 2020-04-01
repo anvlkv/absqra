@@ -217,6 +217,9 @@ impl Cursor<'_> {
             else {
                 match next_character {
                     '.'|',' => {
+                        if !self.second_ahead().is_numeric() {
+                            break;
+                        }
                         if first_separator == ' ' {
                             first_separator = next_character;
                         }
