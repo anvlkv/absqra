@@ -1,6 +1,7 @@
-mod cursor;
+pub mod cursor;
+pub mod errors;
+
 use cursor::{Cursor, Position, is_end_of_line, is_whitespace, EOF_CHAR};
-mod errors;
 use errors::LexerError;
 
 #[derive(Debug, PartialEq, Clone)]

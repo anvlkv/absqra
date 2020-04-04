@@ -1,6 +1,7 @@
 use std::str::Chars;
 use std::fmt;
 use super::errors::LexerError;
+
 pub(crate) const EOF_CHAR: char = '\0';
 pub(crate) const EOL_CHAR: char = '\n';
 
