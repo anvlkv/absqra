@@ -74,17 +74,23 @@ fn tokenize_cursor(mut cursor: Cursor<'_>) -> impl Iterator<Item = Token> + '_ {
         if cursor.is_eof() {
             return None;
         }
-        cursor.advance_token()
+        match cursor.advance_token() {
+            Ok(t) => Some(t),
+            Err(e) => {
+                println!("{:?}", cursor.position);
+                panic!("{:?}", e);
+            }
+        }
     })
 }
 
 
 impl Cursor<'_> {
-    fn advance_token(&mut self) -> Option<Token> {
+    fn advance_token(&mut self) -> Result<Token, LexerError> {
         let mut start_position = self.position.clone();
         let first_char = match self.bump() {
             Some(ch) => ch,
-            None => return None
+            None => return Err(LexerError::UnexpectedEndOfInput)
         };
  
         if self.position.0 > start_position.0 {
@@ -93,8 +99,8 @@ impl Cursor<'_> {
 
         let initial_len = self.len_consumed();
 
-        let generate_some_token = |kind: TokenKind| -> Option<Token>  {
-            Some(Token {
+        let generate_some_token = |kind: TokenKind| -> Result<Token, LexerError>  {
+            Ok(Token {
                 kind, 
                 position: (start_position, self.position.clone()),
                 level: self.level.clone(),
@@ -105,19 +111,19 @@ impl Cursor<'_> {
 
         match first_char {
             '/' => match self.first_ahead() {
-                '/' => Some(self.single_line_comment(start_position.clone())),
-                '*' => Some(self.multi_line_comment(start_position.clone())),
+                '/' => self.single_line_comment(start_position.clone()),
+                '*' => self.multi_line_comment(start_position.clone()),
                 _ => generate_some_token(TokenKind::Slash),
             },
             '>' => match self.first_ahead() {
-                '=' => Some(self.two_characters_token(first_char, self.position.clone())),
+                '=' => self.two_characters_token(first_char, self.position.clone()),
                 _ => generate_some_token(TokenKind::Greater)
             },
             '<' => match self.first_ahead() {
-                '=' => Some(self.two_characters_token(first_char, self.position.clone())),
+                '=' => self.two_characters_token(first_char, self.position.clone()),
                 _ => generate_some_token(TokenKind::Less)
             },
-            '`' => Some(self.content_block(start_position.clone())),
+            '`' => self.content_block(start_position.clone()),
             '!' => generate_some_token(TokenKind::Exclamation),
             '?' => generate_some_token(TokenKind::Question),
             '{' => generate_some_token(TokenKind::OpenCurlyBrace),
@@ -142,34 +148,34 @@ impl Cursor<'_> {
             '$' => generate_some_token(TokenKind::Dollar),
             '^' => generate_some_token(TokenKind::Power),
             '~' => generate_some_token(TokenKind::Tilde),
-            c if c.is_alphabetic() || c == '_' => Some(self.identifier(c, start_position)),
-            c if c.is_numeric() => Some(self.number(c, start_position)),
-            c if c == '\'' => Some(self.string_literal(c, start_position)),
-            c if c == '"' => Some(self.string_literal(c, start_position)),
+            c if c.is_alphabetic() || c == '_' => self.identifier(c, start_position),
+            c if c.is_numeric() => self.number(c, start_position),
+            c if c == '\'' => self.string_literal(c, start_position),
+            c if c == '"' => self.string_literal(c, start_position),
             c if is_whitespace(c) || is_end_of_line(c) => self.advance_token(),
-            _ => panic!(LexerError::UnexpectedCharacter)
+            c => Err(LexerError::UnexpectedCharacter(c))
         }
     }
 
-    fn two_characters_token(&mut self, first_character: char, start_position: Position) -> Token {
+    fn two_characters_token(&mut self, first_character: char, start_position: Position) -> Result<Token, LexerError> {
         match first_character {
             '>' => {
                 match self.bump().unwrap() {
-                    '=' => Token{kind: TokenKind::GreaterOrEquals, len: 2, position: (start_position, self.position.clone()), ..Default::default()},
-                    _ => panic!(LexerError::UnexpectedCharacter)
+                    '=' => Ok(Token{kind: TokenKind::GreaterOrEquals, len: 2, position: (start_position, self.position.clone()), ..Default::default()}),
+                    c => Err(LexerError::UnexpectedCharacter(c))
                 }
             },
             '<' => {
                 match self.bump().unwrap() {
-                    '=' => Token{kind: TokenKind::LessOrEquals, len: 2, position: (start_position, self.position.clone()), ..Default::default()},
-                    _ => panic!(LexerError::UnexpectedCharacter)
+                    '=' => Ok(Token{kind: TokenKind::LessOrEquals, len: 2, position: (start_position, self.position.clone()), ..Default::default()}),
+                    c => Err(LexerError::UnexpectedCharacter(c))
                 }
             },
-            _ => panic!(LexerError::UnexpectedCharacter)
+            c => Err(LexerError::UnexpectedCharacter(c))
         }
     }
 
-    fn string_literal(&mut self, opening_quote: char, start_position: Position) -> Token {
+    fn string_literal(&mut self, opening_quote: char, start_position: Position) -> Result<Token, LexerError> {
         let mut string_literal = Token {
             kind: TokenKind::StringLiteral,
             ..Default::default()
@@ -179,7 +185,7 @@ impl Cursor<'_> {
 
         loop {
             if self.position.0 > start_position.0 {
-                panic!(LexerError::UnexpectedEndOfLine)   
+                return Err(LexerError::UnexpectedEndOfLine);
             }
 
             match self.bump() {
@@ -189,7 +195,7 @@ impl Cursor<'_> {
                         ch => string_literal.content.push(ch)
                     }
                 }
-                None => panic!(LexerError::UnexpectedEndOfInput)
+                None => return Err(LexerError::UnexpectedEndOfInput)
             }
         }
 
@@ -197,10 +203,10 @@ impl Cursor<'_> {
         string_literal.position = (start_position, self.position.clone());
         string_literal.len = self.len_consumed() - initial_len;
 
-        string_literal
+        Ok(string_literal)
     }
 
-    fn number(&mut self, c: char, start_position: Position) -> Token {
+    fn number(&mut self, c: char, start_position: Position) -> Result<Token, LexerError> {
         let mut number = Token {
             content: c.to_string(),
             ..Default::default()
@@ -228,7 +234,7 @@ impl Cursor<'_> {
                             second_separator = next_character;
                         }
                         else if second_separator == next_character && first_separator != ' ' {
-                            panic!(LexerError::UnexpectedCharacter(next_character))
+                            return Err(LexerError::UnexpectedCharacter(next_character))
                         }
                         number.content.push(self.bump().unwrap())
                     }
@@ -261,10 +267,10 @@ impl Cursor<'_> {
         number.position = (start_position, self.position.clone());
         number.level = self.level.clone();
 
-        number
+        Ok(number)
     }
 
-    fn identifier(&mut self, first_char: char, start_position: Position) -> Token {
+    fn identifier(&mut self, first_char: char, start_position: Position) -> Result<Token, LexerError> {
         let mut identifier = Token {
             kind: TokenKind::Identifier,
             content: first_char.to_string(),
@@ -284,10 +290,10 @@ impl Cursor<'_> {
         identifier.len = self.len_consumed() - start_consumed;
         identifier.level = self.level.clone();
 
-        identifier
+        Ok(identifier)
     }
 
-    fn content_block(&mut self, start_position: Position) -> Token {
+    fn content_block(&mut self, start_position: Position) -> Result<Token, LexerError> {
         let mut content_block = Token{
             kind: TokenKind::ContentBlock(Default::default()),
             ..Default::default()
@@ -304,7 +310,7 @@ impl Cursor<'_> {
                     content_block.len += 1;
                 }
                 else {
-                    panic!(LexerError::UnexpectedIndentLevel);
+                    return Err(LexerError::UnexpectedIndentLevel);
                 }
             }
             else if self.level == initial_level && ch == '`' {
@@ -326,7 +332,7 @@ impl Cursor<'_> {
         }
 
         if !block_closed {
-            panic!(LexerError::UnexpectedEndOfInput);
+            return Err(LexerError::UnexpectedEndOfInput);
         }
 
         if initial_line == self.position.0 {
@@ -347,10 +353,10 @@ impl Cursor<'_> {
         content_block.len = self.len_consumed() - start_consumed;
         content_block.level = self.level.clone();
 
-        content_block
+        Ok(content_block)
     }
 
-    fn single_line_comment (&mut self, start_position: Position) -> Token {
+    fn single_line_comment (&mut self, start_position: Position) -> Result<Token, LexerError> {
         self.bump();
         let mut comment = Token{
             kind: TokenKind::Comment,
@@ -373,10 +379,10 @@ impl Cursor<'_> {
         comment.len = self.len_consumed() - start_consumed + 2; // add 2 for "//"
         comment.level = self.level.clone();
         
-        comment
+        Ok(comment)
     }
 
-    fn multi_line_comment (&mut self, start_position: Position) -> Token {
+    fn multi_line_comment (&mut self, start_position: Position) -> Result<Token, LexerError> {
         self.bump();
         let mut comment = Token{
             kind: TokenKind::Comment,
@@ -408,7 +414,7 @@ impl Cursor<'_> {
         comment.position = (start_position, self.position.clone());
         comment.len = self.len_consumed() - start_consumed + 2; // add 2 for "/*"
 
-        comment
+        Ok(comment)
     }
 }
 
@@ -520,7 +526,7 @@ mod tests {
     }
 
     #[test]
-    fn it_should_parse_numbers_with_another_decimal_and_multiple_thousands_separator() {
+    fn it_should_parse_numbers_with_another_decimal_and_multiple_thousands_separators() {
         let mut stream = tokenize("123,321,123.456");
         assert_eq!(stream.next().unwrap(), Token{
             kind: TokenKind::Number('.', ','),

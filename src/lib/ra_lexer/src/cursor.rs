@@ -99,7 +99,7 @@ impl <'a> Cursor<'a> {
 
     /// Checks if there is nothing more to consume.
     pub(crate) fn is_eof(&self) -> bool {
-        self.chars.as_str().is_empty()
+        self.chars.as_str().trim().is_empty()
     }
 
     pub(crate) fn start_reading_continuous_block(&mut self) {
