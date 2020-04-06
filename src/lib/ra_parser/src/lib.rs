@@ -1,8 +1,9 @@
 mod errors;
 mod cursor;
 
-use ra_lexer::{tokenize, Token, TokenKind};
-use std::thread;
+use ra_lexer::{tokenize};
+use ra_lexer::token::{Token, TokenKind};
+use std::fmt;
 use errors::ParserError;
 use cursor::Cursor;
 
@@ -13,12 +14,14 @@ pub enum BlockKind {
     Output(Token),
     RuleDeclaration(Token),
     RuleInvocation(Token),
+    Reference,
     ContextDeclaration,
     Content,
+    Union(usize),
     Undetermined,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone)]
 pub struct Block {
     kind: BlockKind,
     children: Vec<Block>,
@@ -37,32 +40,68 @@ impl Block {
     }
 }
 
-pub fn parse(input: &str) {
+impl fmt::Debug for Block {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        // format!(, , "*indented* text");
+        write!(
+            f, "\n{}{}\n{}{}\n{}{}\n{}{}" , 
+            format_args!("{: >1$}", "", self.level),  
+            format_args!(
+                "L{:?} [{:?}_Block", self.level ,self.kind
+            ),
+            format_args!("{: >1$}", "", self.level),  
+            format_args!(
+                "tokens:{:?}", self.tokens
+            ),
+            format_args!("{: >1$}", "", self.level),  
+            format_args!(
+                "children:{:?}", self.children
+            ),
+            format_args!("{: >1$}", "", self.level),  
+            format_args!(
+                "]"
+            )
+        )
+    }
+}
+
+pub fn parse(input: &str) -> Block {
     let stream = tokenize(input);
     // println!("{:?}", input);
     let mut cursor = Cursor::new(Box::new(stream));
 
     // println!("{:?}", cursor.first_ahead());
 
-    while let Some(t) = cursor.advance_block() {
-        println!("{:?}", t);
+    let mut block = Block::new(BlockKind::Program, 0);
+
+    while !cursor.is_eof() {
+        let b = cursor.advance_block();
+        match b {
+            Ok(blk) => block.children.push(blk),
+            Err(e) => panic!(e)
+        }
     }
+
+    block
 }
 
 impl Cursor<'_> {
-    fn advance_block(&mut self) -> Option<Block> {
+    fn advance_block(&mut self) -> Result<Block, ParserError> {
         let first_token = self.bump();
         let mut current_block = match first_token {
             Some(t) => {
                 match t.clone().kind {
-                    TokenKind::Identifier => {
+                    TokenKind::Identifier |
+                     TokenKind::Number(_, _) |
+                      TokenKind::OpenParentheses => {
                         self.parse_output_block(t)
                     },
                     TokenKind::Exclamation => {
                         self.parse_rule_invocation_block(t)
                     },
-                    TokenKind::Plus => {
-                        self.parse_input_block(t)
+                    TokenKind::Plus |
+                     TokenKind::Greater => {
+                        self.parse_input_block(t).unwrap()
                     },
                     TokenKind::Colon => {
                         self.parse_rule_declaration_block(t)
@@ -70,38 +109,44 @@ impl Cursor<'_> {
                     TokenKind::OpenCurlyBrace => {
                         self.parse_context_declaration(t)
                     },
-                    TokenKind::Greater => {
-                        self.parse_input_block(t)
-                    },
                     TokenKind::ContentBlock(init_tokens) => {
                         self.parse_content_block(t, init_tokens)
                     },
+                    TokenKind::At =>  {
+                        self.parse_reference_block(t)
+                    }
                     TokenKind::Comment => {
                         let next_expression = self.advance_block();
                         match next_expression {
-                            Some(e) => e,
-                            None => return None
+                            Ok(e) => e,
+                            Err(e) => return Err(e)
                         }
                     },
-                    _ => panic!(ParserError::UnexpectedToken)
+                    _ => return Err(ParserError::UnexpectedToken(t))
                 }
             }
-            None => return None
+            None => return Err(ParserError::UnexpectedEndOfInput)
         };
 
         let next_token = self.first_ahead();
 
         if let Some(tok) = next_token {
             if tok.level > current_block.level {
-                current_block.children = self.parse_children()
+                match self.parse_children() {
+                    Ok(children) => current_block.children = children,
+                    Err(e) => return Err(e)
+                }
+            }
+            else if tok.kind == TokenKind::Coma {
+                return self.parse_union_block(current_block)
             }
         }
 
-        Some(current_block)
+        Ok(current_block)
     }
 
-    fn parse_input_block(&mut self, first_token: Token) -> Block {
-        let is_expansive = match first_token.kind {
+    fn parse_input_block(&mut self, first_token: Token) -> Result<Block, ParserError> {
+        let is_expansive = match &first_token.kind {
             TokenKind::Plus => {
                 self.bump();
                 true
@@ -109,18 +154,50 @@ impl Cursor<'_> {
             TokenKind::Greater => {
                 false
             },
-            _ => panic!(ParserError::UnexpectedToken)
+            _ => return Err(ParserError::UnexpectedToken(first_token))
         };
 
         let mut block = Block::new(BlockKind::Input(is_expansive), first_token.level);
 
         block.tokens = self.read_while(|level, position, _| level == first_token.level && position.0 == (first_token.position.0).0);
 
-        block
+        Ok(block)
     }
 
     fn parse_output_block(&mut self, first_token: Token) -> Block {
-        let mut block = Block::new(BlockKind::Output(first_token.clone()), first_token.level);
+        let output_token = match self.first_ahead() {
+            Some(next_token) => {
+                if next_token.level == first_token.level && (next_token.position.0).0 == (first_token.position.0).0 {
+                    Token {
+                        kind: TokenKind::Undetermined,
+                        level: first_token.level,
+                        len: 0,
+                        position: (first_token.position.0, first_token.position.0),
+                        ..Default::default()
+                    }
+                }
+                else {
+                    first_token
+                }
+            },
+            None => first_token
+        };
+
+        // match first_token.kind {
+        //     TokenKind::Identifier => {
+
+        //     }
+        //     Tok
+        // }
+
+        let mut block = Block::new(BlockKind::Output(output_token.clone()), output_token.level);
+        
+        block.tokens = self.read_while(|level, position, _| level == output_token.level && position.0 == (output_token.position.0).0);
+        block
+    }
+
+    fn parse_reference_block(&mut self, first_token: Token) -> Block {
+        let mut block = Block::new(BlockKind::Reference, first_token.level);
         block.tokens = self.read_while(|level, position, _| level == first_token.level && position.0 == (first_token.position.0).0);
         block
     }
@@ -141,24 +218,79 @@ impl Cursor<'_> {
 
     fn parse_context_declaration(&mut self, first_token: Token) -> Block {
         let mut block = Block::new(BlockKind::ContextDeclaration, first_token.level);
+        let block_tokens = self.read_within(first_token.kind, TokenKind::CloseCurlyBrace);
 
-        // block.children = 
+        match &block_tokens.first().unwrap().kind {
+            TokenKind::OpenCurlyBrace => {
 
+            },
+            t => {
+
+            }
+        }
+
+        // println!("{:?}", block.tokens);
+        
+        // block.children.push()
         block
     }
 
     fn parse_content_block(&mut self, content_token: Token, init_tokens: Vec<Token>) -> Block {
         let mut block = Block::new(BlockKind::Content, content_token.level);
-
+        block.tokens.push(content_token);
         block
     }
 
-    fn parse_children(&mut self) -> Vec<Block> {
+    fn parse_union_block(&mut self, first_block: Block) -> Result<Block, ParserError> {
+        let mut block = Block::new(BlockKind::Union(1), first_block.level);
+        block.children.push(first_block);
+
+        loop {
+            let next_block = self.advance_block();
+            match next_block {
+                Ok(b) => {
+                    block.children.push(b);
+                    block.kind = BlockKind::Union(block.children.len())
+                }
+                Err(e) => return Err(e)
+            }
+            match self.first_ahead() {
+                Some(t) => {
+                    if t.kind != TokenKind::Coma {
+                        break;
+                    }
+                }
+                None => break
+            }
+        }
+
+
+        Ok(block)
+    }
+
+    fn parse_children(&mut self) -> Result<Vec<Block>, ParserError> {
         let mut children = Vec::<Block>::new();
+        let initial_level = self.level;
 
+        loop {
+            let next_token = self.first_ahead();
+            match next_token {
+                Some(tok) => {
+                    if tok.level > initial_level {
+                        match self.advance_block() {
+                            Ok(b) => children.push(b),
+                            Err(e) => return Err(e)
+                        }
+                    }
+                    else {
+                        break
+                    }
+                }
+                None => break
+            }
+        }
 
-
-        children
+        Ok(children)
     }
 }
 

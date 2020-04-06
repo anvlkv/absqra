@@ -1,9 +1,9 @@
-use ra_lexer::Token;
+use ra_lexer::token::{Token, TokenKind};
 
 #[derive(Debug)]
 pub enum ParserError {
     UnexpectedIndentLevel,
     UnexpectedToken(Token),
-    ExpectedAGotB(Token, Token),
+    ExpectedAGotB(TokenKind, TokenKind),
     UnexpectedEndOfInput
 }
