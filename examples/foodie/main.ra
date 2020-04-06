@@ -60,16 +60,17 @@ navigation,
                 - {{recipe.countryOfOrigin}}
                 - {{recipe.restrictions}}
             `
-                !options: {1:{
-                    !if: search
-                        !includes: recipe.name : search
-                    !if: mealTypeFilter
-                        !includes: mealTypeFilter : recipe.kindOfMeal
-                    !if: countryFilter
-                        !includes: countryFilter : recipe.countryOfOrigin
-                    !if: restrictionFilter
-                        !includes: recipe.restrictions : restrictionFilter
-                }} recipe
+                !options: 
+                    {1:{
+                        !if: search
+                            !includes: recipe.name : search
+                        !if: mealTypeFilter
+                            !includes: mealTypeFilter : recipe.kindOfMeal
+                        !if: countryFilter
+                            !includes: countryFilter : recipe.countryOfOrigin
+                        !if: restrictionFilter
+                            !includes: recipe.restrictions : restrictionFilter
+                    }} recipe
                 !select:single
     !case:userItems.addRecipe
         @recipe
