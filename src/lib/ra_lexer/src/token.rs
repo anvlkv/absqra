@@ -1,8 +1,8 @@
 
 use crate::cursor::Position;
 
-#[derive(Debug, PartialEq, Clone)]
-pub enum TokenKind {
+#[derive(Debug, PartialEq, Clone, Copy)]
+pub enum TokenKind<'a> {
     SemiColon,
     Coma,
     Dot,
@@ -12,8 +12,11 @@ pub enum TokenKind {
     Less,
     LessOrEquals,
     Equals,
+    NotEquals,
     Plus,
     Minus,
+    AddAssign,
+    SubtractAssign,
     Exclamation,
     Slash,
     Comment,
@@ -36,25 +39,29 @@ pub enum TokenKind {
     Question,
     Identifier,
     StringLiteral,
-    Number(char, char),
-    ContentBlock(Vec<Token>),
+    Int(i64),
+    Float(f64),
+    ContentBlock([&'a Token<'a>; 16]),
+    Immediate,
     Undetermined
 }
 
-#[derive(Debug, PartialEq, Clone)]
-pub struct Token {
-    pub kind: TokenKind,
+#[derive(Debug, PartialEq, Clone, Copy)]
+pub struct Token<'a> {
+    pub kind: TokenKind<'a>,
     pub len: usize,
-    pub content: String,
+    pub content: &'a str,
     pub position: (Position, Position),
     pub level: usize
 }
 
-impl Default for Token {
+const empty_content: &str = "";
+
+impl <'a> Default for Token<'a> {
     fn default() -> Self {
         Self {
             len: 1,
-            content: String::new(),
+            content: empty_content,
             position: (Position(0, 0), Position(0, 1)),
             level: 0,
             kind: TokenKind::Undetermined
