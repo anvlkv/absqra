@@ -1,7 +1,7 @@
 #[derive(Debug)]
-pub enum LexerError {
+pub enum LexerError<'a> {
     UnexpectedIndentLevel,
-    UnexpectedCharacter(char),
+    UnexpectedCharacter(&'a char),
     UnexpectedEndOfInput,
     UnexpectedEndOfLine
 }

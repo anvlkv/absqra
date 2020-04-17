@@ -25,7 +25,7 @@ pub(crate) struct Cursor<'a> {
 
 
 /// True if `c` is considered a whitespace
-pub fn is_whitespace(c: char) -> bool {
+pub fn is_whitespace(c: &char) -> bool {
     match c {
         // Usual ASCII suspects
         | '\u{0009}' // \t
@@ -75,10 +75,10 @@ impl <'a> Cursor<'a> {
     /// If requested position doesn't exist, `EOF_CHAR` is returned.
     /// However, getting `EOF_CHAR` doesn't always mean actual end of file,
     /// it should be checked with `is_eof` method.
-    fn nth_char(&self, n: usize) -> char {
+    fn nth_char(&self, n: usize) -> &char {
         match self.chars().nth(n).unwrap_or(EOF_CHAR) {
-            c if is_end_of_line(c) => EOL_CHAR,
-            t => t
+            c if is_end_of_line(c) => &EOL_CHAR,
+            t => &t
         }
     }
 
@@ -88,12 +88,12 @@ impl <'a> Cursor<'a> {
     }
 
     /// Peeks the next symbol from the input stream without consuming it.
-    pub(crate) fn first_ahead(&self) -> char {
+    pub(crate) fn first_ahead(&self) -> &char {
         self.nth_char(0)
     }
 
     /// Peeks the second symbol from the input stream without consuming it.
-    pub(crate) fn second_ahead(&self) -> char {
+    pub(crate) fn second_ahead(&self) -> &char {
         self.nth_char(1)
     }
 
@@ -113,7 +113,7 @@ impl <'a> Cursor<'a> {
     }
 
     /// Moves to the next character.
-    pub(crate) fn bump(&mut self) -> Option<char> {
+    pub(crate) fn bump(&mut self) -> Option<&'a char> {
         let character = self.chars.next();
         match character {
             Some(ch) => {
@@ -125,7 +125,7 @@ impl <'a> Cursor<'a> {
                     });
                     self.position.1 = self.level * self.indent_width;
                     if self.is_reading_continuous_block_at.0 {
-                        Some(ch)
+                        Some(&ch)
                     }
                     else {
                         self.bump()
@@ -133,7 +133,7 @@ impl <'a> Cursor<'a> {
                 }
                 else {
                     self.position.1 += 1;
-                    Some(ch)
+                    Some(&ch)
                 }
             },
             None => None
@@ -173,7 +173,7 @@ impl <'a> Cursor<'a> {
     /// Returns amount of eaten symbols.
     fn eat_while<F>(&mut self, mut predicate: F) -> usize
     where
-        F: FnMut(char, &usize) -> bool,
+        F: FnMut(&char, &usize) -> bool,
     {
         let mut eaten: usize = 0;
         while predicate(self.first_ahead(), &eaten) && !self.is_eof() {
