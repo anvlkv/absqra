@@ -25,7 +25,7 @@ impl <'a> Cursor<'a> {
     }
 
     fn nth(&mut self, n: usize) -> Option<Token> {
-        if self.tokens_vec.len() > self.consumed_len + n + 1 {
+        if self.tokens_vec.len() > self.consumed_len + n {
             Some(self.tokens_vec[self.consumed_len + n].clone())
         }
         else {
@@ -54,17 +54,16 @@ impl <'a> Cursor<'a> {
         }
     }
 
-    pub fn read_while<F>(&mut self, mut test: F) -> Vec<Token> 
-        where F: FnMut (usize, Position, TokenKind) -> bool 
+    pub fn do_while<F, D>(&mut self, mut test: F, mut cb: D)
+        where F: FnMut (usize, Position, TokenKind) -> bool,
+        D: FnMut (Token)
     {
-        let mut read: Vec<Token> = Vec::new();
-
         loop {
             let next_token = self.first_ahead();
             match next_token {
                 Some(t) => {
                     if test(t.level, t.position.0, t.kind) {
-                        read.push(self.bump().unwrap())
+                        cb(self.bump().unwrap())
                     }
                     else {
                         break
@@ -73,8 +72,6 @@ impl <'a> Cursor<'a> {
                 None => break
             }
         }
-
-        read
     }
 
     pub fn read_within(&mut self, open: TokenKind, close: TokenKind) -> Vec<Token> {

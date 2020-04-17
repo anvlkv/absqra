@@ -5,5 +5,6 @@ pub enum ParserError {
     UnexpectedIndentLevel,
     UnexpectedToken(Token),
     ExpectedAGotB(TokenKind, TokenKind),
-    UnexpectedEndOfInput
+    UnexpectedEndOfInput,
+    InvalidExpression
 }
