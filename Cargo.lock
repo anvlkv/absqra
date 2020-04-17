@@ -4,9 +4,16 @@
 name = "absQra"
 version = "0.1.0"
 dependencies = [
- "ra_lexer",
+ "ra_parser",
 ]
 
 [[package]]
 name = "ra_lexer"
 version = "0.1.0"
+
+[[package]]
+name = "ra_parser"
+version = "0.1.0"
+dependencies = [
+ "ra_lexer",
+]
