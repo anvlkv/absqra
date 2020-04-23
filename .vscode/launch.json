@@ -19,7 +19,10 @@
                     "kind": "bin"
                 }
             },
-            "args": ["examples/mvp.ra"],
+            "args": [
+                "examples/foodie/main.ra"
+                // "examples/mvp.ra"
+            ],
             "cwd": "${workspaceFolder}"
         },
         {
@@ -40,6 +43,48 @@
             },
             "args": [],
             "cwd": "${workspaceFolder}"
-        }
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in library 'ra_lexer'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--package=ra_lexer"
+                ],
+                "filter": {
+                    "name": "ra_lexer",
+                    "kind": "lib"
+                }
+            },
+            "args": [
+                // "it_should_keep_inner_indents_when_parsing_content"
+                "it_should_parse_numbers_with_another_decimal_and_multiple_thousands_separators"
+            ],
+            "cwd": "${workspaceFolder}/src/lib/ra_lexer"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'ra_interactive'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=ra_interactive",
+                    "--package=ra_interactive"
+                ],
+                "filter": {
+                    "name": "ra_interactive",
+                    "kind": "bin"
+                }
+            },
+            "args": [
+
+            ],
+            "cwd": "${workspaceFolder}/src/lib/ra_interactive"
+        },
     ]
 }
