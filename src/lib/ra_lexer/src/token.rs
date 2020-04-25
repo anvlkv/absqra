@@ -1,8 +1,9 @@
 
 use crate::cursor::Position;
+// use std::rc::Rc;
 
 #[derive(Debug, PartialEq, Clone, Copy)]
-pub enum TokenKind<'a> {
+pub enum TokenKind {
     SemiColon,
     Coma,
     Dot,
@@ -41,27 +42,27 @@ pub enum TokenKind<'a> {
     StringLiteral,
     Int(i64),
     Float(f64),
-    ContentBlock([&'a Token<'a>; 16]),
+    ContentBlock,
     Immediate,
     Undetermined
 }
 
 #[derive(Debug, PartialEq, Clone, Copy)]
 pub struct Token<'a> {
-    pub kind: TokenKind<'a>,
-    pub len: usize,
+    pub kind: TokenKind,
+    pub len: u16,
     pub content: &'a str,
     pub position: (Position, Position),
-    pub level: usize
+    pub level: u16
 }
 
-const empty_content: &str = "";
+const EMPTY_CONTENT: &str = "";
 
 impl <'a> Default for Token<'a> {
     fn default() -> Self {
         Self {
             len: 1,
-            content: empty_content,
+            content: EMPTY_CONTENT,
             position: (Position(0, 0), Position(0, 1)),
             level: 0,
             kind: TokenKind::Undetermined
