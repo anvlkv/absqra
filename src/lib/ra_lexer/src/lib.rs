@@ -95,7 +95,7 @@ impl <'a> Cursor<'a> {
         }
     }
 
-    fn single_character_token(&mut self, kind: TokenKind, start_position: Position, start_consumed: usize) -> Result<Token<'a>, LexerError> {
+    fn single_character_token(&mut self, kind: TokenKind<'a>, start_position: Position, start_consumed: usize) -> Result<Token<'a>, LexerError> {
         Ok(Token {
             kind, 
             position: (start_position, self.position.clone()),
@@ -136,7 +136,6 @@ impl <'a> Cursor<'a> {
 
     fn string_literal(&mut self, opening_quote: char, start_position: Position) -> Result<Token<'a>, LexerError> {
         let mut string_literal = Token {
-            kind: TokenKind::StringLiteral,
             ..Default::default()
         };
 
@@ -162,6 +161,7 @@ impl <'a> Cursor<'a> {
         string_literal.position = (start_position, self.position.clone());
         string_literal.len = (self.len_consumed() - start_consumed).try_into().unwrap();
         string_literal.content = self.slice(start_consumed + 1, self.len_consumed() - 1);
+        string_literal.kind = TokenKind::StringLiteral(string_literal.content);
 
         Ok(string_literal)
     }
@@ -236,7 +236,6 @@ impl <'a> Cursor<'a> {
 
     fn identifier(&mut self, start_position: Position) -> Result<Token<'a>, LexerError> {
         let mut identifier = Token {
-            kind: TokenKind::Identifier,
             ..Default::default()
         };
         let start_consumed = self.len_consumed() - 1; // add 1 for first token
@@ -255,6 +254,7 @@ impl <'a> Cursor<'a> {
         identifier.len = (self.len_consumed() - start_consumed).try_into().unwrap();
         identifier.level = self.level.clone();
         identifier.content = self.slice(start_consumed, self.len_consumed());
+        identifier.kind = TokenKind::Identifier(identifier.content);
 
         Ok(identifier)
     }
@@ -400,7 +400,7 @@ mod tests {
     fn it_should_parse_identifiers() {
         let mut stream = tokenize("abc");
         assert_eq!(stream.next().unwrap(), Token{
-            kind: TokenKind::Identifier,
+            kind: TokenKind::Identifier("abc"),
             content: "abc", 
             position: (Position(1, 0), Position(1, 3)),
             len: 3,
@@ -595,7 +595,7 @@ mod tests {
         stream.next();
         stream.next();
         assert_eq!(stream.next().unwrap(), Token{
-            kind: TokenKind::Identifier,
+            kind: TokenKind::Identifier("abc"),
             content: "abc", 
             position: (Position(2, 1), Position(2, 4)),
             len: 3,
@@ -620,7 +620,7 @@ mod tests {
     fn it_should_parse_string_literals() {
         let mut stream = tokenize("\"some\"");
         assert_eq!(stream.next().unwrap(), Token{
-            kind: TokenKind::StringLiteral,
+            kind: TokenKind::StringLiteral("some"),
             content: "some",
             len: 6,
             position: (Position(1, 0), Position(1, 6)),
