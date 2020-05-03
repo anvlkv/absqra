@@ -1,47 +1,35 @@
 use ra_lexer::token::{Token, TokenKind};
 use ra_lexer::cursor::Position;
+use core::iter::Peekable;
 
-
-pub(crate) struct Cursor<'a> {
+pub(crate) struct Cursor<'token, I> 
+    where I: Iterator<Item = Token<'token>> 
+{
     pub position: Position,
-    pub level: usize,
-    tokens: Box<dyn Iterator<Item = Token> + 'a>,
-    tokens_vec: Vec<Token>,
+    pub level: u16,
+    tokens: Peekable<I>,
     consumed_len: usize
 }
 
-impl <'a> Cursor<'a> {
-    pub fn new(tokens: Box<dyn Iterator<Item = Token> + 'a>) -> Cursor<'a> {
-        let tokens_vec: Vec<Token> = tokens.collect();
-        let first_token = &tokens_vec[0];
+impl <'token, I> Cursor<'token, I> 
+where I: Iterator<Item = Token<'token>> 
+{
+    pub fn new(tokens: I) -> Self
         
-        Cursor {
-            position: first_token.position.0,
-            level: first_token.level,
-            tokens: Box::new(tokens_vec.clone().into_iter()),
-            consumed_len: 0,
-            tokens_vec
+    {
+        Self {
+            position: Position(0, 0),
+            level: 0,
+            tokens: tokens.peekable(),
+            consumed_len: 0
         }
     }
 
-    fn nth(&mut self, n: usize) -> Option<Token> {
-        if self.tokens_vec.len() > self.consumed_len + n {
-            Some(self.tokens_vec[self.consumed_len + n].clone())
-        }
-        else {
-            None
-        }
+    pub fn first_ahead(&mut self) -> Option<&Token<'token>> {
+        self.tokens.peek()
     }
 
-    pub fn first_ahead(&mut self) -> Option<Token> {
-        self.nth(0)
-    }
-
-    pub fn second_ahead(&mut self) -> Option<Token> {
-        self.nth(1)
-    }
-
-    pub fn bump(&mut self) -> Option<Token> {
+    pub fn bump(&mut self) -> Option<Token<'token>> {
         let tok = self.tokens.next();
         match tok {
             Some(token) => {
@@ -54,57 +42,57 @@ impl <'a> Cursor<'a> {
         }
     }
 
-    pub fn do_while<F, D>(&mut self, mut test: F, mut cb: D)
-        where F: FnMut (usize, Position, TokenKind) -> bool,
-        D: FnMut (Token)
-    {
-        loop {
-            let next_token = self.first_ahead();
-            match next_token {
-                Some(t) => {
-                    if test(t.level, t.position.0, t.kind) {
-                        cb(self.bump().unwrap())
-                    }
-                    else {
-                        break
-                    }
-                },
-                None => break
-            }
-        }
+    pub fn is_eof(& mut self) -> bool {
+        self.first_ahead() == None
     }
 
-    pub fn read_within(&mut self, open: TokenKind, close: TokenKind) -> Vec<Token> {
-        let mut read: Vec<Token> = Vec::new();
+    // pub fn do_while<F, D>(&mut self, mut test: F, mut cb: D)
+    //     where F: FnMut (u16, Position, TokenKind) -> bool,
+    //     D: FnMut (Token)
+    // {
+    //     loop {
+    //         let next_token = self.first_ahead();
+    //         match next_token {
+    //             Some(t) => {
+    //                 if test(t.level, t.position.0, t.kind) {
+    //                     cb(self.bump().unwrap())
+    //                 }
+    //                 else {
+    //                     break
+    //                 }
+    //             },
+    //             None => break
+    //         }
+    //     }
+    // }
 
-        loop {
-            let next_token = self.first_ahead();
+    // pub fn read_within(&mut self, open: TokenKind, close: TokenKind) -> Vec<Token> {
+    //     let mut read: Vec<Token> = Vec::new();
 
-            match next_token {
-                Some(tok) => {
-                    match tok.kind {
-                        k if k == open => {
-                            let open_token = self.bump().unwrap();
-                            let mut nested = self.read_within(open_token.kind, close.clone());
-                            read.append(&mut nested);
-                        },
-                        k if k == close => {
-                            self.bump();
-                            break
-                        },
-                        _ => read.push(self.bump().unwrap())
-                    }
-                },
-                None => break
-            }
+    //     loop {
+    //         let next_token = self.first_ahead();
 
-            // println!("{:?}", &read);
-        }
+    //         match next_token {
+    //             Some(tok) => {
+    //                 match tok.kind {
+    //                     k if k == open => {
+    //                         let open_token = self.bump().unwrap();
+    //                         let mut nested = self.read_within(open_token.kind, close.clone());
+    //                         read.append(&mut nested);
+    //                     },
+    //                     k if k == close => {
+    //                         self.bump();
+    //                         break
+    //                     },
+    //                     _ => read.push(self.bump().unwrap())
+    //                 }
+    //             },
+    //             None => break
+    //         }
 
-        read
-    }
+    //         // println!("{:?}", &read);
+    //     }
 
-    pub fn is_eof(&mut self) -> bool {
-        self.consumed_len == self.tokens_vec.len()
-    }
+    //     read
+    // }
 }
