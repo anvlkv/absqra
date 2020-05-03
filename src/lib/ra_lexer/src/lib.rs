@@ -275,17 +275,7 @@ impl <'a> Cursor<'a> {
             }
             else if self.level == initial_level && ch == '`' {
                 block_closed = true;
-                self.end_reading_continuous_block();
                 break;
-            }
-            else if self.level > initial_level {
-                self.start_reading_continuous_block();
-            }
-            else {
-                match ch {
-                    c if is_end_of_line(&c) => self.end_reading_continuous_block(),
-                    _ => {}
-                }
             }
         }
 
@@ -333,7 +323,6 @@ impl <'a> Cursor<'a> {
         };
 
         let start_consumed = self.len_consumed();
-        self.start_reading_continuous_block();
         while let Some(ch) = self.bump() {
 
             match ch {
@@ -351,7 +340,6 @@ impl <'a> Cursor<'a> {
                 }
             }
         };
-        self.end_reading_continuous_block();
 
         comment.position = (start_position, self.position.clone());
         comment.len = (self.len_consumed() - start_consumed + 2).try_into().unwrap(); // add 2 for "/*"
