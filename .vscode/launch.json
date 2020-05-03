@@ -41,7 +41,8 @@
                     "kind": "bin"
                 }
             },
-            "args": [],
+            "args": [
+            ],
             "cwd": "${workspaceFolder}"
         },
         {
@@ -62,7 +63,8 @@
             },
             "args": [
                 // "it_should_keep_inner_indents_when_parsing_content"
-                "it_should_parse_numbers_with_another_decimal_and_multiple_thousands_separators"
+                // "tests::it_should_parse_numbers_with_another_decimal_separator"
+                "tests::it_should_parse_numbers_with_another_decimal_and_multiple_thousands_separators"
             ],
             "cwd": "${workspaceFolder}/src/lib/ra_lexer"
         },
