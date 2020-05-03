@@ -56,15 +56,11 @@ pub fn parse<'a>(input: &'a str) -> Result<Block<'a>, Vec<ParserError>> {
     
     let program = {
         let mut children = Vec::new();
-        
         let mut is_eof = || {tokens_cursor.is_eof()};
-        let mut next_block = || {tokens_cursor.advance_block()};
-
-
-
+        
         loop {
             if !is_eof() {
-                match next_block() {
+                match tokens_cursor.advance_block() {
                     Ok(b) => children.push(b),
                     Err(es) => errors.extend(es.into_iter()),
                 }
