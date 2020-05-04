@@ -17,7 +17,14 @@ fn tokenize_cursor<'a>(mut cursor: Cursor<'a>) -> impl Iterator<Item = Token<'a>
             return None;
         }
         match cursor.advance_token() {
-            Ok(t) => Some(t),
+            Ok(t) => {
+                match t.kind {
+                    Some(_) => Some(t),
+                    None => {
+                        panic!("{:?}", LexerError::UnsupportedToken)
+                    }
+                }
+            },
             Err(e) => {
                 // println!("{:?}", cursor.position);
                 panic!("{:?}", e);
@@ -97,7 +104,7 @@ impl <'a> Cursor<'a> {
 
     fn single_character_token(&mut self, kind: TokenKind<'a>, start_position: Position, start_consumed: usize) -> Result<Token<'a>, LexerError> {
         Ok(Token {
-            kind, 
+            kind: Some(kind),
             position: (start_position, self.position.clone()),
             content: self.slice(start_consumed, self.len_consumed()),
             level: self.level.clone(),
@@ -111,7 +118,7 @@ impl <'a> Cursor<'a> {
             '>' => {
                 match self.bump().unwrap() {
                     '=' => Ok(Token{
-                        kind: TokenKind::GreaterOrEquals, 
+                        kind: Some(TokenKind::GreaterOrEquals), 
                         len: 2,
                         content: self.slice(start_consumed, self.len_consumed()),
                         position: (start_position, self.position.clone()),
@@ -123,7 +130,7 @@ impl <'a> Cursor<'a> {
             '<' => {
                 match self.bump().unwrap() {
                     '=' => Ok(Token{
-                        kind: TokenKind::LessOrEquals, 
+                        kind: Some(TokenKind::LessOrEquals), 
                         len: 2, position: (start_position, self.position.clone()), 
                         content: self.slice(start_consumed, self.len_consumed()),
                         ..Default::default()}),
@@ -161,7 +168,7 @@ impl <'a> Cursor<'a> {
         string_literal.position = (start_position, self.position.clone());
         string_literal.len = (self.len_consumed() - start_consumed).try_into().unwrap();
         string_literal.content = self.slice(start_consumed + 1, self.len_consumed() - 1);
-        string_literal.kind = TokenKind::StringLiteral(string_literal.content);
+        string_literal.kind = Some(TokenKind::StringLiteral(string_literal.content));
 
         Ok(string_literal)
     }
@@ -224,10 +231,10 @@ impl <'a> Cursor<'a> {
 
             if let Some(_) = num.find(decimals_separator) {
                 num = num.replace(decimals_separator, ".");
-                TokenKind::Float(num.parse::<f64>().unwrap())
+                Some(TokenKind::Float(num.parse::<f64>().unwrap()))
             }
             else {
-                TokenKind::Int(num.parse::<i64>().unwrap())
+                Some(TokenKind::Int(num.parse::<i64>().unwrap()))
             }
         };
 
@@ -254,14 +261,14 @@ impl <'a> Cursor<'a> {
         identifier.len = (self.len_consumed() - start_consumed).try_into().unwrap();
         identifier.level = self.level.clone();
         identifier.content = self.slice(start_consumed, self.len_consumed());
-        identifier.kind = TokenKind::Identifier(identifier.content);
+        identifier.kind = Some(TokenKind::Identifier(identifier.content));
 
         Ok(identifier)
     }
 
     fn content_block(&mut self, start_position: Position) -> Result<Token<'a>, LexerError> {
         let mut content_block = Token{
-            kind: TokenKind::ContentBlock,
+            kind: Some(TokenKind::ContentBlock),
             ..Default::default()
         };
         let initial_level = self.level;
@@ -294,7 +301,7 @@ impl <'a> Cursor<'a> {
     fn single_line_comment (&mut self, start_position: Position) -> Result<Token<'a>, LexerError> {
         self.bump();
         let mut comment = Token{
-            kind: TokenKind::Comment,
+            kind: Some(TokenKind::Comment),
             ..Default::default()
         };
 
@@ -317,7 +324,7 @@ impl <'a> Cursor<'a> {
     fn multi_line_comment (&mut self, start_position: Position) -> Result<Token<'a>, LexerError> {
         self.bump();
         let mut comment = Token{
-            kind: TokenKind::Comment,
+            kind: Some(TokenKind::Comment),
             level: self.level.clone(),
             ..Default::default()
         };
@@ -364,7 +371,7 @@ mod tests {
     fn it_should_parse_single_line_comments() {
         let mut stream = tokenize("//abc");
         assert_eq!(stream.next().unwrap(), Token{
-            kind: TokenKind::Comment,
+            kind: Some(TokenKind::Comment),
             content: "abc", 
             position: (Position(1, 0), Position(1, 5)),
             len: 5,
@@ -376,7 +383,7 @@ mod tests {
     fn it_should_parse_multi_line_comments() {
         let mut stream = tokenize("/*abc\nSOME*/");
         assert_eq!(stream.next().unwrap(), Token{
-            kind: TokenKind::Comment,
+            kind: Some(TokenKind::Comment),
             content: "abc\nSOME", 
             position: (Position(1, 0), Position(2, 6)),
             len: 12,
@@ -388,7 +395,7 @@ mod tests {
     fn it_should_parse_identifiers() {
         let mut stream = tokenize("abc");
         assert_eq!(stream.next().unwrap(), Token{
-            kind: TokenKind::Identifier("abc"),
+            kind: Some(TokenKind::Identifier("abc")),
             content: "abc", 
             position: (Position(1, 0), Position(1, 3)),
             len: 3,
@@ -400,7 +407,7 @@ mod tests {
     fn it_should_parse_numbers() {
         let mut stream = tokenize("123");
         assert_eq!(stream.next().unwrap(), Token{
-            kind: TokenKind::Int(123),
+            kind: Some(TokenKind::Int(123)),
             content: "123", 
             position: (Position(1, 0), Position(1, 3)),
             len: 3,
@@ -412,7 +419,7 @@ mod tests {
     fn it_should_parse_numbers_with_decimal_separator() {
         let mut stream = tokenize("123,321");
         assert_eq!(stream.next().unwrap(), Token{
-            kind: TokenKind::Float(123.321),
+            kind: Some(TokenKind::Float(123.321)),
             content: "123,321", 
             position: (Position(1, 0), Position(1, 7)),
             len: 7,
@@ -424,7 +431,7 @@ mod tests {
     fn it_should_parse_numbers_with_another_decimal_separator() {
         let mut stream = tokenize("123.321");
         assert_eq!(stream.next().unwrap(), Token{
-            kind: TokenKind::Float(123.321),
+            kind: Some(TokenKind::Float(123.321)),
             content: "123.321", 
             position: (Position(1, 0), Position(1, 7)),
             len: 7,
@@ -436,7 +443,7 @@ mod tests {
     fn it_should_parse_numbers_with_decimal_and_thousands_separator() {
         let mut stream = tokenize("123.321,456");
         assert_eq!(stream.next().unwrap(), Token{
-            kind: TokenKind::Float(123321.456),
+            kind: Some(TokenKind::Float(123321.456)),
             content: "123.321,456", 
             position: (Position(1, 0), Position(1, 11)),
             len: 11,
@@ -448,7 +455,7 @@ mod tests {
     fn it_should_parse_numbers_with_decimal_and_multiple_thousands_separator() {
         let mut stream = tokenize("123.321.123,456");
         assert_eq!(stream.next().unwrap(), Token{
-            kind: TokenKind::Float(123321123.456),
+            kind: Some(TokenKind::Float(123321123.456)),
             content: "123.321.123,456", 
             position: (Position(1, 0), Position(1, 15)),
             len: 15,
@@ -460,7 +467,7 @@ mod tests {
     fn it_should_parse_numbers_with_another_decimal_and_multiple_thousands_separators() {
         let mut stream = tokenize("123,321,123.456");
         assert_eq!(stream.next().unwrap(), Token{
-            kind: TokenKind::Float(123321123.456),
+            kind: Some(TokenKind::Float(123321123.456)),
             content: "123,321,123.456", 
             position: (Position(1, 0), Position(1, 15)),
             len: 15,
@@ -479,7 +486,7 @@ mod tests {
     fn it_should_parse_negative_integer() {
         let mut stream = tokenize("-123");
         assert_eq!(stream.next().unwrap(), Token {
-            kind: TokenKind::Int(-123),
+            kind: Some(TokenKind::Int(-123)),
             content: "-123", 
             position: (Position(1, 0), Position(1, 4)),
             len: 4,
@@ -491,7 +498,7 @@ mod tests {
     fn it_should_parse_negative_float() {
         let mut stream = tokenize("-123.312");
         assert_eq!(stream.next().unwrap(), Token {
-            kind: TokenKind::Float(-123.312),
+            kind: Some(TokenKind::Float(-123.312)),
             content: "-123.312", 
             position: (Position(1, 0), Position(1, 8)),
             len: 8,
@@ -503,7 +510,7 @@ mod tests {
     fn it_should_parse_content_blocks() {
         let mut stream = tokenize("`abc`");
         assert_eq!(stream.next().unwrap(), Token{
-            kind: TokenKind::ContentBlock,
+            kind: Some(TokenKind::ContentBlock),
             content: "abc", 
             position: (Position(1, 0), Position(1, 5)),
             len: 5,
@@ -515,7 +522,7 @@ mod tests {
     fn it_should_parse_content_blocks_with_initialization_tokens() {
         let mut stream = tokenize("`ln=en\n\tabc\n`");
         assert_eq!(stream.next().unwrap(), Token{
-            kind: TokenKind::ContentBlock,
+            kind: Some(TokenKind::ContentBlock),
             content: "ln=en\n\tabc\n", 
             position: (Position(1, 0), Position(3, 1)),
             len: 13,
@@ -527,7 +534,7 @@ mod tests {
     fn it_should_keep_inner_indents_when_parsing_content() {
         let mut stream = tokenize("`\n\tabc\n\t\tabc\n`");
         assert_eq!(stream.next().unwrap(), Token{
-            kind: TokenKind::ContentBlock,
+            kind: Some(TokenKind::ContentBlock),
             content: "\n\tabc\n\t\tabc\n", 
             position: (Position(1, 0), Position(4, 1)),
             len: 14,
@@ -546,28 +553,28 @@ mod tests {
     fn it_should_parse_tokens() {
         let mut stream = tokenize("!?&/");
         assert_eq!(stream.next().unwrap(), Token{
-            kind: TokenKind::Exclamation,
+            kind: Some(TokenKind::Exclamation),
             position: (Position(1, 0), Position(1, 1)),
             content: "!",
             level: 0,
             ..Default::default()
         });
         assert_eq!(stream.next().unwrap(), Token{
-            kind: TokenKind::Question,
+            kind: Some(TokenKind::Question),
             position: (Position(1, 1), Position(1, 2)),
             content: "?",
             level: 0,
             ..Default::default()
         });
         assert_eq!(stream.next().unwrap(), Token{
-            kind: TokenKind::Ampersand,
+            kind: Some(TokenKind::Ampersand),
             position: (Position(1, 2), Position(1, 3)),
             content: "&",
             level: 0,
             ..Default::default()
         });
         assert_eq!(stream.next().unwrap(), Token{
-            kind: TokenKind::Slash,
+            kind: Some(TokenKind::Slash),
             position: (Position(1, 3), Position(1, 4)),
             content: "/",
             level: 0,
@@ -583,7 +590,7 @@ mod tests {
         stream.next();
         stream.next();
         assert_eq!(stream.next().unwrap(), Token{
-            kind: TokenKind::Identifier("abc"),
+            kind: Some(TokenKind::Identifier("abc")),
             content: "abc", 
             position: (Position(2, 1), Position(2, 4)),
             len: 3,
@@ -596,7 +603,7 @@ mod tests {
         let mut stream = tokenize("123 >= abc");
         stream.next();
         assert_eq!(stream.next().unwrap(), Token{
-            kind: TokenKind::GreaterOrEquals,
+            kind: Some(TokenKind::GreaterOrEquals),
             len: 2,
             content: ">=",
             position: (Position(1, 5), Position(1, 6)),
@@ -608,7 +615,7 @@ mod tests {
     fn it_should_parse_string_literals() {
         let mut stream = tokenize("\"some\"");
         assert_eq!(stream.next().unwrap(), Token{
-            kind: TokenKind::StringLiteral("some"),
+            kind: Some(TokenKind::StringLiteral("some")),
             content: "some",
             len: 6,
             position: (Position(1, 0), Position(1, 6)),

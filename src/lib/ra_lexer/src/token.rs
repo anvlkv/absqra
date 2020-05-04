@@ -43,13 +43,11 @@ pub enum TokenKind<'a> {
     Int(i64),
     Float(f64),
     ContentBlock,
-    Immediate,
-    Undetermined
 }
 
 #[derive(Debug, PartialEq, Clone, Copy)]
 pub struct Token<'a> {
-    pub kind: TokenKind<'a>,
+    pub kind: Option<TokenKind<'a>>,
     pub len: u16,
     pub content: &'a str,
     pub position: (Position, Position),
@@ -65,7 +63,7 @@ impl <'a> Default for Token<'a> {
             content: EMPTY_CONTENT,
             position: (Position(0, 0), Position(0, 1)),
             level: 0,
-            kind: TokenKind::Undetermined
+            kind: None
         }
     }
 }
