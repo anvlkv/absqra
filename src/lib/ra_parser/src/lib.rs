@@ -51,17 +51,16 @@ use errors::ParserError;
 
 pub fn parse<'a>(input: &'a str) -> Result<Block<'a>, Vec<ParserError>> {
     let stream = tokenize(input);
-    let mut tokens_cursor = Cursor::new(stream);
     let mut errors: Vec<ParserError> = Vec::new();
     
     let program = {
         let mut children = Vec::new();
-        let mut is_eof = || {tokens_cursor.is_eof()};
+        let mut tokens_cursor = Cursor::new(stream);
         
         loop {
-            if !is_eof() {
+            if !tokens_cursor.is_eof() {
                 match tokens_cursor.advance_block() {
-                    Ok(b) => children.push(b),
+                    Ok(blk) => children.push(blk),
                     Err(es) => errors.extend(es.into_iter()),
                 }
             }
@@ -90,10 +89,21 @@ where
     I: Iterator<Item = Token<'token>>,
 {
     fn advance_block<'a>(&'a mut self) -> Result<Block<'token>, Vec<ParserError>> {
-        let first_token = self.bump().unwrap();
+        let first_token = self.bump();
+        let mut errors = Vec::new();
+        match first_token {
+            Some(token) => {
 
-        Ok(Block::default())
+                Ok(Block::default())
+            },
+            None => {
+                errors.push(ParserError::UnexpectedEndOfInput);
+                Err(errors)
+            }
+        }
     }
+
+    
 }
 
 // pub fn parse<'parser, 'runtime> (input: &'runtime str) -> Block<'runtime> {
