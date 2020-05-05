@@ -1,9 +1,8 @@
+use std::rc::Rc;
+use std::borrow::Borrow;
+use ra_lexer::token::{Token, TokenKind};
 use super::block::Block;
 use super::errors::ParserError;
-use ra_lexer::token::{Token, TokenKind};
-use std::borrow::Borrow;
-use std::cell::{RefCell, RefMut};
-use std::rc::Rc;
 
 #[derive(Debug, Clone, PartialEq, Copy)]
 pub enum MathOperation {
@@ -29,13 +28,13 @@ pub enum ComparisonOperation {
 
 #[derive(Debug, Clone, PartialEq, Copy)]
 pub enum LogicOperation {
-    AND,  // &
-    OR,   // |
-    NOT,  // !
+    AND, // &
+    OR, // |
+    NOT, // !
     NAND, // !&
-    NOR,  // !!
-    XOR,  // ||
-    XNOR, // !|
+    NOR, // !!
+    XOR, // ||
+    XNOR // !|
 }
 
 #[derive(Debug, Clone, PartialEq, Copy)]
@@ -43,41 +42,45 @@ pub enum OperationKind {
     LogicOperation(LogicOperation),
     MathOperation(MathOperation),
     ComparisonOperation(ComparisonOperation),
-    Assign,
+    Assign
 }
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum ExpressionMember<'a> {
     Token(Token<'a>),
     Expression(Expression<'a>, bool),
-    ContextExpression(Block<'a>, bool),
+    ContextExpression(Block<'a>, bool)
 }
 
 #[derive(Debug, Clone, PartialEq, Default)]
 pub struct Expression<'a> {
-    pub left: Option<Rc<RefCell<ExpressionMember<'a>>>>,
+    pub left: Option<Rc<ExpressionMember<'a>>>,
     pub operation: Option<OperationKind>,
-    pub right: Option<Rc<RefCell<ExpressionMember<'a>>>>,
-    pub tokens: Vec<Token<'a>>,
+    pub right: Option<Rc<ExpressionMember<'a>>>,
+    pub tokens: Vec<Token<'a>>
 }
 
-impl<'a> Expression<'a> {
+impl <'a> Expression<'a> {
     pub fn from_token(token: Token<'a>) -> Self {
         let left = {
             match Expression::parse_left(token) {
                 Some(t) => Some(t),
-                None => match Expression::parse_bracket(token) {
-                    Some((closing, expression)) => {
-                        if !closing {
-                            Some(expression)
-                        } else {
-                            None
-                        }
+                None => {
+                    match Expression::parse_bracket(token) {
+                        Some((closing, expression)) => {
+                            if !closing {
+                                Some(expression)
+                            }
+                            else {
+                                None
+                            }
+                        },
+                        None => None
                     }
-                    None => None,
-                },
+                }
             }
         };
+        
         Self {
             left,
             tokens: vec![token],
@@ -86,20 +89,19 @@ impl<'a> Expression<'a> {
     }
 
     pub fn is_complete(&self) -> bool {
-        let left = self.left.unwrap().as_ref().into_inner();
-        let right = self.right.unwrap().as_ref().into_inner();
-        self.left.is_some()
-            && Expression::check_is_expression_member_complete(&left)
-            && self.operation.is_some()
-            && self.right.is_some()
-            && Expression::check_is_expression_member_complete(&right)
+        self.left.is_some() 
+        && Expression::check_is_expression_member_complete(self.left.as_ref().unwrap())
+        && self.operation.is_some()
+        && self.right.is_some()
+        && Expression::check_is_expression_member_complete(self.right.as_ref().unwrap())
     }
+
 
     fn check_is_expression_member_complete(em: &ExpressionMember) -> bool {
         match em {
             ExpressionMember::Token(_) => true,
             ExpressionMember::Expression(child, complete) => child.is_complete() && *complete,
-            ExpressionMember::ContextExpression(blk, complete) => blk.is_complete() && *complete,
+            ExpressionMember::ContextExpression(blk, complete) => blk.is_complete() && *complete
         }
     }
 
@@ -107,294 +109,287 @@ impl<'a> Expression<'a> {
         self.tokens.push(token);
 
         if self.left.is_some() {
-            let left = self.left.unwrap().get_mut();
-
-            if Expression::check_is_expression_member_complete(left) {
+            if Expression::check_is_expression_member_complete(self.left.unwrap().as_ref()) {
                 if self.operation.is_some() && self.right.is_none() {
                     match Expression::parse_operation_second_token(self.operation.unwrap(), token) {
                         Some(op) => {
                             self.operation = Some(op);
                             None
-                        }
-                        None => match Expression::parse_right(token) {
-                            Some(right) => {
-                                self.right = Some(right);
-                                None
-                            }
-                            None => match Expression::parse_bracket(token) {
-                                Some((closing, expression)) => {
-                                    if !closing {
-                                        self.right = Some(expression);
-                                        None
-                                    } else {
-                                        Some(vec![ParserError::UnexpectedToken])
+                        },
+                        None => {
+                            match Expression::parse_right(token) {
+                                Some(right) => {
+                                    self.right = Some(right);
+                                    None
+                                }
+                                None => {
+                                    match Expression::parse_bracket(token) {
+                                        Some((closing, expression)) => {
+                                            if !closing {
+                                                self.right = Some(expression);
+                                                None
+                                            }
+                                            else {
+                                                Some(vec![ParserError::UnexpectedToken])
+                                            }
+                                        },
+                                        None => {
+                                            Some(vec![ParserError::InvalidExpression])
+                                        }
                                     }
                                 }
-                                None => Some(vec![ParserError::InvalidExpression]),
-                            },
-                        },
+                            }
+                        }
                     }
-                } else if self.right.is_some() && self.operation.is_some() {
-                    let right = self.right.unwrap().as_ref().get_mut();
-
-                    if Expression::check_is_expression_member_complete(&right)
-                    {
+                }
+                else if self.right.is_some() && self.operation.is_some(){
+                    if Expression::check_is_expression_member_complete(self.right.unwrap().as_ref()) {
                         match Expression::parse_operation_first_token(token) {
                             Some(op) => {
-                                self.right = Some(Rc::new(RefCell::new(ExpressionMember::Expression(
-                                    Expression {
-                                        left: self.right.clone(),
-                                        operation: Some(op),
-                                        ..Default::default()
-                                    },
-                                    false,
-                                ))));
+                                self.right = Some(Rc::new(ExpressionMember::Expression(Expression {
+                                    left: self.right.clone(),
+                                    operation: Some(op),
+                                    ..Default::default()
+                                }, false)));
                                 None
+                            },
+                            None => {
+                                Some(vec![ParserError::InvalidExpression])
                             }
-                            None => Some(vec![ParserError::InvalidExpression]),
                         }
-                    } else {
+                    }
+                    else {
                         match Expression::parse_bracket(token) {
                             Some((closing, expression)) => {
                                 if !closing {
                                     self.right = Some(expression);
                                     None
-                                } else {
-                                    match right {
+                                }
+                                else {
+                                    match self.right.unwrap().borrow() {
                                         ExpressionMember::Expression(expr, _) => {
-                                            match expression.as_ref().into_inner() {
+                                            match expression.as_ref() {
                                                 ExpressionMember::Expression(_, _) => {
-                                                    self.right = Some(Rc::new(RefCell::new(
-                                                        ExpressionMember::Expression(
-                                                            expr.clone(),
-                                                            true,
-                                                        ),
-                                                    )));
+                                                    self.right = Some(Rc::new(ExpressionMember::Expression(expr.clone(), true)));
                                                     None
                                                 }
-                                                _ => Some(vec![ParserError::InvalidExpression]),
+                                                _ => {
+                                                    Some(vec![ParserError::InvalidExpression])        
+                                                }
                                             }
-                                        }
+                                        },
                                         ExpressionMember::ContextExpression(blk, _) => {
-                                            match expression.as_ref().into_inner() {
+                                            match expression.as_ref() {
                                                 ExpressionMember::ContextExpression(_, _) => {
-                                                    self.right = Some(Rc::new(RefCell::new(
-                                                        ExpressionMember::ContextExpression(
-                                                            blk.clone(),
-                                                            true,
-                                                        ),
-                                                    )));
+                                                    self.right = Some(Rc::new(ExpressionMember::ContextExpression(blk.clone(), true)));
                                                     None
                                                 }
-                                                _ => Some(vec![ParserError::InvalidExpression]),
+                                                _ => {
+                                                    Some(vec![ParserError::InvalidExpression])        
+                                                }
                                             }
+                                        },
+                                        _ => {
+                                            Some(vec![ParserError::InvalidExpression])
                                         }
-                                        _ => Some(vec![ParserError::InvalidExpression]),
+                                    }
+                                }
+                            },
+                            None => {
+                                match self.right.unwrap().borrow() {
+                                    ExpressionMember::Expression(mut expr, _) => {
+                                        expr.append_token(token)
+                                    },
+                                    ExpressionMember::ContextExpression(mut blk, _) => {
+                                        blk.expression.append_token(token)
+                                    },
+                                    _ => {
+                                        Some(vec![ParserError::InvalidExpression])
                                     }
                                 }
                             }
-                            None => match right {
-                                ExpressionMember::Expression(mut expr, _) => {
-                                    expr.append_token(token)
-                                }
-                                ExpressionMember::ContextExpression(mut blk, _) => {
-                                    blk.expression.append_token(token)
-                                }
-                                _ => Some(vec![ParserError::InvalidExpression]),
-                            },
                         }
                     }
-                } else {
+                }
+                else {
                     match Expression::parse_operation_first_token(token) {
                         Some(op) => {
                             self.operation = Some(op);
                             None
                         }
-                        None => Some(vec![ParserError::InvalidExpression]),
+                        None => {
+                            Some(vec![ParserError::InvalidExpression])
+                        }
                     }
                 }
-            } else {
-                match left {
-                    ExpressionMember::Expression(mut expr, _) => expr.append_token(token),
+            }
+            else {
+                match self.left.unwrap().borrow() {
+                    ExpressionMember::Expression(mut expr, _) => {
+                        expr.append_token(token)
+                    },
                     ExpressionMember::ContextExpression(mut blk, _) => {
                         blk.expression.append_token(token)
-                    }
-                    _ => Some(vec![ParserError::InvalidExpression]),
+                    },
+                    _ => {
+                        Some(vec![ParserError::InvalidExpression])
+                    },
                 }
-                // RefMut::map(left, |em| {
-                // })
             }
-        } else {
+        }
+        else {
             match Expression::parse_left(token) {
                 Some(em) => {
                     self.left = Some(em);
                     None
-                }
-                None => match Expression::parse_bracket(token) {
-                    Some((closing, nested_expression)) => {
-                        if !closing {
-                            self.left = Some(nested_expression);
-                            None
-                        } else {
-                            Some(vec![ParserError::UnexpectedToken])
-                        }
-                    }
-                    None => Some(vec![ParserError::InvalidExpression]),
                 },
+                None => {
+                    match Expression::parse_bracket(token) {
+                        Some((closing, nested_expression)) => {
+                            if !closing {
+                                self.left = Some(nested_expression);
+                                None
+                            }
+                            else {
+                                Some(vec![ParserError::UnexpectedToken])
+                            }
+                        }
+                        None => Some(vec![ParserError::InvalidExpression])
+                    }
+                }
             }
         }
     }
 
-    fn parse_left(token: Token) -> Option<Rc<RefCell<ExpressionMember>>> {
+    
+
+    fn parse_left(token: Token) -> Option<Rc<ExpressionMember>> {
         match token.kind.unwrap() {
             TokenKind::Identifier(_)
             | TokenKind::Int(_)
             | TokenKind::Float(_)
-            | TokenKind::StringLiteral(_) => {
-                Some(Rc::new(RefCell::new(ExpressionMember::Token(token))))
-            }
-            _ => None,
+            | TokenKind::StringLiteral(_) => Some(Rc::new(ExpressionMember::Token(token))),
+            _ => None
         }
     }
 
-    fn parse_right(token: Token) -> Option<Rc<RefCell<ExpressionMember>>> {
+    fn parse_right(token: Token) -> Option<Rc<ExpressionMember>> {
         match token.kind.unwrap() {
             TokenKind::Identifier(_)
             | TokenKind::Int(_)
             | TokenKind::Float(_)
-            | TokenKind::StringLiteral(_) => {
-                Some(Rc::new(RefCell::new(ExpressionMember::Token(token))))
-            }
-            _ => None,
+            | TokenKind::StringLiteral(_) => Some(Rc::new(ExpressionMember::Token(token))),
+            _ => None
         }
     }
 
-    fn parse_bracket(token: Token) -> Option<(bool, Rc<RefCell<ExpressionMember>>)> {
+    fn parse_bracket(token: Token) -> Option<(bool, Rc<ExpressionMember>)> {
         match token.kind.unwrap() {
-            TokenKind::OpenParentheses => Some((
-                false,
-                Rc::new(RefCell::new(ExpressionMember::Expression(
-                    Expression::default(),
-                    false,
-                ))),
-            )),
-            TokenKind::OpenCurlyBrace => Some((
-                false,
-                Rc::new(RefCell::new(ExpressionMember::ContextExpression(
-                    Block::default(),
-                    false,
-                ))),
-            )),
+            TokenKind::OpenParentheses => Some((false, Rc::new(ExpressionMember::Expression(Expression::default(), false)))),
+            TokenKind::OpenCurlyBrace => Some((false, Rc::new(ExpressionMember::ContextExpression(Block::default(), false)))),
 
-            TokenKind::CloseParentheses => Some((
-                true,
-                Rc::new(RefCell::new(ExpressionMember::Expression(
-                    Expression::default(),
-                    true,
-                ))),
-            )),
-            TokenKind::CloseCurlyBrace => Some((
-                true,
-                Rc::new(RefCell::new(ExpressionMember::ContextExpression(
-                    Block::default(),
-                    true,
-                ))),
-            )),
+            TokenKind::CloseParentheses => Some((true, Rc::new(ExpressionMember::Expression(Expression::default(), true)))),
+            TokenKind::CloseCurlyBrace => Some((true, Rc::new(ExpressionMember::ContextExpression(Block::default(), true)))),
 
-            _ => None,
+            _ => None
         }
     }
 
     fn parse_operation_first_token(token: Token) -> Option<OperationKind> {
         match token.kind.unwrap() {
             TokenKind::Plus => Some(OperationKind::MathOperation(MathOperation::Sum)),
-            TokenKind::Minus => Some(OperationKind::MathOperation(MathOperation::Subtract)),
-            TokenKind::Asterisk => Some(OperationKind::MathOperation(MathOperation::Multiply)),
-            TokenKind::Slash => Some(OperationKind::MathOperation(MathOperation::Divide)),
-            TokenKind::Percent => Some(OperationKind::MathOperation(MathOperation::Reminder)),
-            TokenKind::Power => Some(OperationKind::MathOperation(MathOperation::Power)),
-
-            TokenKind::Greater => Some(OperationKind::ComparisonOperation(
-                ComparisonOperation::GtCompare,
-            )),
-            TokenKind::Less => Some(OperationKind::ComparisonOperation(
-                ComparisonOperation::LsCompare,
-            )),
+            TokenKind::Minus => Some(OperationKind:: MathOperation(MathOperation::Subtract)),
+            TokenKind::Asterisk => Some(OperationKind:: MathOperation(MathOperation::Multiply)),
+            TokenKind::Slash => Some(OperationKind:: MathOperation(MathOperation::Divide)),
+            TokenKind::Percent => Some(OperationKind:: MathOperation(MathOperation::Reminder)),
+            TokenKind::Power => Some(OperationKind:: MathOperation(MathOperation::Power)),
+            
+            TokenKind::Greater => Some(OperationKind::ComparisonOperation(ComparisonOperation::GtCompare)),
+            TokenKind::Less => Some(OperationKind::ComparisonOperation(ComparisonOperation::LsCompare)),
+            
             TokenKind::Ampersand => Some(OperationKind::LogicOperation(LogicOperation::AND)),
             TokenKind::Pipe => Some(OperationKind::LogicOperation(LogicOperation::OR)),
-            TokenKind::Exclamation => Some(OperationKind::LogicOperation(LogicOperation::NOT)),
+            TokenKind::Exclamation=> Some(OperationKind::LogicOperation(LogicOperation::NOT)),
+            
             TokenKind::Equals => Some(OperationKind::Assign),
-
-            _ => None,
+            
+            _ => None
         }
     }
 
     fn parse_operation_second_token(op: OperationKind, token: Token) -> Option<OperationKind> {
         match token.kind.unwrap() {
-            TokenKind::Equals => match op {
-                OperationKind::MathOperation(m_op) => match m_op {
-                    MathOperation::Sum => {
-                        Some(OperationKind::MathOperation(MathOperation::AddAssign))
-                    }
-                    MathOperation::Subtract => {
-                        Some(OperationKind::MathOperation(MathOperation::SubtractAssign))
-                    }
-                    _ => None,
-                },
-                OperationKind::ComparisonOperation(c_op) => match c_op {
-                    ComparisonOperation::GtCompare => Some(OperationKind::ComparisonOperation(
-                        ComparisonOperation::GtEqCompare,
-                    )),
-                    ComparisonOperation::LsCompare => Some(OperationKind::ComparisonOperation(
-                        ComparisonOperation::LsEqCompare,
-                    )),
-                    _ => None,
-                },
-                OperationKind::LogicOperation(l_op) => match l_op {
-                    LogicOperation::NOT => Some(OperationKind::ComparisonOperation(
-                        ComparisonOperation::NEqCompare,
-                    )),
-                    _ => None,
-                },
-                OperationKind::Assign => Some(OperationKind::ComparisonOperation(
-                    ComparisonOperation::EqCompare,
-                )),
+            TokenKind::Equals => {
+                match op {
+                    OperationKind::MathOperation(m_op) => {
+                        match m_op {
+                            MathOperation::Sum => Some(OperationKind::MathOperation(MathOperation::AddAssign)),
+                            MathOperation::Subtract => Some(OperationKind::MathOperation(MathOperation::SubtractAssign)),
+                            _ => None
+                        }
+                    },
+                    OperationKind::ComparisonOperation(c_op) => {
+                        match c_op {
+                            ComparisonOperation::GtCompare => Some(OperationKind::ComparisonOperation(ComparisonOperation::GtEqCompare)),
+                            ComparisonOperation::LsCompare => Some(OperationKind::ComparisonOperation(ComparisonOperation::LsEqCompare)),
+                            _ => None
+                        }
+                    },
+                    OperationKind::LogicOperation(l_op) => {
+                        match l_op {
+                            LogicOperation::NOT => Some(OperationKind::ComparisonOperation(ComparisonOperation::NEqCompare)),
+                            _ => None
+                        }
+                    },
+                    OperationKind::Assign => Some(OperationKind::ComparisonOperation(ComparisonOperation::EqCompare)),
+                }
             },
-            TokenKind::Ampersand => match op {
-                OperationKind::LogicOperation(l_op) => match l_op {
-                    LogicOperation::NOT => {
-                        Some(OperationKind::LogicOperation(LogicOperation::NAND))
-                    }
-                    _ => None,
-                },
-                _ => None,
+            TokenKind::Ampersand => {
+                match op {
+                    OperationKind::LogicOperation(l_op) => {
+                        match l_op {
+                            LogicOperation::NOT => Some(OperationKind::LogicOperation(LogicOperation::NAND)),
+                            _ => None
+                        }
+                    },
+                    _ => None
+                }
             },
-            TokenKind::Pipe => match op {
-                OperationKind::LogicOperation(l_op) => match l_op {
-                    LogicOperation::OR => Some(OperationKind::LogicOperation(LogicOperation::XOR)),
-                    LogicOperation::NOT => {
-                        Some(OperationKind::LogicOperation(LogicOperation::XNOR))
-                    }
-                    _ => None,
-                },
-                _ => None,
+            TokenKind::Pipe => {
+                match op {
+                    OperationKind::LogicOperation(l_op) => {
+                        match l_op {
+                            LogicOperation::OR => Some(OperationKind::LogicOperation(LogicOperation::XOR)),
+                            LogicOperation::NOT => Some(OperationKind::LogicOperation(LogicOperation::XNOR)),
+                            _ => None
+                        }
+                    },
+                    _ => None
+                }
             },
-            TokenKind::Exclamation => match op {
-                OperationKind::LogicOperation(l_op) => match l_op {
-                    LogicOperation::NOT => Some(OperationKind::LogicOperation(LogicOperation::NOR)),
-                    _ => None,
-                },
-                _ => None,
+            TokenKind::Exclamation => {
+                match op {
+                    OperationKind::LogicOperation(l_op) => {
+                        match l_op {
+                            LogicOperation::NOT => Some(OperationKind::LogicOperation(LogicOperation::NOR)),
+                            _ => None
+                        }
+                    },
+                    _ => None
+                }
             },
-            _ => None,
+            _ => None
         }
     }
+
 }
 
 // use ra_lexer::token::{Token, TokenKind};
 // // use std::rc::Rc;
 // use super::errors::ParserError;
 // // use std::slice::SliceIndex;
+
+
 
 // #[derive(Debug, Clone, PartialEq, Copy)]
 // pub enum ExpressionMember{
@@ -409,6 +404,7 @@ impl<'a> Expression<'a> {
 // pub struct OutputExpression {
 //     members: [Box<ExpressionMember>; 3]
 // }
+
 
 // impl Default for OutputExpression {
 //     fn default() -> Self {
