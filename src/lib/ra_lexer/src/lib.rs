@@ -55,15 +55,8 @@ impl <'a> Cursor<'a> {
                 '*' => self.multi_line_comment(start_position.clone()),
                 _ => self.single_character_token(TokenKind::Slash, start_position, start_consumed),
             },
-            '>' => match self.first_ahead() {
-                '=' => self.two_characters_token(first_char, self.position.clone(), start_consumed),
-                _ => self.single_character_token(TokenKind::Greater, start_position, start_consumed)
-            },
-            '<' => match self.first_ahead() {
-                '=' => self.two_characters_token(first_char, self.position.clone(), start_consumed),
-                _ => self.single_character_token(TokenKind::Less, start_position, start_consumed)
-            },
-            '`' => self.content_block(start_position.clone()),
+            '>' => self.single_character_token(TokenKind::Greater, start_position, start_consumed),
+            '<' => self.single_character_token(TokenKind::Less, start_position, start_consumed),
             '!' => self.single_character_token(TokenKind::Exclamation, start_position, start_consumed),
             '?' => self.single_character_token(TokenKind::Question, start_position, start_consumed),
             '{' => self.single_character_token(TokenKind::OpenCurlyBrace, start_position, start_consumed),
@@ -87,6 +80,7 @@ impl <'a> Cursor<'a> {
             '$' => self.single_character_token(TokenKind::Dollar, start_position, start_consumed),
             '^' => self.single_character_token(TokenKind::Power, start_position, start_consumed),
             '~' => self.single_character_token(TokenKind::Tilde, start_position, start_consumed),
+            '`' => self.content_block(start_position.clone()),
             '-' => {
                 match self.first_ahead() {
                     c if c.is_numeric() => self.number(start_position),
@@ -111,34 +105,6 @@ impl <'a> Cursor<'a> {
             len: 1,
             ..Default::default()
         })
-    }
-
-    fn two_characters_token(&mut self, first_character: char, start_position: Position, start_consumed: usize) -> Result<Token<'a>, LexerError> {
-        match first_character {
-            '>' => {
-                match self.bump().unwrap() {
-                    '=' => Ok(Token{
-                        kind: Some(TokenKind::GreaterOrEquals), 
-                        len: 2,
-                        content: self.slice(start_consumed, self.len_consumed()),
-                        position: (start_position, self.position.clone()),
-                        ..Default::default()
-                    }),
-                    c => Err(LexerError::UnexpectedCharacter(c.clone()))
-                }
-            },
-            '<' => {
-                match self.bump().unwrap() {
-                    '=' => Ok(Token{
-                        kind: Some(TokenKind::LessOrEquals), 
-                        len: 2, position: (start_position, self.position.clone()), 
-                        content: self.slice(start_consumed, self.len_consumed()),
-                        ..Default::default()}),
-                    c => Err(LexerError::UnexpectedCharacter(c.clone()))
-                }
-            },
-            c => Err(LexerError::UnexpectedCharacter(c.clone()))
-        }
     }
 
     fn string_literal(&mut self, opening_quote: char, start_position: Position) -> Result<Token<'a>, LexerError> {
@@ -595,19 +561,6 @@ mod tests {
             position: (Position(2, 1), Position(2, 4)),
             len: 3,
             level: 1,
-        })
-    }
-
-    #[test]
-    fn it_should_parse_two_character_tokens() {
-        let mut stream = tokenize("123 >= abc");
-        stream.next();
-        assert_eq!(stream.next().unwrap(), Token{
-            kind: Some(TokenKind::GreaterOrEquals),
-            len: 2,
-            content: ">=",
-            position: (Position(1, 5), Position(1, 6)),
-            ..Default::default()
         })
     }
 

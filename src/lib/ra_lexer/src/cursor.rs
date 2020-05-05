@@ -9,6 +9,12 @@ pub(crate) const EOL_CHAR: char = '\n';
 #[derive(Copy, Clone, PartialEq)]
 pub struct Position(pub u16, pub u16);
 
+impl Default for Position {
+    fn default() -> Self {
+        Position(0, 0)
+    }
+}
+
 impl fmt::Debug for Position {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "[{}:{}]", self.0, self.1)
@@ -19,7 +25,6 @@ pub(crate) struct Cursor<'a> {
     input: &'a str,
     initial_len: usize,
     chars: Chars<'a>,
-    is_reading_continuous_block_at: (bool, u16),
     pub position: Position,
     pub level: u16,
     pub indent_width: u16,
@@ -69,8 +74,7 @@ impl <'a> Cursor<'a> {
             chars: input.chars(),
             position,
             level,
-            indent_width,
-            is_reading_continuous_block_at: (false, 0)
+            indent_width
         }
     }
 
