@@ -1,7 +1,6 @@
 use std::str::Chars;
 use std::fmt;
 use super::errors::LexerError;
-use std::convert::TryInto;
 
 pub(crate) const EOF_CHAR: char = '\0';
 pub(crate) const EOL_CHAR: char = '\n';
@@ -168,94 +167,5 @@ impl <'a> Cursor<'a> {
         }
 
         eaten
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::{Cursor, Position};
-    #[test]
-    fn it_should_create() {
-        Cursor::new("abc", Position(1, 0), 0, 0);
-    }
-
-    #[test]
-    fn it_should_give_first_char() {
-        let cur = Cursor::new("abc", Position(1, 0), 0, 0);
-        assert_eq!(cur.first_ahead(), 'a');
-    }
-
-    #[test]
-    fn it_should_give_second_char() {
-        let cur = Cursor::new("abc", Position(1, 0), 0, 0);
-        assert_eq!(cur.second_ahead(), 'b');
-    }
-
-    #[test]
-    fn it_should_return_next_char() {
-        let mut cur = Cursor::new("a", Position(1, 0), 0, 0);
-        assert_eq!(cur.bump().unwrap(), 'a');
-    }
-
-    #[test]
-    fn it_should_return_none_at_end_of_input() {
-        let mut cur = Cursor::new("a", Position(1, 0), 0, 0);
-        cur.bump();
-        assert_eq!(cur.bump(), None);
-    }
-
-    #[test]
-    fn it_should_confirm_eof() {
-        let mut cur = Cursor::new("a", Position(1, 0), 0, 0);
-        cur.bump();
-        cur.bump();
-        cur.bump();
-        assert_eq!(cur.is_eof(), true);
-    }
-
-    #[test]
-    fn it_should_return_amount_of_consumed_symbols() {
-        let mut cur = Cursor::new("abc", Position(1, 0), 0, 0);
-        cur.bump();
-        cur.bump();
-        cur.bump();
-        assert_eq!(cur.len_consumed(), 3);
-    }
-
-    #[test]
-    fn it_should_not_panic_when_encountering_funny_characters() {
-        let mut cur = Cursor::new("🚬", Position(1, 0), 0, 0);
-        assert_eq!(cur.bump().unwrap(), '🚬');
-    }
-
-    #[test]
-    fn it_should_track_position() {
-        let mut cur = Cursor::new("abc\nSOME", Position(1, 0), 0, 0);
-        assert_eq!(cur.bump().unwrap(), 'a');
-        assert_eq!(cur.position, Position(1, 1));
-        assert_eq!(cur.bump().unwrap(), 'b');
-        assert_eq!(cur.position, Position(1, 2));
-        assert_eq!(cur.bump().unwrap(), 'c');
-        assert_eq!(cur.position, Position(1, 3));
-        assert_eq!(cur.bump().unwrap(), 'S');
-        assert_eq!(cur.position, Position(2, 1));
-        assert_eq!(cur.bump().unwrap(), 'O');
-        assert_eq!(cur.position, Position(2, 2));
-        assert_eq!(cur.bump().unwrap(), 'M');
-        assert_eq!(cur.position, Position(2, 3));
-    }
-
-    #[test]
-    fn it_should_track_indent_level() {
-        let mut cur = Cursor::new("a\n\tb\n\t\tc\nd", Position(1, 0), 0, 0);
-        assert_eq!(cur.bump().unwrap(), 'a');
-        assert_eq!(cur.level, 0);
-        assert_eq!(cur.bump().unwrap(), 'b');
-        assert_eq!(cur.level, 1);
-        assert_eq!(cur.bump().unwrap(), 'c');
-        assert_eq!(cur.level, 2);
-        assert_eq!(cur.position, Position(3, 3));
-        assert_eq!(cur.bump().unwrap(), 'd');
-        assert_eq!(cur.level, 0);
     }
 }
