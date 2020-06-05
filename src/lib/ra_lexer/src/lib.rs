@@ -21,7 +21,7 @@ fn tokenize_cursor<'a>(mut cursor: Cursor<'a>) -> impl Iterator<Item = Token<'a>
                 match t.kind {
                     Some(_) => Some(t),
                     None => {
-                        panic!("{:?}", LexerError::UnsupportedToken)
+                        panic!("{:?}", LexerError::UnsupportedToken(cursor.position))
                     }
                 }
             },
@@ -39,7 +39,7 @@ impl <'a> Cursor<'a> {
         let mut start_position = self.position.clone();
         let first_char = match self.bump() {
             Some(ch) => ch,
-            None => return Err(LexerError::UnexpectedEndOfInput)
+            None => return Err(LexerError::UnexpectedEndOfInput(self.position))
         };
  
         if self.position.0 > start_position.0 {
@@ -92,7 +92,7 @@ impl <'a> Cursor<'a> {
             c if c == '\'' => self.string_literal(c, start_position),
             c if c == '"' => self.string_literal(c, start_position),
             c if is_whitespace(&c) || is_end_of_line(&c) => self.advance_token(),
-            c => Err(LexerError::UnexpectedCharacter(c.clone()))
+            c => Err(LexerError::UnexpectedCharacter(c.clone(), start_position))
         }
     }
 
@@ -116,7 +116,7 @@ impl <'a> Cursor<'a> {
 
         loop {
             if self.position.0 > start_position.0 {
-                return Err(LexerError::UnexpectedEndOfLine);
+                return Err(LexerError::UnexpectedEndOfLine(self.position));
             }
 
             match self.bump() {
@@ -126,7 +126,7 @@ impl <'a> Cursor<'a> {
                         _ => {}
                     }
                 }
-                None => return Err(LexerError::UnexpectedEndOfInput)
+                None => return Err(LexerError::UnexpectedEndOfInput(self.position))
             }
         }
 
@@ -164,7 +164,7 @@ impl <'a> Cursor<'a> {
                         second_separator = next_character;
                     }
                     else if second_separator == next_character && first_separator != ' ' {
-                        return Err(LexerError::UnexpectedCharacter(next_character))
+                        return Err(LexerError::UnexpectedCharacter(next_character, self.position))
                     }
                     self.bump();
                 }
@@ -197,10 +197,16 @@ impl <'a> Cursor<'a> {
 
             if let Some(_) = num.find(decimals_separator) {
                 num = num.replace(decimals_separator, ".");
-                Some(TokenKind::Float(num.parse::<f64>().unwrap()))
+                match num.parse::<f64>() {
+                    Ok(n) => Some(TokenKind::Float(n)),
+                    Err(e) => return Err(LexerError::InvalidFloat(e, self.position))
+                }
             }
             else {
-                Some(TokenKind::Int(num.parse::<i64>().unwrap()))
+                match num.parse::<i64>() {
+                    Ok(n) => Some(TokenKind::Int(n)),
+                    Err(e) => return Err(LexerError::InvalidInt(e, self.position))
+                }
             }
         };
 
@@ -243,7 +249,7 @@ impl <'a> Cursor<'a> {
         while let Some(ch) = self.bump() {
             if self.level < initial_level {
                 if !is_end_of_line(&ch) {
-                    return Err(LexerError::UnexpectedIndentLevel);
+                    return Err(LexerError::UnexpectedIndentLevel(self.level, self.position));
                 }
             }
             else if self.level == initial_level && ch == '`' {
@@ -253,7 +259,7 @@ impl <'a> Cursor<'a> {
         }
 
         if !block_closed {
-            return Err(LexerError::UnexpectedEndOfInput);
+            return Err(LexerError::UnexpectedEndOfInput(self.position));
         }
 
         content_block.content = self.slice(start_consumed + 1, self.len_consumed() - 1);

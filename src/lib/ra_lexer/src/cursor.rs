@@ -20,6 +20,12 @@ impl fmt::Debug for Position {
     }
 }
 
+impl fmt::Display for Position {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "[{}:{}]", self.0, self.1)
+    }
+}
+
 pub(crate) struct Cursor<'a> {
     input: &'a str,
     initial_len: usize,
@@ -150,7 +156,7 @@ impl <'a> Cursor<'a> {
                     self.level =  inner_width / self.indent_width;
                 } 
                 else {
-                    panic!(LexerError::UnexpectedIndentLevel);
+                    panic!(LexerError::UnexpectedIndentLevel(inner_width, self.position));
                 }
             }
         }
