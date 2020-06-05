@@ -26,7 +26,7 @@ fn tokenize_cursor<'a>(mut cursor: Cursor<'a>) -> impl Iterator<Item = Token<'a>
                 }
             },
             Err(e) => {
-                // println!("{:?}", cursor.position);
+                println!("{:?}", cursor.position);
                 panic!("{:?}", e);
             }
         }
@@ -274,8 +274,10 @@ impl <'a> Cursor<'a> {
         let start_consumed = self.len_consumed();
 
         while let Some(_) = self.bump() {
-            if self.position.0 != start_position.0 {
-                break;
+            match self.first_ahead() {
+                c if is_end_of_line(&c) => break,
+                EOF_CHAR => break,
+                _ => {}
             }
         };
 

@@ -91,6 +91,11 @@ mod cursor {
 
 mod lib {
     use super::{tokenize, Position, Token, TokenKind};
+    use insta::assert_debug_snapshot;
+    use utils::files_from_dir_recursively;
+    use std::ffi::OsStr;
+    use std::fs::File;
+    use std::io::Read;
 
     #[test]
     fn it_should_create_iterator_of_tokens() {
@@ -130,6 +135,24 @@ mod lib {
                 level: 0
             }
         );
+    }
+
+    #[test]
+    fn it_should_match_snapshots() {
+        files_from_dir_recursively("../../../examples")
+            .into_iter()
+            .filter(|f| f.path().extension().and_then(OsStr::to_str).unwrap_or("") == "ra")
+            .for_each(|example| {
+                let mut file = File::open(example.path()).unwrap();
+    
+                let mut contents = String::new();
+                file.read_to_string(&mut contents).unwrap();
+
+                println!("{}", example.file_name().to_str().unwrap());
+
+                let tokens: Vec<Token> = tokenize(&contents).collect();
+                assert_debug_snapshot!(example.path().to_str().unwrap(), tokens)
+        });
     }
 
     mod strings {
@@ -190,6 +213,47 @@ mod lib {
                     content: "abc\nSOME",
                     position: (Position(1, 0), Position(2, 6)),
                     len: 12,
+                    level: 0
+                }
+            );
+        }
+
+        #[test]
+        fn it_should_parse_multi_line_comments_with_fringe() {
+            let mut stream = tokenize("/*\n* abc\n* SOME\n*/");
+            assert_eq!(
+                stream.next().unwrap(),
+                Token {
+                    kind: Some(TokenKind::Comment),
+                    content: "\n* abc\n* SOME\n",
+                    position: (Position(1, 0), Position(4, 2)),
+                    len: 18,
+                    level: 0
+                }
+            );
+        }
+
+        #[test]
+        fn it_should_parse_comments_followed_by_one_another() {
+            let mut stream = tokenize("//some\n\n/*\n* abc\n* SOME\n*/");
+            assert_eq!(
+                stream.next().unwrap(),
+                Token {
+                    kind: Some(TokenKind::Comment),
+                    content: "some",
+                    position: (Position(1, 0), Position(1, 6)),
+                    len: 6,
+                    level: 0
+                }
+            );
+
+            assert_eq!(
+                stream.next().unwrap(),
+                Token {
+                    kind: Some(TokenKind::Comment),
+                    content: "\n* abc\n* SOME\n",
+                    position: (Position(3, 0), Position(6, 2)),
+                    len: 18,
                     level: 0
                 }
             );
@@ -423,4 +487,6 @@ mod lib {
             );
         }
     }
+
+
 }

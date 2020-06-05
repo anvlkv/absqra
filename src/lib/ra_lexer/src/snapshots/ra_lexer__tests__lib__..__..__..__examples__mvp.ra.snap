@@ -1,0 +1,444 @@
+---
+source: src/lib/ra_lexer/src/tests.rs
+expression: tokens
+---
+[
+    Token {
+        kind: Some(
+            Comment,
+        ),
+        len: 60,
+        content: " this file is my todo list and also should render like one",
+        position: (
+            [1:0],
+            [1:60],
+        ),
+        level: 0,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "parseBlocks",
+            ),
+        ),
+        len: 11,
+        content: "parseBlocks",
+        position: (
+            [3:0],
+            [3:11],
+        ),
+        level: 0,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 14,
+        content: "parse blocks",
+        position: (
+            [4:4],
+            [4:18],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 26,
+        content: "and funny chars too 😠",
+        position: (
+            [5:4],
+            [5:27],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 5,
+        content: "₰",
+        position: (
+            [6:4],
+            [6:7],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 4,
+        content: "Ͽ",
+        position: (
+            [7:4],
+            [7:7],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            Greater,
+        ),
+        len: 1,
+        content: ">",
+        position: (
+            [8:8],
+            [8:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Exclamation,
+        ),
+        len: 1,
+        content: "!",
+        position: (
+            [9:12],
+            [9:13],
+        ),
+        level: 3,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "choice",
+            ),
+        ),
+        len: 6,
+        content: "choice",
+        position: (
+            [9:13],
+            [9:19],
+        ),
+        level: 3,
+    },
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [9:19],
+            [9:20],
+        ),
+        level: 3,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "multiple",
+            ),
+        ),
+        len: 8,
+        content: "multiple",
+        position: (
+            [9:20],
+            [9:28],
+        ),
+        level: 3,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "parseDifferentTypesOfBlocks",
+            ),
+        ),
+        len: 27,
+        content: "parseDifferentTypesOfBlocks",
+        position: (
+            [11:0],
+            [11:27],
+        ),
+        level: 0,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 10,
+        content: "comments",
+        position: (
+            [12:4],
+            [12:14],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 17,
+        content: "var declaration",
+        position: (
+            [13:4],
+            [13:21],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 18,
+        content: "rule declaration",
+        position: (
+            [14:4],
+            [14:22],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 14,
+        content: "applied rule",
+        position: (
+            [15:4],
+            [15:18],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 13,
+        content: "input block",
+        position: (
+            [16:4],
+            [16:17],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 18,
+        content: "context switches",
+        position: (
+            [17:4],
+            [17:22],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 15,
+        content: "content block",
+        position: (
+            [18:4],
+            [18:19],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            Greater,
+        ),
+        len: 1,
+        content: ">",
+        position: (
+            [19:8],
+            [19:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Exclamation,
+        ),
+        len: 1,
+        content: "!",
+        position: (
+            [20:12],
+            [20:13],
+        ),
+        level: 3,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "choice",
+            ),
+        ),
+        len: 6,
+        content: "choice",
+        position: (
+            [20:13],
+            [20:19],
+        ),
+        level: 3,
+    },
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [20:19],
+            [20:20],
+        ),
+        level: 3,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "multiple",
+            ),
+        ),
+        len: 8,
+        content: "multiple",
+        position: (
+            [20:20],
+            [20:28],
+        ),
+        level: 3,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "generateRuntime",
+            ),
+        ),
+        len: 15,
+        content: "generateRuntime",
+        position: (
+            [22:0],
+            [22:15],
+        ),
+        level: 0,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 16,
+        content: "render content",
+        position: (
+            [23:4],
+            [23:20],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 15,
+        content: "render inputs",
+        position: (
+            [24:4],
+            [24:19],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 62,
+        content: "group inputs as long as there no dependency on previous step",
+        position: (
+            [25:4],
+            [25:66],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 15,
+        content: "execute logic",
+        position: (
+            [26:4],
+            [26:19],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 13,
+        content: "apply rules",
+        position: (
+            [27:4],
+            [27:17],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            Greater,
+        ),
+        len: 1,
+        content: ">",
+        position: (
+            [28:8],
+            [28:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Exclamation,
+        ),
+        len: 1,
+        content: "!",
+        position: (
+            [29:12],
+            [29:13],
+        ),
+        level: 3,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "choice",
+            ),
+        ),
+        len: 6,
+        content: "choice",
+        position: (
+            [29:13],
+            [29:19],
+        ),
+        level: 3,
+    },
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [29:19],
+            [29:20],
+        ),
+        level: 3,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "multiple",
+            ),
+        ),
+        len: 8,
+        content: "multiple",
+        position: (
+            [29:20],
+            [29:28],
+        ),
+        level: 3,
+    },
+]

@@ -139,18 +139,23 @@ impl <'a> Cursor<'a> {
 
     /// Consumes indent level and returns indentation level
     fn consume_indent(&mut self) {
-        if self.indent_width == 0 {
-            self.level = 1;
-            self.indent_width = self.eat_while(|c, _| is_whitespace(&c));
+        if is_whitespace(&self.first_ahead()) {
+            if self.indent_width == 0 {
+                self.level = 1;
+                self.indent_width = self.eat_while(|c, _| is_whitespace(&c));
+            }
+            else {
+                let inner_width = self.eat_while(|c, _| is_whitespace(&c));
+                if inner_width % self.indent_width == 0 {
+                    self.level =  inner_width / self.indent_width;
+                } 
+                else {
+                    panic!(LexerError::UnexpectedIndentLevel);
+                }
+            }
         }
         else {
-            let inner_width = self.eat_while(|c, _| is_whitespace(&c));
-            if inner_width % self.indent_width == 0 {
-                self.level =  inner_width / self.indent_width;
-            } 
-            else {
-                panic!(LexerError::UnexpectedIndentLevel);
-            }
+            self.level = 0;
         }
     }
 

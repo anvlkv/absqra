@@ -1,0 +1,372 @@
+---
+source: src/lib/ra_lexer/src/tests.rs
+expression: tokens
+---
+[
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [1:0],
+            [1:1],
+        ),
+        level: 0,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "navigationItems",
+            ),
+        ),
+        len: 15,
+        content: "navigationItems",
+        position: (
+            [1:1],
+            [1:16],
+        ),
+        level: 0,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "meals",
+            ),
+        ),
+        len: 5,
+        content: "meals",
+        position: (
+            [2:4],
+            [2:9],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 36,
+        content: "ln = en\n            Meals\n        ",
+        position: (
+            [3:8],
+            [5:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 41,
+        content: "ln = ru\n            Блюда\n        ",
+        position: (
+            [6:8],
+            [8:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "countries",
+            ),
+        ),
+        len: 9,
+        content: "countries",
+        position: (
+            [9:4],
+            [9:13],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 40,
+        content: "ln = en\n            Countries\n        ",
+        position: (
+            [10:8],
+            [12:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 66,
+        content: "ln = ru\n            Национальные кухни\n        ",
+        position: (
+            [13:8],
+            [15:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "restrictions",
+            ),
+        ),
+        len: 12,
+        content: "restrictions",
+        position: (
+            [16:4],
+            [16:16],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 42,
+        content: "ln = en\n            Preferences\n        ",
+        position: (
+            [17:8],
+            [19:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 55,
+        content: "ln = ru\n            Предпочтения\n        ",
+        position: (
+            [20:8],
+            [22:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [24:0],
+            [24:1],
+        ),
+        level: 0,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "userItems",
+            ),
+        ),
+        len: 9,
+        content: "userItems",
+        position: (
+            [24:1],
+            [24:10],
+        ),
+        level: 0,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "addRecipe",
+            ),
+        ),
+        len: 9,
+        content: "addRecipe",
+        position: (
+            [25:4],
+            [25:13],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 56,
+        content: "kind = image\n            http://path.to.image\n        ",
+        position: (
+            [26:8],
+            [28:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Coma,
+        ),
+        len: 1,
+        content: ",",
+        position: (
+            [28:9],
+            [28:10],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 39,
+        content: "ln=en\n            Add recipe\n        ",
+        position: (
+            [29:8],
+            [31:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 60,
+        content: "ln = ru\n            Добавить рецепт\n        ",
+        position: (
+            [32:8],
+            [34:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "myAccount",
+            ),
+        ),
+        len: 9,
+        content: "myAccount",
+        position: (
+            [35:4],
+            [35:13],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 40,
+        content: "ln= en\n            My account\n        ",
+        position: (
+            [36:8],
+            [38:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 52,
+        content: "ln = ru\n            Мой аккаунт\n        ",
+        position: (
+            [39:8],
+            [41:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [43:0],
+            [43:1],
+        ),
+        level: 0,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "searchPlaceholder",
+            ),
+        ),
+        len: 17,
+        content: "searchPlaceholder",
+        position: (
+            [43:1],
+            [43:18],
+        ),
+        level: 0,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 35,
+        content: "ln =en\n        Find a recipe\n    ",
+        position: (
+            [44:4],
+            [46:5],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 44,
+        content: "ln=ru\n        Найти рецепт\n    ",
+        position: (
+            [47:4],
+            [49:5],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [51:0],
+            [51:1],
+        ),
+        level: 0,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "pictureLabel",
+            ),
+        ),
+        len: 12,
+        content: "pictureLabel",
+        position: (
+            [51:1],
+            [51:13],
+        ),
+        level: 0,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 30,
+        content: "ln = en\n        Picture\n    ",
+        position: (
+            [52:4],
+            [54:5],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 39,
+        content: "ln = ru\n        Картинка\n    ",
+        position: (
+            [55:4],
+            [57:5],
+        ),
+        level: 1,
+    },
+]
