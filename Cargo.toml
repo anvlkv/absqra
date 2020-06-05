@@ -4,6 +4,14 @@ version = "0.1.0"
 authors = ["a.nvlkv <a.nvlkv@protonmail.ch>"]
 edition = "2018"
 
+[workspace]
+members = [
+    "src/lib/ra_lexer",
+    "src/lib/ra_parser",
+    "src/lib/ra_interactive",
+    "src/lib/utils"
+]
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
