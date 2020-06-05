@@ -18,10 +18,10 @@ navigation,
         >   
             !options:@resources.userItems
             !select:single
-        !else
-            @resources.userItems.addRecipe
-                >
-                    !select:single
+    !else
+        @resources.userItems.addRecipe
+            >
+                !select:single
 
 !switch:navigation
     !default

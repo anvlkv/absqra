@@ -31,63 +31,15 @@ expression: tokens
     },
     Token {
         kind: Some(
-            ContentBlock,
-        ),
-        len: 14,
-        content: "parse blocks",
-        position: (
-            [4:4],
-            [4:18],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 26,
-        content: "and funny chars too 😠",
-        position: (
-            [5:4],
-            [5:27],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 5,
-        content: "₰",
-        position: (
-            [6:4],
-            [6:7],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 4,
-        content: "Ͽ",
-        position: (
-            [7:4],
-            [7:7],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
             Greater,
         ),
         len: 1,
         content: ">",
         position: (
-            [8:8],
-            [8:9],
+            [4:4],
+            [4:5],
         ),
-        level: 2,
+        level: 1,
     },
     Token {
         kind: Some(
@@ -96,10 +48,10 @@ expression: tokens
         len: 1,
         content: "!",
         position: (
-            [9:12],
-            [9:13],
+            [5:8],
+            [5:9],
         ),
-        level: 3,
+        level: 2,
     },
     Token {
         kind: Some(
@@ -110,10 +62,10 @@ expression: tokens
         len: 6,
         content: "choice",
         position: (
-            [9:13],
-            [9:19],
+            [5:9],
+            [5:15],
         ),
-        level: 3,
+        level: 2,
     },
     Token {
         kind: Some(
@@ -122,10 +74,10 @@ expression: tokens
         len: 1,
         content: ":",
         position: (
-            [9:19],
-            [9:20],
+            [5:15],
+            [5:16],
         ),
-        level: 3,
+        level: 2,
     },
     Token {
         kind: Some(
@@ -136,8 +88,94 @@ expression: tokens
         len: 8,
         content: "multiple",
         position: (
-            [9:20],
-            [9:28],
+            [5:16],
+            [5:24],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Exclamation,
+        ),
+        len: 1,
+        content: "!",
+        position: (
+            [6:8],
+            [6:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "options",
+            ),
+        ),
+        len: 7,
+        content: "options",
+        position: (
+            [6:9],
+            [6:16],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [6:16],
+            [6:17],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 14,
+        content: "parse blocks",
+        position: (
+            [7:12],
+            [7:26],
+        ),
+        level: 3,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 26,
+        content: "and funny chars too 😠",
+        position: (
+            [8:12],
+            [8:35],
+        ),
+        level: 3,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 5,
+        content: "₰",
+        position: (
+            [9:12],
+            [9:15],
+        ),
+        level: 3,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 4,
+        content: "Ͽ",
+        position: (
+            [10:12],
+            [10:15],
         ),
         level: 3,
     },
@@ -150,94 +188,10 @@ expression: tokens
         len: 27,
         content: "parseDifferentTypesOfBlocks",
         position: (
-            [11:0],
-            [11:27],
+            [12:0],
+            [12:27],
         ),
         level: 0,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 10,
-        content: "comments",
-        position: (
-            [12:4],
-            [12:14],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 17,
-        content: "var declaration",
-        position: (
-            [13:4],
-            [13:21],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 18,
-        content: "rule declaration",
-        position: (
-            [14:4],
-            [14:22],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 14,
-        content: "applied rule",
-        position: (
-            [15:4],
-            [15:18],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 13,
-        content: "input block",
-        position: (
-            [16:4],
-            [16:17],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 18,
-        content: "context switches",
-        position: (
-            [17:4],
-            [17:22],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 15,
-        content: "content block",
-        position: (
-            [18:4],
-            [18:19],
-        ),
-        level: 1,
     },
     Token {
         kind: Some(
@@ -246,10 +200,10 @@ expression: tokens
         len: 1,
         content: ">",
         position: (
-            [19:8],
-            [19:9],
+            [13:4],
+            [13:5],
         ),
-        level: 2,
+        level: 1,
     },
     Token {
         kind: Some(
@@ -258,10 +212,10 @@ expression: tokens
         len: 1,
         content: "!",
         position: (
-            [20:12],
-            [20:13],
+            [14:8],
+            [14:9],
         ),
-        level: 3,
+        level: 2,
     },
     Token {
         kind: Some(
@@ -272,10 +226,10 @@ expression: tokens
         len: 6,
         content: "choice",
         position: (
-            [20:13],
-            [20:19],
+            [14:9],
+            [14:15],
         ),
-        level: 3,
+        level: 2,
     },
     Token {
         kind: Some(
@@ -284,10 +238,10 @@ expression: tokens
         len: 1,
         content: ":",
         position: (
-            [20:19],
-            [20:20],
+            [14:15],
+            [14:16],
         ),
-        level: 3,
+        level: 2,
     },
     Token {
         kind: Some(
@@ -298,8 +252,130 @@ expression: tokens
         len: 8,
         content: "multiple",
         position: (
-            [20:20],
-            [20:28],
+            [14:16],
+            [14:24],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Exclamation,
+        ),
+        len: 1,
+        content: "!",
+        position: (
+            [15:8],
+            [15:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "options",
+            ),
+        ),
+        len: 7,
+        content: "options",
+        position: (
+            [15:9],
+            [15:16],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [15:16],
+            [15:17],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 10,
+        content: "comments",
+        position: (
+            [16:12],
+            [16:22],
+        ),
+        level: 3,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 17,
+        content: "var declaration",
+        position: (
+            [17:12],
+            [17:29],
+        ),
+        level: 3,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 18,
+        content: "rule declaration",
+        position: (
+            [18:12],
+            [18:30],
+        ),
+        level: 3,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 14,
+        content: "applied rule",
+        position: (
+            [19:12],
+            [19:26],
+        ),
+        level: 3,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 13,
+        content: "input block",
+        position: (
+            [20:12],
+            [20:25],
+        ),
+        level: 3,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 18,
+        content: "context switches",
+        position: (
+            [21:12],
+            [21:30],
+        ),
+        level: 3,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 15,
+        content: "content block",
+        position: (
+            [22:12],
+            [22:27],
         ),
         level: 3,
     },
@@ -312,70 +388,10 @@ expression: tokens
         len: 15,
         content: "generateRuntime",
         position: (
-            [22:0],
-            [22:15],
+            [24:0],
+            [24:15],
         ),
         level: 0,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 16,
-        content: "render content",
-        position: (
-            [23:4],
-            [23:20],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 15,
-        content: "render inputs",
-        position: (
-            [24:4],
-            [24:19],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 62,
-        content: "group inputs as long as there no dependency on previous step",
-        position: (
-            [25:4],
-            [25:66],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 15,
-        content: "execute logic",
-        position: (
-            [26:4],
-            [26:19],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 13,
-        content: "apply rules",
-        position: (
-            [27:4],
-            [27:17],
-        ),
-        level: 1,
     },
     Token {
         kind: Some(
@@ -384,10 +400,10 @@ expression: tokens
         len: 1,
         content: ">",
         position: (
-            [28:8],
-            [28:9],
+            [25:4],
+            [25:5],
         ),
-        level: 2,
+        level: 1,
     },
     Token {
         kind: Some(
@@ -396,10 +412,10 @@ expression: tokens
         len: 1,
         content: "!",
         position: (
-            [29:12],
-            [29:13],
+            [26:8],
+            [26:9],
         ),
-        level: 3,
+        level: 2,
     },
     Token {
         kind: Some(
@@ -410,10 +426,10 @@ expression: tokens
         len: 6,
         content: "choice",
         position: (
-            [29:13],
-            [29:19],
+            [26:9],
+            [26:15],
         ),
-        level: 3,
+        level: 2,
     },
     Token {
         kind: Some(
@@ -422,10 +438,10 @@ expression: tokens
         len: 1,
         content: ":",
         position: (
-            [29:19],
-            [29:20],
+            [26:15],
+            [26:16],
         ),
-        level: 3,
+        level: 2,
     },
     Token {
         kind: Some(
@@ -436,8 +452,106 @@ expression: tokens
         len: 8,
         content: "multiple",
         position: (
-            [29:20],
-            [29:28],
+            [26:16],
+            [26:24],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Exclamation,
+        ),
+        len: 1,
+        content: "!",
+        position: (
+            [27:8],
+            [27:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "options",
+            ),
+        ),
+        len: 7,
+        content: "options",
+        position: (
+            [27:9],
+            [27:16],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [27:16],
+            [27:17],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 16,
+        content: "render content",
+        position: (
+            [28:12],
+            [28:28],
+        ),
+        level: 3,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 15,
+        content: "render inputs",
+        position: (
+            [29:12],
+            [29:27],
+        ),
+        level: 3,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 62,
+        content: "group inputs as long as there no dependency on previous step",
+        position: (
+            [30:12],
+            [30:74],
+        ),
+        level: 3,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 15,
+        content: "execute logic",
+        position: (
+            [31:12],
+            [31:27],
+        ),
+        level: 3,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 13,
+        content: "apply rules",
+        position: (
+            [32:12],
+            [32:25],
         ),
         level: 3,
     },

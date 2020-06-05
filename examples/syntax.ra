@@ -3,77 +3,77 @@
 /*
 * this
 * is
-* multiline
-* comment
+* multi-line
+* comment 
 */
 
-this is a block name // blocks map output and define structure
+this_is_a_block_name // blocks map output and define structure
 
-this block is a variable `content` // same as block but already has a value
+this_block_is_a_variable 
+  `content` // same as block but already has a value
 
-contents might have multiple definitions // e.g. translations
-  `lang=EN
+contents_might_have_multiple_definitions // e.g. translations
+  #ln:en`
     This is content in english
   `
-  `lang = RU
+  #ln:ru`
     Этот контент на русском
   `
 
-option B
-  `lang=EN
+option_B
+  #ln:en`
     Option B
   `
-  `lang=RU
+  #ln:ru`
     Вариант Б
   `
 
-this block provides choices
+this_block_provides_choices
   > `An option` // static
   > option B // or using a variable
 
-THIS BLOCK PROVIDES A TEXT INPUT // in caps just for fun
+THIS_BLOCK_PROVIDES_A_TEXT_INPUT // in caps just for fun
   >
 
-this block provides a number input
+this_block_provides_a_number_input
   >
     !number
 
-this block provides a number input with constraints
+this_block_provides_a_number_input_with_constraints
   >
     !number:max=100:min=20
 
-this block provides a number input with constraints and a default value
+this_block_provides_a_number_input_with_constraints_and_a_default_value
   > 42
     !number:max=100:min=20
 
-this block provides an email input
+this_block_provides_an_email_input
   >
     !pattern:email
 
-block can be nested to create a sequence
-  a property // any string
+block_can_be_nested_to_create_a_sequence
+  a_property // any string
     >
-  b property // string, with 42 as its maximum length
+  b_property // string, with 42 as its maximum length
     >
       !length:max=24
 
-lists can be created as well // maximum of 3 emails
+lists_can_be_created_as_well // maximum of 3 emails
   +>
     !count:max=3
     !format:email=true
 
-block that refers to another sequence // fill in basic demographics but only once
-  >@basic.demographics
-    !iterate:once
+block_that_refers_to_another_sequence
+  @basic.demographics
 
 // following example shows how to reuse data between blocks
 
-my initial block // list of 1 to 30 strings
+my_initial_block // list of 1 to 30 strings
   +>
     !count:min=1:max=30
 
-another block // enter number from 0 to 10 for each of the items, default 6
-  ...my initial block // ellipsis operator will iterate over values from "my initial block" in current context
+another_block // enter number from 0 to 10 for each of the items, default 6
+  ...my_initial_block // ellipsis operator will iterate over values from "my initial block" in current context
     > 6
       !number:min=0:max=10
 
@@ -81,14 +81,14 @@ another block // enter number from 0 to 10 for each of the items, default 6
 * Declaring your own rules
 */
 
-:my rule // yes colon at the start of the line means it's a rule definition
-  argument 1 // arguments are blocks
+:my_rule // yes colon at the start of the line means it's a rule definition
+  argument_1 // arguments are blocks
     >
       !number // with validated inputs
-  argument 2
+  argument_2
     > `default`
   // content below will be executed in a sandbox
-  `ln=typescript
+  #lang:typescript`
     export default function(
       in /* "in" will prepare the inputs */,
       out /* "out" should be called with valid inputs */,
@@ -103,15 +103,15 @@ another block // enter number from 0 to 10 for each of the items, default 6
     }
   `
 
-block that uses the rule
+block_that_uses_the_rule
   >
-  !my rule : argument 1 = 10 : argument 2 = `something`
+  !my_rule : argument 1 = 10 : argument 2 = `something`
 
 // следубщий блок использует логический оператор, сравнение и метаданные
 // об одном из предыдущих блоков
 
-conditioned block
-  !if:my initial block.count > 3
+conditioned_block
+  !if:my_initial_block.count > 3
     `
       ## Какой элемент лишний?
     `
@@ -122,17 +122,17 @@ conditioned block
   !else
     `Все отлично!`
 
-switching block
+switching_block
   !switch // without a parameter will evaluate expressions for each case
-    !case:conditioned block.count <> 0 // :case accepts exactly one argument "case", so the argument assignment can be omitted
+    !case:conditioned_block.count <> 0 // :case accepts exactly one argument "case", so the argument assignment can be omitted
     `Самый неподходящий варинат?`
-      ...conditioned block
+      ...conditioned_block
         >
           !choice:multiple
     !default
       `Спасибо большое`
 
-another switching block
+another_switching_block
   !switch:conditioned block.count
     !case:case=0 // or a more verbose way same as writing !case:0
       `че то вы ничо нам не написали... :-(`

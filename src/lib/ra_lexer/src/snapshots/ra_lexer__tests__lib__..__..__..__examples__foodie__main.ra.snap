@@ -922,10 +922,10 @@ expression: tokens
         len: 1,
         content: "!",
         position: (
-            [21:8],
-            [21:9],
+            [21:4],
+            [21:5],
         ),
-        level: 2,
+        level: 1,
     },
     Token {
         kind: Some(
@@ -936,10 +936,10 @@ expression: tokens
         len: 4,
         content: "else",
         position: (
+            [21:5],
             [21:9],
-            [21:13],
         ),
-        level: 2,
+        level: 1,
     },
     Token {
         kind: Some(
@@ -948,10 +948,10 @@ expression: tokens
         len: 1,
         content: "@",
         position: (
-            [22:12],
-            [22:13],
+            [22:8],
+            [22:9],
         ),
-        level: 3,
+        level: 2,
     },
     Token {
         kind: Some(
@@ -962,10 +962,10 @@ expression: tokens
         len: 9,
         content: "resources",
         position: (
-            [22:13],
-            [22:22],
+            [22:9],
+            [22:18],
         ),
-        level: 3,
+        level: 2,
     },
     Token {
         kind: Some(
@@ -974,10 +974,10 @@ expression: tokens
         len: 1,
         content: ".",
         position: (
-            [22:22],
-            [22:23],
+            [22:18],
+            [22:19],
         ),
-        level: 3,
+        level: 2,
     },
     Token {
         kind: Some(
@@ -988,10 +988,10 @@ expression: tokens
         len: 9,
         content: "userItems",
         position: (
-            [22:23],
-            [22:32],
+            [22:19],
+            [22:28],
         ),
-        level: 3,
+        level: 2,
     },
     Token {
         kind: Some(
@@ -1000,10 +1000,10 @@ expression: tokens
         len: 1,
         content: ".",
         position: (
-            [22:32],
-            [22:33],
+            [22:28],
+            [22:29],
         ),
-        level: 3,
+        level: 2,
     },
     Token {
         kind: Some(
@@ -1014,10 +1014,10 @@ expression: tokens
         len: 9,
         content: "addRecipe",
         position: (
-            [22:33],
-            [22:42],
+            [22:29],
+            [22:38],
         ),
-        level: 3,
+        level: 2,
     },
     Token {
         kind: Some(
@@ -1026,10 +1026,10 @@ expression: tokens
         len: 1,
         content: ">",
         position: (
-            [23:16],
-            [23:17],
+            [23:12],
+            [23:13],
         ),
-        level: 4,
+        level: 3,
     },
     Token {
         kind: Some(
@@ -1038,10 +1038,10 @@ expression: tokens
         len: 1,
         content: "!",
         position: (
-            [24:20],
-            [24:21],
+            [24:16],
+            [24:17],
         ),
-        level: 5,
+        level: 4,
     },
     Token {
         kind: Some(
@@ -1052,10 +1052,10 @@ expression: tokens
         len: 6,
         content: "select",
         position: (
-            [24:21],
-            [24:27],
+            [24:17],
+            [24:23],
         ),
-        level: 5,
+        level: 4,
     },
     Token {
         kind: Some(
@@ -1064,10 +1064,10 @@ expression: tokens
         len: 1,
         content: ":",
         position: (
-            [24:27],
-            [24:28],
+            [24:23],
+            [24:24],
         ),
-        level: 5,
+        level: 4,
     },
     Token {
         kind: Some(
@@ -1078,10 +1078,10 @@ expression: tokens
         len: 6,
         content: "single",
         position: (
-            [24:28],
-            [24:34],
+            [24:24],
+            [24:30],
         ),
-        level: 5,
+        level: 4,
     },
     Token {
         kind: Some(

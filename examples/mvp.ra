@@ -1,32 +1,35 @@
 // this file is my todo list and also should render like one
 
 parseBlocks
-    `parse blocks`
-    `and funny chars too 😠`
-    `₰`
-    `Ͽ`
-        >
-            !choice:multiple
+    >
+        !choice:multiple
+        !options:
+            `parse blocks`
+            `and funny chars too 😠`
+            `₰`
+            `Ͽ`
 
 parseDifferentTypesOfBlocks
-    `comments`
-    `var declaration`
-    `rule declaration`
-    `applied rule`
-    `input block`
-    `context switches`
-    `content block`
-        >
-            !choice:multiple
+    >
+        !choice:multiple
+        !options:
+            `comments`
+            `var declaration`
+            `rule declaration`
+            `applied rule`
+            `input block`
+            `context switches`
+            `content block`
 
 generateRuntime
-    `render content`
-    `render inputs`
-    `group inputs as long as there no dependency on previous step`
-    `execute logic`
-    `apply rules`
-        >
-            !choice:multiple
+    >
+        !choice:multiple
+        !options:
+            `render content`
+            `render inputs`
+            `group inputs as long as there no dependency on previous step`
+            `execute logic`
+            `apply rules`
 
 
 

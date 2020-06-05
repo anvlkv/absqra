@@ -45,13 +45,53 @@ expression: tokens
     },
     Token {
         kind: Some(
-            ContentBlock,
+            HashPound,
         ),
-        len: 36,
-        content: "ln = en\n            Meals\n        ",
+        len: 1,
+        content: "#",
         position: (
             [3:8],
-            [5:9],
+            [3:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "ln",
+            ),
+        ),
+        len: 2,
+        content: "ln",
+        position: (
+            [3:9],
+            [3:11],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [3:11],
+            [3:12],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "en",
+            ),
+        ),
+        len: 2,
+        content: "en",
+        position: (
+            [3:12],
+            [3:14],
         ),
         level: 2,
     },
@@ -59,10 +99,74 @@ expression: tokens
         kind: Some(
             ContentBlock,
         ),
-        len: 41,
-        content: "ln = ru\n            Блюда\n        ",
+        len: 29,
+        content: "\n            Meals\n        ",
+        position: (
+            [3:14],
+            [5:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            HashPound,
+        ),
+        len: 1,
+        content: "#",
         position: (
             [6:8],
+            [6:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "ln",
+            ),
+        ),
+        len: 2,
+        content: "ln",
+        position: (
+            [6:9],
+            [6:11],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [6:11],
+            [6:12],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "ru",
+            ),
+        ),
+        len: 2,
+        content: "ru",
+        position: (
+            [6:12],
+            [6:14],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 34,
+        content: "\n            Блюда\n        ",
+        position: (
+            [6:14],
             [8:9],
         ),
         level: 2,
@@ -83,13 +187,53 @@ expression: tokens
     },
     Token {
         kind: Some(
-            ContentBlock,
+            HashPound,
         ),
-        len: 40,
-        content: "ln = en\n            Countries\n        ",
+        len: 1,
+        content: "#",
         position: (
             [10:8],
-            [12:9],
+            [10:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "ln",
+            ),
+        ),
+        len: 2,
+        content: "ln",
+        position: (
+            [10:9],
+            [10:11],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [10:11],
+            [10:12],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "en",
+            ),
+        ),
+        len: 2,
+        content: "en",
+        position: (
+            [10:12],
+            [10:14],
         ),
         level: 2,
     },
@@ -97,10 +241,74 @@ expression: tokens
         kind: Some(
             ContentBlock,
         ),
-        len: 66,
-        content: "ln = ru\n            Национальные кухни\n        ",
+        len: 33,
+        content: "\n            Countries\n        ",
+        position: (
+            [10:14],
+            [12:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            HashPound,
+        ),
+        len: 1,
+        content: "#",
         position: (
             [13:8],
+            [13:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "ln",
+            ),
+        ),
+        len: 2,
+        content: "ln",
+        position: (
+            [13:9],
+            [13:11],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [13:11],
+            [13:12],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "ru",
+            ),
+        ),
+        len: 2,
+        content: "ru",
+        position: (
+            [13:12],
+            [13:14],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 59,
+        content: "\n            Национальные кухни\n        ",
+        position: (
+            [13:14],
             [15:9],
         ),
         level: 2,
@@ -121,13 +329,53 @@ expression: tokens
     },
     Token {
         kind: Some(
-            ContentBlock,
+            HashPound,
         ),
-        len: 42,
-        content: "ln = en\n            Preferences\n        ",
+        len: 1,
+        content: "#",
         position: (
             [17:8],
-            [19:9],
+            [17:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "ln",
+            ),
+        ),
+        len: 2,
+        content: "ln",
+        position: (
+            [17:9],
+            [17:11],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [17:11],
+            [17:12],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "ru",
+            ),
+        ),
+        len: 2,
+        content: "ru",
+        position: (
+            [17:12],
+            [17:14],
         ),
         level: 2,
     },
@@ -135,10 +383,74 @@ expression: tokens
         kind: Some(
             ContentBlock,
         ),
-        len: 55,
-        content: "ln = ru\n            Предпочтения\n        ",
+        len: 35,
+        content: "\n            Preferences\n        ",
+        position: (
+            [17:14],
+            [19:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            HashPound,
+        ),
+        len: 1,
+        content: "#",
         position: (
             [20:8],
+            [20:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "ln",
+            ),
+        ),
+        len: 2,
+        content: "ln",
+        position: (
+            [20:9],
+            [20:11],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [20:11],
+            [20:12],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "ru",
+            ),
+        ),
+        len: 2,
+        content: "ru",
+        position: (
+            [20:12],
+            [20:14],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 48,
+        content: "\n            Предпочтения\n        ",
+        position: (
+            [20:14],
             [22:9],
         ),
         level: 2,
@@ -185,12 +497,64 @@ expression: tokens
     },
     Token {
         kind: Some(
-            ContentBlock,
+            HashPound,
         ),
-        len: 56,
-        content: "kind = image\n            http://path.to.image\n        ",
+        len: 1,
+        content: "#",
         position: (
             [26:8],
+            [26:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "kind",
+            ),
+        ),
+        len: 4,
+        content: "kind",
+        position: (
+            [26:9],
+            [26:13],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [26:13],
+            [26:14],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "image",
+            ),
+        ),
+        len: 5,
+        content: "image",
+        position: (
+            [26:14],
+            [26:19],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 44,
+        content: "\n            http://path.to.image\n        ",
+        position: (
+            [26:19],
             [28:9],
         ),
         level: 2,
@@ -209,13 +573,53 @@ expression: tokens
     },
     Token {
         kind: Some(
-            ContentBlock,
+            HashPound,
         ),
-        len: 39,
-        content: "ln=en\n            Add recipe\n        ",
+        len: 1,
+        content: "#",
         position: (
             [29:8],
-            [31:9],
+            [29:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "ln",
+            ),
+        ),
+        len: 2,
+        content: "ln",
+        position: (
+            [29:9],
+            [29:11],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [29:11],
+            [29:12],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "en",
+            ),
+        ),
+        len: 2,
+        content: "en",
+        position: (
+            [29:12],
+            [29:14],
         ),
         level: 2,
     },
@@ -223,10 +627,74 @@ expression: tokens
         kind: Some(
             ContentBlock,
         ),
-        len: 60,
-        content: "ln = ru\n            Добавить рецепт\n        ",
+        len: 34,
+        content: "\n            Add recipe\n        ",
+        position: (
+            [29:14],
+            [31:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            HashPound,
+        ),
+        len: 1,
+        content: "#",
         position: (
             [32:8],
+            [32:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "ln",
+            ),
+        ),
+        len: 2,
+        content: "ln",
+        position: (
+            [32:9],
+            [32:11],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [32:11],
+            [32:12],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "ru",
+            ),
+        ),
+        len: 2,
+        content: "ru",
+        position: (
+            [32:12],
+            [32:14],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 53,
+        content: "\n            Добавить рецепт\n        ",
+        position: (
+            [32:14],
             [34:9],
         ),
         level: 2,
@@ -247,13 +715,53 @@ expression: tokens
     },
     Token {
         kind: Some(
-            ContentBlock,
+            HashPound,
         ),
-        len: 40,
-        content: "ln= en\n            My account\n        ",
+        len: 1,
+        content: "#",
         position: (
             [36:8],
-            [38:9],
+            [36:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "ln",
+            ),
+        ),
+        len: 2,
+        content: "ln",
+        position: (
+            [36:9],
+            [36:11],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [36:11],
+            [36:12],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "en",
+            ),
+        ),
+        len: 2,
+        content: "en",
+        position: (
+            [36:12],
+            [36:14],
         ),
         level: 2,
     },
@@ -261,10 +769,74 @@ expression: tokens
         kind: Some(
             ContentBlock,
         ),
-        len: 52,
-        content: "ln = ru\n            Мой аккаунт\n        ",
+        len: 34,
+        content: "\n            My account\n        ",
+        position: (
+            [36:14],
+            [38:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            HashPound,
+        ),
+        len: 1,
+        content: "#",
         position: (
             [39:8],
+            [39:9],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "ln",
+            ),
+        ),
+        len: 2,
+        content: "ln",
+        position: (
+            [39:9],
+            [39:11],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [39:11],
+            [39:12],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "ru",
+            ),
+        ),
+        len: 2,
+        content: "ru",
+        position: (
+            [39:12],
+            [39:14],
+        ),
+        level: 2,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 45,
+        content: "\n            Мой аккаунт\n        ",
+        position: (
+            [39:14],
             [41:9],
         ),
         level: 2,
@@ -297,13 +869,53 @@ expression: tokens
     },
     Token {
         kind: Some(
-            ContentBlock,
+            HashPound,
         ),
-        len: 35,
-        content: "ln =en\n        Find a recipe\n    ",
+        len: 1,
+        content: "#",
         position: (
             [44:4],
-            [46:5],
+            [44:5],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "ln",
+            ),
+        ),
+        len: 2,
+        content: "ln",
+        position: (
+            [44:5],
+            [44:7],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [44:7],
+            [44:8],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "en",
+            ),
+        ),
+        len: 2,
+        content: "en",
+        position: (
+            [44:8],
+            [44:10],
         ),
         level: 1,
     },
@@ -311,10 +923,74 @@ expression: tokens
         kind: Some(
             ContentBlock,
         ),
-        len: 44,
-        content: "ln=ru\n        Найти рецепт\n    ",
+        len: 29,
+        content: "\n        Find a recipe\n    ",
+        position: (
+            [44:10],
+            [46:5],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            HashPound,
+        ),
+        len: 1,
+        content: "#",
         position: (
             [47:4],
+            [47:5],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "ln",
+            ),
+        ),
+        len: 2,
+        content: "ln",
+        position: (
+            [47:5],
+            [47:7],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [47:7],
+            [47:8],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "ru",
+            ),
+        ),
+        len: 2,
+        content: "ru",
+        position: (
+            [47:8],
+            [47:10],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 39,
+        content: "\n        Найти рецепт\n    ",
+        position: (
+            [47:10],
             [49:5],
         ),
         level: 1,
@@ -347,13 +1023,53 @@ expression: tokens
     },
     Token {
         kind: Some(
-            ContentBlock,
+            HashPound,
         ),
-        len: 30,
-        content: "ln = en\n        Picture\n    ",
+        len: 1,
+        content: "#",
         position: (
             [52:4],
-            [54:5],
+            [52:5],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "ln",
+            ),
+        ),
+        len: 2,
+        content: "ln",
+        position: (
+            [52:5],
+            [52:7],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [52:7],
+            [52:8],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "en",
+            ),
+        ),
+        len: 2,
+        content: "en",
+        position: (
+            [52:8],
+            [52:10],
         ),
         level: 1,
     },
@@ -361,10 +1077,74 @@ expression: tokens
         kind: Some(
             ContentBlock,
         ),
-        len: 39,
-        content: "ln = ru\n        Картинка\n    ",
+        len: 23,
+        content: "\n        Picture\n    ",
+        position: (
+            [52:10],
+            [54:5],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            HashPound,
+        ),
+        len: 1,
+        content: "#",
         position: (
             [55:4],
+            [55:5],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "ln",
+            ),
+        ),
+        len: 2,
+        content: "ln",
+        position: (
+            [55:5],
+            [55:7],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [55:7],
+            [55:8],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "ru",
+            ),
+        ),
+        len: 2,
+        content: "ru",
+        position: (
+            [55:8],
+            [55:10],
+        ),
+        level: 1,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 32,
+        content: "\n        Картинка\n    ",
+        position: (
+            [55:10],
             [57:5],
         ),
         level: 1,

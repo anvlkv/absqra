@@ -1,57 +1,57 @@
 :navigationItems
     meals
-        `ln = en
+        #ln:en`
             Meals
         `
-        `ln = ru
+        #ln:ru`
             Блюда
         `
     countries
-        `ln = en
+        #ln:en`
             Countries
         `
-        `ln = ru
+        #ln:ru`
             Национальные кухни
         `
     restrictions
-        `ln = en
+        #ln:ru`
             Preferences
         `
-        `ln = ru
+        #ln:ru`
             Предпочтения
         `
     
 :userItems
     addRecipe
-        `kind = image
+        #kind:image`
             http://path.to.image
         `,
-        `ln=en
+        #ln:en`
             Add recipe
         `
-        `ln = ru
+        #ln:ru`
             Добавить рецепт
         `
     myAccount
-        `ln= en
+        #ln:en`
             My account
         `
-        `ln = ru
+        #ln:ru`
             Мой аккаунт
         `
 
 :searchPlaceholder
-    `ln =en
+    #ln:en`
         Find a recipe
     `
-    `ln=ru
+    #ln:ru`
         Найти рецепт
     `
     
 :pictureLabel
-    `ln = en
+    #ln:en`
         Picture
     `
-    `ln = ru
+    #ln:ru`
         Картинка
     `

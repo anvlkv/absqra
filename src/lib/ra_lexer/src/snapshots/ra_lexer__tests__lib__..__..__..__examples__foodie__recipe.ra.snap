@@ -1585,13 +1585,53 @@ expression: tokens
     },
     Token {
         kind: Some(
-            ContentBlock,
+            HashPound,
         ),
-        len: 63,
-        content: "ln = en\n                    Step description\n                ",
+        len: 1,
+        content: "#",
         position: (
             [42:16],
-            [44:17],
+            [42:17],
+        ),
+        level: 4,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "ln",
+            ),
+        ),
+        len: 2,
+        content: "ln",
+        position: (
+            [42:17],
+            [42:19],
+        ),
+        level: 4,
+    },
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [42:19],
+            [42:20],
+        ),
+        level: 4,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "en",
+            ),
+        ),
+        len: 2,
+        content: "en",
+        position: (
+            [42:20],
+            [42:22],
         ),
         level: 4,
     },
@@ -1599,10 +1639,74 @@ expression: tokens
         kind: Some(
             ContentBlock,
         ),
-        len: 70,
-        content: "ln=ru\n                    Описание шага\n                ",
+        len: 56,
+        content: "\n                    Step description\n                ",
+        position: (
+            [42:22],
+            [44:17],
+        ),
+        level: 4,
+    },
+    Token {
+        kind: Some(
+            HashPound,
+        ),
+        len: 1,
+        content: "#",
         position: (
             [45:16],
+            [45:17],
+        ),
+        level: 4,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "ln",
+            ),
+        ),
+        len: 2,
+        content: "ln",
+        position: (
+            [45:17],
+            [45:19],
+        ),
+        level: 4,
+    },
+    Token {
+        kind: Some(
+            Colon,
+        ),
+        len: 1,
+        content: ":",
+        position: (
+            [45:19],
+            [45:20],
+        ),
+        level: 4,
+    },
+    Token {
+        kind: Some(
+            Identifier(
+                "ru",
+            ),
+        ),
+        len: 2,
+        content: "ru",
+        position: (
+            [45:20],
+            [45:22],
+        ),
+        level: 4,
+    },
+    Token {
+        kind: Some(
+            ContentBlock,
+        ),
+        len: 65,
+        content: "\n                    Описание шага\n                ",
+        position: (
+            [45:22],
             [47:17],
         ),
         level: 4,

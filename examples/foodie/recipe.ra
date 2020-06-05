@@ -39,10 +39,10 @@ recipe
     preparation
         +preparationSteps
             description
-                `ln = en
+                #ln:en`
                     Step description
                 `
-                `ln=ru
+                #ln:ru`
                     Описание шага
                 `,
                 >
