@@ -8,3 +8,8 @@ edition = "2018"
 
 [dependencies]
 ra_lexer = {path = "../ra_lexer"}
+
+
+[dev-dependencies]
+insta = "0.16.0"
+utils = {path = "../utils"}

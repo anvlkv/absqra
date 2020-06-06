@@ -147,7 +147,9 @@ dependencies = [
 name = "ra_parser"
 version = "0.1.0"
 dependencies = [
+ "insta",
  "ra_lexer",
+ "utils",
 ]
 
 [[package]]

@@ -16,7 +16,7 @@ fn main() {
     file.read_to_string(&mut contents).unwrap();
     // let bts:() = file.bytes();
 
-    let mut prog = ra_parser::parse(&contents);
+    let mut prog = ra_parser::parser::parse(&contents);
 
     println!("{:?}", prog);
 }

@@ -35,19 +35,19 @@ pub struct Block<'a> {
 }
 
 impl <'a> Block<'a> {
-    pub fn from_token_and_kind(token: Token<'a>, kind: BlockKind) -> Self {
+    pub fn new(token: Token<'a>, kind: BlockKind) -> Self {
         Self {
             kind: Some(kind),
             position: (token.position.0, token.position.1),
-            expression: Expression::from_token(token),
+            expression: Expression::new(token),
             ..Default::default()
         }
     }
 
-    pub fn is_complete(&self) -> bool {
-        self.kind.is_some()
-        && self.expression.is_complete()
-        && (!self.children.last().is_some()
-        || self.children.last().unwrap().is_complete())
-    }
+    // pub fn is_complete(&self) -> bool {
+    //     self.kind.is_some()
+    //     && self.expression.is_complete()
+    //     && (!self.children.last().is_some()
+    //     || self.children.last().unwrap().is_complete())
+    // }
 }
