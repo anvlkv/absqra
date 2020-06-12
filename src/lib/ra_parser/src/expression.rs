@@ -1,6 +1,7 @@
 // use std::rc::Rc;
 // use std::borrow::Borrow;
 use ra_lexer::token::{Token, TokenKind};
+use ra_lexer::cursor::Position;
 // use super::block::Block;
 use super::errors::ParserError;
 
@@ -45,41 +46,167 @@ pub enum OperationKind {
     Assign
 }
 
+#[derive(Debug, Clone, PartialEq)]
+pub enum ExpressionMember<'a> {
+    Identifier(Token<'a>),
+    Literal(Token<'a>),
+    Expression(bool, Option<Expression<'a>>),
+    Nil
+}
+
+impl<'a> Default for ExpressionMember<'a> {
+    fn default() -> Self {
+        Self::Nil
+    }
+}
+
+pub (crate) trait ByTokenExpandable<'a, Item> {
+    fn append_token(self, token: Token<'a>) -> Result<Item, ParserError<'a>>;
+}
+
+pub (crate) trait Leveled {
+    fn get_level(&self) -> u16;
+}
+
+pub (crate) trait Positioned {
+    fn get_position(&self) -> Position;
+}
+
+impl <'a> ExpressionMember<'a> {
+    pub fn new(token: Token<'a>) -> Result<Self, ParserError<'a>> {
+        match token.kind.unwrap() {
+            TokenKind::Identifier(_) => Ok(ExpressionMember::Identifier(token)),
+            TokenKind::Int(_) |
+            TokenKind::Float(_) |
+            TokenKind::StringLiteral(_) => Ok(ExpressionMember::Literal(token)),
+            TokenKind::OpenParentheses => Ok(ExpressionMember::Expression(false, None)),
+            _ => Err(ParserError::UnexpectedToken(token))
+        }
+    }
+}
+
+impl <'a> Leveled for ExpressionMember<'a> {
+    fn get_level(&self) -> u16 {
+        match self {
+            ExpressionMember::Nil => 0,
+            ExpressionMember::Literal(token) |
+            ExpressionMember::Identifier(token) => token.level,
+            ExpressionMember::Expression(_, expression) => expression.as_ref().unwrap().get_level()
+        }
+    }
+}
+
+impl <'a> ByTokenExpandable<'a, ExpressionMember<'a>> for ExpressionMember<'a> {
+    fn append_token(self, token: Token<'a>) -> Result<ExpressionMember<'a>, ParserError<'a>> {
+        match self {
+            ExpressionMember::Expression(open, expression) => {
+                if open {
+                    match expression {
+                        Some(e) => {
+                            let updated_nested_expression = e.append_token(token)?;
+                            Ok(ExpressionMember::Expression(false, Some(updated_nested_expression)))
+                        },
+                        None => {
+                            Ok(ExpressionMember::Expression(false, Some(Expression::new(token)?)))
+                        }
+                    }
+                }
+                else {
+                    Err(ParserError::InvalidExpression(token.position.0))
+                }
+            },
+            _ => Err(ParserError::InvalidExpression(token.position.0))
+        }
+    }
+}
+
+impl <'a> Positioned  for ExpressionMember<'a> {
+    fn get_position(&self) -> Position {
+        match self {
+            ExpressionMember::Nil => Position::default(),
+            ExpressionMember::Literal(token) |
+            ExpressionMember::Identifier(token) => token.position.0.clone(),
+            ExpressionMember::Expression(_, expression) => expression.as_ref().unwrap().get_position()
+        }
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Default)]
 pub struct Expression<'a>(
-    pub Token<'a>, 
+    pub Box<ExpressionMember<'a>>, 
     pub Option<OperationKind>, 
-    pub Option<Box<Expression<'a>>>
+    pub Option<Box<ExpressionMember<'a>>>
 );
 
-impl <'a> Expression<'a> {
-    pub fn new(token: Token<'a>) -> Self {
-        Self(token, None, None)
+impl <'a> Leveled for Expression<'a> {
+    fn get_level(&self) -> u16 {
+        let Expression(first_member, _, _) = self;
+        first_member.get_level()
     }
+}
 
-    pub fn append_token(self, token: Token<'a>) -> Result<Expression<'a>, ParserError> {
-        let Expression(first_token, op, next) = self;
+impl <'a> ByTokenExpandable<'a, Expression<'a>> for Expression<'a> {
+    fn append_token(self, token: Token<'a>) -> Result<Expression<'a>, ParserError<'a>> {
+        let Expression(first_member, op, last_member) = self;
+        // TODO: can this be done without matching?
+
+        match first_member.as_ref() {
+            ExpressionMember::Expression(open, expression) => {
+                if *open {
+                    if token.kind.unwrap() == TokenKind::CloseParentheses {
+                        if expression.is_some() {
+                            return Ok(Expression(Box::new(ExpressionMember::Expression(true, expression.clone())), None, None))
+                        }
+                        else {
+                            return Err(ParserError::InvalidExpression(token.position.0))
+                        }
+                    }
+                    else {
+                        
+                    }
+                }
+            },
+            _ => {}
+        }
+
+        // first_member.
 
         if op.is_none() {
             match Self::parse_operation_first_token(token) {
-                Some(operation) => Ok(Expression(first_token.clone(), Some(operation), None)),
+                Some(operation) => Ok(Expression(first_member.clone(), Some(operation), None)),
                 None => Err(ParserError::UnexpectedToken(token))
             }
         }
         else {
             match Self::parse_operation_second_token(op.unwrap(), token) {
-                Some(operation) => Ok(Expression(first_token.clone(), Some(operation), None)),
+                Some(operation) => Ok(Expression(first_member.clone(), Some(operation), None)),
                 None => {
-                    if next.is_none() {
-                        Ok(Expression(first_token.clone(), op.clone(), Some(Box::new(Expression::new(token)))))
+                    if last_member.is_none() {
+                        Ok(Expression(first_member.clone(), op.clone(), Some(Box::new(ExpressionMember::new(token)?))))
                     }
                     else {
-                        let child_expression = next.unwrap();
-                        child_expression.append_token(token)
+                        let child_expression = last_member.unwrap();
+                        let child_member = child_expression.append_token(token)?;
+                        Ok(Expression(first_member.clone(), op.clone(), Some(Box::new(child_member))))
                     }
                 }
             }
         }
+    }
+}
+
+impl <'a> Positioned for Expression<'a> {
+    fn get_position(&self) -> Position {
+        let Expression(first_member, _, _) = self;
+        first_member.get_position().clone()
+    }
+}
+
+impl <'a> Expression<'a> {
+    pub fn new(token: Token<'a>) -> Result<Self, ParserError<'a>> {
+        let left_member = ExpressionMember::new(token)?;
+
+        Ok(Self(Box::new(left_member), None, None))
     }
 
 

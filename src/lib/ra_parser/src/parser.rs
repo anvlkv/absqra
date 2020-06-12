@@ -4,7 +4,7 @@ use ra_lexer::tokenize;
 use super::block::{Block, BlockKind};
 use super::cursor::Cursor;
 use super::errors::ParserError;
-use super::expression::Expression;
+use super::expression::{Expression, Leveled, ByTokenExpandable, Positioned};
 
 pub fn parse<'a>(input: &'a str) -> Result<Block<'a>, Vec<ParserError>> {
     let stream = tokenize(input);
@@ -76,7 +76,7 @@ where
         kind: BlockKind,
     ) -> Result<Block<'token>, Vec<ParserError<'token>>> {
         let mut errors: Vec<ParserError<'token>> = Vec::new();
-        let block = Some(Block::new(first_token, kind));
+        let block = Some(Block::new(first_token, kind)?);
 
         if let (Some(blk), mut errs) =
             self.check_parse_block_expression(block.unwrap(), &mut errors)
@@ -98,15 +98,21 @@ where
         errors: &'errors mut Vec<ParserError<'token>>,
     ) -> (Option<Block<'token>>, &'errors mut Vec<ParserError<'token>>) {
         if let Some(token) = self.first_ahead() {
-            let first_block_token = block.expression.0;
-            if token.level == first_block_token.level
-                && (token.position.0).0 == (first_block_token.position.0).0
+            let first_block_expression_member = block.clone().expression.0;
+            if token.level == first_block_expression_member.get_level()
+                && (token.position.0).0 == (first_block_expression_member.get_position()).0
             {
-                block.expression = Expression::new(self.bump().unwrap());
+                block.expression = match Expression::new(self.bump().unwrap()){
+                    Ok(expr) => expr,
+                    Err(e) => {
+                        errors.push(e);
+                        return (None, errors)
+                    }
+                };
                 while !self.is_eof()
                     && self.first_ahead().is_some()
                     && (self.first_ahead().unwrap().position.0).0
-                        == (first_block_token.position.0).0
+                        == (first_block_expression_member.get_position()).0
                 {
                     match block.clone().expression.append_token(self.bump().unwrap()) {
                         Ok(expression) => {
@@ -128,8 +134,8 @@ where
         mut block: Block<'token>,
         errors: &'errors mut Vec<ParserError<'token>>,
     ) -> (Option<Block<'token>>, &'errors mut Vec<ParserError<'token>>) {
-        let first_block_token = block.expression.0;
-        while !self.is_eof() && self.first_ahead().unwrap().level == first_block_token.level + 1 {
+        let first_block_token = block.clone().expression.0;
+        while !self.is_eof() && self.first_ahead().unwrap().level == first_block_token.get_level() + 1 {
             match self.advance_block() {
                 Ok(child) => {
                     block.children.push(child);
@@ -152,12 +158,12 @@ where
         block: Block<'token>,
         errors: &'errors mut Vec<ParserError<'token>>,
     ) -> (Option<Block<'token>>, &'errors mut Vec<ParserError<'token>>) {
-        let first_block_token = block.expression.0;
+        let first_block_token = block.clone().expression.0;
         let mut union_block = Block::default();
         let mut union_size = 0;
         while !self.is_eof()
             && self.first_ahead().unwrap().kind.unwrap() == TokenKind::Coma
-            && self.first_ahead().unwrap().level == first_block_token.level
+            && self.first_ahead().unwrap().level == first_block_token.get_level()
         {
             assert!(self.bump().unwrap().kind.unwrap() == TokenKind::Coma);
             match self.advance_block() {

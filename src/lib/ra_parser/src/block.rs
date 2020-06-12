@@ -2,6 +2,7 @@
 
 
 use super::expression::Expression;
+use super::errors::ParserError;
 
 use ra_lexer::token::{Token};
 use ra_lexer::cursor::Position;
@@ -35,13 +36,14 @@ pub struct Block<'a> {
 }
 
 impl <'a> Block<'a> {
-    pub fn new(token: Token<'a>, kind: BlockKind) -> Self {
-        Self {
+    pub fn new(token: Token<'a>, kind: BlockKind) -> Result<Self, ParserError<'a>> {
+        let expression = Expression::new(token)?;
+        Ok(Self {
             kind: Some(kind),
             position: (token.position.0, token.position.1),
-            expression: Expression::new(token),
+            expression,
             ..Default::default()
-        }
+        })
     }
 
     // pub fn is_complete(&self) -> bool {
