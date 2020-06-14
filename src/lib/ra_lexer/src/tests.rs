@@ -91,11 +91,7 @@ mod cursor {
 
 mod lib {
     use super::{tokenize, Position, Token, TokenKind};
-    use insta::assert_debug_snapshot;
-    use utils::files_from_dir_recursively;
-    use std::ffi::OsStr;
-    use std::fs::File;
-    use std::io::Read;
+    
 
     #[test]
     fn it_should_create_iterator_of_tokens() {
@@ -137,12 +133,14 @@ mod lib {
         );
     }
 
+    use insta::assert_debug_snapshot;
+    use utils::for_each_ra_example_file;
+    use std::fs::File;
+    use std::io::Read;
+
     #[test]
     fn it_should_match_snapshots() {
-        files_from_dir_recursively("../../../examples")
-            .into_iter()
-            .filter(|f| f.path().extension().and_then(OsStr::to_str).unwrap_or("") == "ra")
-            .for_each(|example| {
+        for_each_ra_example_file(|example| {
                 let mut file = File::open(example.path()).unwrap();
     
                 let mut contents = String::new();

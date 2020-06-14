@@ -2,20 +2,40 @@ mod lib {
     use ra_lexer::cursor::Position;
     use ra_lexer::token::{Token, TokenKind};
 
-    use crate::expression::{Expression, OperationKind, MathOperation};
-    use crate::parser::parse;
     use crate::block::BlockKind;
+    use crate::expressions::output_expression::ExpressionMember;
+    use crate::expressions::output_expression::{MathOperation, OperationKind, OutputExpression};
+    use crate::parser::parse;
 
-    
     #[test]
     fn it_should_return_program_block() {
-        assert_eq!(parse("abc").expect("can't parse").kind, Some(BlockKind::Program));
+        assert_eq!(parse("abc").expect("can't parse").kind, BlockKind::Program);
     }
 
     #[test]
     fn it_should_parse_block_level_expressions() {
         let program = parse("abc + 2").expect("can't parse");
         let parsed = program.children.iter().nth(0).unwrap();
+        assert_eq!(
+            parsed.kind,
+            BlockKind::Output(OutputExpression(
+                Box::new(ExpressionMember::Identifier(Token {
+                    kind: Some(TokenKind::Identifier("abc")),
+                    position: (Position(1, 0), Position(1, 3)),
+                    len: 3,
+                    content: "abc",
+                    level: 0,
+                })),
+                Some(OperationKind::MathOperation(MathOperation::Sum)),
+                Some(Box::new(ExpressionMember::Literal(Token {
+                    kind: Some(TokenKind::Int(2)),
+                    position: (Position(1, 6), Position(1, 7)),
+                    level: 0,
+                    content: "2",
+                    len: 1
+                })))
+            ))
+        )
         // assert_eq!(parsed.expression.1, Some(OperationKind::MathOperation(MathOperation::Sum)));
 
         // assert_eq!(
@@ -42,26 +62,21 @@ mod lib {
     }
 
     use insta::assert_debug_snapshot;
-    use utils::files_from_dir_recursively;
-    use std::ffi::OsStr;
+    
     use std::fs::File;
     use std::io::Read;
+    use utils::for_each_ra_example_file;
 
     #[test]
     fn it_should_match_snapshots() {
-        files_from_dir_recursively("../../../examples")
-            .into_iter()
-            .filter(|f| f.path().extension().and_then(OsStr::to_str).unwrap_or("") == "ra")
-            .for_each(|example| {
-                let mut file = File::open(example.path()).unwrap();
-                println!("{}", example.file_name().to_str().unwrap());
-    
-                let mut contents = String::new();
-                file.read_to_string(&mut contents).unwrap();
+        for_each_ra_example_file(|example| {
+            let mut file = File::open(example.path()).unwrap();
+            println!("{}", example.file_name().to_str().unwrap());
+            let mut contents = String::new();
+            file.read_to_string(&mut contents).unwrap();
 
-
-                let block_tree = parse(&contents).unwrap();
-                assert_debug_snapshot!(example.path().to_str().unwrap(), block_tree)
-        });
+            let block_tree = parse(&contents).unwrap();
+            assert_debug_snapshot!(example.path().to_str().unwrap(), block_tree)
+        })       
     }
 }
