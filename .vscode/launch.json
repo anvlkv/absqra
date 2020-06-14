@@ -1,0 +1,122 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in library 'ra_lexer'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--package=ra_lexer"
+                ],
+                "filter": {
+                    "name": "ra_lexer",
+                    "kind": "lib"
+                }
+            },
+            "args": [
+                "it_should_match_snapshots"
+            ],
+            "cwd": "${workspaceFolder}/src/lib/ra_lexer"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in library 'ra_parser'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--package=ra_parser"
+                ],
+                "filter": {
+                    "name": "ra_parser",
+                    "kind": "lib"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}/src/lib/ra_parser"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'ra_interactive'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=ra_interactive",
+                    "--package=ra_interactive"
+                ],
+                "filter": {
+                    "name": "ra_interactive",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}/src/lib/ra_interactive"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'ra_interactive'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=ra_interactive",
+                    "--package=ra_interactive"
+                ],
+                "filter": {
+                    "name": "ra_interactive",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}/src/lib/ra_interactive"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'absQra'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=absQra",
+                    "--package=absQra"
+                ],
+                "filter": {
+                    "name": "absQra",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'absQra'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=absQra",
+                    "--package=absQra"
+                ],
+                "filter": {
+                    "name": "absQra",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
