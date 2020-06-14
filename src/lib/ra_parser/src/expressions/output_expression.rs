@@ -4,6 +4,7 @@ use ra_lexer::token::{Token, TokenKind};
 use ra_lexer::cursor::Position;
 // use super::block::Block;
 use super::errors::ParserError;
+use super::traits::{*};
 
 #[derive(Debug, Clone, PartialEq, Copy)]
 pub enum MathOperation {
@@ -43,14 +44,14 @@ pub enum OperationKind {
     LogicOperation(LogicOperation),
     MathOperation(MathOperation),
     ComparisonOperation(ComparisonOperation),
-    Assign
+    Assign,
 }
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum ExpressionMember<'a> {
     Identifier(Token<'a>),
     Literal(Token<'a>),
-    Expression(bool, Option<Expression<'a>>),
+    OutputExpression(bool, Option<OutputExpression<'a>>),
     Nil
 }
 
@@ -60,17 +61,6 @@ impl<'a> Default for ExpressionMember<'a> {
     }
 }
 
-pub (crate) trait ByTokenExpandable<'a, Item> {
-    fn append_token(self, token: Token<'a>) -> Result<Item, ParserError<'a>>;
-}
-
-pub (crate) trait Leveled {
-    fn get_level(&self) -> u16;
-}
-
-pub (crate) trait Positioned {
-    fn get_position(&self) -> Position;
-}
 
 impl <'a> ExpressionMember<'a> {
     pub fn new(token: Token<'a>) -> Result<Self, ParserError<'a>> {
@@ -79,8 +69,8 @@ impl <'a> ExpressionMember<'a> {
             TokenKind::Int(_) |
             TokenKind::Float(_) |
             TokenKind::StringLiteral(_) => Ok(ExpressionMember::Literal(token)),
-            TokenKind::OpenParentheses => Ok(ExpressionMember::Expression(false, None)),
-            _ => Err(ParserError::UnexpectedToken(token))
+            TokenKind::OpenParentheses => Ok(ExpressionMember::OutputExpression(false, None)),
+            _ => Err(ParserError::ExpectedAGotB(token, vec![TokenKind::Identifier(""), TokenKind::Int(0), TokenKind::Float(0.0), TokenKind::StringLiteral(""), TokenKind::OpenParentheses]))
         }
     }
 }
@@ -91,7 +81,7 @@ impl <'a> Leveled for ExpressionMember<'a> {
             ExpressionMember::Nil => 0,
             ExpressionMember::Literal(token) |
             ExpressionMember::Identifier(token) => token.level,
-            ExpressionMember::Expression(_, expression) => expression.as_ref().unwrap().get_level()
+            ExpressionMember::OutputExpression(_, expression) => expression.as_ref().unwrap().get_level()
         }
     }
 }
@@ -99,15 +89,15 @@ impl <'a> Leveled for ExpressionMember<'a> {
 impl <'a> ByTokenExpandable<'a, ExpressionMember<'a>> for ExpressionMember<'a> {
     fn append_token(self, token: Token<'a>) -> Result<ExpressionMember<'a>, ParserError<'a>> {
         match self {
-            ExpressionMember::Expression(open, expression) => {
+            ExpressionMember::OutputExpression(open, expression) => {
                 if open {
                     match expression {
                         Some(e) => {
                             let updated_nested_expression = e.append_token(token)?;
-                            Ok(ExpressionMember::Expression(false, Some(updated_nested_expression)))
+                            Ok(ExpressionMember::OutputExpression(false, Some(updated_nested_expression)))
                         },
                         None => {
-                            Ok(ExpressionMember::Expression(false, Some(Expression::new(token)?)))
+                            Ok(ExpressionMember::OutputExpression(false, Some(OutputExpression::new(token)?)))
                         }
                     }
                 }
@@ -121,41 +111,41 @@ impl <'a> ByTokenExpandable<'a, ExpressionMember<'a>> for ExpressionMember<'a> {
 }
 
 impl <'a> Positioned  for ExpressionMember<'a> {
-    fn get_position(&self) -> Position {
+    fn get_position(&self) -> (Position, Position) {
         match self {
-            ExpressionMember::Nil => Position::default(),
+            ExpressionMember::Nil => (Position::default(), Position::default()),
             ExpressionMember::Literal(token) |
-            ExpressionMember::Identifier(token) => token.position.0.clone(),
-            ExpressionMember::Expression(_, expression) => expression.as_ref().unwrap().get_position()
+            ExpressionMember::Identifier(token) => token.position,
+            ExpressionMember::OutputExpression(_, expression) => expression.as_ref().unwrap().get_position()
         }
     }
 }
 
 #[derive(Debug, Clone, PartialEq, Default)]
-pub struct Expression<'a>(
+pub struct OutputExpression<'a>(
     pub Box<ExpressionMember<'a>>, 
     pub Option<OperationKind>, 
     pub Option<Box<ExpressionMember<'a>>>
 );
 
-impl <'a> Leveled for Expression<'a> {
+impl <'a> Leveled for OutputExpression<'a> {
     fn get_level(&self) -> u16 {
-        let Expression(first_member, _, _) = self;
+        let OutputExpression(first_member, _, _) = self;
         first_member.get_level()
     }
 }
 
-impl <'a> ByTokenExpandable<'a, Expression<'a>> for Expression<'a> {
-    fn append_token(self, token: Token<'a>) -> Result<Expression<'a>, ParserError<'a>> {
-        let Expression(first_member, op, last_member) = self;
+impl <'a> ByTokenExpandable<'a, OutputExpression<'a>> for OutputExpression<'a> {
+    fn append_token(self, token: Token<'a>) -> Result<OutputExpression<'a>, ParserError<'a>> {
+        let OutputExpression(first_member, op, last_member) = self;
         // TODO: can this be done without matching?
 
         match first_member.as_ref() {
-            ExpressionMember::Expression(open, expression) => {
+            ExpressionMember::OutputExpression(open, expression) => {
                 if *open {
                     if token.kind.unwrap() == TokenKind::CloseParentheses {
                         if expression.is_some() {
-                            return Ok(Expression(Box::new(ExpressionMember::Expression(true, expression.clone())), None, None))
+                            return Ok(OutputExpression(Box::new(ExpressionMember::OutputExpression(true, expression.clone())), None, None))
                         }
                         else {
                             return Err(ParserError::InvalidExpression(token.position.0))
@@ -173,21 +163,21 @@ impl <'a> ByTokenExpandable<'a, Expression<'a>> for Expression<'a> {
 
         if op.is_none() {
             match Self::parse_operation_first_token(token) {
-                Some(operation) => Ok(Expression(first_member.clone(), Some(operation), None)),
+                Some(operation) => Ok(OutputExpression(first_member.clone(), Some(operation), None)),
                 None => Err(ParserError::UnexpectedToken(token))
             }
         }
         else {
             match Self::parse_operation_second_token(op.unwrap(), token) {
-                Some(operation) => Ok(Expression(first_member.clone(), Some(operation), None)),
+                Some(operation) => Ok(OutputExpression(first_member.clone(), Some(operation), None)),
                 None => {
                     if last_member.is_none() {
-                        Ok(Expression(first_member.clone(), op.clone(), Some(Box::new(ExpressionMember::new(token)?))))
+                        Ok(OutputExpression(first_member.clone(), op.clone(), Some(Box::new(ExpressionMember::new(token)?))))
                     }
                     else {
                         let child_expression = last_member.unwrap();
                         let child_member = child_expression.append_token(token)?;
-                        Ok(Expression(first_member.clone(), op.clone(), Some(Box::new(child_member))))
+                        Ok(OutputExpression(first_member.clone(), op.clone(), Some(Box::new(child_member))))
                     }
                 }
             }
@@ -195,14 +185,25 @@ impl <'a> ByTokenExpandable<'a, Expression<'a>> for Expression<'a> {
     }
 }
 
-impl <'a> Positioned for Expression<'a> {
-    fn get_position(&self) -> Position {
-        let Expression(first_member, _, _) = self;
-        first_member.get_position().clone()
+impl <'a> Positioned for OutputExpression<'a> {
+    fn get_position(&self) -> (Position, Position) {
+        let OutputExpression(first_member, _, last_member) = self;
+        
+        let start_position = first_member.get_position().0;
+        let end_position = {
+            if last_member.is_some() {
+                last_member.clone().unwrap().get_position().1
+            }
+            else {
+                first_member.get_position().1
+            }
+        };
+
+        (start_position, end_position)
     }
 }
 
-impl <'a> Expression<'a> {
+impl <'a> OutputExpression<'a> {
     pub fn new(token: Token<'a>) -> Result<Self, ParserError<'a>> {
         let left_member = ExpressionMember::new(token)?;
 
@@ -302,24 +303,24 @@ impl <'a> Expression<'a> {
 // #[derive(Debug, Clone, PartialEq)]
 // pub enum ExpressionMember<'a> {
 //     Token(Token<'a>),
-//     Expression(Expression<'a>, bool),
+//     OutputExpression(OutputExpression<'a>, bool),
 // }
 
 // #[derive(Debug, Clone, PartialEq, Default)]
-// pub struct Expression<'a> {
+// pub struct OutputExpression<'a> {
 //     pub left: Option<Rc<ExpressionMember<'a>>>,
 //     pub operation: Option<OperationKind>,
 //     pub right: Option<Rc<ExpressionMember<'a>>>,
 //     pub tokens: Vec<Token<'a>>
 // }
 
-// impl <'a> Expression<'a> {
+// impl <'a> OutputExpression<'a> {
 //     pub fn from_token(token: Token<'a>) -> Self {
 //         let left = {
-//             match Expression::parse_left(token) {
+//             match OutputExpression::parse_left(token) {
 //                 Some(t) => Some(t),
 //                 None => {
-//                     match Expression::parse_bracket(token) {
+//                     match OutputExpression::parse_bracket(token) {
 //                         Some((closing, expression)) => {
 //                             if !closing {
 //                                 Some(expression)
@@ -337,23 +338,23 @@ impl <'a> Expression<'a> {
 //         Self {
 //             left,
 //             tokens: vec![token],
-//             ..Expression::default()
+//             ..OutputExpression::default()
 //         }
 //     }
 
 //     pub fn is_complete(&self) -> bool {
 //         self.left.is_some() 
-//         && Expression::check_is_expression_member_complete(self.left.as_ref().unwrap())
+//         && OutputExpression::check_is_expression_member_complete(self.left.as_ref().unwrap())
 //         && self.operation.is_some()
 //         && self.right.is_some()
-//         && Expression::check_is_expression_member_complete(self.right.as_ref().unwrap())
+//         && OutputExpression::check_is_expression_member_complete(self.right.as_ref().unwrap())
 //     }
 
 
 //     fn check_is_expression_member_complete(em: &ExpressionMember) -> bool {
 //         match em {
 //             ExpressionMember::Token(_) => true,
-//             ExpressionMember::Expression(child, complete) => child.is_complete() && *complete,
+//             ExpressionMember::OutputExpression(child, complete) => child.is_complete() && *complete,
 //             ExpressionMember::ContextExpression(blk, complete) => blk.is_complete() && *complete
 //         }
 //     }
@@ -362,21 +363,21 @@ impl <'a> Expression<'a> {
 //         self.tokens.push(token);
 
 //         if self.left.is_some() {
-//             if Expression::check_is_expression_member_complete(self.left.unwrap().as_ref()) {
+//             if OutputExpression::check_is_expression_member_complete(self.left.unwrap().as_ref()) {
 //                 if self.operation.is_some() && self.right.is_none() {
-//                     match Expression::parse_operation_second_token(self.operation.unwrap(), token) {
+//                     match OutputExpression::parse_operation_second_token(self.operation.unwrap(), token) {
 //                         Some(op) => {
 //                             self.operation = Some(op);
 //                             None
 //                         },
 //                         None => {
-//                             match Expression::parse_right(token) {
+//                             match OutputExpression::parse_right(token) {
 //                                 Some(right) => {
 //                                     self.right = Some(right);
 //                                     None
 //                                 }
 //                                 None => {
-//                                     match Expression::parse_bracket(token) {
+//                                     match OutputExpression::parse_bracket(token) {
 //                                         Some((closing, expression)) => {
 //                                             if !closing {
 //                                                 self.right = Some(expression);
@@ -396,10 +397,10 @@ impl <'a> Expression<'a> {
 //                     }
 //                 }
 //                 else if self.right.is_some() && self.operation.is_some(){
-//                     if Expression::check_is_expression_member_complete(self.right.unwrap().as_ref()) {
-//                         match Expression::parse_operation_first_token(token) {
+//                     if OutputExpression::check_is_expression_member_complete(self.right.unwrap().as_ref()) {
+//                         match OutputExpression::parse_operation_first_token(token) {
 //                             Some(op) => {
-//                                 self.right = Some(Rc::new(ExpressionMember::Expression(Expression {
+//                                 self.right = Some(Rc::new(ExpressionMember::OutputExpression(OutputExpression {
 //                                     left: self.right.clone(),
 //                                     operation: Some(op),
 //                                     ..Default::default()
@@ -412,7 +413,7 @@ impl <'a> Expression<'a> {
 //                         }
 //                     }
 //                     else {
-//                         match Expression::parse_bracket(token) {
+//                         match OutputExpression::parse_bracket(token) {
 //                             Some((closing, expression)) => {
 //                                 if !closing {
 //                                     self.right = Some(expression);
@@ -420,10 +421,10 @@ impl <'a> Expression<'a> {
 //                                 }
 //                                 else {
 //                                     match self.right.unwrap().borrow() {
-//                                         ExpressionMember::Expression(expr, _) => {
+//                                         ExpressionMember::OutputExpression(expr, _) => {
 //                                             match expression.as_ref() {
-//                                                 ExpressionMember::Expression(_, _) => {
-//                                                     self.right = Some(Rc::new(ExpressionMember::Expression(expr.clone(), true)));
+//                                                 ExpressionMember::OutputExpression(_, _) => {
+//                                                     self.right = Some(Rc::new(ExpressionMember::OutputExpression(expr.clone(), true)));
 //                                                     None
 //                                                 }
 //                                                 _ => {
@@ -450,7 +451,7 @@ impl <'a> Expression<'a> {
 //                             },
 //                             None => {
 //                                 match self.right.unwrap().borrow() {
-//                                     ExpressionMember::Expression(mut expr, _) => {
+//                                     ExpressionMember::OutputExpression(mut expr, _) => {
 //                                         expr.append_token(token)
 //                                     },
 //                                     ExpressionMember::ContextExpression(mut blk, _) => {
@@ -465,7 +466,7 @@ impl <'a> Expression<'a> {
 //                     }
 //                 }
 //                 else {
-//                     match Expression::parse_operation_first_token(token) {
+//                     match OutputExpression::parse_operation_first_token(token) {
 //                         Some(op) => {
 //                             self.operation = Some(op);
 //                             None
@@ -478,7 +479,7 @@ impl <'a> Expression<'a> {
 //             }
 //             else {
 //                 match self.left.unwrap().borrow() {
-//                     ExpressionMember::Expression(mut expr, _) => {
+//                     ExpressionMember::OutputExpression(mut expr, _) => {
 //                         expr.append_token(token)
 //                     },
 //                     ExpressionMember::ContextExpression(mut blk, _) => {
@@ -491,13 +492,13 @@ impl <'a> Expression<'a> {
 //             }
 //         }
 //         else {
-//             match Expression::parse_left(token) {
+//             match OutputExpression::parse_left(token) {
 //                 Some(em) => {
 //                     self.left = Some(em);
 //                     None
 //                 },
 //                 None => {
-//                     match Expression::parse_bracket(token) {
+//                     match OutputExpression::parse_bracket(token) {
 //                         Some((closing, nested_expression)) => {
 //                             if !closing {
 //                                 self.left = Some(nested_expression);
@@ -538,10 +539,10 @@ impl <'a> Expression<'a> {
 
 //     fn parse_bracket(token: Token) -> Option<(bool, Rc<ExpressionMember>)> {
 //         match token.kind.unwrap() {
-//             TokenKind::OpenParentheses => Some((false, Rc::new(ExpressionMember::Expression(Expression::default(), false)))),
+//             TokenKind::OpenParentheses => Some((false, Rc::new(ExpressionMember::OutputExpression(OutputExpression::default(), false)))),
 //             TokenKind::OpenCurlyBrace => Some((false, Rc::new(ExpressionMember::ContextExpression(Block::default(), false)))),
 
-//             TokenKind::CloseParentheses => Some((true, Rc::new(ExpressionMember::Expression(Expression::default(), true)))),
+//             TokenKind::CloseParentheses => Some((true, Rc::new(ExpressionMember::OutputExpression(OutputExpression::default(), true)))),
 //             TokenKind::CloseCurlyBrace => Some((true, Rc::new(ExpressionMember::ContextExpression(Block::default(), true)))),
 
 //             _ => None
@@ -559,7 +560,7 @@ impl <'a> Expression<'a> {
 
 // #[derive(Debug, Clone, PartialEq, Copy)]
 // pub enum ExpressionMember{
-//     Expression(OutputExpression, bool),
+//     OutputExpression(OutputExpression, bool),
 //     Identifier(Token),
 //     Literal(Token),
 //     Operation(OperationKind),
@@ -588,7 +589,7 @@ impl <'a> Expression<'a> {
 //     pub fn append_token(&mut self, token: Token) -> Result<(), ParserError> {
 //          match token.kind {
 //             TokenKind::OpenParentheses => {
-//                 self.append_expression_member(ExpressionMember::Expression(OutputExpression::new(), false))
+//                 self.append_expression_member(ExpressionMember::OutputExpression(OutputExpression::new(), false))
 //             },
 //             TokenKind::CloseParentheses => {
 //                 self.close_last_expression_member()
@@ -633,7 +634,7 @@ impl <'a> Expression<'a> {
 //                     self.members[i] = Box::new(expression_member);
 //                     return Ok(())
 //                 },
-//                 &ExpressionMember::Expression(mut expression, is_complete) => {
+//                 &ExpressionMember::OutputExpression(mut expression, is_complete) => {
 //                     if !is_complete {
 //                         expression.append_expression_member(expression_member);
 //                         return Ok(())
@@ -649,13 +650,13 @@ impl <'a> Expression<'a> {
 //     fn close_last_expression_member(&mut self) -> Result<(), ParserError> {
 //         for (i, member) in self.members.iter().enumerate() {
 //             match member.as_mut() {
-//                 &mut ExpressionMember::Expression(mut expression, is_complete) => {
+//                 &mut ExpressionMember::OutputExpression(mut expression, is_complete) => {
 //                     if !is_complete {
 //                         if !expression.is_nested_expression_complete() {
 //                             return expression.close_last_expression_member()
 //                         }
 //                         else {
-//                             self.members[i] = Box::new(ExpressionMember::Expression(expression, true));
+//                             self.members[i] = Box::new(ExpressionMember::OutputExpression(expression, true));
 //                             return Ok(())
 //                         }
 //                     }
@@ -670,7 +671,7 @@ impl <'a> Expression<'a> {
 //     fn is_nested_expression_complete(&self) -> bool {
 //         for (i, member) in self.members.iter().enumerate() {
 //             match member.as_ref() {
-//                 &ExpressionMember::Expression(expression, is_complete) => {
+//                 &ExpressionMember::OutputExpression(expression, is_complete) => {
 //                     return expression.is_nested_expression_complete() && is_complete
 //                 },
 //                 _ => {}
@@ -703,7 +704,7 @@ impl <'a> Expression<'a> {
 
 //                     return Ok(())
 //                 },
-//                 &mut ExpressionMember::Expression(mut expression, is_complete) => {
+//                 &mut ExpressionMember::OutputExpression(mut expression, is_complete) => {
 //                     if !is_complete {
 //                         return expression.append_operation(token)
 //                     }
@@ -727,7 +728,7 @@ impl <'a> Expression<'a> {
 //                     }));
 //                     return Ok(())
 //                 },
-//                 &ExpressionMember::Expression(mut expression, is_complete) => {
+//                 &ExpressionMember::OutputExpression(mut expression, is_complete) => {
 //                     if !is_complete {
 //                         return expression.append_logical_operation(token)
 //                     }
