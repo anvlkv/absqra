@@ -4,10 +4,10 @@ use ra_lexer::tokenize;
 use super::block::{Block, BlockKind};
 use super::cursor::Cursor;
 use super::errors::ParserError;
-use super::expressions::traits::{Leveled, ByTokenExpandable, Positioned};
+use super::expressions::traits::{Leveled, Expandable, Positioned};
 
 pub fn parse<'a>(input: &'a str) -> Result<Block<'a>, Vec<ParserError>> {
-    let stream = tokenize(input);
+    let stream = tokenize(input).filter(|tok| tok.kind.unwrap() != TokenKind::Comment);
     let mut errors: Vec<ParserError> = Vec::new();
     let program = {
         let mut block = Block::new(Token::default()).unwrap();
@@ -73,16 +73,6 @@ where
         Err(errors)
     }
 
-    // fn parse_context_declaration_block(
-    //     &mut self,
-    //     first_token: Token<'token>,
-    //     kind: BlockKind,
-    // ) -> Result<Block<'token>, Vec<ParserError<'token>>> { 
-    //     let mut errors: Vec<ParserError<'token>> = Vec::new();
-    //     // let block = Some(Block::new(first_token, kind)?);
-
-    // }
-
     fn check_parse_block_expression<'errors>(
         &mut self,
         mut block: Block<'token>,
@@ -93,7 +83,7 @@ where
         while self.first_ahead().is_some()
             && self.first_ahead().unwrap().level == lvl
             && (self.first_ahead().unwrap().position.0).0 == line_number {
-                match block.clone().append_token(self.bump().unwrap()) {
+                match block.clone().append_item(self.bump().unwrap()) {
                     Ok(blk) => {
                         block = blk;
                     },
@@ -101,37 +91,8 @@ where
                         errors.push(e)
                     }
                 }
-            }
+        }
 
-        //     let first_block_expression_member = block.clone().expression.0;
-        //     if token.level == first_block_expression_member.get_level()
-        //         && (token.position.0).0 == (first_block_expression_member.get_position()).0
-        //     {
-        //         // block.expression.append_token(self.bump().unwrap());
-        //         // // block.expression = match OutputExpression::new(self.bump().unwrap()){
-        //         // //     Ok(expr) => expr,
-        //         // //     Err(e) => {
-        //         // //         errors.push(e);
-        //         // //         return (None, errors)
-        //         // //     }
-        //         // // };
-        //         while !self.is_eof()
-        //             && self.first_ahead().is_some()
-        //             && (self.first_ahead().unwrap().position.0).0
-        //                 == (first_block_expression_member.get_position()).0
-        //         {
-        //             match block.clone().expression.append_token(self.bump().unwrap()) {
-        //                 Ok(expression) => {
-        //                     block.expression = expression;
-        //                 }
-        //                 Err(e) => {
-        //                     errors.push(e);
-        //                     break;
-        //                 }
-        //             };
-        //         }
-        //     }
-        // }
         (Some(block), errors)
     }
 
@@ -164,7 +125,7 @@ where
         block: Block<'token>,
         errors: &'errors mut Vec<ParserError<'token>>,
     ) -> (Option<Block<'token>>, &'errors mut Vec<ParserError<'token>>) {
-        let mut union_block = Block::from_block(block.clone());
+        let mut union_block = block.clone();
         let lvl = block.get_level();
         let mut union_size = 0;
         while !self.is_eof()

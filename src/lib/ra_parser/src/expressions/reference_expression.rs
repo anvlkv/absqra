@@ -3,31 +3,55 @@ use super::traits::{*};
 use super::errors::ParserError;
 
 use ra_lexer::cursor::Position;
-use ra_lexer::token::Token;
+use ra_lexer::token::{Token, TokenKind};
 
 #[derive(Clone, Debug, PartialEq)]
-pub struct ReferenceExpression {}
+pub struct ReferenceExpression<'a> (Token<'a>, Option<Box<ReferenceExpression<'a>>>);
 
-impl<'a> ReferenceExpression {
+impl<'a> ReferenceExpression<'a> {
     pub fn new(token: Token<'a>) -> Result<Self, ParserError<'a>> {
-        todo!()
+        match token.kind.unwrap() {
+            TokenKind::Identifier(_) => Ok(Self(token, None)),
+            _ => Err(ParserError::ExpectedAGotB(token, vec![TokenKind::Identifier("")]))
+        }
     }
 }
 
-impl Leveled for ReferenceExpression {
+impl<'a> Leveled for ReferenceExpression<'a> {
     fn get_level(&self) -> u16 {
-        todo!()
+        let ReferenceExpression(first_token, _) = self;
+        first_token.level
     }
 }
 
-impl Positioned for ReferenceExpression {
+impl<'a> Positioned for ReferenceExpression<'a> {
     fn get_position(&self) -> (Position, Position) {
-        todo!()
+        let ReferenceExpression(first_token, next) = self;
+
+        let start_position = first_token.position.0;
+
+        let end_position = {
+            if next.is_some() {
+                next.as_ref().unwrap().get_position().1
+            }
+            else {
+                first_token.position.1
+            }
+        };
+
+        (start_position, end_position)
     }
 }
 
-impl<'a> ByTokenExpandable<'a, ReferenceExpression> for ReferenceExpression {
-    fn append_token(self, token: Token<'a>) -> Result<ReferenceExpression, ParserError<'a>> {
-        todo!()
+impl<'a> Expandable<'a, ReferenceExpression<'a>, Token<'a>> for ReferenceExpression<'a> {
+    fn append_item(self, token: Token<'a>) -> Result<ReferenceExpression<'a>, ParserError<'a>> {
+        let ReferenceExpression(first_token, next) = self;
+        if next.is_none() {
+            Ok(ReferenceExpression(first_token, Some(Box::new(ReferenceExpression::new(token)?))))
+        }
+        else {
+            let updated_expression = next.unwrap().append_item(token)?;
+            Ok(ReferenceExpression(first_token, Some(Box::new(updated_expression))))
+        }
     }
 }

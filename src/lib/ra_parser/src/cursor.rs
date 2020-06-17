@@ -36,7 +36,7 @@ where I: Iterator<Item = Token<'token>>
                 self.position = token.position.1;
                 self.level = token.level;
                 self.consumed_len += 1;
-                return Some(token);
+                Some(token)
             }
             None => None
         }

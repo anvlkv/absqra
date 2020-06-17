@@ -71,7 +71,7 @@ mod lib {
     fn it_should_match_snapshots() {
         for_each_ra_example_file(|example| {
             let mut file = File::open(example.path()).unwrap();
-            println!("{}", example.file_name().to_str().unwrap());
+            
             let mut contents = String::new();
             file.read_to_string(&mut contents).unwrap();
 

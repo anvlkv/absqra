@@ -1,0 +1,142 @@
+use ra_lexer::token::{TokenKind, Token};
+use ra_lexer::cursor::{Cursor, Position};
+use ra_lexer::tokenize;
+
+use super::reference_expression::ReferenceExpression;
+use super::traits::{Expandable};
+
+use super::errors::ParserError;
+
+#[derive(Clone, Debug, PartialEq)]
+pub enum ContentBlockMember<'a> {
+    Body(String),
+    Template(ReferenceExpression<'a>)
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub struct Content<'a> (ContentBlockMember<'a>, Option<Box<Content<'a>>>);
+
+impl<'a> Content<'a> {
+    pub fn new(token: Token<'a>) -> Result<Content<'a>, ParserError<'a>> {
+        match token.kind.unwrap() {
+            TokenKind::ContentBlock => {
+                Self::parse_content(token)
+            },
+            _ => {
+                Err(ParserError::ExpectedAGotB(token, vec![TokenKind::ContentBlock]))
+            }
+        }
+    }
+
+    fn parse_content(token: Token<'a>) -> Result<Content<'a>, ParserError<'a>> {
+        let Token {
+            kind, level, len, content, position
+        } = token;
+
+        let mut cursor = Cursor::new(content, position.0, level, 0);
+
+        let mut content = Content(Self::parse_member(&mut cursor)?, None);
+
+
+        while !cursor.is_eof() {
+            match Self::parse_member(&mut cursor) {
+                Ok(member) => {
+                    content = content.append_item(member)?;
+                },
+                Err(e) => return Err(e)
+            }
+        }
+
+        Ok(content)
+    }
+
+    fn parse_member(cursor: &mut Cursor<'a>) -> Result<ContentBlockMember<'a>, ParserError<'a>> {
+        let mut string_buffer = String::new();
+        let mut token_buffer = cursor.slice(0, 0);
+
+        while let Some(ch) = cursor.bump() {
+            match ch {
+                '{' => {
+                    match cursor.first_ahead() {
+                        '{' => {
+                            if string_buffer.len() > 0 {
+                                return Ok(ContentBlockMember::Body(string_buffer))
+                            }
+                            let start_consumed = cursor.len_consumed();
+                            while let Some(ch) = cursor.bump() {
+                                match ch {
+                                    '}' => {
+                                        match cursor.first_ahead() {
+                                            '}' => {
+                                                if token_buffer.len() > 0 {
+                                                    return Ok(
+                                                        ContentBlockMember::Template(
+                                                            Self::parse_reference_from_buffer(token_buffer, cursor.position)?
+                                                        ))
+                                                }
+                                                break;
+                                            },
+                                            _ => return Err(ParserError::InvalidBlock)
+                                        }
+                                    },
+                                    _ => {
+                                        token_buffer = cursor.slice(start_consumed, cursor.len_consumed())
+                                        // token_buffer.push(ch)
+                                    }
+                                }
+                            }
+                        },
+                        '\\' => {
+                            cursor.bump();
+                        }
+                        _ => {
+                            string_buffer.push(ch);
+                        }
+                    }
+                },
+                _ => {
+                    string_buffer.push(ch);
+                }
+            }
+        };
+
+        if token_buffer.len() > 0 {
+            Err(ParserError::UnexpectedEndOfInput(cursor.position))
+        }
+        else {
+            Ok(ContentBlockMember::Body(string_buffer))
+        }
+    }
+
+    fn parse_reference_from_buffer(buffer: &'a str, position: Position) -> Result<ReferenceExpression<'a>, ParserError<'a>> {
+        let mut tokens_stream = tokenize(buffer);
+
+
+        match tokens_stream.next() {
+            Some(token) => {
+                let mut expression = ReferenceExpression::new(token)?;
+
+                while let Some(token) = tokens_stream.next() {
+                    expression = expression.append_item(token)?;
+                };
+
+                Ok(expression)
+            }
+            None => Err(ParserError::UnexpectedEndOfInput(position))
+        }       
+    }
+}
+
+impl<'a> Expandable<'a, Content<'a>, ContentBlockMember<'a>> for Content<'a> {
+    fn append_item(self, item: ContentBlockMember<'a>) -> Result<Content<'a>, ParserError<'a>> {
+        let Content(current, next) = self;
+        match next {
+            Some(next) => {
+                Ok(Content(current, Some(Box::new(next.append_item(item)?))))
+            },
+            None => {
+                Ok(Content(current, Some(Box::new(Content(item, None)))))
+            }
+        }
+    }
+}

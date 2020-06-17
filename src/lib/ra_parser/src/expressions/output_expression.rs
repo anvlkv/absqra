@@ -86,14 +86,14 @@ impl <'a> Leveled for ExpressionMember<'a> {
     }
 }
 
-impl <'a> ByTokenExpandable<'a, ExpressionMember<'a>> for ExpressionMember<'a> {
-    fn append_token(self, token: Token<'a>) -> Result<ExpressionMember<'a>, ParserError<'a>> {
+impl <'a> Expandable<'a, ExpressionMember<'a>, Token<'a>> for ExpressionMember<'a> {
+    fn append_item(self, token: Token<'a>) -> Result<ExpressionMember<'a>, ParserError<'a>> {
         match self {
             ExpressionMember::OutputExpression(open, expression) => {
                 if open {
                     match expression {
                         Some(e) => {
-                            let updated_nested_expression = e.append_token(token)?;
+                            let updated_nested_expression = e.append_item(token)?;
                             Ok(ExpressionMember::OutputExpression(false, Some(updated_nested_expression)))
                         },
                         None => {
@@ -135,8 +135,8 @@ impl <'a> Leveled for OutputExpression<'a> {
     }
 }
 
-impl <'a> ByTokenExpandable<'a, OutputExpression<'a>> for OutputExpression<'a> {
-    fn append_token(self, token: Token<'a>) -> Result<OutputExpression<'a>, ParserError<'a>> {
+impl <'a> Expandable<'a, OutputExpression<'a>, Token<'a>> for OutputExpression<'a> {
+    fn append_item(self, token: Token<'a>) -> Result<OutputExpression<'a>, ParserError<'a>> {
         let OutputExpression(first_member, op, last_member) = self;
         // TODO: can this be done without matching?
 
@@ -176,7 +176,7 @@ impl <'a> ByTokenExpandable<'a, OutputExpression<'a>> for OutputExpression<'a> {
                     }
                     else {
                         let child_expression = last_member.unwrap();
-                        let child_member = child_expression.append_token(token)?;
+                        let child_member = child_expression.append_item(token)?;
                         Ok(OutputExpression(first_member.clone(), op.clone(), Some(Box::new(child_member))))
                     }
                 }

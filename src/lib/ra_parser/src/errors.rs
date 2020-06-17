@@ -2,6 +2,7 @@ use std::error;
 use std::fmt;
 use ra_lexer::token::{Token, TokenKind};
 use ra_lexer::cursor::Position;
+use ra_lexer::errors::{LexerError};
 
 pub enum ParserError<'a> {
     UnexpectedIndentLevel(u16, Position),
@@ -9,7 +10,8 @@ pub enum ParserError<'a> {
     ExpectedAGotB(Token<'a>, Vec<TokenKind<'a>>),
     UnexpectedEndOfInput(Position),
     InvalidExpression(Position),
-    InvalidBlock
+    InvalidBlock,
+    ContentParsingError(LexerError)
 }
 
 impl<'a> fmt::Display for ParserError<'a> {
@@ -19,8 +21,11 @@ impl<'a> fmt::Display for ParserError<'a> {
             ParserError::UnexpectedToken(token) =>  format!("Unexpected {:?}: {} at {}", token.kind.unwrap(), token.content, token.position.0),
             ParserError::UnexpectedEndOfInput(pos) =>  format!("Unexpected end of input at {}", pos),
             ParserError::InvalidExpression(pos) =>  format!("Invalid expression at {}", pos),
-            ParserError::ExpectedAGotB(got, expected) => format!("Expected one of [{:?}], got {:?}", expected, got.kind),
-            ParserError::InvalidBlock => format!("Invalid block")
+            ParserError::ExpectedAGotB(got, expected) => format!("Expected one of [{:?}], got {:?}", expected, got),
+            ParserError::InvalidBlock => format!("Invalid block"),
+            ParserError::ContentParsingError(err) => {
+                return err.fmt(f)
+            }
         };
 
         write!(f, "Parser error: {}", err_text)
@@ -34,8 +39,11 @@ impl<'a> fmt::Debug for ParserError<'a> {
             ParserError::UnexpectedToken(token) =>  format!("Unexpected {:?}: {} at {}", token.kind.unwrap(), token.content, token.position.0),
             ParserError::UnexpectedEndOfInput(pos) =>  format!("Unexpected end of input at {}", pos),
             ParserError::InvalidExpression(pos) =>  format!("Invalid expression at {}", pos),
-            ParserError::ExpectedAGotB(got, expected) => format!("Expected one of [{:?}], got {:?}", expected, got.kind),
-            ParserError::InvalidBlock => format!("Invalid block")
+            ParserError::ExpectedAGotB(got, expected) => format!("Expected one of [{:?}], got {:?}", expected, got),
+            ParserError::InvalidBlock => format!("Invalid block"),
+            ParserError::ContentParsingError(err) => {
+                return err.fmt(f)
+            }
         };
 
         write!(f, "{:?}", err_text)

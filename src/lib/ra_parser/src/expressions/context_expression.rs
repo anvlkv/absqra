@@ -54,8 +54,8 @@ impl Positioned for ContextExpression {
     }
 }
 
-impl<'a> ByTokenExpandable<'a, ContextExpression> for ContextExpression {
-    fn append_token(self, token: Token<'a>) -> Result<ContextExpression, ParserError<'a>> {
+impl<'a> Expandable<'a, ContextExpression, Token<'a>> for ContextExpression {
+    fn append_item(self, token: Token<'a>) -> Result<ContextExpression, ParserError<'a>> {
         match token.kind.unwrap() {
             TokenKind::Colon => Ok(self.clone()),
             _ => Err(ParserError::ExpectedAGotB(token, vec![TokenKind::Colon])),

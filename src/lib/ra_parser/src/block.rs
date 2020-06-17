@@ -6,6 +6,7 @@ use super::expressions::context_expression::ContextExpression;
 use super::expressions::input_expression::InputExpression;
 use super::expressions::reference_expression::ReferenceExpression;
 use super::expressions::annotation_expression::AnnotationExpression;
+use super::expressions::content::Content;
 use super::expressions::traits::{*};
 
 use super::errors::ParserError;
@@ -17,13 +18,13 @@ use ra_lexer::cursor::Position;
 pub enum BlockKind<'a> {
     Program,
     Output(OutputExpression<'a>),
-    Input(bool, Option<InputExpression>),
+    Input(bool, Option<InputExpression<'a>>),
     Declaration(Option<Token<'a>>),
-    Invocation(Option<Token<'a>>, Option<InputExpression>),
-    Reference(Option<ReferenceExpression>),
+    Invocation(Option<Token<'a>>, Option<InputExpression<'a>>),
+    Reference(Option<ReferenceExpression<'a>>),
     ContextModification(Option<ContextExpression>),
-    Content(Option<String>),
-    Annotation(Option<AnnotationExpression>),
+    Content(Content<'a>),
+    Annotation(Option<AnnotationExpression<'a>>),
     Union(usize)
 }
 
@@ -51,12 +52,6 @@ impl <'a> Block<'a> {
         })
     }
 
-    pub fn from_block(blk: Block<'a>) -> Self {
-        Self {
-            ..blk
-        }
-    }
-
     fn parse_block_kind(token: Token<'a>) -> Result<BlockKind, ParserError<'a>> {
         if token.kind.is_none() {
             return  Ok(BlockKind::Program)
@@ -71,7 +66,7 @@ impl <'a> Block<'a> {
             | TokenKind::OpenParentheses => Ok(BlockKind::Output(OutputExpression::new(token)?)),
             TokenKind::Exclamation => Ok(BlockKind::Invocation(None, None)),
             TokenKind::Plus | TokenKind::Greater => Ok(BlockKind::Input(token_kind == TokenKind::Plus, None)),
-            TokenKind::ContentBlock => Ok(BlockKind::Content(None)),
+            TokenKind::ContentBlock => Ok(BlockKind::Content(Content::new(token)?)),
             TokenKind::At => Ok(BlockKind::Reference(None)),
             TokenKind::Colon => Ok(BlockKind::Declaration(None)),
             TokenKind::OpenCurlyBrace => Ok(BlockKind::ContextModification(None)),
@@ -157,7 +152,7 @@ impl<'a> Positioned for Block<'a> {
                         else {
                             None
                         }
-                    }
+                    },
                     _ => None
                 };
 
@@ -174,22 +169,22 @@ impl<'a> Positioned for Block<'a> {
     }
 }
 
-impl<'a> ByTokenExpandable<'a, Block<'a>> for Block<'a> {
-    fn append_token(self, token: Token<'a>) -> Result<Block<'a>, ParserError<'a>> {
+impl<'a> Expandable<'a, Block<'a>, Token<'a>> for Block<'a> {
+    fn append_item(self, token: Token<'a>) -> Result<Block<'a>, ParserError<'a>> {
         let mut block = self.clone();
         match self.kind {
             BlockKind::Program 
             | BlockKind::Union(_) 
             | BlockKind::Content(_) => Err(ParserError::InvalidBlock),
             BlockKind::Output(expression) => {
-                let updated_expression = expression.append_token(token)?;
+                let updated_expression = expression.append_item(token)?;
                 block.kind = BlockKind::Output(updated_expression);
                 Ok(block)
             },
             BlockKind::Input(multiple, expression) => {
                 let new_expression;
                 if expression.is_some() {
-                    new_expression = expression.unwrap().append_token(token)?;
+                    new_expression = expression.unwrap().append_item(token, None)?;
                 }
                 else {
                     new_expression = InputExpression::new(token)?;
@@ -201,7 +196,12 @@ impl<'a> ByTokenExpandable<'a, Block<'a>> for Block<'a> {
             BlockKind::Annotation(expression) => {
                 let new_expression;
                 if expression.is_some() {
-                    new_expression = expression.unwrap().append_token(token)?;
+                    // let AnnotationExpression(first_token, next) = expression.clone().unwrap();
+
+                    // TODO: should append to existing expression or push to block children
+                    // TODO: what are possible annotated blocks
+
+                    new_expression = expression.unwrap().append_item(token)?;
                 }
                 else {
                     new_expression = AnnotationExpression::new(token)?;
@@ -231,13 +231,16 @@ impl<'a> ByTokenExpandable<'a, Block<'a>> for Block<'a> {
                 else if expression.is_none() {
                     block.kind = BlockKind::Invocation(invoked_token, Some(InputExpression::new(token)?));
                 }
+                else {
+                    block.kind = BlockKind::Invocation(invoked_token, Some(expression.unwrap().append_item(token, None)?))
+                }
 
                 Ok(block)
             },
             BlockKind::Reference(expression) => {
                 let new_expression;
                 if expression.is_some() {
-                    new_expression = expression.unwrap().append_token(token)?;
+                    new_expression = expression.unwrap().append_item(token)?;
                 }
                 else {
                     new_expression = ReferenceExpression::new(token)?;
@@ -249,7 +252,7 @@ impl<'a> ByTokenExpandable<'a, Block<'a>> for Block<'a> {
             BlockKind::ContextModification(expression) => {
                 let new_expression;
                 if expression.is_some() {
-                    new_expression = expression.unwrap().append_token(token)?;
+                    new_expression = expression.unwrap().append_item(token)?;
                 }
                 else {
                     new_expression = ContextExpression::new(token)?;

@@ -2,8 +2,8 @@ use std::str::Chars;
 use std::fmt;
 use super::errors::LexerError;
 
-pub(crate) const EOF_CHAR: char = '\0';
-pub(crate) const EOL_CHAR: char = '\n';
+pub const EOF_CHAR: char = '\0';
+pub const EOL_CHAR: char = '\n';
 
 #[derive(Copy, Clone, PartialEq)]
 pub struct Position(pub u16, pub u16);
@@ -26,10 +26,11 @@ impl fmt::Display for Position {
     }
 }
 
-pub(crate) struct Cursor<'a> {
+pub struct Cursor<'a> {
     input: &'a str,
     initial_len: usize,
     chars: Chars<'a>,
+    initial_level: Option<u16>,
     pub position: Position,
     pub level: u16,
     pub indent_width: u16,
@@ -72,14 +73,24 @@ pub fn is_end_of_line(c: &char) -> bool {
 }
 
 impl <'a> Cursor<'a> {
-    pub(crate)fn new(input: &'a str, position: Position, level: u16, indent_width: u16) -> Cursor<'a> {
+    pub fn new(input: &'a str, position: Position, level: u16, indent_width: u16) -> Cursor<'a> {
+        let initial_level = {
+            if level > 0 {
+                Some(level)
+            }
+            else {
+                None
+            }
+        };
+
         Cursor {
             input,
             initial_len: input.len(),
             chars: input.chars(),
             position,
             level,
-            indent_width
+            indent_width,
+            initial_level
         }
     }
 
@@ -100,22 +111,22 @@ impl <'a> Cursor<'a> {
     }
 
     /// Peeks the next symbol from the input stream without consuming it.
-    pub(crate) fn first_ahead(&self) -> char {
+    pub fn first_ahead(&self) -> char {
         self.nth_char(0)
     }
 
     /// Peeks the second symbol from the input stream without consuming it.
-    pub(crate) fn second_ahead(&self) -> char {
+    pub fn second_ahead(&self) -> char {
         self.nth_char(1)
     }
 
     /// Checks if there is nothing more to consume.
-    pub(crate) fn is_eof(&self) -> bool {
+    pub fn is_eof(&self) -> bool {
         self.chars.as_str().trim().is_empty()
     }
 
     /// Moves to the next character.
-    pub(crate) fn bump(&mut self) -> Option<char> {
+    pub fn bump(&mut self) -> Option<char> {
         let character = self.chars.next();
         match character {
             Some(ch) => {
@@ -135,11 +146,11 @@ impl <'a> Cursor<'a> {
     }
 
     /// Returns amount of already consumed symbols.
-    pub(crate) fn len_consumed(&self) -> usize {
+    pub fn len_consumed(&self) -> usize {
         self.initial_len - self.chars.as_str().len()
     }
 
-    pub(crate) fn slice(&self, start: usize, end: usize) -> &'a str {
+    pub fn slice(&self, start: usize, end: usize) -> &'a str {
         &self.input[start..end]
     }
 
@@ -147,13 +158,29 @@ impl <'a> Cursor<'a> {
     fn consume_indent(&mut self) {
         if is_whitespace(&self.first_ahead()) {
             if self.indent_width == 0 {
-                self.level = 1;
-                self.indent_width = self.eat_while(|c, _| is_whitespace(&c));
+                self.level = {
+                    if self.initial_level.is_some() {
+                        self.initial_level.unwrap()
+                    }
+                    else {
+                        1
+                    }
+                };
+
+                self.indent_width = self.eat_while(|c, _| is_whitespace(&c)) / self.level;
             }
             else {
-                let inner_width = self.eat_while(|c, _| is_whitespace(&c));
-                if inner_width % self.indent_width == 0 {
-                    self.level =  inner_width / self.indent_width;
+                let initial_level = self.initial_level.clone();
+                let indent_width = self.indent_width.clone();
+
+                let inner_width = self.eat_while(|c, eaten| {
+                    match initial_level {
+                        Some(lvl) => eaten / indent_width  > lvl.to_owned() && is_whitespace(&c),
+                        None => is_whitespace(&c)
+                    }
+                });
+                if inner_width % indent_width == 0 {
+                    self.level =  inner_width / indent_width;
                 } 
                 else {
                     panic!(LexerError::UnexpectedIndentLevel(inner_width, self.position));
