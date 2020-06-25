@@ -5,6 +5,7 @@ mod lib {
     use crate::block::BlockKind;
     use crate::expressions::output_expression::ExpressionMember;
     use crate::expressions::output_expression::{MathOperation, OperationKind, OutputExpression};
+    use crate::expressions::reference_expression::ReferenceExpression;
     use crate::parser::parse;
 
     #[test]
@@ -19,13 +20,13 @@ mod lib {
         assert_eq!(
             parsed.kind,
             BlockKind::Output(OutputExpression(
-                Box::new(ExpressionMember::Identifier(Token {
+                Box::new(ExpressionMember::ReferenceExpression(ReferenceExpression(Token {
                     kind: Some(TokenKind::Identifier("abc")),
                     position: (Position(1, 0), Position(1, 3)),
                     len: 3,
                     content: "abc",
                     level: 0,
-                })),
+                }, None))),
                 Some(OperationKind::MathOperation(MathOperation::Sum)),
                 Some(Box::new(ExpressionMember::Literal(Token {
                     kind: Some(TokenKind::Int(2)),

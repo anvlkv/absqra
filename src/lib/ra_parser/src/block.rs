@@ -187,6 +187,13 @@ impl<'a> Expandable<'a, Block<'a>, Token<'a>> for Block<'a> {
                     new_expression = expression.unwrap().append_item(token, None)?;
                 }
                 else {
+                    if multiple {
+                        match token.kind.unwrap() {
+                            TokenKind::Greater => return Ok(block),
+                            _ => {}
+                        }
+                    }
+                    
                     new_expression = InputExpression::new(token)?;
                 }
 
@@ -196,12 +203,22 @@ impl<'a> Expandable<'a, Block<'a>, Token<'a>> for Block<'a> {
             BlockKind::Annotation(expression) => {
                 let new_expression;
                 if expression.is_some() {
-                    // let AnnotationExpression(first_token, next) = expression.clone().unwrap();
-
-                    // TODO: should append to existing expression or push to block children
-                    // TODO: what are possible annotated blocks
-
-                    new_expression = expression.unwrap().append_item(token)?;
+                    match expression.unwrap().append_item(token) {
+                        Ok(expression) => {
+                            new_expression = expression;
+                        },
+                        Err(e) => {
+                            match Block::new(token) {
+                                Ok(blk) => {
+                                    block.children.push(blk);
+                                    return Ok(block)
+                                }
+                                Err(_) => {
+                                    return Err(e)
+                                }
+                            }
+                        }
+                    }
                 }
                 else {
                     new_expression = AnnotationExpression::new(token)?;

@@ -1,9 +1,7 @@
-// use std::rc::Rc;
-// use std::borrow::Borrow;
 use ra_lexer::token::{Token, TokenKind};
 use ra_lexer::cursor::Position;
-// use super::block::Block;
 use super::errors::ParserError;
+use super::reference_expression::ReferenceExpression;
 use super::traits::{*};
 
 #[derive(Debug, Clone, PartialEq, Copy)]
@@ -49,9 +47,9 @@ pub enum OperationKind {
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum ExpressionMember<'a> {
-    Identifier(Token<'a>),
     Literal(Token<'a>),
     OutputExpression(bool, Option<OutputExpression<'a>>),
+    ReferenceExpression(ReferenceExpression<'a>),
     Nil
 }
 
@@ -65,7 +63,7 @@ impl<'a> Default for ExpressionMember<'a> {
 impl <'a> ExpressionMember<'a> {
     pub fn new(token: Token<'a>) -> Result<Self, ParserError<'a>> {
         match token.kind.unwrap() {
-            TokenKind::Identifier(_) => Ok(ExpressionMember::Identifier(token)),
+            TokenKind::Identifier(_) => Ok(ExpressionMember::ReferenceExpression(ReferenceExpression::new(token)?)),
             TokenKind::Int(_) |
             TokenKind::Float(_) |
             TokenKind::StringLiteral(_) => Ok(ExpressionMember::Literal(token)),
@@ -79,8 +77,8 @@ impl <'a> Leveled for ExpressionMember<'a> {
     fn get_level(&self) -> u16 {
         match self {
             ExpressionMember::Nil => 0,
-            ExpressionMember::Literal(token) |
-            ExpressionMember::Identifier(token) => token.level,
+            ExpressionMember::Literal(token) => token.level,
+            ExpressionMember::ReferenceExpression(expression) => expression.get_level(),
             ExpressionMember::OutputExpression(_, expression) => expression.as_ref().unwrap().get_level()
         }
     }
@@ -114,8 +112,8 @@ impl <'a> Positioned  for ExpressionMember<'a> {
     fn get_position(&self) -> (Position, Position) {
         match self {
             ExpressionMember::Nil => (Position::default(), Position::default()),
-            ExpressionMember::Literal(token) |
-            ExpressionMember::Identifier(token) => token.position,
+            ExpressionMember::Literal(token) => token.position,
+            ExpressionMember::ReferenceExpression(expression) => expression.get_position(), 
             ExpressionMember::OutputExpression(_, expression) => expression.as_ref().unwrap().get_position()
         }
     }

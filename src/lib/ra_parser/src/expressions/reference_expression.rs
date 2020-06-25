@@ -6,7 +6,7 @@ use ra_lexer::cursor::Position;
 use ra_lexer::token::{Token, TokenKind};
 
 #[derive(Clone, Debug, PartialEq)]
-pub struct ReferenceExpression<'a> (Token<'a>, Option<Box<ReferenceExpression<'a>>>);
+pub struct ReferenceExpression<'a> (pub Token<'a>, pub Option<Option<Box<ReferenceExpression<'a>>>>);
 
 impl<'a> ReferenceExpression<'a> {
     pub fn new(token: Token<'a>) -> Result<Self, ParserError<'a>> {
@@ -31,8 +31,8 @@ impl<'a> Positioned for ReferenceExpression<'a> {
         let start_position = first_token.position.0;
 
         let end_position = {
-            if next.is_some() {
-                next.as_ref().unwrap().get_position().1
+            if next.is_some() && next.as_ref().unwrap().is_some() {
+                next.as_ref().unwrap().as_ref().unwrap().get_position().1
             }
             else {
                 first_token.position.1
@@ -47,11 +47,19 @@ impl<'a> Expandable<'a, ReferenceExpression<'a>, Token<'a>> for ReferenceExpress
     fn append_item(self, token: Token<'a>) -> Result<ReferenceExpression<'a>, ParserError<'a>> {
         let ReferenceExpression(first_token, next) = self;
         if next.is_none() {
-            Ok(ReferenceExpression(first_token, Some(Box::new(ReferenceExpression::new(token)?))))
+            match token.kind.unwrap() {
+                TokenKind::Dot => {
+                    Ok(ReferenceExpression(first_token, Some(None)))
+                }
+                _ => Err(ParserError::ExpectedAGotB(token, vec![TokenKind::Dot]))
+            }
+        }
+        else if next.is_some() && next.as_ref().unwrap().is_none() {
+            Ok(ReferenceExpression(first_token, Some(Some(Box::new(ReferenceExpression::new(token)?)))))
         }
         else {
-            let updated_expression = next.unwrap().append_item(token)?;
-            Ok(ReferenceExpression(first_token, Some(Box::new(updated_expression))))
+            let updated_expression = next.unwrap().unwrap().append_item(token)?;
+            Ok(ReferenceExpression(first_token, Some(Some(Box::new(updated_expression)))))
         }
     }
 }

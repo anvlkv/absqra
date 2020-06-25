@@ -14,6 +14,8 @@ pub enum ParserError<'a> {
     ContentParsingError(LexerError)
 }
 
+
+
 impl<'a> fmt::Display for ParserError<'a> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::result::Result<(), std::fmt::Error> { 
         let err_text = match self {

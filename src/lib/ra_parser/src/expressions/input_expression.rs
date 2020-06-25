@@ -1,20 +1,25 @@
 
 use super::traits::{*};
 use super::errors::ParserError;
+use super::content::Content;
+use super::reference_expression::ReferenceExpression;
+use super::output_expression::OutputExpression;
 
 use ra_lexer::cursor::Position;
 use ra_lexer::token::{Token, TokenKind};
 
 #[derive(Clone, Debug, PartialEq)]
 pub enum ArgumentType<'a> {
-    Named(Token<'a>),
+    Named(Token<'a>, bool),
     Ordered(u16)
 }
 
 #[derive(Clone, Debug, PartialEq)]
 pub enum ValueType<'a> {
     Literal(Token<'a>),
-    Identifier(Token<'a>)
+    Content(Content<'a>),
+    OutputExpression(OutputExpression<'a>),
+    ReferenceExpression(ReferenceExpression<'a>)
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -58,7 +63,7 @@ impl<'a> ByTokenExpandableFromRoot<'a, InputExpression<'a>> for InputExpression<
         if argument_type.is_none() {
             match token.kind.unwrap() {
                 TokenKind::Identifier(_) => {
-                    Ok(InputExpression(Some(ArgumentType::Named(token)), None, None))
+                    Ok(InputExpression(Some(ArgumentType::Named(token, false)), None, None))
                 },
                 TokenKind::Equals => {
                     Ok(InputExpression(Some(ArgumentType::Ordered(ordered_argument_depth)), None, None))
@@ -67,14 +72,33 @@ impl<'a> ByTokenExpandableFromRoot<'a, InputExpression<'a>> for InputExpression<
             }
         }
         else if value_type.is_none() {
+            match argument_type.clone().unwrap() {
+                ArgumentType::Named(tok, assigned) => {
+                    if !assigned {
+                        return match token.kind.unwrap() {
+                            TokenKind::Equals => {
+                                Ok(InputExpression(Some(ArgumentType::Named(tok, true)), None, None))
+                            },
+                            
+                            _ => Err(ParserError::ExpectedAGotB(token, vec![TokenKind::Equals]))
+                        }
+                    }
+                }, 
+                _ => {}
+            }
+
             match token.kind.unwrap() {
                 TokenKind::StringLiteral(_)
                 | TokenKind::Float(_)
                 | TokenKind::Int(_) => {
                     Ok(InputExpression(argument_type, Some(ValueType::Literal(token)), None))
                 },
+                TokenKind::ContentBlock => {
+                    let content = Content::new(token)?;
+                    Ok(InputExpression(argument_type, Some(ValueType::Content(content)), None))
+                },
                 TokenKind::Identifier(_) => {
-                    Ok(InputExpression(argument_type, Some(ValueType::Identifier(token)), None))
+                    Ok(InputExpression(argument_type, Some(ValueType::ReferenceExpression(ReferenceExpression::new(token)?)), None))
                 },
                 _ => Err(ParserError::ExpectedAGotB(token, vec![TokenKind::StringLiteral(""), TokenKind::Float(0.0), TokenKind::Int(0), TokenKind::Identifier("")]))
             }

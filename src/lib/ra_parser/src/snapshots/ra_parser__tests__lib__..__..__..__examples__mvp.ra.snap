@@ -8,21 +8,24 @@ Block {
         Block {
             kind: Output(
                 OutputExpression(
-                    Identifier(
-                        Token {
-                            kind: Some(
-                                Identifier(
-                                    "parseBlocks",
+                    ReferenceExpression(
+                        ReferenceExpression(
+                            Token {
+                                kind: Some(
+                                    Identifier(
+                                        "parseBlocks",
+                                    ),
                                 ),
-                            ),
-                            len: 11,
-                            content: "parseBlocks",
-                            position: (
-                                [3:0],
-                                [3:11],
-                            ),
-                            level: 0,
-                        },
+                                len: 11,
+                                content: "parseBlocks",
+                                position: (
+                                    [3:0],
+                                    [3:11],
+                                ),
+                                level: 0,
+                            },
+                            None,
+                        ),
                     ),
                     None,
                     None,
@@ -71,6 +74,7 @@ Block {
                                                     ),
                                                     level: 2,
                                                 },
+                                                false,
                                             ),
                                         ),
                                         None,
@@ -258,21 +262,24 @@ Block {
         Block {
             kind: Output(
                 OutputExpression(
-                    Identifier(
-                        Token {
-                            kind: Some(
-                                Identifier(
-                                    "parseDifferentTypesOfBlocks",
+                    ReferenceExpression(
+                        ReferenceExpression(
+                            Token {
+                                kind: Some(
+                                    Identifier(
+                                        "parseDifferentTypesOfBlocks",
+                                    ),
                                 ),
-                            ),
-                            len: 27,
-                            content: "parseDifferentTypesOfBlocks",
-                            position: (
-                                [12:0],
-                                [12:27],
-                            ),
-                            level: 0,
-                        },
+                                len: 27,
+                                content: "parseDifferentTypesOfBlocks",
+                                position: (
+                                    [12:0],
+                                    [12:27],
+                                ),
+                                level: 0,
+                            },
+                            None,
+                        ),
                     ),
                     None,
                     None,
@@ -321,6 +328,7 @@ Block {
                                                     ),
                                                     level: 2,
                                                 },
+                                                false,
                                             ),
                                         ),
                                         None,
@@ -577,21 +585,24 @@ Block {
         Block {
             kind: Output(
                 OutputExpression(
-                    Identifier(
-                        Token {
-                            kind: Some(
-                                Identifier(
-                                    "generateRuntime",
+                    ReferenceExpression(
+                        ReferenceExpression(
+                            Token {
+                                kind: Some(
+                                    Identifier(
+                                        "generateRuntime",
+                                    ),
                                 ),
-                            ),
-                            len: 15,
-                            content: "generateRuntime",
-                            position: (
-                                [24:0],
-                                [24:15],
-                            ),
-                            level: 0,
-                        },
+                                len: 15,
+                                content: "generateRuntime",
+                                position: (
+                                    [24:0],
+                                    [24:15],
+                                ),
+                                level: 0,
+                            },
+                            None,
+                        ),
                     ),
                     None,
                     None,
@@ -640,6 +651,7 @@ Block {
                                                     ),
                                                     level: 2,
                                                 },
+                                                false,
                                             ),
                                         ),
                                         None,

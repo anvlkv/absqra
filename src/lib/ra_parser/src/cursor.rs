@@ -1,4 +1,4 @@
-use ra_lexer::token::{Token, TokenKind};
+use ra_lexer::token::{Token};
 use ra_lexer::cursor::Position;
 use core::iter::Peekable;
 
