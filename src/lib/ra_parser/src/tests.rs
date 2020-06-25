@@ -62,7 +62,7 @@ mod lib {
         // );
     }
 
-    use insta::assert_debug_snapshot;
+    use ra_common::insta::assert_debug_snapshot;
     
     use std::fs::File;
     use std::io::Read;
