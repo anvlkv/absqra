@@ -3,6 +3,8 @@ use std::fs::{DirEntry, read_dir};
 use std::ffi::OsStr;
 use std::cmp::Ordering;
 
+pub extern crate insta;
+
 pub fn files_from_dir_recursively(path: PathBuf) -> Vec<DirEntry> {
     let mut entries = read_dir(path).unwrap().map(|f| f.unwrap()).collect::<Vec<DirEntry>>();
 

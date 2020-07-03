@@ -1,4 +1,4 @@
-use ra_parser::parse;
+use ra_parser::parser::parse;
 use std::panic;
 use std::io::{stdin, stdout, Write};
 

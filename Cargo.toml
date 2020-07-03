@@ -9,7 +9,7 @@ members = [
     "src/lib/ra_lexer",
     "src/lib/ra_parser",
     "src/lib/ra_interactive",
-    "src/lib/utils",
+    "src/lib/ra_dev_tools",
     "src/lib/ra_common"
 ]
 

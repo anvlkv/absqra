@@ -10,4 +10,4 @@ edition = "2018"
 ra_common = {path = "../ra_common"}
 
 [dev-dependencies]
-utils = {path = "../utils"}
+ra_dev_tools = {path = "../ra_dev_tools"}

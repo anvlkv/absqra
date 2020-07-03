@@ -8,6 +8,3 @@ edition = "2018"
 
 [dependencies]
 failure = "0.1.8"
-insta = "0.16.0"
-
-[dev-dependecies]

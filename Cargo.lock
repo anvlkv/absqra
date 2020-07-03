@@ -211,6 +211,12 @@ name = "ra_common"
 version = "0.1.0"
 dependencies = [
  "failure",
+]
+
+[[package]]
+name = "ra_dev_tools"
+version = "0.1.0"
+dependencies = [
  "insta",
 ]
 
@@ -226,7 +232,7 @@ name = "ra_lexer"
 version = "0.1.0"
 dependencies = [
  "ra_common",
- "utils",
+ "ra_dev_tools",
 ]
 
 [[package]]
@@ -234,8 +240,8 @@ name = "ra_parser"
 version = "0.1.0"
 dependencies = [
  "ra_common",
+ "ra_dev_tools",
  "ra_lexer",
- "utils",
 ]
 
 [[package]]
@@ -340,10 +346,6 @@ name = "unicode-xid"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "826e7639553986605ec5979c7dd957c7895e93eabed50ab2ffa7f6128a75097c"
-
-[[package]]
-name = "utils"
-version = "0.1.0"
 
 [[package]]
 name = "winapi"
