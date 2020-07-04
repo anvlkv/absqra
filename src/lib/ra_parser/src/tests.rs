@@ -62,7 +62,7 @@ mod lib {
         // );
     }
 
-    use ra_dev_tools::insta::assert_json_snapshot;
+    use ra_dev_tools::insta::{assert_json_snapshot, assert_snapshot};
     
     use std::fs::File;
     use std::io::Read;
@@ -70,6 +70,7 @@ mod lib {
 
     #[test]
     fn it_should_match_snapshots() {
+        println!("{:?}", std::env::args());
         for_each_ra_example_file(|example| {
             let mut file = File::open(example.path()).unwrap();
             
@@ -81,13 +82,13 @@ mod lib {
                     Ok(b) => b,
                     Err((errors, parsed)) => {
 
-                        let formatted_errors: Vec<String> = {
-                            errors.into_iter().map(|e| format!("{}", e)).collect()
+                        let formatted_errors: String = {
+                            errors.into_iter().map(|e| format!("{}", e)).collect::<Vec<String>>().join("\n")
                         };
 
-
-
-                        assert_json_snapshot!(String::from(example.path().to_str().unwrap()) + "__ERR__", (formatted_errors, parsed));
+                        
+                        assert_snapshot!(String::from(example.path().to_str().unwrap()) + "__ERR__MESSAGES__", formatted_errors);
+                        assert_json_snapshot!(String::from(example.path().to_str().unwrap()) + "__ERR__", parsed);
 
 
                         panic!("failed to parse example {:?}", example.path());

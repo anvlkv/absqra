@@ -5,6 +5,7 @@ use super::block::{Block, BlockKind};
 use super::cursor::Cursor;
 use super::errors::ParserError;
 use super::expressions::traits::{Leveled, Expandable, Positioned};
+use failure::Backtrace;
 
 pub fn parse<'a>(input: &'a str) -> Result<Block<'a>, (Vec<ParserError>, Block<'a>)> {
     let stream = tokenize(input).filter(|tok| tok.kind.unwrap() != TokenKind::Comment);
@@ -45,7 +46,7 @@ where
                 self.parse_block(token)
             },
             None => {
-                errors.push(ParserError::UnexpectedEndOfInput(self.position));
+                errors.push(ParserError::UnexpectedEndOfInput(self.position, Backtrace::new()));
                 Err(errors)
             }
         }
