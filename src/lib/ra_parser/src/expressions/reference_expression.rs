@@ -1,19 +1,26 @@
-
-use super::traits::{*};
 use super::errors::ParserError;
-use serde::{Serialize};
-
+use super::traits::*;
+use serde::Serialize;
+use failure::Backtrace;
 use ra_lexer::cursor::Position;
 use ra_lexer::token::{Token, TokenKind};
 
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ReferenceExpression<'a> (pub Token<'a>, pub Option<Option<Box<ReferenceExpression<'a>>>>);
+pub struct ReferenceExpression<'a>(
+    pub Token<'a>,
+    pub Option<Option<Box<ReferenceExpression<'a>>>>,
+);
 
 impl<'a> ReferenceExpression<'a> {
     pub fn new(token: Token<'a>) -> Result<Self, ParserError> {
         match token.kind.unwrap() {
             TokenKind::Identifier(_) => Ok(Self(token, None)),
-            _ => Err(ParserError::ExpectedAGotB(format!("{}", token), format!("{:?}", vec![TokenKind::Identifier("")]), token.position.0))
+            _ => Err(ParserError::ExpectedAGotB(
+                format!("{}", token),
+                format!("{:?}", vec![TokenKind::Identifier("")]),
+                token.position.0,
+                Backtrace::new()
+            )),
         }
     }
 }
@@ -34,8 +41,7 @@ impl<'a> Positioned for ReferenceExpression<'a> {
         let end_position = {
             if next.is_some() && next.as_ref().unwrap().is_some() {
                 next.as_ref().unwrap().as_ref().unwrap().get_position().1
-            }
-            else {
+            } else {
                 first_token.position.1
             }
         };
@@ -49,18 +55,25 @@ impl<'a> Expandable<'a, ReferenceExpression<'a>, Token<'a>> for ReferenceExpress
         let ReferenceExpression(first_token, next) = self;
         if next.is_none() {
             match token.kind.unwrap() {
-                TokenKind::Dot => {
-                    Ok(ReferenceExpression(first_token, Some(None)))
-                }
-                _ => Err(ParserError::ExpectedAGotB(format!("{}", token), format!("{:?}", vec![TokenKind::Dot]), token.position.0))
+                TokenKind::Dot => Ok(ReferenceExpression(first_token, Some(None))),
+                _ => Err(ParserError::ExpectedAGotB(
+                    format!("{}", token),
+                    format!("{:?}", vec![TokenKind::Dot]),
+                    token.position.0,
+                    Backtrace::new()
+                )),
             }
-        }
-        else if next.is_some() && next.as_ref().unwrap().is_none() {
-            Ok(ReferenceExpression(first_token, Some(Some(Box::new(ReferenceExpression::new(token)?)))))
-        }
-        else {
+        } else if next.is_some() && next.as_ref().unwrap().is_none() {
+            Ok(ReferenceExpression(
+                first_token,
+                Some(Some(Box::new(ReferenceExpression::new(token)?))),
+            ))
+        } else {
             let updated_expression = next.unwrap().unwrap().append_item(token)?;
-            Ok(ReferenceExpression(first_token, Some(Some(Box::new(updated_expression)))))
+            Ok(ReferenceExpression(
+                first_token,
+                Some(Some(Box::new(updated_expression))),
+            ))
         }
     }
 }

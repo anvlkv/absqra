@@ -1,18 +1,26 @@
-use super::traits::{*};
 use super::errors::ParserError;
-
+use super::traits::*;
 use ra_lexer::cursor::Position;
 use ra_lexer::token::{Token, TokenKind};
-use serde::{ Serialize};
+use serde::Serialize;
+use failure::Backtrace;
 
-#[derive(Clone, Debug, PartialEq,  Serialize)]
-pub struct AnnotationExpression<'a>(pub Token<'a>, pub Option<Option<Box<AnnotationExpression<'a>>>>);
+#[derive(Clone, Debug, PartialEq, Serialize)]
+pub struct AnnotationExpression<'a>(
+    pub Token<'a>,
+    pub Option<Option<Box<AnnotationExpression<'a>>>>,
+);
 
 impl<'a> AnnotationExpression<'a> {
     pub fn new(token: Token<'a>) -> Result<Self, ParserError> {
         match token.kind.unwrap() {
             TokenKind::Identifier(_) => Ok(Self(token, None)),
-            _ => Err(ParserError::ExpectedAGotB(format!("{}", token), format!("{:?}" ,vec![TokenKind::Identifier("")]), token.position.0))
+            _ => Err(ParserError::ExpectedAGotB(
+                format!("{}", token),
+                format!("{:?}", vec![TokenKind::Identifier("")]),
+                token.position.0,
+                Backtrace::new()
+            )),
         }
     }
 }
@@ -25,14 +33,19 @@ impl<'a> Leveled for AnnotationExpression<'a> {
 
 impl<'a> Positioned for AnnotationExpression<'a> {
     fn get_position(&self) -> (Position, Position) {
-        let AnnotationExpression (first_token, next_expression) = self;
+        let AnnotationExpression(first_token, next_expression) = self;
 
         let start_position = first_token.position.0;
         let end_position = {
             if next_expression.as_ref().is_some() && next_expression.as_ref().unwrap().is_some() {
-                next_expression.as_ref().unwrap().as_ref().unwrap().get_position().1
-            }
-            else {
+                next_expression
+                    .as_ref()
+                    .unwrap()
+                    .as_ref()
+                    .unwrap()
+                    .get_position()
+                    .1
+            } else {
                 first_token.position.1
             }
         };
@@ -42,22 +55,28 @@ impl<'a> Positioned for AnnotationExpression<'a> {
 
 impl<'a> Expandable<'a, AnnotationExpression<'a>, Token<'a>> for AnnotationExpression<'a> {
     fn append_item(self, token: Token<'a>) -> Result<AnnotationExpression, ParserError> {
-        let AnnotationExpression (first_token, next_expression) = self;
+        let AnnotationExpression(first_token, next_expression) = self;
 
         if next_expression.is_some() {
             let child_expression;
             if next_expression.as_ref().unwrap().is_some() {
                 child_expression = next_expression.unwrap().unwrap().append_item(token)?;
-            }
-            else {
+            } else {
                 child_expression = AnnotationExpression::new(token)?
             }
-            Ok(AnnotationExpression(first_token, Some(Some(Box::new(child_expression)))))
-        }
-        else {
+            Ok(AnnotationExpression(
+                first_token,
+                Some(Some(Box::new(child_expression))),
+            ))
+        } else {
             match token.kind.unwrap() {
                 TokenKind::Colon => Ok(AnnotationExpression(first_token, Some(None))),
-                _ => Err(ParserError::ExpectedAGotB(format!("{}", token), format!("{:?}" ,vec![TokenKind::Colon]), token.position.0))
+                _ => Err(ParserError::ExpectedAGotB(
+                    format!("{}", token),
+                    format!("{:?}", vec![TokenKind::Colon]),
+                    token.position.0,
+                    Backtrace::new()
+                )),
             }
         }
     }

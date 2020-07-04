@@ -1,10 +1,11 @@
 use super::errors::ParserError;
 use super::traits::*;
-use serde::{ Serialize};
 use ra_lexer::cursor::Position;
 use ra_lexer::token::{Token, TokenKind};
+use serde::Serialize;
+use failure::Backtrace;
 
-#[derive(Clone, Debug, PartialEq,  Serialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub enum ContextExpressionMemberKind {
     None,
     One,
@@ -12,13 +13,13 @@ pub enum ContextExpressionMemberKind {
     MSpecifier,
 }
 
-#[derive(Clone, Debug, PartialEq,  Serialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub enum ContextExpressionMember {
     Target(ContextExpressionMemberKind),
     Source(ContextExpressionMemberKind),
 }
 
-#[derive(Clone, Debug, PartialEq,  Serialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ContextExpression(ContextExpressionMember, ContextExpressionMember);
 
 impl<'a> ContextExpression {
@@ -37,7 +38,19 @@ impl<'a> ContextExpression {
                 ContextExpressionMember::Target(ContextExpressionMemberKind::MSpecifier),
                 ContextExpressionMember::Source(ContextExpressionMemberKind::None),
             )),
-            _ => Err(ParserError::ExpectedAGotB(format!("{}", token), format!("{:?}" ,vec![TokenKind::Int(1), TokenKind::Identifier("N"), TokenKind::OpenCurlyBrace]), token.position.0))
+            _ => Err(ParserError::ExpectedAGotB(
+                format!("{}", token),
+                format!(
+                    "{:?}",
+                    vec![
+                        TokenKind::Int(1),
+                        TokenKind::Identifier("N"),
+                        TokenKind::OpenCurlyBrace
+                    ]
+                ),
+                token.position.0,
+                Backtrace::new(),
+            )),
         }
     }
 }
@@ -58,7 +71,12 @@ impl<'a> Expandable<'a, ContextExpression, Token<'a>> for ContextExpression {
     fn append_item(self, token: Token<'a>) -> Result<ContextExpression, ParserError> {
         match token.kind.unwrap() {
             TokenKind::Colon => Ok(self.clone()),
-            _ => Err(ParserError::ExpectedAGotB(format!("{}", token), format!("{:?}" ,vec![TokenKind::Colon]), token.position.0)),
+            _ => Err(ParserError::ExpectedAGotB(
+                format!("{}", token),
+                format!("{:?}", vec![TokenKind::Colon]),
+                token.position.0,
+                Backtrace::new(),
+            )),
         }
     }
 }
