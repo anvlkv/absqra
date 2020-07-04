@@ -136,20 +136,36 @@ impl<'a> ByTokenExpandableFromRoot<'a, InputExpression<'a>> for InputExpression<
                     )?)),
                     None,
                 )),
-                _ => Err(ParserError::ExpectedAGotB(
-                    format!("{}", token),
-                    format!(
-                        "{:?}",
-                        vec![
-                            TokenKind::StringLiteral(""),
-                            TokenKind::Float(0.0),
-                            TokenKind::Int(0),
-                            TokenKind::Identifier("")
-                        ]
-                    ),
-                    token.position.0,
-                    Backtrace::new()
-                )),
+                _ => {
+                    match OutputExpression::new(token) {
+                        Ok(expression) => {
+                            Ok(InputExpression(
+                                argument_type,
+                                Some(ValueType::OutputExpression(expression)),
+                                None
+                            ))
+                        },
+                        Err(e) => {
+                            Err(ParserError::ChainedError(
+                                Box::new(e),
+                                Box::new(ParserError::ExpectedAGotB(
+                                    format!("{}", token),
+                                    format!(
+                                        "{:?}",
+                                        vec![
+                                            TokenKind::StringLiteral(""),
+                                            TokenKind::Float(0.0),
+                                            TokenKind::Int(0),
+                                            TokenKind::Identifier("")
+                                        ]
+                                    ),
+                                    token.position.0,
+                                    Backtrace::new()
+                                ))
+                            ))               
+                        }
+                    }
+                },
             }
         } else if next.is_none() {
             match value_type.clone().unwrap() {
