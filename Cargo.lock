@@ -228,6 +228,7 @@ dependencies = [
  "failure_derive",
  "ra_dev_tools",
  "serde",
+ "serde_derive",
  "serde_json",
 ]
 
@@ -240,6 +241,7 @@ dependencies = [
  "ra_dev_tools",
  "ra_lexer",
  "serde",
+ "serde_derive",
  "serde_json",
  "thiserror",
 ]
