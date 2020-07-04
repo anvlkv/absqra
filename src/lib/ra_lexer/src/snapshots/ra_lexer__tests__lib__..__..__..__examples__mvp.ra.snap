@@ -3,556 +3,732 @@ source: src/lib/ra_lexer/src/tests.rs
 expression: tokens
 ---
 [
-    Token {
-        kind: Some(
-            Comment,
-        ),
-        len: 60,
-        content: " this file is my todo list and also should render like one",
-        position: (
-            [1:0],
-            [1:60],
-        ),
-        level: 0,
+  {
+    "kind": "Comment",
+    "len": 60,
+    "content": " this file is my todo list and also should render like one",
+    "position": [
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        60
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Identifier": "parseBlocks"
     },
-    Token {
-        kind: Some(
-            Identifier(
-                "parseBlocks",
-            ),
-        ),
-        len: 11,
-        content: "parseBlocks",
-        position: (
-            [3:0],
-            [3:11],
-        ),
-        level: 0,
+    "len": 11,
+    "content": "parseBlocks",
+    "position": [
+      [
+        3,
+        0
+      ],
+      [
+        3,
+        11
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Greater",
+    "len": 1,
+    "content": ">",
+    "position": [
+      [
+        4,
+        4
+      ],
+      [
+        4,
+        5
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Exclamation",
+    "len": 1,
+    "content": "!",
+    "position": [
+      [
+        5,
+        8
+      ],
+      [
+        5,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "choice"
     },
-    Token {
-        kind: Some(
-            Greater,
-        ),
-        len: 1,
-        content: ">",
-        position: (
-            [4:4],
-            [4:5],
-        ),
-        level: 1,
+    "len": 6,
+    "content": "choice",
+    "position": [
+      [
+        5,
+        9
+      ],
+      [
+        5,
+        15
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        5,
+        15
+      ],
+      [
+        5,
+        16
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "multiple"
     },
-    Token {
-        kind: Some(
-            Exclamation,
-        ),
-        len: 1,
-        content: "!",
-        position: (
-            [5:8],
-            [5:9],
-        ),
-        level: 2,
+    "len": 8,
+    "content": "multiple",
+    "position": [
+      [
+        5,
+        16
+      ],
+      [
+        5,
+        24
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "Exclamation",
+    "len": 1,
+    "content": "!",
+    "position": [
+      [
+        6,
+        8
+      ],
+      [
+        6,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "options"
     },
-    Token {
-        kind: Some(
-            Identifier(
-                "choice",
-            ),
-        ),
-        len: 6,
-        content: "choice",
-        position: (
-            [5:9],
-            [5:15],
-        ),
-        level: 2,
+    "len": 7,
+    "content": "options",
+    "position": [
+      [
+        6,
+        9
+      ],
+      [
+        6,
+        16
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        6,
+        16
+      ],
+      [
+        6,
+        17
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 14,
+    "content": "parse blocks",
+    "position": [
+      [
+        7,
+        12
+      ],
+      [
+        7,
+        26
+      ]
+    ],
+    "level": 3
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 26,
+    "content": "and funny chars too 😠",
+    "position": [
+      [
+        8,
+        12
+      ],
+      [
+        8,
+        35
+      ]
+    ],
+    "level": 3
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 5,
+    "content": "₰",
+    "position": [
+      [
+        9,
+        12
+      ],
+      [
+        9,
+        15
+      ]
+    ],
+    "level": 3
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 4,
+    "content": "Ͽ",
+    "position": [
+      [
+        10,
+        12
+      ],
+      [
+        10,
+        15
+      ]
+    ],
+    "level": 3
+  },
+  {
+    "kind": {
+      "Identifier": "parseDifferentTypesOfBlocks"
     },
-    Token {
-        kind: Some(
-            Colon,
-        ),
-        len: 1,
-        content: ":",
-        position: (
-            [5:15],
-            [5:16],
-        ),
-        level: 2,
+    "len": 27,
+    "content": "parseDifferentTypesOfBlocks",
+    "position": [
+      [
+        12,
+        0
+      ],
+      [
+        12,
+        27
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Greater",
+    "len": 1,
+    "content": ">",
+    "position": [
+      [
+        13,
+        4
+      ],
+      [
+        13,
+        5
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Exclamation",
+    "len": 1,
+    "content": "!",
+    "position": [
+      [
+        14,
+        8
+      ],
+      [
+        14,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "choice"
     },
-    Token {
-        kind: Some(
-            Identifier(
-                "multiple",
-            ),
-        ),
-        len: 8,
-        content: "multiple",
-        position: (
-            [5:16],
-            [5:24],
-        ),
-        level: 2,
+    "len": 6,
+    "content": "choice",
+    "position": [
+      [
+        14,
+        9
+      ],
+      [
+        14,
+        15
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        14,
+        15
+      ],
+      [
+        14,
+        16
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "multiple"
     },
-    Token {
-        kind: Some(
-            Exclamation,
-        ),
-        len: 1,
-        content: "!",
-        position: (
-            [6:8],
-            [6:9],
-        ),
-        level: 2,
+    "len": 8,
+    "content": "multiple",
+    "position": [
+      [
+        14,
+        16
+      ],
+      [
+        14,
+        24
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "Exclamation",
+    "len": 1,
+    "content": "!",
+    "position": [
+      [
+        15,
+        8
+      ],
+      [
+        15,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "options"
     },
-    Token {
-        kind: Some(
-            Identifier(
-                "options",
-            ),
-        ),
-        len: 7,
-        content: "options",
-        position: (
-            [6:9],
-            [6:16],
-        ),
-        level: 2,
+    "len": 7,
+    "content": "options",
+    "position": [
+      [
+        15,
+        9
+      ],
+      [
+        15,
+        16
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        15,
+        16
+      ],
+      [
+        15,
+        17
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 10,
+    "content": "comments",
+    "position": [
+      [
+        16,
+        12
+      ],
+      [
+        16,
+        22
+      ]
+    ],
+    "level": 3
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 17,
+    "content": "var declaration",
+    "position": [
+      [
+        17,
+        12
+      ],
+      [
+        17,
+        29
+      ]
+    ],
+    "level": 3
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 18,
+    "content": "rule declaration",
+    "position": [
+      [
+        18,
+        12
+      ],
+      [
+        18,
+        30
+      ]
+    ],
+    "level": 3
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 14,
+    "content": "applied rule",
+    "position": [
+      [
+        19,
+        12
+      ],
+      [
+        19,
+        26
+      ]
+    ],
+    "level": 3
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 13,
+    "content": "input block",
+    "position": [
+      [
+        20,
+        12
+      ],
+      [
+        20,
+        25
+      ]
+    ],
+    "level": 3
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 18,
+    "content": "context switches",
+    "position": [
+      [
+        21,
+        12
+      ],
+      [
+        21,
+        30
+      ]
+    ],
+    "level": 3
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 15,
+    "content": "content block",
+    "position": [
+      [
+        22,
+        12
+      ],
+      [
+        22,
+        27
+      ]
+    ],
+    "level": 3
+  },
+  {
+    "kind": {
+      "Identifier": "generateRuntime"
     },
-    Token {
-        kind: Some(
-            Colon,
-        ),
-        len: 1,
-        content: ":",
-        position: (
-            [6:16],
-            [6:17],
-        ),
-        level: 2,
+    "len": 15,
+    "content": "generateRuntime",
+    "position": [
+      [
+        24,
+        0
+      ],
+      [
+        24,
+        15
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Greater",
+    "len": 1,
+    "content": ">",
+    "position": [
+      [
+        25,
+        4
+      ],
+      [
+        25,
+        5
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Exclamation",
+    "len": 1,
+    "content": "!",
+    "position": [
+      [
+        26,
+        8
+      ],
+      [
+        26,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "choice"
     },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 14,
-        content: "parse blocks",
-        position: (
-            [7:12],
-            [7:26],
-        ),
-        level: 3,
+    "len": 6,
+    "content": "choice",
+    "position": [
+      [
+        26,
+        9
+      ],
+      [
+        26,
+        15
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        26,
+        15
+      ],
+      [
+        26,
+        16
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "multiple"
     },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 26,
-        content: "and funny chars too 😠",
-        position: (
-            [8:12],
-            [8:35],
-        ),
-        level: 3,
+    "len": 8,
+    "content": "multiple",
+    "position": [
+      [
+        26,
+        16
+      ],
+      [
+        26,
+        24
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "Exclamation",
+    "len": 1,
+    "content": "!",
+    "position": [
+      [
+        27,
+        8
+      ],
+      [
+        27,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "options"
     },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 5,
-        content: "₰",
-        position: (
-            [9:12],
-            [9:15],
-        ),
-        level: 3,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 4,
-        content: "Ͽ",
-        position: (
-            [10:12],
-            [10:15],
-        ),
-        level: 3,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "parseDifferentTypesOfBlocks",
-            ),
-        ),
-        len: 27,
-        content: "parseDifferentTypesOfBlocks",
-        position: (
-            [12:0],
-            [12:27],
-        ),
-        level: 0,
-    },
-    Token {
-        kind: Some(
-            Greater,
-        ),
-        len: 1,
-        content: ">",
-        position: (
-            [13:4],
-            [13:5],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            Exclamation,
-        ),
-        len: 1,
-        content: "!",
-        position: (
-            [14:8],
-            [14:9],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "choice",
-            ),
-        ),
-        len: 6,
-        content: "choice",
-        position: (
-            [14:9],
-            [14:15],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Colon,
-        ),
-        len: 1,
-        content: ":",
-        position: (
-            [14:15],
-            [14:16],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "multiple",
-            ),
-        ),
-        len: 8,
-        content: "multiple",
-        position: (
-            [14:16],
-            [14:24],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Exclamation,
-        ),
-        len: 1,
-        content: "!",
-        position: (
-            [15:8],
-            [15:9],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "options",
-            ),
-        ),
-        len: 7,
-        content: "options",
-        position: (
-            [15:9],
-            [15:16],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Colon,
-        ),
-        len: 1,
-        content: ":",
-        position: (
-            [15:16],
-            [15:17],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 10,
-        content: "comments",
-        position: (
-            [16:12],
-            [16:22],
-        ),
-        level: 3,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 17,
-        content: "var declaration",
-        position: (
-            [17:12],
-            [17:29],
-        ),
-        level: 3,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 18,
-        content: "rule declaration",
-        position: (
-            [18:12],
-            [18:30],
-        ),
-        level: 3,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 14,
-        content: "applied rule",
-        position: (
-            [19:12],
-            [19:26],
-        ),
-        level: 3,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 13,
-        content: "input block",
-        position: (
-            [20:12],
-            [20:25],
-        ),
-        level: 3,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 18,
-        content: "context switches",
-        position: (
-            [21:12],
-            [21:30],
-        ),
-        level: 3,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 15,
-        content: "content block",
-        position: (
-            [22:12],
-            [22:27],
-        ),
-        level: 3,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "generateRuntime",
-            ),
-        ),
-        len: 15,
-        content: "generateRuntime",
-        position: (
-            [24:0],
-            [24:15],
-        ),
-        level: 0,
-    },
-    Token {
-        kind: Some(
-            Greater,
-        ),
-        len: 1,
-        content: ">",
-        position: (
-            [25:4],
-            [25:5],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            Exclamation,
-        ),
-        len: 1,
-        content: "!",
-        position: (
-            [26:8],
-            [26:9],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "choice",
-            ),
-        ),
-        len: 6,
-        content: "choice",
-        position: (
-            [26:9],
-            [26:15],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Colon,
-        ),
-        len: 1,
-        content: ":",
-        position: (
-            [26:15],
-            [26:16],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "multiple",
-            ),
-        ),
-        len: 8,
-        content: "multiple",
-        position: (
-            [26:16],
-            [26:24],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Exclamation,
-        ),
-        len: 1,
-        content: "!",
-        position: (
-            [27:8],
-            [27:9],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "options",
-            ),
-        ),
-        len: 7,
-        content: "options",
-        position: (
-            [27:9],
-            [27:16],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Colon,
-        ),
-        len: 1,
-        content: ":",
-        position: (
-            [27:16],
-            [27:17],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 16,
-        content: "render content",
-        position: (
-            [28:12],
-            [28:28],
-        ),
-        level: 3,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 15,
-        content: "render inputs",
-        position: (
-            [29:12],
-            [29:27],
-        ),
-        level: 3,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 62,
-        content: "group inputs as long as there no dependency on previous step",
-        position: (
-            [30:12],
-            [30:74],
-        ),
-        level: 3,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 15,
-        content: "execute logic",
-        position: (
-            [31:12],
-            [31:27],
-        ),
-        level: 3,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 13,
-        content: "apply rules",
-        position: (
-            [32:12],
-            [32:25],
-        ),
-        level: 3,
-    },
+    "len": 7,
+    "content": "options",
+    "position": [
+      [
+        27,
+        9
+      ],
+      [
+        27,
+        16
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        27,
+        16
+      ],
+      [
+        27,
+        17
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 16,
+    "content": "render content",
+    "position": [
+      [
+        28,
+        12
+      ],
+      [
+        28,
+        28
+      ]
+    ],
+    "level": 3
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 15,
+    "content": "render inputs",
+    "position": [
+      [
+        29,
+        12
+      ],
+      [
+        29,
+        27
+      ]
+    ],
+    "level": 3
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 62,
+    "content": "group inputs as long as there no dependency on previous step",
+    "position": [
+      [
+        30,
+        12
+      ],
+      [
+        30,
+        74
+      ]
+    ],
+    "level": 3
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 15,
+    "content": "execute logic",
+    "position": [
+      [
+        31,
+        12
+      ],
+      [
+        31,
+        27
+      ]
+    ],
+    "level": 3
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 13,
+    "content": "apply rules",
+    "position": [
+      [
+        32,
+        12
+      ],
+      [
+        32,
+        25
+      ]
+    ],
+    "level": 3
+  }
 ]

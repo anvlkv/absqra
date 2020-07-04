@@ -3,1150 +3,1506 @@ source: src/lib/ra_lexer/src/tests.rs
 expression: tokens
 ---
 [
-    Token {
-        kind: Some(
-            Colon,
-        ),
-        len: 1,
-        content: ":",
-        position: (
-            [1:0],
-            [1:1],
-        ),
-        level: 0,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "navigationItems",
-            ),
-        ),
-        len: 15,
-        content: "navigationItems",
-        position: (
-            [1:1],
-            [1:16],
-        ),
-        level: 0,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "meals",
-            ),
-        ),
-        len: 5,
-        content: "meals",
-        position: (
-            [2:4],
-            [2:9],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            HashPound,
-        ),
-        len: 1,
-        content: "#",
-        position: (
-            [3:8],
-            [3:9],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "ln",
-            ),
-        ),
-        len: 2,
-        content: "ln",
-        position: (
-            [3:9],
-            [3:11],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Colon,
-        ),
-        len: 1,
-        content: ":",
-        position: (
-            [3:11],
-            [3:12],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "en",
-            ),
-        ),
-        len: 2,
-        content: "en",
-        position: (
-            [3:12],
-            [3:14],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 29,
-        content: "\n            Meals\n        ",
-        position: (
-            [3:14],
-            [5:9],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            HashPound,
-        ),
-        len: 1,
-        content: "#",
-        position: (
-            [6:8],
-            [6:9],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "ln",
-            ),
-        ),
-        len: 2,
-        content: "ln",
-        position: (
-            [6:9],
-            [6:11],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Colon,
-        ),
-        len: 1,
-        content: ":",
-        position: (
-            [6:11],
-            [6:12],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "ru",
-            ),
-        ),
-        len: 2,
-        content: "ru",
-        position: (
-            [6:12],
-            [6:14],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 34,
-        content: "\n            Блюда\n        ",
-        position: (
-            [6:14],
-            [8:9],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "countries",
-            ),
-        ),
-        len: 9,
-        content: "countries",
-        position: (
-            [9:4],
-            [9:13],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            HashPound,
-        ),
-        len: 1,
-        content: "#",
-        position: (
-            [10:8],
-            [10:9],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "ln",
-            ),
-        ),
-        len: 2,
-        content: "ln",
-        position: (
-            [10:9],
-            [10:11],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Colon,
-        ),
-        len: 1,
-        content: ":",
-        position: (
-            [10:11],
-            [10:12],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "en",
-            ),
-        ),
-        len: 2,
-        content: "en",
-        position: (
-            [10:12],
-            [10:14],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 33,
-        content: "\n            Countries\n        ",
-        position: (
-            [10:14],
-            [12:9],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            HashPound,
-        ),
-        len: 1,
-        content: "#",
-        position: (
-            [13:8],
-            [13:9],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "ln",
-            ),
-        ),
-        len: 2,
-        content: "ln",
-        position: (
-            [13:9],
-            [13:11],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Colon,
-        ),
-        len: 1,
-        content: ":",
-        position: (
-            [13:11],
-            [13:12],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "ru",
-            ),
-        ),
-        len: 2,
-        content: "ru",
-        position: (
-            [13:12],
-            [13:14],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 59,
-        content: "\n            Национальные кухни\n        ",
-        position: (
-            [13:14],
-            [15:9],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "restrictions",
-            ),
-        ),
-        len: 12,
-        content: "restrictions",
-        position: (
-            [16:4],
-            [16:16],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            HashPound,
-        ),
-        len: 1,
-        content: "#",
-        position: (
-            [17:8],
-            [17:9],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "ln",
-            ),
-        ),
-        len: 2,
-        content: "ln",
-        position: (
-            [17:9],
-            [17:11],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Colon,
-        ),
-        len: 1,
-        content: ":",
-        position: (
-            [17:11],
-            [17:12],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "ru",
-            ),
-        ),
-        len: 2,
-        content: "ru",
-        position: (
-            [17:12],
-            [17:14],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 35,
-        content: "\n            Preferences\n        ",
-        position: (
-            [17:14],
-            [19:9],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            HashPound,
-        ),
-        len: 1,
-        content: "#",
-        position: (
-            [20:8],
-            [20:9],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "ln",
-            ),
-        ),
-        len: 2,
-        content: "ln",
-        position: (
-            [20:9],
-            [20:11],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Colon,
-        ),
-        len: 1,
-        content: ":",
-        position: (
-            [20:11],
-            [20:12],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "ru",
-            ),
-        ),
-        len: 2,
-        content: "ru",
-        position: (
-            [20:12],
-            [20:14],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 48,
-        content: "\n            Предпочтения\n        ",
-        position: (
-            [20:14],
-            [22:9],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Colon,
-        ),
-        len: 1,
-        content: ":",
-        position: (
-            [24:0],
-            [24:1],
-        ),
-        level: 0,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "userItems",
-            ),
-        ),
-        len: 9,
-        content: "userItems",
-        position: (
-            [24:1],
-            [24:10],
-        ),
-        level: 0,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "addRecipe",
-            ),
-        ),
-        len: 9,
-        content: "addRecipe",
-        position: (
-            [25:4],
-            [25:13],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            HashPound,
-        ),
-        len: 1,
-        content: "#",
-        position: (
-            [26:8],
-            [26:9],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "kind",
-            ),
-        ),
-        len: 4,
-        content: "kind",
-        position: (
-            [26:9],
-            [26:13],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Colon,
-        ),
-        len: 1,
-        content: ":",
-        position: (
-            [26:13],
-            [26:14],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "image",
-            ),
-        ),
-        len: 5,
-        content: "image",
-        position: (
-            [26:14],
-            [26:19],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 44,
-        content: "\n            http://path.to.image\n        ",
-        position: (
-            [26:19],
-            [28:9],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Coma,
-        ),
-        len: 1,
-        content: ",",
-        position: (
-            [28:9],
-            [28:10],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            HashPound,
-        ),
-        len: 1,
-        content: "#",
-        position: (
-            [29:8],
-            [29:9],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "ln",
-            ),
-        ),
-        len: 2,
-        content: "ln",
-        position: (
-            [29:9],
-            [29:11],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Colon,
-        ),
-        len: 1,
-        content: ":",
-        position: (
-            [29:11],
-            [29:12],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "en",
-            ),
-        ),
-        len: 2,
-        content: "en",
-        position: (
-            [29:12],
-            [29:14],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 34,
-        content: "\n            Add recipe\n        ",
-        position: (
-            [29:14],
-            [31:9],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            HashPound,
-        ),
-        len: 1,
-        content: "#",
-        position: (
-            [32:8],
-            [32:9],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "ln",
-            ),
-        ),
-        len: 2,
-        content: "ln",
-        position: (
-            [32:9],
-            [32:11],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Colon,
-        ),
-        len: 1,
-        content: ":",
-        position: (
-            [32:11],
-            [32:12],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "ru",
-            ),
-        ),
-        len: 2,
-        content: "ru",
-        position: (
-            [32:12],
-            [32:14],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 53,
-        content: "\n            Добавить рецепт\n        ",
-        position: (
-            [32:14],
-            [34:9],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "myAccount",
-            ),
-        ),
-        len: 9,
-        content: "myAccount",
-        position: (
-            [35:4],
-            [35:13],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            HashPound,
-        ),
-        len: 1,
-        content: "#",
-        position: (
-            [36:8],
-            [36:9],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "ln",
-            ),
-        ),
-        len: 2,
-        content: "ln",
-        position: (
-            [36:9],
-            [36:11],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Colon,
-        ),
-        len: 1,
-        content: ":",
-        position: (
-            [36:11],
-            [36:12],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "en",
-            ),
-        ),
-        len: 2,
-        content: "en",
-        position: (
-            [36:12],
-            [36:14],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 34,
-        content: "\n            My account\n        ",
-        position: (
-            [36:14],
-            [38:9],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            HashPound,
-        ),
-        len: 1,
-        content: "#",
-        position: (
-            [39:8],
-            [39:9],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "ln",
-            ),
-        ),
-        len: 2,
-        content: "ln",
-        position: (
-            [39:9],
-            [39:11],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Colon,
-        ),
-        len: 1,
-        content: ":",
-        position: (
-            [39:11],
-            [39:12],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "ru",
-            ),
-        ),
-        len: 2,
-        content: "ru",
-        position: (
-            [39:12],
-            [39:14],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 45,
-        content: "\n            Мой аккаунт\n        ",
-        position: (
-            [39:14],
-            [41:9],
-        ),
-        level: 2,
-    },
-    Token {
-        kind: Some(
-            Colon,
-        ),
-        len: 1,
-        content: ":",
-        position: (
-            [43:0],
-            [43:1],
-        ),
-        level: 0,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "searchPlaceholder",
-            ),
-        ),
-        len: 17,
-        content: "searchPlaceholder",
-        position: (
-            [43:1],
-            [43:18],
-        ),
-        level: 0,
-    },
-    Token {
-        kind: Some(
-            HashPound,
-        ),
-        len: 1,
-        content: "#",
-        position: (
-            [44:4],
-            [44:5],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "ln",
-            ),
-        ),
-        len: 2,
-        content: "ln",
-        position: (
-            [44:5],
-            [44:7],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            Colon,
-        ),
-        len: 1,
-        content: ":",
-        position: (
-            [44:7],
-            [44:8],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "en",
-            ),
-        ),
-        len: 2,
-        content: "en",
-        position: (
-            [44:8],
-            [44:10],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 29,
-        content: "\n        Find a recipe\n    ",
-        position: (
-            [44:10],
-            [46:5],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            HashPound,
-        ),
-        len: 1,
-        content: "#",
-        position: (
-            [47:4],
-            [47:5],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "ln",
-            ),
-        ),
-        len: 2,
-        content: "ln",
-        position: (
-            [47:5],
-            [47:7],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            Colon,
-        ),
-        len: 1,
-        content: ":",
-        position: (
-            [47:7],
-            [47:8],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "ru",
-            ),
-        ),
-        len: 2,
-        content: "ru",
-        position: (
-            [47:8],
-            [47:10],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 39,
-        content: "\n        Найти рецепт\n    ",
-        position: (
-            [47:10],
-            [49:5],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            Colon,
-        ),
-        len: 1,
-        content: ":",
-        position: (
-            [51:0],
-            [51:1],
-        ),
-        level: 0,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "pictureLabel",
-            ),
-        ),
-        len: 12,
-        content: "pictureLabel",
-        position: (
-            [51:1],
-            [51:13],
-        ),
-        level: 0,
-    },
-    Token {
-        kind: Some(
-            HashPound,
-        ),
-        len: 1,
-        content: "#",
-        position: (
-            [52:4],
-            [52:5],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "ln",
-            ),
-        ),
-        len: 2,
-        content: "ln",
-        position: (
-            [52:5],
-            [52:7],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            Colon,
-        ),
-        len: 1,
-        content: ":",
-        position: (
-            [52:7],
-            [52:8],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "en",
-            ),
-        ),
-        len: 2,
-        content: "en",
-        position: (
-            [52:8],
-            [52:10],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 23,
-        content: "\n        Picture\n    ",
-        position: (
-            [52:10],
-            [54:5],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            HashPound,
-        ),
-        len: 1,
-        content: "#",
-        position: (
-            [55:4],
-            [55:5],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "ln",
-            ),
-        ),
-        len: 2,
-        content: "ln",
-        position: (
-            [55:5],
-            [55:7],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            Colon,
-        ),
-        len: 1,
-        content: ":",
-        position: (
-            [55:7],
-            [55:8],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            Identifier(
-                "ru",
-            ),
-        ),
-        len: 2,
-        content: "ru",
-        position: (
-            [55:8],
-            [55:10],
-        ),
-        level: 1,
-    },
-    Token {
-        kind: Some(
-            ContentBlock,
-        ),
-        len: 32,
-        content: "\n        Картинка\n    ",
-        position: (
-            [55:10],
-            [57:5],
-        ),
-        level: 1,
-    },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Identifier": "navigationItems"
+    },
+    "len": 15,
+    "content": "navigationItems",
+    "position": [
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        16
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Identifier": "meals"
+    },
+    "len": 5,
+    "content": "meals",
+    "position": [
+      [
+        2,
+        4
+      ],
+      [
+        2,
+        9
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "HashPound",
+    "len": 1,
+    "content": "#",
+    "position": [
+      [
+        3,
+        8
+      ],
+      [
+        3,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "ln"
+    },
+    "len": 2,
+    "content": "ln",
+    "position": [
+      [
+        3,
+        9
+      ],
+      [
+        3,
+        11
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        3,
+        11
+      ],
+      [
+        3,
+        12
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "en"
+    },
+    "len": 2,
+    "content": "en",
+    "position": [
+      [
+        3,
+        12
+      ],
+      [
+        3,
+        14
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 29,
+    "content": "\n            Meals\n        ",
+    "position": [
+      [
+        3,
+        14
+      ],
+      [
+        5,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "HashPound",
+    "len": 1,
+    "content": "#",
+    "position": [
+      [
+        6,
+        8
+      ],
+      [
+        6,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "ln"
+    },
+    "len": 2,
+    "content": "ln",
+    "position": [
+      [
+        6,
+        9
+      ],
+      [
+        6,
+        11
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        6,
+        11
+      ],
+      [
+        6,
+        12
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "ru"
+    },
+    "len": 2,
+    "content": "ru",
+    "position": [
+      [
+        6,
+        12
+      ],
+      [
+        6,
+        14
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 34,
+    "content": "\n            Блюда\n        ",
+    "position": [
+      [
+        6,
+        14
+      ],
+      [
+        8,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "countries"
+    },
+    "len": 9,
+    "content": "countries",
+    "position": [
+      [
+        9,
+        4
+      ],
+      [
+        9,
+        13
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "HashPound",
+    "len": 1,
+    "content": "#",
+    "position": [
+      [
+        10,
+        8
+      ],
+      [
+        10,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "ln"
+    },
+    "len": 2,
+    "content": "ln",
+    "position": [
+      [
+        10,
+        9
+      ],
+      [
+        10,
+        11
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        10,
+        11
+      ],
+      [
+        10,
+        12
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "en"
+    },
+    "len": 2,
+    "content": "en",
+    "position": [
+      [
+        10,
+        12
+      ],
+      [
+        10,
+        14
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 33,
+    "content": "\n            Countries\n        ",
+    "position": [
+      [
+        10,
+        14
+      ],
+      [
+        12,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "HashPound",
+    "len": 1,
+    "content": "#",
+    "position": [
+      [
+        13,
+        8
+      ],
+      [
+        13,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "ln"
+    },
+    "len": 2,
+    "content": "ln",
+    "position": [
+      [
+        13,
+        9
+      ],
+      [
+        13,
+        11
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        13,
+        11
+      ],
+      [
+        13,
+        12
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "ru"
+    },
+    "len": 2,
+    "content": "ru",
+    "position": [
+      [
+        13,
+        12
+      ],
+      [
+        13,
+        14
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 59,
+    "content": "\n            Национальные кухни\n        ",
+    "position": [
+      [
+        13,
+        14
+      ],
+      [
+        15,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "restrictions"
+    },
+    "len": 12,
+    "content": "restrictions",
+    "position": [
+      [
+        16,
+        4
+      ],
+      [
+        16,
+        16
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "HashPound",
+    "len": 1,
+    "content": "#",
+    "position": [
+      [
+        17,
+        8
+      ],
+      [
+        17,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "ln"
+    },
+    "len": 2,
+    "content": "ln",
+    "position": [
+      [
+        17,
+        9
+      ],
+      [
+        17,
+        11
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        17,
+        11
+      ],
+      [
+        17,
+        12
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "ru"
+    },
+    "len": 2,
+    "content": "ru",
+    "position": [
+      [
+        17,
+        12
+      ],
+      [
+        17,
+        14
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 35,
+    "content": "\n            Preferences\n        ",
+    "position": [
+      [
+        17,
+        14
+      ],
+      [
+        19,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "HashPound",
+    "len": 1,
+    "content": "#",
+    "position": [
+      [
+        20,
+        8
+      ],
+      [
+        20,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "ln"
+    },
+    "len": 2,
+    "content": "ln",
+    "position": [
+      [
+        20,
+        9
+      ],
+      [
+        20,
+        11
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        20,
+        11
+      ],
+      [
+        20,
+        12
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "ru"
+    },
+    "len": 2,
+    "content": "ru",
+    "position": [
+      [
+        20,
+        12
+      ],
+      [
+        20,
+        14
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 48,
+    "content": "\n            Предпочтения\n        ",
+    "position": [
+      [
+        20,
+        14
+      ],
+      [
+        22,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        24,
+        0
+      ],
+      [
+        24,
+        1
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Identifier": "userItems"
+    },
+    "len": 9,
+    "content": "userItems",
+    "position": [
+      [
+        24,
+        1
+      ],
+      [
+        24,
+        10
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Identifier": "addRecipe"
+    },
+    "len": 9,
+    "content": "addRecipe",
+    "position": [
+      [
+        25,
+        4
+      ],
+      [
+        25,
+        13
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "HashPound",
+    "len": 1,
+    "content": "#",
+    "position": [
+      [
+        26,
+        8
+      ],
+      [
+        26,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "kind"
+    },
+    "len": 4,
+    "content": "kind",
+    "position": [
+      [
+        26,
+        9
+      ],
+      [
+        26,
+        13
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        26,
+        13
+      ],
+      [
+        26,
+        14
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "image"
+    },
+    "len": 5,
+    "content": "image",
+    "position": [
+      [
+        26,
+        14
+      ],
+      [
+        26,
+        19
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 44,
+    "content": "\n            http://path.to.image\n        ",
+    "position": [
+      [
+        26,
+        19
+      ],
+      [
+        28,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "Coma",
+    "len": 1,
+    "content": ",",
+    "position": [
+      [
+        28,
+        9
+      ],
+      [
+        28,
+        10
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "HashPound",
+    "len": 1,
+    "content": "#",
+    "position": [
+      [
+        29,
+        8
+      ],
+      [
+        29,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "ln"
+    },
+    "len": 2,
+    "content": "ln",
+    "position": [
+      [
+        29,
+        9
+      ],
+      [
+        29,
+        11
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        29,
+        11
+      ],
+      [
+        29,
+        12
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "en"
+    },
+    "len": 2,
+    "content": "en",
+    "position": [
+      [
+        29,
+        12
+      ],
+      [
+        29,
+        14
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 34,
+    "content": "\n            Add recipe\n        ",
+    "position": [
+      [
+        29,
+        14
+      ],
+      [
+        31,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "HashPound",
+    "len": 1,
+    "content": "#",
+    "position": [
+      [
+        32,
+        8
+      ],
+      [
+        32,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "ln"
+    },
+    "len": 2,
+    "content": "ln",
+    "position": [
+      [
+        32,
+        9
+      ],
+      [
+        32,
+        11
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        32,
+        11
+      ],
+      [
+        32,
+        12
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "ru"
+    },
+    "len": 2,
+    "content": "ru",
+    "position": [
+      [
+        32,
+        12
+      ],
+      [
+        32,
+        14
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 53,
+    "content": "\n            Добавить рецепт\n        ",
+    "position": [
+      [
+        32,
+        14
+      ],
+      [
+        34,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "myAccount"
+    },
+    "len": 9,
+    "content": "myAccount",
+    "position": [
+      [
+        35,
+        4
+      ],
+      [
+        35,
+        13
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "HashPound",
+    "len": 1,
+    "content": "#",
+    "position": [
+      [
+        36,
+        8
+      ],
+      [
+        36,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "ln"
+    },
+    "len": 2,
+    "content": "ln",
+    "position": [
+      [
+        36,
+        9
+      ],
+      [
+        36,
+        11
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        36,
+        11
+      ],
+      [
+        36,
+        12
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "en"
+    },
+    "len": 2,
+    "content": "en",
+    "position": [
+      [
+        36,
+        12
+      ],
+      [
+        36,
+        14
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 34,
+    "content": "\n            My account\n        ",
+    "position": [
+      [
+        36,
+        14
+      ],
+      [
+        38,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "HashPound",
+    "len": 1,
+    "content": "#",
+    "position": [
+      [
+        39,
+        8
+      ],
+      [
+        39,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "ln"
+    },
+    "len": 2,
+    "content": "ln",
+    "position": [
+      [
+        39,
+        9
+      ],
+      [
+        39,
+        11
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        39,
+        11
+      ],
+      [
+        39,
+        12
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "ru"
+    },
+    "len": 2,
+    "content": "ru",
+    "position": [
+      [
+        39,
+        12
+      ],
+      [
+        39,
+        14
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 45,
+    "content": "\n            Мой аккаунт\n        ",
+    "position": [
+      [
+        39,
+        14
+      ],
+      [
+        41,
+        9
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        43,
+        0
+      ],
+      [
+        43,
+        1
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Identifier": "searchPlaceholder"
+    },
+    "len": 17,
+    "content": "searchPlaceholder",
+    "position": [
+      [
+        43,
+        1
+      ],
+      [
+        43,
+        18
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "HashPound",
+    "len": 1,
+    "content": "#",
+    "position": [
+      [
+        44,
+        4
+      ],
+      [
+        44,
+        5
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Identifier": "ln"
+    },
+    "len": 2,
+    "content": "ln",
+    "position": [
+      [
+        44,
+        5
+      ],
+      [
+        44,
+        7
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        44,
+        7
+      ],
+      [
+        44,
+        8
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Identifier": "en"
+    },
+    "len": 2,
+    "content": "en",
+    "position": [
+      [
+        44,
+        8
+      ],
+      [
+        44,
+        10
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 29,
+    "content": "\n        Find a recipe\n    ",
+    "position": [
+      [
+        44,
+        10
+      ],
+      [
+        46,
+        5
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "HashPound",
+    "len": 1,
+    "content": "#",
+    "position": [
+      [
+        47,
+        4
+      ],
+      [
+        47,
+        5
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Identifier": "ln"
+    },
+    "len": 2,
+    "content": "ln",
+    "position": [
+      [
+        47,
+        5
+      ],
+      [
+        47,
+        7
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        47,
+        7
+      ],
+      [
+        47,
+        8
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Identifier": "ru"
+    },
+    "len": 2,
+    "content": "ru",
+    "position": [
+      [
+        47,
+        8
+      ],
+      [
+        47,
+        10
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 39,
+    "content": "\n        Найти рецепт\n    ",
+    "position": [
+      [
+        47,
+        10
+      ],
+      [
+        49,
+        5
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        51,
+        0
+      ],
+      [
+        51,
+        1
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Identifier": "pictureLabel"
+    },
+    "len": 12,
+    "content": "pictureLabel",
+    "position": [
+      [
+        51,
+        1
+      ],
+      [
+        51,
+        13
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "HashPound",
+    "len": 1,
+    "content": "#",
+    "position": [
+      [
+        52,
+        4
+      ],
+      [
+        52,
+        5
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Identifier": "ln"
+    },
+    "len": 2,
+    "content": "ln",
+    "position": [
+      [
+        52,
+        5
+      ],
+      [
+        52,
+        7
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        52,
+        7
+      ],
+      [
+        52,
+        8
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Identifier": "en"
+    },
+    "len": 2,
+    "content": "en",
+    "position": [
+      [
+        52,
+        8
+      ],
+      [
+        52,
+        10
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 23,
+    "content": "\n        Picture\n    ",
+    "position": [
+      [
+        52,
+        10
+      ],
+      [
+        54,
+        5
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "HashPound",
+    "len": 1,
+    "content": "#",
+    "position": [
+      [
+        55,
+        4
+      ],
+      [
+        55,
+        5
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Identifier": "ln"
+    },
+    "len": 2,
+    "content": "ln",
+    "position": [
+      [
+        55,
+        5
+      ],
+      [
+        55,
+        7
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        55,
+        7
+      ],
+      [
+        55,
+        8
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Identifier": "ru"
+    },
+    "len": 2,
+    "content": "ru",
+    "position": [
+      [
+        55,
+        8
+      ],
+      [
+        55,
+        10
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "ContentBlock",
+    "len": 32,
+    "content": "\n        Картинка\n    ",
+    "position": [
+      [
+        55,
+        10
+      ],
+      [
+        57,
+        5
+      ]
+    ],
+    "level": 1
+  }
 ]

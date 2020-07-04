@@ -133,7 +133,7 @@ mod lib {
         );
     }
 
-    use ra_dev_tools::insta::assert_debug_snapshot;
+    use ra_dev_tools::insta::assert_json_snapshot;
     use ra_dev_tools::for_each_ra_example_file;
     use std::fs::File;
     use std::io::Read;
@@ -149,7 +149,7 @@ mod lib {
                 println!("{}", example.file_name().to_str().unwrap());
 
                 let tokens: Vec<Token> = tokenize(&contents).collect();
-                assert_debug_snapshot!(example.path().to_str().unwrap(), tokens)
+                assert_json_snapshot!(example.path().to_str().unwrap(), tokens)
         });
     }
 

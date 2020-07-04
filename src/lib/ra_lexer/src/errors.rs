@@ -3,31 +3,24 @@ use std::fmt;
 use std::num;
 use super::Position;
 
-#[derive(Debug)]
+extern crate failure;
+use failure::Fail;
+
+
+#[derive(Debug, Fail)]
 pub enum LexerError {
+    #[fail(display = "Unexpected indentation level: {} at {}", _0, _1)]
     UnexpectedIndentLevel(u16, Position),
+    #[fail(display = "Unexpected character: {} at {}", _0, _1)]
     UnexpectedCharacter(char, Position),
+    #[fail(display = "Unsupported token at {}", _0)]
     UnsupportedToken(Position),
+    #[fail(display = "Unexpected end of input at {}", _0)]
     UnexpectedEndOfInput(Position),
+    #[fail(display = "Unexpected end of line at {}", _0)]
     UnexpectedEndOfLine(Position),
-    InvalidFloat(num::ParseFloatError, Position),
-    InvalidInt(num::ParseIntError, Position)
+    #[fail(display = "Invalid floating point number: {} at {}", _0, _1)]
+    InvalidFloat(#[cause] num::ParseFloatError, Position),
+    #[fail(display = "Invalid number: {} at {}", _0, _1)]
+    InvalidInt(#[cause] num::ParseIntError, Position)
 }
-
-impl fmt::Display for LexerError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::result::Result<(), std::fmt::Error> { 
-        let err_text = match self {
-            LexerError::UnexpectedIndentLevel(lvl, pos) =>  format!("Unexpected indentation level: {} at {}", lvl, pos),
-            LexerError::UnexpectedCharacter(ch, pos) =>  format!("Unexpected character: {} at {}", ch, pos),
-            LexerError::UnsupportedToken(pos) =>  format!("Unsupported token at {}", pos),
-            LexerError::UnexpectedEndOfInput(pos) =>  format!("Unexpected end of input at {}", pos),
-            LexerError::UnexpectedEndOfLine(pos) =>  format!("Unexpected end of line at {}", pos),
-            LexerError::InvalidFloat(e, pos) => format!("Invalid floating point number: {} at {}", e, pos),
-            LexerError::InvalidInt(e, pos) => format!("Invalid number: {} at {}", e, pos),
-        };
-
-        write!(f, "Lexer error: {}", err_text)
-     }
-}
-
-impl error::Error for LexerError {}

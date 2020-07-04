@@ -1,11 +1,12 @@
 use std::str::Chars;
 use std::fmt;
 use super::errors::LexerError;
+use serde::{ Serialize};
 
 pub const EOF_CHAR: char = '\0';
 pub const EOL_CHAR: char = '\n';
 
-#[derive(Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq, Serialize)]
 pub struct Position(pub u16, pub u16);
 
 impl Default for Position {
