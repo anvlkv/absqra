@@ -1,7 +1,7 @@
 use std::str::Chars;
 use std::fmt;
 use super::errors::LexerError;
-use serde::{ Serialize};
+use serde::{Serialize};
 
 pub const EOF_CHAR: char = '\0';
 pub const EOL_CHAR: char = '\n';

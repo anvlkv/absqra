@@ -1,6 +1,4 @@
-use super::errors::LexerError;
 use crate::cursor::Position;
-use std::convert::TryInto;
 use std::fmt::Display;
 use serde::{Serialize};
 
@@ -81,40 +79,3 @@ impl<'a> Display for Token<'a> {
         )
     }
 }
-
-// impl<'a> TryInto<RaToken> for Token<'a> {
-//     type Error = LexerError;
-
-//     fn try_into(
-//         self,
-//     ) -> std::result::Result<RaToken, <Self as std::convert::TryInto<RaToken>>::Error> {
-//         let mut kind_value = String::new();
-//         let kind = {
-//             match self.kind {
-//                 Some(k) => {
-//                     match k {
-//                         TokenKind::Identifier(id) => {
-//                             kind_value = id.to_owned();
-//                             TokenKind::Identifier(& kind_value)
-//                         }
-//                         TokenKind::StringLiteral(text) => {
-//                             kind_value = text.to_owned();
-//                             TokenKind::StringLiteral(& kind_value)
-//                         },
-//                         _ => k
-//                     }
-//                 },
-//                 None => return Err(LexerError::UnsupportedToken(self.position.0))
-//             }
-//         };
-
-//         Ok(RaToken {
-//             len: self.len,
-//             level: self.level,
-//             position: self.position,
-//             kind,
-//             content: self.content.to_owned(),
-            
-//         })
-//     }
-// }
