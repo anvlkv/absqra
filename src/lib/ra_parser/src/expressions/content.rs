@@ -1,34 +1,35 @@
 use ra_lexer::token::{TokenKind, Token};
 use ra_lexer::cursor::{Cursor, Position};
 use ra_lexer::tokenize;
+use serde::{Serialize};
 
 use super::reference_expression::ReferenceExpression;
 use super::traits::{Expandable};
 
 use super::errors::ParserError;
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub enum ContentBlockMember<'a> {
     Body(String),
     Template(ReferenceExpression<'a>)
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct Content<'a> (ContentBlockMember<'a>, Option<Box<Content<'a>>>);
 
 impl<'a> Content<'a> {
-    pub fn new(token: Token<'a>) -> Result<Content<'a>, ParserError<'a>> {
+    pub fn new(token: Token<'a>) -> Result<Content<'a>, ParserError> {
         match token.kind.unwrap() {
             TokenKind::ContentBlock => {
                 Self::parse_content(token)
             },
             _ => {
-                Err(ParserError::ExpectedAGotB(token, vec![TokenKind::ContentBlock]))
+                Err(ParserError::ExpectedAGotB(format!("{}", token), format!("{:?}" ,vec![TokenKind::ContentBlock]), token.position.0))
             }
         }
     }
 
-    fn parse_content(token: Token<'a>) -> Result<Content<'a>, ParserError<'a>> {
+    fn parse_content(token: Token<'a>) -> Result<Content<'a>, ParserError> {
         let Token {
             kind, level, len, content, position
         } = token;
@@ -50,7 +51,7 @@ impl<'a> Content<'a> {
         Ok(content)
     }
 
-    fn parse_member(cursor: &mut Cursor<'a>) -> Result<ContentBlockMember<'a>, ParserError<'a>> {
+    fn parse_member(cursor: &mut Cursor<'a>) -> Result<ContentBlockMember<'a>, ParserError> {
         let mut string_buffer = String::new();
         let mut token_buffer = cursor.slice(0, 0);
 
@@ -108,7 +109,7 @@ impl<'a> Content<'a> {
         }
     }
 
-    fn parse_reference_from_buffer(buffer: &'a str, position: Position) -> Result<ReferenceExpression<'a>, ParserError<'a>> {
+    fn parse_reference_from_buffer(buffer: &'a str, position: Position) -> Result<ReferenceExpression<'a>, ParserError> {
         let mut tokens_stream = tokenize(buffer);
 
 
@@ -128,7 +129,7 @@ impl<'a> Content<'a> {
 }
 
 impl<'a> Expandable<'a, Content<'a>, ContentBlockMember<'a>> for Content<'a> {
-    fn append_item(self, item: ContentBlockMember<'a>) -> Result<Content<'a>, ParserError<'a>> {
+    fn append_item(self, item: ContentBlockMember<'a>) -> Result<Content<'a>, ParserError> {
         let Content(current, next) = self;
         match next {
             Some(next) => {

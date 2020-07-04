@@ -4,17 +4,18 @@ use super::errors::ParserError;
 use super::content::Content;
 use super::reference_expression::ReferenceExpression;
 use super::output_expression::OutputExpression;
+use serde::{ Serialize};
 
 use ra_lexer::cursor::Position;
 use ra_lexer::token::{Token, TokenKind};
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq,  Serialize)]
 pub enum ArgumentType<'a> {
     Named(Token<'a>, bool),
     Ordered(u16)
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq,  Serialize)]
 pub enum ValueType<'a> {
     Literal(Token<'a>),
     Content(Content<'a>),
@@ -22,14 +23,14 @@ pub enum ValueType<'a> {
     ReferenceExpression(ReferenceExpression<'a>)
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq,  Serialize)]
 pub struct InputExpression<'a> (Option<ArgumentType<'a>>, Option<ValueType<'a>>, Option<Box<InputExpression<'a>>>);
 
 impl<'a> InputExpression<'a> {
-    pub fn new(token: Token<'a>) -> Result<Self, ParserError<'a>> {
+    pub fn new(token: Token<'a>) -> Result<Self, ParserError> {
         match token.kind.unwrap() {
             TokenKind::Colon => Ok(Self(None, None, None)),
-            _ => Err(ParserError::ExpectedAGotB(token, vec![TokenKind::Colon]))
+            _ => Err(ParserError::ExpectedAGotB(format!("{}", token), format!("{:?}" ,vec![TokenKind::Colon]), token.position.0))
         }
     }
 }
@@ -52,7 +53,7 @@ impl<'a> Positioned for InputExpression<'a> {
 }
 
 impl<'a> ByTokenExpandableFromRoot<'a, InputExpression<'a>> for InputExpression<'a> {
-    fn append_item(self, token: Token<'a>, depth: Option<u16>) -> Result<InputExpression<'a>, ParserError<'a>> {
+    fn append_item(self, token: Token<'a>, depth: Option<u16>) -> Result<InputExpression<'a>, ParserError> {
         let InputExpression(argument_type, value_type, next) = self;
 
         let ordered_argument_depth = match depth {
@@ -68,7 +69,7 @@ impl<'a> ByTokenExpandableFromRoot<'a, InputExpression<'a>> for InputExpression<
                 TokenKind::Equals => {
                     Ok(InputExpression(Some(ArgumentType::Ordered(ordered_argument_depth)), None, None))
                 },
-                _ => Err(ParserError::ExpectedAGotB(token, vec![TokenKind::Identifier(""), TokenKind::Equals]))
+                _ => Err(ParserError::ExpectedAGotB(format!("{}", token), format!("{:?}" ,vec![TokenKind::Identifier(""), TokenKind::Equals]), token.position.0))
             }
         }
         else if value_type.is_none() {
@@ -80,7 +81,7 @@ impl<'a> ByTokenExpandableFromRoot<'a, InputExpression<'a>> for InputExpression<
                                 Ok(InputExpression(Some(ArgumentType::Named(tok, true)), None, None))
                             },
                             
-                            _ => Err(ParserError::ExpectedAGotB(token, vec![TokenKind::Equals]))
+                            _ => Err(ParserError::ExpectedAGotB(format!("{}", token), format!("{:?}" ,vec![TokenKind::Equals]), token.position.0))
                         }
                     }
                 }, 
@@ -100,7 +101,7 @@ impl<'a> ByTokenExpandableFromRoot<'a, InputExpression<'a>> for InputExpression<
                 TokenKind::Identifier(_) => {
                     Ok(InputExpression(argument_type, Some(ValueType::ReferenceExpression(ReferenceExpression::new(token)?)), None))
                 },
-                _ => Err(ParserError::ExpectedAGotB(token, vec![TokenKind::StringLiteral(""), TokenKind::Float(0.0), TokenKind::Int(0), TokenKind::Identifier("")]))
+                _ => Err(ParserError::ExpectedAGotB(format!("{}", token), format!("{:?}" ,vec![TokenKind::StringLiteral(""), TokenKind::Float(0.0), TokenKind::Int(0), TokenKind::Identifier("")]), token.position.0))
             }
         }
         else if next.is_none() {

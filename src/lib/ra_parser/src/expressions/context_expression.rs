@@ -1,10 +1,10 @@
 use super::errors::ParserError;
 use super::traits::*;
-
+use serde::{ Serialize};
 use ra_lexer::cursor::Position;
 use ra_lexer::token::{Token, TokenKind};
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq,  Serialize)]
 pub enum ContextExpressionMemberKind {
     None,
     One,
@@ -12,17 +12,17 @@ pub enum ContextExpressionMemberKind {
     MSpecifier,
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq,  Serialize)]
 pub enum ContextExpressionMember {
     Target(ContextExpressionMemberKind),
     Source(ContextExpressionMemberKind),
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq,  Serialize)]
 pub struct ContextExpression(ContextExpressionMember, ContextExpressionMember);
 
 impl<'a> ContextExpression {
-    pub fn new(token: Token<'a>) -> Result<Self, ParserError<'a>> {
+    pub fn new(token: Token<'a>) -> Result<Self, ParserError> {
         // println!("{:?}", token);
         match token.kind.unwrap() {
             TokenKind::Int(1) => Ok(ContextExpression(
@@ -37,7 +37,7 @@ impl<'a> ContextExpression {
                 ContextExpressionMember::Target(ContextExpressionMemberKind::MSpecifier),
                 ContextExpressionMember::Source(ContextExpressionMemberKind::None),
             )),
-            _ => Err(ParserError::ExpectedAGotB(token, vec![TokenKind::Int(1), TokenKind::Identifier("N"), TokenKind::OpenCurlyBrace])),
+            _ => Err(ParserError::ExpectedAGotB(format!("{}", token), format!("{:?}" ,vec![TokenKind::Int(1), TokenKind::Identifier("N"), TokenKind::OpenCurlyBrace]), token.position.0))
         }
     }
 }
@@ -55,10 +55,10 @@ impl Positioned for ContextExpression {
 }
 
 impl<'a> Expandable<'a, ContextExpression, Token<'a>> for ContextExpression {
-    fn append_item(self, token: Token<'a>) -> Result<ContextExpression, ParserError<'a>> {
+    fn append_item(self, token: Token<'a>) -> Result<ContextExpression, ParserError> {
         match token.kind.unwrap() {
             TokenKind::Colon => Ok(self.clone()),
-            _ => Err(ParserError::ExpectedAGotB(token, vec![TokenKind::Colon])),
+            _ => Err(ParserError::ExpectedAGotB(format!("{}", token), format!("{:?}" ,vec![TokenKind::Colon]), token.position.0)),
         }
     }
 }

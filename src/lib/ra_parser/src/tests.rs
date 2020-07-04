@@ -62,7 +62,7 @@ mod lib {
         // );
     }
 
-    use ra_dev_tools::insta::assert_debug_snapshot;
+    use ra_dev_tools::insta::assert_json_snapshot;
     
     use std::fs::File;
     use std::io::Read;
@@ -76,8 +76,25 @@ mod lib {
             let mut contents = String::new();
             file.read_to_string(&mut contents).unwrap();
 
-            let block_tree = parse(&contents).unwrap();
-            assert_debug_snapshot!(example.path().to_str().unwrap(), block_tree)
+            let block_tree = {
+                match parse(&contents) {
+                    Ok(b) => b,
+                    Err((errors, parsed)) => {
+
+                        let formatted_errors: Vec<String> = {
+                            errors.into_iter().map(|e| format!("{}", e)).collect()
+                        };
+
+
+
+                        assert_json_snapshot!(String::from(example.path().to_str().unwrap()) + "__ERR__", (formatted_errors, parsed));
+
+
+                        panic!("failed to parse example {:?}", example.path());
+                    }
+                }
+            };
+            assert_json_snapshot!(example.path().to_str().unwrap(), block_tree)
         })       
     }
 }

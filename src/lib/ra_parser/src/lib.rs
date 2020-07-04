@@ -1,3 +1,6 @@
+#[macro_use] extern crate failure_derive;
+extern crate serde;
+
 mod cursor;
 pub mod block;
 pub mod errors;

@@ -1,6 +1,6 @@
 
 
-
+use serde::{ Serialize};
 use super::expressions::output_expression::OutputExpression;
 use super::expressions::context_expression::ContextExpression;
 use super::expressions::input_expression::InputExpression;
@@ -14,7 +14,7 @@ use super::errors::ParserError;
 use ra_lexer::token::{Token, TokenKind};
 use ra_lexer::cursor::Position;
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub enum BlockKind<'a> {
     Program,
     Output(OutputExpression<'a>),
@@ -34,7 +34,7 @@ impl<'a> Default for BlockKind<'a> {
     }
 }
 
-#[derive(Clone, Debug, PartialEq, Default)]
+#[derive(Clone, Debug, PartialEq, Default, Serialize)]
 pub struct Block<'a> {
     pub kind: BlockKind<'a>,
     pub children: Vec<Block<'a>>,
@@ -42,7 +42,7 @@ pub struct Block<'a> {
 }
 
 impl <'a> Block<'a> {
-    pub fn new(first_token: Token<'a>) -> Result<Self, ParserError<'a>> {
+    pub fn new(first_token: Token<'a>) -> Result<Self, ParserError> {
         let kind = Self::parse_block_kind(first_token.clone())?;
 
         Ok(Self {
@@ -52,7 +52,7 @@ impl <'a> Block<'a> {
         })
     }
 
-    fn parse_block_kind(token: Token<'a>) -> Result<BlockKind, ParserError<'a>> {
+    fn parse_block_kind(token: Token<'a>) -> Result<BlockKind, ParserError> {
         if token.kind.is_none() {
             return  Ok(BlockKind::Program)
         }
@@ -71,7 +71,7 @@ impl <'a> Block<'a> {
             TokenKind::Colon => Ok(BlockKind::Declaration(None)),
             TokenKind::OpenCurlyBrace => Ok(BlockKind::ContextModification(None)),
             TokenKind::HashPound => Ok(BlockKind::Annotation(None)),
-            _ => Err(ParserError::ExpectedAGotB(token, vec![
+            _ => Err(ParserError::ExpectedAGotB(format!("{}", token), format!("{:?}", vec![
                 TokenKind::Identifier(""), 
                 TokenKind::Float(0.0), 
                 TokenKind::Int(0), 
@@ -84,7 +84,7 @@ impl <'a> Block<'a> {
                 TokenKind::Colon, 
                 TokenKind::OpenCurlyBrace, 
                 TokenKind::HashPound
-            ]))
+            ]), token.position.0))
         }
     }
 }
@@ -170,7 +170,7 @@ impl<'a> Positioned for Block<'a> {
 }
 
 impl<'a> Expandable<'a, Block<'a>, Token<'a>> for Block<'a> {
-    fn append_item(self, token: Token<'a>) -> Result<Block<'a>, ParserError<'a>> {
+    fn append_item(self, token: Token<'a>) -> Result<Block<'a>, ParserError> {
         let mut block = self.clone();
         match self.kind {
             BlockKind::Program 
@@ -242,7 +242,7 @@ impl<'a> Expandable<'a, Block<'a>, Token<'a>> for Block<'a> {
                         TokenKind::Identifier(_) => {
                             block.kind = BlockKind::Invocation(Some(token), None);
                         },
-                        _ => return Err(ParserError::ExpectedAGotB(token, vec![TokenKind::Identifier("")]))
+                        _ => return Err(ParserError::ExpectedAGotB(format!("{}",token), format!("{:?}", vec![TokenKind::Identifier("")]), token.position.0))
                     }
                 }
                 else if expression.is_none() {

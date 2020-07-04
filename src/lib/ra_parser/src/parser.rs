@@ -6,7 +6,7 @@ use super::cursor::Cursor;
 use super::errors::ParserError;
 use super::expressions::traits::{Leveled, Expandable, Positioned};
 
-pub fn parse<'a>(input: &'a str) -> Result<Block<'a>, Vec<ParserError>> {
+pub fn parse<'a>(input: &'a str) -> Result<Block<'a>, (Vec<ParserError>, Block<'a>)> {
     let stream = tokenize(input).filter(|tok| tok.kind.unwrap() != TokenKind::Comment);
     let mut errors: Vec<ParserError> = Vec::new();
     let program = {
@@ -27,7 +27,7 @@ pub fn parse<'a>(input: &'a str) -> Result<Block<'a>, Vec<ParserError>> {
     };
 
     if errors.len() > 0 {
-        Err(errors)
+        Err((errors, program))
     } else {
         Ok(program)
     }
@@ -37,9 +37,9 @@ impl<'token, I> Cursor<'token, I>
 where
     I: Iterator<Item = Token<'token>>,
 {
-    fn advance_block<'a>(&'a mut self) -> Result<Block<'token>, Vec<ParserError<'token>>> {
+    fn advance_block<'a>(&'a mut self) -> Result<Block<'token>, Vec<ParserError>> {
         let first_token = self.bump();
-        let mut errors: Vec<ParserError<'token>> = Vec::new();
+        let mut errors: Vec<ParserError> = Vec::new();
         match first_token {
             Some(token) => {
                 self.parse_block(token)
@@ -54,8 +54,8 @@ where
     fn parse_block(
         &mut self,
         first_token: Token<'token>,
-    ) -> Result<Block<'token>, Vec<ParserError<'token>>> {
-        let mut errors: Vec<ParserError<'token>> = Vec::new();
+    ) -> Result<Block<'token>, Vec<ParserError>> {
+        let mut errors: Vec<ParserError> = Vec::new();
         let block = Block::new(first_token)?;
 
         if let (Some(blk), mut errs) =
@@ -76,8 +76,8 @@ where
     fn check_parse_block_expression<'errors>(
         &mut self,
         mut block: Block<'token>,
-        errors: &'errors mut Vec<ParserError<'token>>,
-    ) -> (Option<Block<'token>>, &'errors mut Vec<ParserError<'token>>) {
+        errors: &'errors mut Vec<ParserError>,
+    ) -> (Option<Block<'token>>, &'errors mut Vec<ParserError>) {
         let lvl = block.get_level();
         let line_number = (block.get_position().0).0;
         while self.first_ahead().is_some()
@@ -99,8 +99,8 @@ where
     fn check_parse_block_children<'errors>(
         &mut self,
         mut block: Block<'token>,
-        errors: &'errors mut Vec<ParserError<'token>>,
-    ) -> (Option<Block<'token>>, &'errors mut Vec<ParserError<'token>>) {
+        errors: &'errors mut Vec<ParserError>,
+    ) -> (Option<Block<'token>>, &'errors mut Vec<ParserError>) {
         
         while !self.is_eof() && self.first_ahead().unwrap().level == block.get_level() + 1 {
             match self.advance_block() {
@@ -123,8 +123,8 @@ where
     fn check_parse_union<'errors>(
         &mut self,
         block: Block<'token>,
-        errors: &'errors mut Vec<ParserError<'token>>,
-    ) -> (Option<Block<'token>>, &'errors mut Vec<ParserError<'token>>) {
+        errors: &'errors mut Vec<ParserError>,
+    ) -> (Option<Block<'token>>, &'errors mut Vec<ParserError>) {
         let mut union_block = block.clone();
         let lvl = block.get_level();
         let mut union_size = 0;

@@ -1,18 +1,19 @@
 
 use super::traits::{*};
 use super::errors::ParserError;
+use serde::{Serialize};
 
 use ra_lexer::cursor::Position;
 use ra_lexer::token::{Token, TokenKind};
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ReferenceExpression<'a> (pub Token<'a>, pub Option<Option<Box<ReferenceExpression<'a>>>>);
 
 impl<'a> ReferenceExpression<'a> {
-    pub fn new(token: Token<'a>) -> Result<Self, ParserError<'a>> {
+    pub fn new(token: Token<'a>) -> Result<Self, ParserError> {
         match token.kind.unwrap() {
             TokenKind::Identifier(_) => Ok(Self(token, None)),
-            _ => Err(ParserError::ExpectedAGotB(token, vec![TokenKind::Identifier("")]))
+            _ => Err(ParserError::ExpectedAGotB(format!("{}", token), format!("{:?}", vec![TokenKind::Identifier("")]), token.position.0))
         }
     }
 }
@@ -44,14 +45,14 @@ impl<'a> Positioned for ReferenceExpression<'a> {
 }
 
 impl<'a> Expandable<'a, ReferenceExpression<'a>, Token<'a>> for ReferenceExpression<'a> {
-    fn append_item(self, token: Token<'a>) -> Result<ReferenceExpression<'a>, ParserError<'a>> {
+    fn append_item(self, token: Token<'a>) -> Result<ReferenceExpression<'a>, ParserError> {
         let ReferenceExpression(first_token, next) = self;
         if next.is_none() {
             match token.kind.unwrap() {
                 TokenKind::Dot => {
                     Ok(ReferenceExpression(first_token, Some(None)))
                 }
-                _ => Err(ParserError::ExpectedAGotB(token, vec![TokenKind::Dot]))
+                _ => Err(ParserError::ExpectedAGotB(format!("{}", token), format!("{:?}", vec![TokenKind::Dot]), token.position.0))
             }
         }
         else if next.is_some() && next.as_ref().unwrap().is_none() {
