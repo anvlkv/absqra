@@ -10,7 +10,6 @@ members = [
     "src/lib/ra_parser",
     "src/lib/ra_interactive",
     "src/lib/ra_dev_tools",
-    "src/lib/ra_common"
 ]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

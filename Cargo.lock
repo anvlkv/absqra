@@ -207,13 +207,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "ra_common"
-version = "0.1.0"
-dependencies = [
- "failure",
-]
-
-[[package]]
 name = "ra_dev_tools"
 version = "0.1.0"
 dependencies = [
@@ -231,17 +224,24 @@ dependencies = [
 name = "ra_lexer"
 version = "0.1.0"
 dependencies = [
- "ra_common",
+ "failure",
+ "failure_derive",
  "ra_dev_tools",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
 name = "ra_parser"
 version = "0.1.0"
 dependencies = [
- "ra_common",
+ "failure",
+ "failure_derive",
  "ra_dev_tools",
  "ra_lexer",
+ "serde",
+ "serde_json",
+ "thiserror",
 ]
 
 [[package]]
@@ -278,9 +278,9 @@ dependencies = [
 
 [[package]]
 name = "serde_json"
-version = "1.0.55"
+version = "1.0.56"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ec2c5d7e739bc07a3e73381a39d61fdb5f671c60c1df26a130690665803d8226"
+checksum = "3433e879a558dde8b5e8feb2a04899cf34fdde1fafb894687e52105fc1162ac3"
 dependencies = [
  "itoa",
  "ryu",
@@ -339,6 +339,26 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6f0fcee7b24a25675de40d5bb4de6e41b0df07bc9856295e7e2b3a3600c400c2"
 dependencies = [
  "libc",
+]
+
+[[package]]
+name = "thiserror"
+version = "1.0.20"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7dfdd070ccd8ccb78f4ad66bf1982dc37f620ef696c6b5028fe2ed83dd3d0d08"
+dependencies = [
+ "thiserror-impl",
+]
+
+[[package]]
+name = "thiserror-impl"
+version = "1.0.20"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bd80fc12f73063ac132ac92aceea36734f04a1d93c1240c6944e23a3b8841793"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]
