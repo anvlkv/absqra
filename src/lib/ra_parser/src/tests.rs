@@ -64,15 +64,41 @@ mod lib {
 
     use ra_dev_tools::insta::{assert_json_snapshot, assert_snapshot};
     
-    use std::fs::File;
+    use std::fs::{File, DirEntry};
     use std::io::Read;
-    use ra_dev_tools::for_each_ra_example_file;
+    use ra_dev_tools::{make_example_tests};
 
+    
+
+
+    #[make_example_tests]
     #[test]
-    fn it_should_match_snapshots() {
-        println!("{:?}", std::env::args());
-        for_each_ra_example_file(|example| {
-            let mut file = File::open(example.path()).unwrap();
+    fn it_should_match_snapshots(contents: String, file_name: String) {
+        let block_tree = {
+            match parse(&contents) {
+                Ok(b) => b,
+                Err((errors, parsed)) => {
+
+                    let formatted_errors: String = {
+                        errors.into_iter().map(|e| format!("{}", e)).collect::<Vec<String>>().join("\n")
+                    };
+
+                    
+                    assert_snapshot!(format!("{}__{}",file_name, "ERR__MESSAGES"), formatted_errors);
+                    assert_json_snapshot!(format!("{}__{}", file_name, "ERR"), parsed);
+
+
+                    panic!("failed to parse example {:?}", file_name);
+                }
+            }
+        };
+        assert_json_snapshot!(file_name, block_tree)       
+    }
+
+    // test_each_example_file!(snapshot_matcher);
+
+    fn snapshot_matcher(example: DirEntry) {
+        let mut file = File::open(example.path()).unwrap();
             
             let mut contents = String::new();
             file.read_to_string(&mut contents).unwrap();
@@ -96,6 +122,5 @@ mod lib {
                 }
             };
             assert_json_snapshot!(example.path().to_str().unwrap(), block_tree)
-        })       
     }
 }

@@ -1,0 +1,109 @@
+---
+source: src/lib/ra_parser/src/tests.rs
+expression: parsed
+---
+{
+  "kind": "Program",
+  "children": [
+    {
+      "kind": {
+        "Invocation": [
+          {
+            "kind": {
+              "Identifier": "required"
+            },
+            "len": 8,
+            "content": "required",
+            "position": [
+              [
+                10,
+                13
+              ],
+              [
+                10,
+                21
+              ]
+            ],
+            "level": 3
+          },
+          null
+        ]
+      },
+      "children": [],
+      "first_token": {
+        "kind": "Exclamation",
+        "len": 1,
+        "content": "!",
+        "position": [
+          [
+            10,
+            12
+          ],
+          [
+            10,
+            13
+          ]
+        ],
+        "level": 3
+      }
+    },
+    {
+      "kind": {
+        "Invocation": [
+          {
+            "kind": {
+              "Identifier": "text"
+            },
+            "len": 4,
+            "content": "text",
+            "position": [
+              [
+                11,
+                13
+              ],
+              [
+                11,
+                17
+              ]
+            ],
+            "level": 3
+          },
+          null
+        ]
+      },
+      "children": [],
+      "first_token": {
+        "kind": "Exclamation",
+        "len": 1,
+        "content": "!",
+        "position": [
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            13
+          ]
+        ],
+        "level": 3
+      }
+    }
+  ],
+  "first_token": {
+    "kind": null,
+    "len": 1,
+    "content": "",
+    "position": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "level": 0
+  }
+}
