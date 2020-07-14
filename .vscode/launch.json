@@ -7,6 +7,24 @@
         {
             "type": "lldb",
             "request": "launch",
+            "name": "Debug program in 'ra_dev_tools/example_files_macro'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=example_files_macro",
+                    "--package=example_files_macro"
+                ],
+                "filter": {
+                    "name": "example_files_macro",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}/src/lib/ra_dev_tools/src/lib/example_file_macro",
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
             "name": "Debug unit tests in library 'ra_lexer'",
             "cargo": {
                 "args": [

@@ -134,23 +134,15 @@ mod lib {
     }
 
     use ra_dev_tools::insta::assert_json_snapshot;
-    use ra_dev_tools::for_each_ra_example_file;
+    use ra_dev_tools::make_example_tests;
     use std::fs::File;
     use std::io::Read;
 
+    #[make_example_tests]
     #[test]
-    fn it_should_match_snapshots() {
-        for_each_ra_example_file(|example| {
-                let mut file = File::open(example.path()).unwrap();
-    
-                let mut contents = String::new();
-                file.read_to_string(&mut contents).unwrap();
-
-                println!("{}", example.file_name().to_str().unwrap());
-
-                let tokens: Vec<Token> = tokenize(&contents).collect();
-                assert_json_snapshot!(example.path().to_str().unwrap(), tokens)
-        });
+    fn it_should_match_snapshots(contents: String, file_name: String) {
+        let tokens: Vec<Token> = tokenize(&contents).collect();
+        assert_json_snapshot!(file_name, tokens)
     }
 
     mod strings {
