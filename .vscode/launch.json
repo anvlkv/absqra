@@ -39,7 +39,6 @@
                 }
             },
             "args": [
-                "it_should_match_snapshots"
             ],
             "cwd": "${workspaceFolder}/src/lib/ra_lexer"
         },
