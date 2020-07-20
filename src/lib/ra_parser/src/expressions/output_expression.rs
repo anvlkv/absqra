@@ -222,6 +222,17 @@ impl<'a> Expandable<'a, OutputExpression<'a>, Token<'a>> for OutputExpression<'a
                 None,
             )),
             _ => {
+                if let ExpressionMember::ReferenceExpression(reference_expression) = first_member.as_ref() {
+                    let append_result = reference_expression.clone().append_item(token);
+
+                    if append_result.is_ok() {
+                        return Ok(OutputExpression(
+                            Box::new(ExpressionMember::ReferenceExpression(append_result.unwrap())),
+                            None,
+                            None
+                        ))
+                    }
+                }
                 if op.is_none() {
                     match Self::parse_operation_first_token(token) {
                         Some(operation) => Ok(OutputExpression(

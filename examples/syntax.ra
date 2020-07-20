@@ -146,5 +146,3 @@ another_switching_block
 {N:1} // is common for many apps - multiple enries at once. For example in a note taking app there are N notes for one user
 
 {1:N} // collaborate on one entry
-
-{M:N} // is multiple collaborations

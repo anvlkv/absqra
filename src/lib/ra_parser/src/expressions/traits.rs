@@ -1,9 +1,10 @@
 use super::errors::ParserError;
-use ra_lexer::token::Token;
+use ra_lexer::token::{Token, TokenKind};
 use ra_lexer::cursor::Position;
 
 pub (crate) trait Expandable<'a, Item, ByItem> {
     fn append_item(self, item: ByItem) -> Result<Item, ParserError>;
+    // fn expected_items(&self) -> Vec<TokenKind<'a>>;
 }
 
 pub (crate) trait ByTokenExpandableFromRoot<'a, Item> {
