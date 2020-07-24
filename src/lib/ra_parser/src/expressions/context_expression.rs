@@ -20,7 +20,7 @@ pub enum ContextExpressionMember {
 }
 
 #[derive(Clone, Debug, PartialEq, Serialize)]
-pub struct ContextExpression(ContextExpressionMember, Option<ContextExpressionMember>);
+pub struct ContextExpression(pub ContextExpressionMember, pub Option<ContextExpressionMember>);
 
 impl<'a> ContextExpression {
     pub fn new(token: Token<'a>) -> Result<Self, ParserError> {

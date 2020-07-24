@@ -1,3 +1,4 @@
+use crate::expressions::context_expression::{ContextExpression, ContextExpressionMemberKind, ContextExpressionMember};
 use ra_lexer::token::{Token, TokenKind};
 use ra_lexer::tokenize;
 
@@ -79,14 +80,43 @@ where
         mut block: Block<'token>,
         errors: &'errors mut Vec<ParserError>,
     ) -> (Option<Block<'token>>, &'errors mut Vec<ParserError>) {
-        let lvl = block.get_level();
-        let line_number = (block.get_position().0).0;
+        let mut lvl = block.get_level();
+        let mut line_number = (block.get_position().0).0;
         while self.first_ahead().is_some()
             && self.first_ahead().unwrap().level == lvl
             && (self.first_ahead().unwrap().position.0).0 == line_number {
                 match block.clone().append_item(self.bump().unwrap()) {
                     Ok(blk) => {
                         block = blk;
+
+                        // // TODO: ugly, move this logic elsewhere
+
+                        if let BlockKind::ContextModification(Some(ContextExpression(target, source))) = block.clone().kind { 
+                            if ContextExpressionMember::Target(ContextExpressionMemberKind::MSpecifier) == target && source.is_none() {
+                                if let (Some(mut blk), mut errs) = self.check_parse_block_children(block.clone(), errors) {
+                                    let close_curly_brace = self.bump().unwrap();
+                                    assert_eq!(close_curly_brace.kind.unwrap(), TokenKind::CloseCurlyBrace);
+                                    block = blk;
+                                    lvl = close_curly_brace.level;
+                                    line_number = (close_curly_brace.position.0).0;
+                            //         // let updated_expression = ContextExpression(target, None).append_item(self.bump().unwrap())?;
+
+                            //         // blk.kind = BlockKind::ContextModification(Some(updated_expression));
+                            //         // self.check_parse_block_expression(blk, errs)
+                                }
+                            }
+                            else if source.is_some() && ContextExpressionMember::Source(ContextExpressionMemberKind::MSpecifier) == source.unwrap() {
+                                if let (Some(blk), mut errs) = self.check_parse_block_children(block.clone(), errors) {
+                                    assert_eq!(self.bump().unwrap().kind.unwrap(), TokenKind::CloseCurlyBrace);
+                                    assert_eq!(self.bump().unwrap().kind.unwrap(), TokenKind::CloseCurlyBrace);
+                                    block = blk;
+                                    // return Ok(blk);
+                                }
+                            }
+                            println!("{:?}", block);
+                        }
+
+                        // // end TODO
                     },
                     Err(e) => {
                         errors.push(e)

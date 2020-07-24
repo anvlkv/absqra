@@ -58,7 +58,9 @@
                     "kind": "lib"
                 }
             },
-            "args": [],
+            "args": [
+                "tests::lib::it_should_match_snapshots_foodie_recipe_ra"
+            ],
             "cwd": "${workspaceFolder}/src/lib/ra_parser"
         },
         {

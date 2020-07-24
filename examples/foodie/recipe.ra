@@ -6,48 +6,59 @@
 recipe
     publisher
         user
-    name > :placeholder=`Name`
+    name 
+        > :placeholder=`Name`
             !required
             !text
             !maxLength:100
-    pictures +> :placeholder=@resources.pictureLabel
-        !file:type=image
-        !minCount:1
+    pictures 
+        +> :placeholder=@resources.pictureLabel
+            !file:type=image
+            !minCount:1
     ingredients
-        + ingredient
-            name >
-                !text
-            amount >
-                !number
-            unit >
-                !text
-                !maxLength:100
-    tools +>
-        !text
-    kindOfMeal >
-        !options:@resources.mealsTypes
-        !required
-        !select:single
-    countryOfOrigin >
-        !options:@resources.countries
-        !required
-        !select:single
-    restrictions >
-        !options:@resources.foodRestrictions
-        !required
-        !select:multiple
+        +> 
+            ingredient
+                name 
+                    >
+                        !text
+                amount 
+                    >
+                        !number
+                unit 
+                    >
+                        !text
+                        !maxLength:100
+    tools 
+        +>
+            !text
+    kindOfMeal 
+        >
+            !options:@resources.mealsTypes
+            !required
+            !select:single
+    countryOfOrigin 
+        >
+            !options:@resources.countries
+            !required
+            !select:single
+    restrictions 
+        >
+            !options:@resources.foodRestrictions
+            !required
+            !select:multiple
     preparation
-        +preparationSteps
-            description
-                #ln:en`
-                    Step description
-                `
-                #ln:ru`
-                    Описание шага
-                `,
-                >
-                    !text
-            picture
-                @resources.pictureLabel,
-                >
-                    !file:type=image
+        +> 
+            preparationSteps
+                description
+                    #ln:en`
+                        Step description
+                    `
+                    #ln:ru`
+                        Описание шага
+                    `,
+                    >
+                        !text
+                picture
+                    @resources.pictureLabel,
+                    >
+                        !file:type=image
