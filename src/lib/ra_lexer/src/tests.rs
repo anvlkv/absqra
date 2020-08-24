@@ -107,7 +107,7 @@ mod lib {
         stream.next();
         stream.next();
         assert_eq!(
-            stream.next().unwrap(),
+            stream.next().unwrap().unwrap(),
             Token {
                 kind: Some(TokenKind::Identifier("abc")),
                 content: "abc",
@@ -122,7 +122,7 @@ mod lib {
     fn it_should_parse_identifiers() {
         let mut stream = tokenize("abc");
         assert_eq!(
-            stream.next().unwrap(),
+            stream.next().unwrap().unwrap(),
             Token {
                 kind: Some(TokenKind::Identifier("abc")),
                 content: "abc",
@@ -135,13 +135,11 @@ mod lib {
 
     use ra_dev_tools::insta::assert_json_snapshot;
     use ra_dev_tools::make_example_tests;
-    use std::fs::File;
-    use std::io::Read;
 
     #[make_example_tests]
     #[test]
     fn it_should_match_snapshots(contents: String, file_name: String) {
-        let tokens: Vec<Token> = tokenize(&contents).collect();
+        let tokens: Vec<Token> = tokenize(&contents).map(|r| r.unwrap()).collect();
         assert_json_snapshot!(file_name, tokens)
     }
 
@@ -151,7 +149,7 @@ mod lib {
         fn it_should_parse_string_literals_with_double_quotes() {
             let mut stream = tokenize("\"some\"");
             assert_eq!(
-                stream.next().unwrap(),
+                stream.next().unwrap().unwrap(),
                 Token {
                     kind: Some(TokenKind::StringLiteral("some")),
                     content: "some",
@@ -166,7 +164,7 @@ mod lib {
         fn it_should_parse_string_literals_with_single_quotes() {
             let mut stream = tokenize("\'some\'");
             assert_eq!(
-                stream.next().unwrap(),
+                stream.next().unwrap().unwrap(),
                 Token {
                     kind: Some(TokenKind::StringLiteral("some")),
                     content: "some",
@@ -183,7 +181,7 @@ mod lib {
         fn it_should_parse_single_line_comments() {
             let mut stream = tokenize("//abc");
             assert_eq!(
-                stream.next().unwrap(),
+                stream.next().unwrap().unwrap(),
                 Token {
                     kind: Some(TokenKind::Comment),
                     content: "abc",
@@ -197,7 +195,7 @@ mod lib {
         fn it_should_parse_multi_line_comments() {
             let mut stream = tokenize("/*abc\nSOME*/");
             assert_eq!(
-                stream.next().unwrap(),
+                stream.next().unwrap().unwrap(),
                 Token {
                     kind: Some(TokenKind::Comment),
                     content: "abc\nSOME",
@@ -212,7 +210,7 @@ mod lib {
         fn it_should_parse_multi_line_comments_with_fringe() {
             let mut stream = tokenize("/*\n* abc\n* SOME\n*/");
             assert_eq!(
-                stream.next().unwrap(),
+                stream.next().unwrap().unwrap(),
                 Token {
                     kind: Some(TokenKind::Comment),
                     content: "\n* abc\n* SOME\n",
@@ -227,7 +225,7 @@ mod lib {
         fn it_should_parse_comments_followed_by_one_another() {
             let mut stream = tokenize("//some\n\n/*\n* abc\n* SOME\n*/");
             assert_eq!(
-                stream.next().unwrap(),
+                stream.next().unwrap().unwrap(),
                 Token {
                     kind: Some(TokenKind::Comment),
                     content: "some",
@@ -238,7 +236,7 @@ mod lib {
             );
 
             assert_eq!(
-                stream.next().unwrap(),
+                stream.next().unwrap().unwrap(),
                 Token {
                     kind: Some(TokenKind::Comment),
                     content: "\n* abc\n* SOME\n",
@@ -256,7 +254,7 @@ mod lib {
         fn it_should_parse_numbers() {
             let mut stream = tokenize("123");
             assert_eq!(
-                stream.next().unwrap(),
+                stream.next().unwrap().unwrap(),
                 Token {
                     kind: Some(TokenKind::Int(123)),
                     content: "123",
@@ -271,7 +269,7 @@ mod lib {
         fn it_should_parse_numbers_with_decimal_separator() {
             let mut stream = tokenize("123,321");
             assert_eq!(
-                stream.next().unwrap(),
+                stream.next().unwrap().unwrap(),
                 Token {
                     kind: Some(TokenKind::Float(123.321)),
                     content: "123,321",
@@ -286,7 +284,7 @@ mod lib {
         fn it_should_parse_numbers_with_another_decimal_separator() {
             let mut stream = tokenize("123.321");
             assert_eq!(
-                stream.next().unwrap(),
+                stream.next().unwrap().unwrap(),
                 Token {
                     kind: Some(TokenKind::Float(123.321)),
                     content: "123.321",
@@ -301,7 +299,7 @@ mod lib {
         fn it_should_parse_numbers_with_decimal_and_thousands_separator() {
             let mut stream = tokenize("123.321,456");
             assert_eq!(
-                stream.next().unwrap(),
+                stream.next().unwrap().unwrap(),
                 Token {
                     kind: Some(TokenKind::Float(123321.456)),
                     content: "123.321,456",
@@ -316,7 +314,7 @@ mod lib {
         fn it_should_parse_numbers_with_decimal_and_multiple_thousands_separator() {
             let mut stream = tokenize("123.321.123,456");
             assert_eq!(
-                stream.next().unwrap(),
+                stream.next().unwrap().unwrap(),
                 Token {
                     kind: Some(TokenKind::Float(123321123.456)),
                     content: "123.321.123,456",
@@ -331,7 +329,7 @@ mod lib {
         fn it_should_parse_numbers_with_another_decimal_and_multiple_thousands_separators() {
             let mut stream = tokenize("123,321,123.456");
             assert_eq!(
-                stream.next().unwrap(),
+                stream.next().unwrap().unwrap(),
                 Token {
                     kind: Some(TokenKind::Float(123321123.456)),
                     content: "123,321,123.456",
@@ -353,7 +351,7 @@ mod lib {
         fn it_should_parse_negative_integer() {
             let mut stream = tokenize("-123");
             assert_eq!(
-                stream.next().unwrap(),
+                stream.next().unwrap().unwrap(),
                 Token {
                     kind: Some(TokenKind::Int(-123)),
                     content: "-123",
@@ -368,7 +366,7 @@ mod lib {
         fn it_should_parse_negative_float() {
             let mut stream = tokenize("-123.312");
             assert_eq!(
-                stream.next().unwrap(),
+                stream.next().unwrap().unwrap(),
                 Token {
                     kind: Some(TokenKind::Float(-123.312)),
                     content: "-123.312",
@@ -386,7 +384,7 @@ mod lib {
         fn it_should_parse_content_blocks() {
             let mut stream = tokenize("`abc`");
             assert_eq!(
-                stream.next().unwrap(),
+                stream.next().unwrap().unwrap(),
                 Token {
                     kind: Some(TokenKind::ContentBlock),
                     content: "abc",
@@ -401,7 +399,7 @@ mod lib {
         fn it_should_keep_inner_indents_when_parsing_content() {
             let mut stream = tokenize("`\n\tabc\n\t\tabc\n`");
             assert_eq!(
-                stream.next().unwrap(),
+                stream.next().unwrap().unwrap(),
                 Token {
                     kind: Some(TokenKind::ContentBlock),
                     content: "\n\tabc\n\t\tabc\n",
@@ -426,7 +424,7 @@ mod lib {
         fn it_should_parse_tokens() {
             let mut stream = tokenize("!?&/#");
             assert_eq!(
-                stream.next().unwrap(),
+                stream.next().unwrap().unwrap(),
                 Token {
                     kind: Some(TokenKind::Exclamation),
                     position: (Position(1, 0), Position(1, 1)),
@@ -436,7 +434,7 @@ mod lib {
                 }
             );
             assert_eq!(
-                stream.next().unwrap(),
+                stream.next().unwrap().unwrap(),
                 Token {
                     kind: Some(TokenKind::Question),
                     position: (Position(1, 1), Position(1, 2)),
@@ -446,7 +444,7 @@ mod lib {
                 }
             );
             assert_eq!(
-                stream.next().unwrap(),
+                stream.next().unwrap().unwrap(),
                 Token {
                     kind: Some(TokenKind::Ampersand),
                     position: (Position(1, 2), Position(1, 3)),
@@ -456,7 +454,7 @@ mod lib {
                 }
             );
             assert_eq!(
-                stream.next().unwrap(),
+                stream.next().unwrap().unwrap(),
                 Token {
                     kind: Some(TokenKind::Slash),
                     position: (Position(1, 3), Position(1, 4)),
@@ -466,7 +464,7 @@ mod lib {
                 }
             );
             assert_eq!(
-                stream.next().unwrap(),
+                stream.next().unwrap().unwrap(),
                 Token {
                     kind: Some(TokenKind::HashPound),
                     position: (Position(1, 4), Position(1, 5)),

@@ -1,6 +1,7 @@
 use crate::expressions::context_expression::{ContextExpression, ContextExpressionMemberKind, ContextExpressionMember};
 use ra_lexer::token::{Token, TokenKind};
 use ra_lexer::tokenize;
+use ra_lexer::errors::LexerError;
 
 use super::block::{Block, BlockKind};
 use super::cursor::Cursor;
@@ -9,11 +10,19 @@ use super::expressions::traits::{Leveled, Expandable, Positioned};
 use failure::Backtrace;
 
 pub fn parse<'a>(input: &'a str) -> Result<Block<'a>, (Vec<ParserError>, Block<'a>)> {
-    let stream = tokenize(input).filter(|tok| tok.kind.unwrap() != TokenKind::Comment);
+    let stream = tokenize(input);
+    
     let mut errors: Vec<ParserError> = Vec::new();
+
     let program = {
         let mut block = Block::new(Token::default()).unwrap();
-        let mut tokens_cursor = Cursor::new(stream);
+
+        let mut tokens_cursor = Cursor::new(
+            stream
+            .take_while(|r| r.is_ok())
+            .map(|r| r.unwrap())
+            .filter(|tok| tok.kind.unwrap() != TokenKind::Comment)
+        );
         loop {
             if !tokens_cursor.is_eof() {
                 match tokens_cursor.advance_block() {

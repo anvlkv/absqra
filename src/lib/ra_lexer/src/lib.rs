@@ -12,29 +12,16 @@ use cursor::{Cursor, Position, is_end_of_line, is_whitespace, EOF_CHAR};
 use errors::LexerError;
 use std::convert::TryInto;
 
-pub fn tokenize<'a>(input: &'a str) -> impl Iterator<Item = Token<'a>> + 'a {
+pub fn tokenize<'a>(input: &'a str) -> impl Iterator<Item = Result<Token<'a>, LexerError>> + 'a {
     tokenize_cursor(Cursor::new(input, Position(1, 0), 0, 0))
 }
 
-fn tokenize_cursor<'a>(mut cursor: Cursor<'a>) -> impl Iterator<Item = Token<'a>> + 'a {
+fn tokenize_cursor<'a>(mut cursor: Cursor<'a>) -> impl Iterator<Item = Result<Token<'a>, LexerError>> + 'a {
     std::iter::from_fn(move || {
         if cursor.is_eof() {
             return None;
         }
-        match cursor.advance_token() {
-            Ok(t) => {
-                match t.kind {
-                    Some(_) => Some(t),
-                    None => {
-                        panic!("{:?}", LexerError::UnsupportedToken(cursor.position))
-                    }
-                }
-            },
-            Err(e) => {
-                println!("{:?}", cursor.position);
-                panic!("{:?}", e);
-            }
-        }
+        Some(cursor.advance_token())
     })
 }
 

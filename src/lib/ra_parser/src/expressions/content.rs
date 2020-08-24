@@ -121,10 +121,10 @@ impl<'a> Content<'a> {
 
         match tokens_stream.next() {
             Some(token) => {
-                let mut expression = ReferenceExpression::new(token)?;
+                let mut expression = ReferenceExpression::new(token?)?;
 
                 while let Some(token) = tokens_stream.next() {
-                    expression = expression.append_item(token)?;
+                    expression = expression.append_item(token?)?;
                 }
 
                 Ok(expression)

@@ -14,7 +14,7 @@ pub struct ReferenceExpression<'a>(
 impl<'a> ReferenceExpression<'a> {
     pub fn new(token: Token<'a>) -> Result<Self, ParserError> {
         match token.kind.unwrap() {
-            TokenKind::Identifier(_) => Ok(Self(token, None)),
+            TokenKind::Identifier(_) | TokenKind::At => Ok(Self(token, None)),
             _ => Err(ParserError::ExpectedAGotB(
                 format!("{}", token),
                 format!("{:?}", vec![TokenKind::Identifier("")]),
@@ -53,9 +53,23 @@ impl<'a> Positioned for ReferenceExpression<'a> {
 impl<'a> Expandable<'a, ReferenceExpression<'a>, Token<'a>> for ReferenceExpression<'a> {
     fn append_item(self, token: Token<'a>) -> Result<ReferenceExpression<'a>, ParserError> {
         let ReferenceExpression(first_token, next) = self;
+        
         if next.is_none() {
             match token.kind.unwrap() {
                 TokenKind::Dot => Ok(ReferenceExpression(first_token, Some(None))),
+                TokenKind::Identifier(_) => {
+                    if first_token.kind.unwrap() == TokenKind::At {
+                        Ok(ReferenceExpression(first_token, Some(Some(Box::new(ReferenceExpression(token, None))))))
+                    }
+                    else {
+                        Err(ParserError::ExpectedAGotB(
+                            format!("{}", token),
+                            format!("{:?}", vec![TokenKind::Identifier("")]),
+                            token.position.0,
+                            Backtrace::new()
+                        ))
+                    }
+                }
                 _ => Err(ParserError::ExpectedAGotB(
                     format!("{}", token),
                     format!("{:?}", vec![TokenKind::Dot]),

@@ -10,11 +10,11 @@ recipe
         > :placeholder=`Name`
             !required
             !text
-            !maxLength:100
+            !maxLength:=100
     pictures 
         +> :placeholder=@resources.pictureLabel
             !file:type=image
-            !minCount:1
+            !minCount:=1
     ingredients
         +> 
             ingredient
@@ -27,7 +27,7 @@ recipe
                 unit 
                     >
                         !text
-                        !maxLength:100
+                        !maxLength:=100
     tools 
         +>
             !text

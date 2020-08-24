@@ -18,8 +18,8 @@ pub enum ParserError {
     InvalidExpression(Position, Backtrace),
     #[fail(display = "Invalid block")]
     InvalidBlock,
-    #[fail(display = "ContentParsingError: {}, \n {}", _0, _1)]
-    ContentParsingError(#[cause] LexerError, Backtrace),
+    #[fail(display = "LexerError: {}, \n {}", _0, _1)]
+    LexerError(#[cause] LexerError, Backtrace),
     #[fail(display = "Error chain: {}, caused by: {}", _1, _0)]
     ChainedError(#[cause] Box<ParserError>, Box<ParserError>)
 }
@@ -28,6 +28,12 @@ pub enum ParserError {
 impl From<ParserError> for Vec<ParserError> {
     fn from(err: ParserError) -> Vec<ParserError> {
         vec![err]
+    }
+}
+
+impl From<LexerError> for ParserError {
+    fn from(err: LexerError) -> ParserError {
+        ParserError::LexerError(err, Backtrace::new())
     }
 }
 

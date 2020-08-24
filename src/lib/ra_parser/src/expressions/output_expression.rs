@@ -64,7 +64,7 @@ impl<'a> Default for ExpressionMember<'a> {
 impl<'a> ExpressionMember<'a> {
     pub fn new(token: Token<'a>) -> Result<Self, ParserError> {
         match token.kind.unwrap() {
-            TokenKind::Identifier(_) => Ok(ExpressionMember::ReferenceExpression(
+            TokenKind::Identifier(_) | TokenKind::At => Ok(ExpressionMember::ReferenceExpression(
                 ReferenceExpression::new(token)?,
             )),
             TokenKind::Int(_) | TokenKind::Float(_) | TokenKind::StringLiteral(_) => {
