@@ -1,5 +1,21 @@
 # absQra
 
+- [absQra](#absqra)
+  - [Overview](#overview)
+    - [current scenario](#current-scenario)
+    - [what if](#what-if)
+    - [new scenario](#new-scenario)
+  - [Outcomes](#outcomes)
+    - [for the ones building solutions (__developers / designers__)](#for-the-ones-building-solutions-developers--designers)
+    - [for the ones using the solution (__users / programs__)](#for-the-ones-using-the-solution-users--programs)
+    - [for the ones studying the data (__researchers / analysts / designers__)](#for-the-ones-studying-the-data-researchers--analysts--designers)
+  - [Success](#success)
+  - [Progress](#progress)
+    - [milestones](#milestones)
+    - [adoption](#adoption)
+  - [Problem - value](#problem---value)
+  - [Value discovery](#value-discovery)
+
 __absQra__ is an input-output framework and delivery platform, aimed at building, delivering and measuring better user experiences in a more streamlined and flexible way.
 
 ## Overview
@@ -33,9 +49,23 @@ Apps are essentially user flows, described as sequences of inputs and outputs wi
 
 - universal delivery, so that users or other code can use a solution built with absQra using their preferred medium
 - solution design more focused on user flows, so that users get better experiences
-- reuse of patterns, so that users will encounter certain design patterns more often, so that they are more exposed to it, so that it's easier for them to understand
-
+- reuse of patterns, so that users will encounter certain design patterns more often, so that they are more exposed to it, so that it's easier for them to understand how to use a solution
+- transparency, publicity, anonymization, so that solutions are transparent about what data they keep, and what becomes available in public access, so that users are informed and safe
 
 ### for the ones studying the data (__researchers / analysts / designers__)
 
-- 
+- access to anonymized data from a public sequence, so that they can study well sampled data
+- access to anonymized metadata from a public sequence, so that behavioral patterns can be studied as well, so that their design solutions can be further optimized
+- configurable contributions for references, so that well designed sequences when used by others will collect data in accordance with their configuration, so that sequences can have a better outreach while cleared from undesired entries, so that samples are bigger and cleaner
+
+## Success
+
+## Progress
+
+### milestones
+
+### adoption
+
+## Problem - value
+
+## Value discovery
