@@ -91,7 +91,6 @@ mod cursor {
 
 mod lib {
     use super::{tokenize, Position, Token, TokenKind};
-    
 
     #[test]
     fn it_should_create_iterator_of_tokens() {
@@ -250,6 +249,7 @@ mod lib {
     
     mod numbers {
         use super::{tokenize, Position, Token, TokenKind};
+        use crate::errors::LexerError;
         #[test]
         fn it_should_parse_numbers() {
             let mut stream = tokenize("123");
@@ -341,10 +341,15 @@ mod lib {
         }
 
         #[test]
-        #[should_panic]
-        fn it_should_panic_when_encountering_multiple_decimal_separators() {
+        fn it_should_error_when_encountering_multiple_decimal_separators() {
             let mut stream = tokenize("123.321.123,456,654");
-            stream.next();
+            match stream.next().unwrap() {
+                Ok(_) => panic!("didn't error"),
+                Err(e) => assert!(match e {
+                    LexerError::UnexpectedCharacter(ch, _) => ch == ',',
+                    _ => false
+                })
+            }
         }
 
         #[test]
@@ -380,6 +385,8 @@ mod lib {
 
     mod content_block {
         use super::{tokenize, Position, Token, TokenKind};
+        use crate::errors::LexerError;
+
         #[test]
         fn it_should_parse_content_blocks() {
             let mut stream = tokenize("`abc`");
@@ -411,10 +418,15 @@ mod lib {
         }
 
         #[test]
-        #[should_panic]
-        fn it_should_panic_when_content_block_is_not_closed_properly() {
+        fn it_should_error_when_content_block_is_not_closed_properly() {
             let mut stream = tokenize("`\n\tabc`");
-            stream.next();
+            match stream.next().unwrap() {
+                Ok(_) => panic!("parsed invalid content"),
+                Err(e) => assert!(match e {
+                    LexerError::UnexpectedEndOfInput(_) => true,
+                    _ => false
+                })
+            }
         }
     }
 

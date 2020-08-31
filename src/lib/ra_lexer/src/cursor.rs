@@ -1,6 +1,6 @@
 use std::str::Chars;
 use std::fmt;
-use super::errors::LexerError;
+use crate::errors::LexerError;
 use serde::{Serialize};
 
 pub const EOF_CHAR: char = '\0';

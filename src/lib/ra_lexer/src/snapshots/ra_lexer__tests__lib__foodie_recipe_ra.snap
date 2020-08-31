@@ -476,6 +476,22 @@ expression: tokens
     "level": 3
   },
   {
+    "kind": "Equals",
+    "len": 1,
+    "content": "=",
+    "position": [
+      [
+        13,
+        23
+      ],
+      [
+        13,
+        24
+      ]
+    ],
+    "level": 3
+  },
+  {
     "kind": {
       "Int": 100
     },
@@ -484,11 +500,11 @@ expression: tokens
     "position": [
       [
         13,
-        23
+        24
       ],
       [
         13,
-        26
+        27
       ]
     ],
     "level": 3
@@ -814,11 +830,9 @@ expression: tokens
     "level": 3
   },
   {
-    "kind": {
-      "Int": 1
-    },
+    "kind": "Equals",
     "len": 1,
-    "content": "1",
+    "content": "=",
     "position": [
       [
         17,
@@ -827,6 +841,24 @@ expression: tokens
       [
         17,
         23
+      ]
+    ],
+    "level": 3
+  },
+  {
+    "kind": {
+      "Int": 1
+    },
+    "len": 1,
+    "content": "1",
+    "position": [
+      [
+        17,
+        23
+      ],
+      [
+        17,
+        24
       ]
     ],
     "level": 3
@@ -1154,6 +1186,22 @@ expression: tokens
     "level": 6
   },
   {
+    "kind": "Equals",
+    "len": 1,
+    "content": "=",
+    "position": [
+      [
+        30,
+        35
+      ],
+      [
+        30,
+        36
+      ]
+    ],
+    "level": 6
+  },
+  {
     "kind": {
       "Int": 100
     },
@@ -1162,11 +1210,11 @@ expression: tokens
     "position": [
       [
         30,
-        35
+        36
       ],
       [
         30,
-        38
+        39
       ]
     ],
     "level": 6

@@ -1,13 +1,11 @@
-use std::error;
-use std::fmt;
 use std::num;
-use super::Position;
+use crate::cursor::Position;
 
 extern crate failure;
 use failure::Fail;
 
 
-#[derive(Debug, Fail)]
+#[derive(Debug, Fail, PartialEq)]
 pub enum LexerError {
     #[fail(display = "Unexpected indentation level: {} at {}", _0, _1)]
     UnexpectedIndentLevel(u16, Position),
