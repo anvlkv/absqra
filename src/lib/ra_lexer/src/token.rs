@@ -4,7 +4,7 @@ use serde::Serialize;
 use std::convert::TryFrom;
 use std::fmt::Display;
 
-#[derive(Debug, PartialEq, Clone, Copy, Serialize)]
+#[derive(Debug, Clone, Copy, Serialize)]
 pub enum TokenKind<'a> {
     Ampersand,
     Asterisk,
@@ -42,13 +42,48 @@ pub enum TokenKind<'a> {
     Tilde,
 }
 
-/// Token type
-/// pub kind: Option<TokenKind<'a>>,
-/// pub len: u16,
-/// pub content: &'a str,
-/// pub position: (Position, Position),
-/// pub level: u16,
-///
+impl<'a> PartialEq for TokenKind<'a> {
+    fn eq(&self, other: &Self) -> bool {
+        match (self, other) {
+            (&TokenKind::Identifier(_), &TokenKind::Identifier(_)) => true,
+            (&TokenKind::StringLiteral(_), &TokenKind::StringLiteral(_)) => true,
+            (&TokenKind::Int(_), &TokenKind::Int(_)) => true,
+            (&TokenKind::Float(_), &TokenKind::Float(_)) => true,
+            (&TokenKind::Ampersand, &TokenKind::Ampersand) => true,
+            (&TokenKind::Asterisk, &TokenKind::Asterisk) => true,
+            (&TokenKind::At, &TokenKind::At) => true,
+            (&TokenKind::CloseCurlyBrace, &TokenKind::CloseCurlyBrace) => true,
+            (&TokenKind::CloseParentheses, &TokenKind::CloseParentheses) => true,
+            (&TokenKind::CloseSquareBrace, &TokenKind::CloseSquareBrace) => true,
+            (&TokenKind::Colon, &TokenKind::Colon) => true,
+            (&TokenKind::Coma, &TokenKind::Coma) => true,
+            (&TokenKind::Comment, &TokenKind::Comment) => true,
+            (&TokenKind::ContentBlock, &TokenKind::ContentBlock) => true,
+            (&TokenKind::Dollar, &TokenKind::Dollar) => true,
+            (&TokenKind::Dot, &TokenKind::Dot) => true,
+            (&TokenKind::Equals, &TokenKind::Equals) => true,
+            (&TokenKind::Exclamation, &TokenKind::Exclamation) => true,
+            (&TokenKind::ForwardSlash, &TokenKind::ForwardSlash) => true,
+            (&TokenKind::Greater, &TokenKind::Greater) => true,
+            (&TokenKind::HashPound, &TokenKind::HashPound) => true,
+            (&TokenKind::Less, &TokenKind::Less) => true,
+            (&TokenKind::Minus, &TokenKind::Minus) => true,
+            (&TokenKind::OpenCurlyBrace, &TokenKind::OpenCurlyBrace) => true,
+            (&TokenKind::OpenParentheses, &TokenKind::OpenParentheses) => true,
+            (&TokenKind::OpenSquareBrace, &TokenKind::OpenSquareBrace) => true,
+            (&TokenKind::Percent, &TokenKind::Percent) => true,
+            (&TokenKind::Pipe, &TokenKind::Pipe) => true,
+            (&TokenKind::Plus, &TokenKind::Plus) => true,
+            (&TokenKind::Power, &TokenKind::Power) => true,
+            (&TokenKind::Question, &TokenKind::Question) => true,
+            (&TokenKind::SemiColon, &TokenKind::SemiColon) => true,
+            (&TokenKind::Slash, &TokenKind::Slash) => true,
+            (&TokenKind::Tilde, &TokenKind::Tilde) => true,
+            _ => false,
+        }
+    }
+}
+
 #[derive(Debug, PartialEq, Clone, Copy, Serialize)]
 pub(crate) struct Token<'a> {
     pub kind: Option<TokenKind<'a>>,
@@ -73,14 +108,13 @@ impl<'a> TryFrom<Token<'a>> for RaToken<'a> {
     fn try_from(token: Token<'a>) -> Result<Self, <Self as TryFrom<Token<'a>>>::Error> {
         if token.kind.is_none() {
             Err(LexerError::UnsupportedToken(token.position.0))
-        }
-        else {
+        } else {
             Ok(RaToken {
                 kind: token.kind.unwrap(),
                 level: token.level,
                 position: token.position,
                 content: token.content,
-                len: token.len
+                len: token.len,
             })
         }
     }
