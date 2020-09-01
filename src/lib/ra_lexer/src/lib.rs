@@ -7,13 +7,13 @@ pub mod cursor;
 pub mod errors;
 pub mod token;
 
-use token::{Token, TokenKind};
+use token::{Token, TokenKind, RaToken};
 use cursor::{Cursor, Position, is_end_of_line, is_whitespace, EOF_CHAR};
 use errors::LexerError;
 use std::convert::TryInto;
 
-pub fn tokenize<'a>(input: &'a str) -> impl Iterator<Item = Result<Token<'a>, LexerError>> + 'a {
-    tokenize_cursor(Cursor::new(input, Position(1, 0), 0, 0))
+pub fn tokenize<'a>(input: &'a str) -> impl Iterator<Item = Result<RaToken<'a>, LexerError>> + 'a {
+    tokenize_cursor(Cursor::new(input, Position(1, 0), 0, 0)).map(|lexer_result| lexer_result?.try_into())
 }
 
 fn tokenize_cursor<'a>(mut cursor: Cursor<'a>) -> impl Iterator<Item = Result<Token<'a>, LexerError>> + 'a {

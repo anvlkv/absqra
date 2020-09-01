@@ -1,6 +1,8 @@
 use crate::cursor::Position;
+use crate::LexerError;
+use serde::Serialize;
+use std::convert::TryFrom;
 use std::fmt::Display;
-use serde::{Serialize};
 
 #[derive(Debug, PartialEq, Clone, Copy, Serialize)]
 pub enum TokenKind<'a> {
@@ -46,14 +48,42 @@ pub enum TokenKind<'a> {
 /// pub content: &'a str,
 /// pub position: (Position, Position),
 /// pub level: u16,
-/// 
+///
 #[derive(Debug, PartialEq, Clone, Copy, Serialize)]
-pub struct Token<'a> {
+pub(crate) struct Token<'a> {
     pub kind: Option<TokenKind<'a>>,
     pub len: u16,
     pub content: &'a str,
     pub position: (Position, Position),
     pub level: u16,
+}
+
+#[derive(Debug, PartialEq, Clone, Copy, Serialize)]
+pub struct RaToken<'a> {
+    pub kind: TokenKind<'a>,
+    pub len: u16,
+    pub content: &'a str,
+    pub position: (Position, Position),
+    pub level: u16,
+}
+
+impl<'a> TryFrom<Token<'a>> for RaToken<'a> {
+    type Error = LexerError;
+
+    fn try_from(token: Token<'a>) -> Result<Self, <Self as TryFrom<Token<'a>>>::Error> {
+        if token.kind.is_none() {
+            Err(LexerError::UnsupportedToken(token.position.0))
+        }
+        else {
+            Ok(RaToken {
+                kind: token.kind.unwrap(),
+                level: token.level,
+                position: token.position,
+                content: token.content,
+                len: token.len
+            })
+        }
+    }
 }
 
 const EMPTY_CONTENT: &str = "";
