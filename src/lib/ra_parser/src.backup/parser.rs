@@ -1,5 +1,5 @@
 use crate::expressions::context_expression::{ContextExpression, ContextExpressionMemberKind, ContextExpressionMember};
-use ra_lexer::token::{Token, TokenKind};
+use ra_lexer::token::{RaToken, TokenKind};
 use ra_lexer::tokenize;
 use ra_lexer::errors::LexerError;
 
@@ -15,7 +15,7 @@ pub fn parse<'a>(input: &'a str) -> Result<Block<'a>, (Vec<ParserError>, Block<'
     let mut errors: Vec<ParserError> = Vec::new();
 
     let program = {
-        let mut block = Block::new(Token::default()).unwrap();
+        let mut block = Block::new(RaToken::default()).unwrap();
 
         let mut tokens_cursor = Cursor::new(
             stream
@@ -46,7 +46,7 @@ pub fn parse<'a>(input: &'a str) -> Result<Block<'a>, (Vec<ParserError>, Block<'
 
 impl<'token, I> Cursor<'token, I>
 where
-    I: Iterator<Item = Token<'token>>,
+    I: Iterator<Item = RaToken<'token>>,
 {
     fn advance_block<'a>(&'a mut self) -> Result<Block<'token>, Vec<ParserError>> {
         let first_token = self.bump();
@@ -64,7 +64,7 @@ where
 
     fn parse_block(
         &mut self,
-        first_token: Token<'token>,
+        first_token: RaToken<'token>,
     ) -> Result<Block<'token>, Vec<ParserError>> {
         let mut errors: Vec<ParserError> = Vec::new();
         let block = Block::new(first_token)?;

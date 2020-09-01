@@ -1,18 +1,18 @@
 use super::errors::ParserError;
 use super::traits::*;
 use ra_lexer::cursor::Position;
-use ra_lexer::token::{Token, TokenKind};
+use ra_lexer::token::{RaToken, TokenKind};
 use serde::Serialize;
 use failure::Backtrace;
 
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct AnnotationExpression<'a>(
-    pub Token<'a>,
+    pub RaToken<'a>,
     pub Option<Option<Box<AnnotationExpression<'a>>>>,
 );
 
 impl<'a> AnnotationExpression<'a> {
-    pub fn new(token: Token<'a>) -> Result<Self, ParserError> {
+    pub fn new(token: RaToken<'a>) -> Result<Self, ParserError> {
         match token.kind.unwrap() {
             TokenKind::Identifier(_) => Ok(Self(token, None)),
             _ => Err(ParserError::ExpectedAGotB(
@@ -53,8 +53,8 @@ impl<'a> Positioned for AnnotationExpression<'a> {
     }
 }
 
-impl<'a> Expandable<'a, AnnotationExpression<'a>, Token<'a>> for AnnotationExpression<'a> {
-    fn append_item(self, token: Token<'a>) -> Result<AnnotationExpression, ParserError> {
+impl<'a> Expandable<'a, AnnotationExpression<'a>, RaToken<'a>> for AnnotationExpression<'a> {
+    fn append_item(self, token: RaToken<'a>) -> Result<AnnotationExpression, ParserError> {
         let AnnotationExpression(first_token, next_expression) = self;
 
         if next_expression.is_some() {

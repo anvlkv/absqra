@@ -1,9 +1,9 @@
-use ra_lexer::token::{Token};
+use ra_lexer::token::{RaToken};
 use ra_lexer::cursor::Position;
 use core::iter::Peekable;
 
 pub(crate) struct Cursor<'token, I> 
-    where I: Iterator<Item = Token<'token>> 
+    where I: Iterator<Item = RaToken<'token>> 
 {
     pub position: Position,
     pub level: u16,
@@ -12,7 +12,7 @@ pub(crate) struct Cursor<'token, I>
 }
 
 impl <'token, I> Cursor<'token, I> 
-where I: Iterator<Item = Token<'token>> 
+where I: Iterator<Item = RaToken<'token>> 
 {
     pub fn new(tokens: I) -> Self
         
@@ -25,11 +25,11 @@ where I: Iterator<Item = Token<'token>>
         }
     }
 
-    pub fn first_ahead(&mut self) -> Option<&Token<'token>> {
+    pub fn first_ahead(&mut self) -> Option<&RaToken<'token>> {
         self.tokens.peek()
     }
 
-    pub fn bump(&mut self) -> Option<Token<'token>> {
+    pub fn bump(&mut self) -> Option<RaToken<'token>> {
         let tok = self.tokens.next();
         match tok {
             Some(token) => {
@@ -48,7 +48,7 @@ where I: Iterator<Item = Token<'token>>
 
     // pub fn do_while<F, D>(&mut self, mut test: F, mut cb: D)
     //     where F: FnMut (u16, Position, TokenKind) -> bool,
-    //     D: FnMut (Token)
+    //     D: FnMut (RaToken)
     // {
     //     loop {
     //         let next_token = self.first_ahead();
@@ -66,8 +66,8 @@ where I: Iterator<Item = Token<'token>>
     //     }
     // }
 
-    // pub fn read_within(&mut self, open: TokenKind, close: TokenKind) -> Vec<Token> {
-    //     let mut read: Vec<Token> = Vec::new();
+    // pub fn read_within(&mut self, open: TokenKind, close: TokenKind) -> Vec<RaToken> {
+    //     let mut read: Vec<RaToken> = Vec::new();
 
     //     loop {
     //         let next_token = self.first_ahead();

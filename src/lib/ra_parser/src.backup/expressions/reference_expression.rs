@@ -3,16 +3,16 @@ use super::traits::*;
 use serde::Serialize;
 use failure::Backtrace;
 use ra_lexer::cursor::Position;
-use ra_lexer::token::{Token, TokenKind};
+use ra_lexer::token::{RaToken, TokenKind};
 
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct ReferenceExpression<'a>(
-    pub Token<'a>,
+    pub RaToken<'a>,
     pub Option<Option<Box<ReferenceExpression<'a>>>>,
 );
 
 impl<'a> ReferenceExpression<'a> {
-    pub fn new(token: Token<'a>) -> Result<Self, ParserError> {
+    pub fn new(token: RaToken<'a>) -> Result<Self, ParserError> {
         match token.kind.unwrap() {
             TokenKind::Identifier(_) | TokenKind::At => Ok(Self(token, None)),
             _ => Err(ParserError::ExpectedAGotB(
@@ -50,8 +50,8 @@ impl<'a> Positioned for ReferenceExpression<'a> {
     }
 }
 
-impl<'a> Expandable<'a, ReferenceExpression<'a>, Token<'a>> for ReferenceExpression<'a> {
-    fn append_item(self, token: Token<'a>) -> Result<ReferenceExpression<'a>, ParserError> {
+impl<'a> Expandable<'a, ReferenceExpression<'a>, RaToken<'a>> for ReferenceExpression<'a> {
+    fn append_item(self, token: RaToken<'a>) -> Result<ReferenceExpression<'a>, ParserError> {
         let ReferenceExpression(first_token, next) = self;
         
         if next.is_none() {

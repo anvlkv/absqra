@@ -2,7 +2,7 @@ use super::errors::ParserError;
 use super::traits::*;
 use failure::Backtrace;
 use ra_lexer::cursor::Position;
-use ra_lexer::token::{Token, TokenKind};
+use ra_lexer::token::{RaToken, TokenKind};
 use serde::Serialize;
 
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -23,7 +23,7 @@ pub enum ContextExpressionMember {
 pub struct ContextExpression(pub ContextExpressionMember, pub Option<ContextExpressionMember>);
 
 impl<'a> ContextExpression {
-    pub fn new(token: Token<'a>) -> Result<Self, ParserError> {
+    pub fn new(token: RaToken<'a>) -> Result<Self, ParserError> {
         // println!("{:?}", token);
         match token.kind.unwrap() {
             TokenKind::Int(1) => Ok(ContextExpression(
@@ -67,8 +67,8 @@ impl Positioned for ContextExpression {
     }
 }
 
-impl<'a> Expandable<'a, ContextExpression, Token<'a>> for ContextExpression {
-    fn append_item(self, token: Token<'a>) -> Result<ContextExpression, ParserError> {
+impl<'a> Expandable<'a, ContextExpression, RaToken<'a>> for ContextExpression {
+    fn append_item(self, token: RaToken<'a>) -> Result<ContextExpression, ParserError> {
         match token.kind.unwrap() {
             TokenKind::Colon => Ok(ContextExpression(
                 self.0.clone(),

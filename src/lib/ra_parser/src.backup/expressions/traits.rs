@@ -1,5 +1,5 @@
 use super::errors::ParserError;
-use ra_lexer::token::{Token, TokenKind};
+use ra_lexer::token::{RaToken, TokenKind};
 use ra_lexer::cursor::Position;
 
 pub (crate) trait Expandable<'a, Item, ByItem> {
@@ -8,7 +8,7 @@ pub (crate) trait Expandable<'a, Item, ByItem> {
 }
 
 pub (crate) trait ByTokenExpandableFromRoot<'a, Item> {
-    fn append_item(self, token: Token<'a>, depth: Option<u16>) -> Result<Item, ParserError>;
+    fn append_item(self, token: RaToken<'a>, depth: Option<u16>) -> Result<Item, ParserError>;
 }
 
 pub (crate) trait Leveled {

@@ -7,17 +7,17 @@ use serde::Serialize;
 use failure::Backtrace;
 
 use ra_lexer::cursor::Position;
-use ra_lexer::token::{Token, TokenKind};
+use ra_lexer::token::{RaToken, TokenKind};
 
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub enum ArgumentType<'a> {
-    Named(Token<'a>, bool),
+    Named(RaToken<'a>, bool),
     Ordered(u16),
 }
 
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub enum ValueType<'a> {
-    Literal(Token<'a>),
+    Literal(RaToken<'a>),
     Content(Content<'a>),
     OutputExpression(OutputExpression<'a>),
     ReferenceExpression(ReferenceExpression<'a>),
@@ -31,7 +31,7 @@ pub struct InputExpression<'a>(
 );
 
 impl<'a> InputExpression<'a> {
-    pub fn new(token: Token<'a>) -> Result<Self, ParserError> {
+    pub fn new(token: RaToken<'a>) -> Result<Self, ParserError> {
         match token.kind.unwrap() {
             TokenKind::Colon => Ok(Self(None, None, None)),
             _ => Err(ParserError::ExpectedAGotB(
@@ -64,7 +64,7 @@ impl<'a> Positioned for InputExpression<'a> {
 impl<'a> ByTokenExpandableFromRoot<'a, InputExpression<'a>> for InputExpression<'a> {
     fn append_item(
         self,
-        token: Token<'a>,
+        token: RaToken<'a>,
         depth: Option<u16>,
     ) -> Result<InputExpression<'a>, ParserError> {
         let InputExpression(argument_type, value_type, next) = self;

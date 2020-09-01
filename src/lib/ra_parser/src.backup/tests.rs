@@ -1,6 +1,6 @@
 mod lib {
     use ra_lexer::cursor::Position;
-    use ra_lexer::token::{Token, TokenKind};
+    use ra_lexer::token::{RaToken, TokenKind};
 
     use crate::block::BlockKind;
     use crate::expressions::output_expression::ExpressionMember;
@@ -20,7 +20,7 @@ mod lib {
         assert_eq!(
             parsed.kind,
             BlockKind::Output(OutputExpression(
-                Box::new(ExpressionMember::ReferenceExpression(ReferenceExpression(Token {
+                Box::new(ExpressionMember::ReferenceExpression(ReferenceExpression(RaToken {
                     kind: Some(TokenKind::Identifier("abc")),
                     position: (Position(1, 0), Position(1, 3)),
                     len: 3,
@@ -28,7 +28,7 @@ mod lib {
                     level: 0,
                 }, None))),
                 Some(OperationKind::MathOperation(MathOperation::Sum)),
-                Some(Box::new(ExpressionMember::Literal(Token {
+                Some(Box::new(ExpressionMember::Literal(RaToken {
                     kind: Some(TokenKind::Int(2)),
                     position: (Position(1, 6), Position(1, 7)),
                     level: 0,
@@ -41,7 +41,7 @@ mod lib {
 
         // assert_eq!(
         //     parsed.expression.0,
-        //     Token {
+        //     RaToken {
         //         content: "abc",
         //         kind: Some(TokenKind::Identifier("abc")),
         //         len: 3,
@@ -52,7 +52,7 @@ mod lib {
 
         // assert_eq!(
         //     (parsed.expression.2.as_ref().unwrap())
-        //     Token {
+        //     RaToken {
         //         content: "2",
         //         kind: Some(TokenKind::Int(2)),
         //         len: 1,

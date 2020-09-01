@@ -3,7 +3,7 @@ use super::reference_expression::ReferenceExpression;
 use super::traits::*;
 use failure::Backtrace;
 use ra_lexer::cursor::Position;
-use ra_lexer::token::{Token, TokenKind};
+use ra_lexer::token::{RaToken, TokenKind};
 use serde::Serialize;
 
 #[derive(Debug, Clone, PartialEq, Copy, Serialize)]
@@ -49,7 +49,7 @@ pub enum OperationKind {
 
 #[derive(Debug, Clone, PartialEq, Serialize)]
 pub enum ExpressionMember<'a> {
-    Literal(Token<'a>),
+    Literal(RaToken<'a>),
     OutputExpression(bool, Option<OutputExpression<'a>>),
     ReferenceExpression(ReferenceExpression<'a>),
     Nil,
@@ -62,7 +62,7 @@ impl<'a> Default for ExpressionMember<'a> {
 }
 
 impl<'a> ExpressionMember<'a> {
-    pub fn new(token: Token<'a>) -> Result<Self, ParserError> {
+    pub fn new(token: RaToken<'a>) -> Result<Self, ParserError> {
         match token.kind.unwrap() {
             TokenKind::Identifier(_) | TokenKind::At => Ok(ExpressionMember::ReferenceExpression(
                 ReferenceExpression::new(token)?,
@@ -103,8 +103,8 @@ impl<'a> Leveled for ExpressionMember<'a> {
     }
 }
 
-impl<'a> Expandable<'a, ExpressionMember<'a>, Token<'a>> for ExpressionMember<'a> {
-    fn append_item(self, token: Token<'a>) -> Result<ExpressionMember<'a>, ParserError> {
+impl<'a> Expandable<'a, ExpressionMember<'a>, RaToken<'a>> for ExpressionMember<'a> {
+    fn append_item(self, token: RaToken<'a>) -> Result<ExpressionMember<'a>, ParserError> {
         match self {
             ExpressionMember::OutputExpression(open, expression) => {
                 if open {
@@ -163,8 +163,8 @@ impl<'a> Leveled for OutputExpression<'a> {
     }
 }
 
-impl<'a> Expandable<'a, OutputExpression<'a>, Token<'a>> for OutputExpression<'a> {
-    fn append_item(self, token: Token<'a>) -> Result<OutputExpression<'a>, ParserError> {
+impl<'a> Expandable<'a, OutputExpression<'a>, RaToken<'a>> for OutputExpression<'a> {
+    fn append_item(self, token: RaToken<'a>) -> Result<OutputExpression<'a>, ParserError> {
         let OutputExpression(first_member, op, last_member) = self;
         // TODO: can this be done without matching?
 
@@ -299,13 +299,13 @@ impl<'a> Positioned for OutputExpression<'a> {
 }
 
 impl<'a> OutputExpression<'a> {
-    pub fn new(token: Token<'a>) -> Result<Self, ParserError> {
+    pub fn new(token: RaToken<'a>) -> Result<Self, ParserError> {
         let left_member = ExpressionMember::new(token)?;
 
         Ok(Self(Box::new(left_member), None, None))
     }
 
-    fn parse_operation_first_token(token: Token) -> Option<OperationKind> {
+    fn parse_operation_first_token(token: RaToken) -> Option<OperationKind> {
         match token.kind.unwrap() {
             TokenKind::Plus => Some(OperationKind::MathOperation(MathOperation::Sum)),
             TokenKind::Minus => Some(OperationKind::MathOperation(MathOperation::Subtract)),
@@ -329,7 +329,7 @@ impl<'a> OutputExpression<'a> {
         }
     }
 
-    fn parse_operation_second_token(op: OperationKind, token: Token) -> Option<OperationKind> {
+    fn parse_operation_second_token(op: OperationKind, token: RaToken) -> Option<OperationKind> {
         match token.kind.unwrap() {
             TokenKind::Equals => match op {
                 OperationKind::MathOperation(m_op) => match m_op {

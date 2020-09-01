@@ -11,15 +11,15 @@ use failure::Backtrace;
 use super::errors::ParserError;
 
 use ra_lexer::cursor::Position;
-use ra_lexer::token::{Token, TokenKind};
+use ra_lexer::token::{RaToken, TokenKind};
 
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub enum BlockKind<'a> {
     Program,
     Output(OutputExpression<'a>),
     Input(bool, Option<InputExpression<'a>>),
-    Declaration(Option<Token<'a>>),
-    Invocation(Option<Token<'a>>, Option<InputExpression<'a>>),
+    Declaration(Option<RaToken<'a>>),
+    Invocation(Option<RaToken<'a>>, Option<InputExpression<'a>>),
     Reference(Option<ReferenceExpression<'a>>),
     ContextModification(Option<ContextExpression>),
     Content(Content<'a>),
@@ -37,11 +37,11 @@ impl<'a> Default for BlockKind<'a> {
 pub struct Block<'a> {
     pub kind: BlockKind<'a>,
     pub children: Vec<Block<'a>>,
-    first_token: Token<'a>,
+    first_token: RaToken<'a>,
 }
 
 impl<'a> Block<'a> {
-    pub fn new(first_token: Token<'a>) -> Result<Self, ParserError> {
+    pub fn new(first_token: RaToken<'a>) -> Result<Self, ParserError> {
         let kind = Self::parse_block_kind(first_token.clone())?;
 
         Ok(Self {
@@ -51,7 +51,7 @@ impl<'a> Block<'a> {
         })
     }
 
-    fn parse_block_kind(token: Token<'a>) -> Result<BlockKind, ParserError> {
+    fn parse_block_kind(token: RaToken<'a>) -> Result<BlockKind, ParserError> {
         if token.kind.is_none() {
             return Ok(BlockKind::Program);
         }
@@ -169,8 +169,8 @@ impl<'a> Positioned for Block<'a> {
     }
 }
 
-impl<'a> Expandable<'a, Block<'a>, Token<'a>> for Block<'a> {
-    fn append_item(self, token: Token<'a>) -> Result<Block<'a>, ParserError> {
+impl<'a> Expandable<'a, Block<'a>, RaToken<'a>> for Block<'a> {
+    fn append_item(self, token: RaToken<'a>) -> Result<Block<'a>, ParserError> {
         let mut block = self.clone();
         match self.kind {
             BlockKind::Program | BlockKind::Union(_) | BlockKind::Content(_) => {

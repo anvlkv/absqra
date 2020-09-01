@@ -1,5 +1,5 @@
 use ra_lexer::cursor::{Cursor, Position};
-use ra_lexer::token::{Token, TokenKind};
+use ra_lexer::token::{RaToken, TokenKind};
 use ra_lexer::tokenize;
 use serde::Serialize;
 
@@ -18,7 +18,7 @@ pub enum ContentBlockMember<'a> {
 pub struct Content<'a>(ContentBlockMember<'a>, Option<Box<Content<'a>>>);
 
 impl<'a> Content<'a> {
-    pub fn new(token: Token<'a>) -> Result<Content<'a>, ParserError> {
+    pub fn new(token: RaToken<'a>) -> Result<Content<'a>, ParserError> {
         match token.kind.unwrap() {
             TokenKind::ContentBlock => Self::parse_content(token),
             _ => Err(ParserError::ExpectedAGotB(
@@ -30,8 +30,8 @@ impl<'a> Content<'a> {
         }
     }
 
-    fn parse_content(token: Token<'a>) -> Result<Content<'a>, ParserError> {
-        let Token {
+    fn parse_content(token: RaToken<'a>) -> Result<Content<'a>, ParserError> {
+        let RaToken {
             kind,
             level,
             len,
