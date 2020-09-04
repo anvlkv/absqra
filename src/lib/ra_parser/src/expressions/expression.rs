@@ -1,48 +1,125 @@
 use ra_lexer::cursor::Position;
 
-use crate::expressions::content_expression::ContentExpression;
 use crate::expressions::annotation_expression::AnnotationExpression;
+use crate::expressions::content_expression::ContentExpression;
 use crate::expressions::context_expression::ContextExpression;
-use crate::expressions::reference_expression::ReferenceExpression;
 use crate::expressions::input_expression::InputExpression;
 use crate::expressions::output_expression::OutputExpression;
+use crate::expressions::reference_expression::ReferenceExpression;
 
-use super::{ParserError, ParseByToken, TokenKind, RaToken};
-
-
+use super::{Backtrace, ParseByToken, ParserError, RaToken, TokenKind};
 
 #[derive(Serialize, Clone, Debug)]
 pub struct Expression<'a> {
     buffer: Vec<RaToken<'a>>,
-    pub kind: Option<ExpressionKind>,
-    pub position: (Position, Position)
+    pub kind: Option<ExpressionKind<'a>>,
+    pub position: (Position, Position),
 }
 
 #[derive(Serialize, Clone, Debug)]
-pub enum ExpressionKind {
+pub enum ExpressionKind<'a> {
     OutputExpression(OutputExpression),
     InputExpression(InputExpression),
     ReferenceExpression(ReferenceExpression),
     ContextExpression(ContextExpression),
-    AnnotationExpression(AnnotationExpression),
+    AnnotationExpression(AnnotationExpression<'a>),
     ContentExpression(ContentExpression),
 }
 
-impl<'a> ParseByToken for Expression<'a> {
-    fn new(token: RaToken) -> Result<Self, Vec<ParserError>> {
-        // let tokens = OutputExpression.allowed_tokens();
-        if Self::starts_with_tokens().into_iter().find(|kind| &token.kind == kind).is_some() {
+impl<'a> ParseByToken<'a> for Expression<'a> {
+    fn new(token: RaToken<'a>) -> Result<Expression<'a>, Vec<ParserError>> {
+        let mut errors = Vec::new();
 
+        let possibly_matching = Self::starts_with_tokens()
+            .into_iter()
+            .filter(|kind| &token.kind == kind)
+            .collect::<Vec<TokenKind>>();
+
+        if possibly_matching.len() == 1 {
+            let kind = {
+                match token.kind {
+                    k if OutputExpression::starts_with_tokens()
+                        .into_iter()
+                        .find(|kind| kind == &k)
+                        .is_some() =>
+                    {
+                        ExpressionKind::OutputExpression(OutputExpression::new(token)?)
+                    }
+                    k if InputExpression::starts_with_tokens()
+                        .into_iter()
+                        .find(|kind| kind == &k)
+                        .is_some() =>
+                    {
+                        ExpressionKind::InputExpression(InputExpression::new(token)?)
+                    }
+                    k if ReferenceExpression::starts_with_tokens()
+                        .into_iter()
+                        .find(|kind| kind == &k)
+                        .is_some() =>
+                    {
+                        ExpressionKind::ReferenceExpression(ReferenceExpression::new(token)?)
+                    }
+                    k if ContextExpression::starts_with_tokens()
+                        .into_iter()
+                        .find(|kind| kind == &k)
+                        .is_some() =>
+                    {
+                        ExpressionKind::ContextExpression(ContextExpression::new(token)?)
+                    }
+                    k if AnnotationExpression::starts_with_tokens()
+                        .into_iter()
+                        .find(|kind| kind == &k)
+                        .is_some() =>
+                    {
+                        ExpressionKind::AnnotationExpression(AnnotationExpression::new(token)?)
+                    }
+                    k if ContentExpression::starts_with_tokens()
+                        .into_iter()
+                        .find(|kind| kind == &k)
+                        .is_some() =>
+                    {
+                        ExpressionKind::ContentExpression(ContentExpression::new(token)?)
+                    }
+                    _ => {
+                        errors.push(ParserError::UnexpectedToken(
+                            format!("{:?}", token),
+                            token.position.0,
+                            Backtrace::new(),
+                        ));
+
+                        return Err(errors);
+                    }
+                }
+            };
+
+            Ok(Self {
+                buffer: Vec::new(),
+                kind: Some(kind),
+                position: token.position,
+            })
+        } else if possibly_matching.len() > 1 {
+            Ok(Self {
+                buffer: vec![token],
+                position: token.position,
+                kind: None,
+            })
+        } else {
+            errors.push(ParserError::ExpectedAGotB(
+                format!("{:?}", Self::starts_with_tokens()),
+                format!("{:?}", token.kind),
+                token.position.0,
+                Backtrace::new(),
+            ));
+
+            Err(errors)
         }
-        // ;
-        todo!();
     }
 
-    fn append_token(self, token: RaToken) -> Result<Self, Vec<ParserError>> {
+    fn append_token(self, token: RaToken<'a>) -> Result<Self, Vec<ParserError>> {
         todo!("append token to expression");
     }
 
-    fn allowed_tokens(&self) -> Vec<TokenKind> {
+    fn allowed_tokens(&self) -> Vec<TokenKind<'a>> {
         todo!("implement allowed tokens")
     }
 

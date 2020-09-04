@@ -2,11 +2,11 @@ use serde::Serialize;
 use super::{ParserError, ParseByToken, RaToken, TokenKind};
 
 #[derive(Serialize, Clone, Debug)]
-pub struct ReferenceExpression {
+pub struct GroupingExpression {
 
 }
 
-impl<'a> ParseByToken<'a> for ReferenceExpression {
+impl<'a> ParseByToken<'a> for GroupingExpression {
     fn new(token: RaToken<'a>) -> Result<Self, Vec<ParserError>> { 
         todo!("implement new")
     }
@@ -19,10 +19,9 @@ impl<'a> ParseByToken<'a> for ReferenceExpression {
 
     fn starts_with_tokens() -> Vec<TokenKind<'static>> { 
         vec![
-            TokenKind::At,
-            TokenKind::Identifier(Default::default())
+            TokenKind::OpenParentheses
         ]
-     }
+    }
 
 }
 

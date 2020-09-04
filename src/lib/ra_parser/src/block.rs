@@ -13,8 +13,8 @@ pub struct Block<'a> {
     pub children: Vec<Box<Block<'a>>>,
 }
 
-impl<'a> ParseByToken for Block<'a> {
-    fn new(token: RaToken) -> Result<Self, Vec<ParserError>> {
+impl<'a> ParseByToken<'a> for Block<'a> {
+    fn new(token: RaToken<'a>) -> Result<Self, Vec<ParserError>> {
         let expression = Expression::new(token)?;
         Ok(Self {
             expression,
@@ -24,11 +24,11 @@ impl<'a> ParseByToken for Block<'a> {
         })
     }
 
-    fn append_token(self, token: RaToken) -> Result<Self, Vec<ParserError>> {
+    fn append_token(self, token: RaToken<'a>) -> Result<Self, Vec<ParserError>> {
         todo!("append token");
     }
 
-    fn allowed_tokens(&self) -> Vec<TokenKind> {
+    fn allowed_tokens(&self) -> Vec<TokenKind<'a>> {
         todo!("implement allowed tokens")
     }
 
