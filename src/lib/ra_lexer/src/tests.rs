@@ -253,8 +253,9 @@ mod lib {
         #[test]
         fn it_should_parse_numbers() {
             let mut stream = tokenize("123");
+            let parsed = stream.next().unwrap().unwrap();
             assert_eq!(
-                stream.next().unwrap().unwrap(),
+                parsed,
                 RaToken {
                     kind: TokenKind::Int(123),
                     content: "123",
@@ -263,13 +264,18 @@ mod lib {
                     level: 0
                 }
             );
+            match parsed.kind {
+                TokenKind::Int(v) => assert_eq!(v, 123),
+                _ => panic!("unexpected kind")
+            };
         }
 
         #[test]
         fn it_should_parse_numbers_with_decimal_separator() {
             let mut stream = tokenize("123,321");
+            let parsed = stream.next().unwrap().unwrap();
             assert_eq!(
-                stream.next().unwrap().unwrap(),
+                parsed,
                 RaToken {
                     kind: TokenKind::Float(123.321),
                     content: "123,321",
@@ -278,13 +284,18 @@ mod lib {
                     level: 0
                 }
             );
+            match parsed.kind {
+                TokenKind::Float(v) => assert_eq!(v, 123.321),
+                _ => panic!("unexpected kind")
+            };
         }
 
         #[test]
         fn it_should_parse_numbers_with_another_decimal_separator() {
             let mut stream = tokenize("123.321");
+            let parsed = stream.next().unwrap().unwrap();
             assert_eq!(
-                stream.next().unwrap().unwrap(),
+                parsed,
                 RaToken {
                     kind: TokenKind::Float(123.321),
                     content: "123.321",
@@ -293,13 +304,18 @@ mod lib {
                     level: 0
                 }
             );
+            match parsed.kind {
+                TokenKind::Float(v) => assert_eq!(v, 123.321),
+                _ => panic!("unexpected kind")
+            };
         }
 
         #[test]
         fn it_should_parse_numbers_with_decimal_and_thousands_separator() {
             let mut stream = tokenize("123.321,456");
+            let parsed = stream.next().unwrap().unwrap();
             assert_eq!(
-                stream.next().unwrap().unwrap(),
+                parsed,
                 RaToken {
                     kind: TokenKind::Float(123321.456),
                     content: "123.321,456",
@@ -308,13 +324,19 @@ mod lib {
                     level: 0
                 }
             );
+
+            match parsed.kind {
+                TokenKind::Float(v) => assert_eq!(v, 123321.456),
+                _ => panic!("unexpected kind")
+            };
         }
 
         #[test]
         fn it_should_parse_numbers_with_decimal_and_multiple_thousands_separator() {
             let mut stream = tokenize("123.321.123,456");
+            let parsed = stream.next().unwrap().unwrap();
             assert_eq!(
-                stream.next().unwrap().unwrap(),
+                parsed,
                 RaToken {
                     kind: TokenKind::Float(123321123.456),
                     content: "123.321.123,456",
@@ -323,13 +345,19 @@ mod lib {
                     level: 0
                 }
             );
+
+            match parsed.kind {
+                TokenKind::Float(v) => assert_eq!(v, 123321123.456),
+                _ => panic!("unexpected kind")
+            };
         }
 
         #[test]
         fn it_should_parse_numbers_with_another_decimal_and_multiple_thousands_separators() {
             let mut stream = tokenize("123,321,123.456");
+            let parsed = stream.next().unwrap().unwrap();
             assert_eq!(
-                stream.next().unwrap().unwrap(),
+                parsed,
                 RaToken {
                     kind: TokenKind::Float(123321123.456),
                     content: "123,321,123.456",
@@ -338,6 +366,11 @@ mod lib {
                     level: 0
                 }
             );
+
+            match parsed.kind {
+                TokenKind::Float(v) => assert_eq!(v, 123321123.456),
+                _ => panic!("unexpected kind")
+            };
         }
 
         #[test]
@@ -355,8 +388,9 @@ mod lib {
         #[test]
         fn it_should_parse_negative_integer() {
             let mut stream = tokenize("-123");
+            let parsed = stream.next().unwrap().unwrap();
             assert_eq!(
-                stream.next().unwrap().unwrap(),
+                parsed,
                 RaToken {
                     kind: TokenKind::Int(-123),
                     content: "-123",
@@ -364,14 +398,19 @@ mod lib {
                     len: 4,
                     level: 0
                 }
-            )
+            );
+            match parsed.kind {
+                TokenKind::Int(v) => assert_eq!(v, -123),
+                _ => panic!("unexpected kind")
+            };
         }
 
         #[test]
         fn it_should_parse_negative_float() {
             let mut stream = tokenize("-123.312");
+            let parsed = stream.next().unwrap().unwrap();
             assert_eq!(
-                stream.next().unwrap().unwrap(),
+                parsed,
                 RaToken {
                     kind: TokenKind::Float(-123.312),
                     content: "-123.312",
@@ -379,7 +418,11 @@ mod lib {
                     len: 8,
                     level: 0
                 }
-            )
+            );
+            match parsed.kind {
+                TokenKind::Float(v) => assert_eq!(v, -123.312),
+                _ => panic!("unexpected kind")
+            };
         }
     }
 

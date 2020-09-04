@@ -4,6 +4,8 @@ use serde::Serialize;
 use std::convert::TryFrom;
 use std::fmt::Display;
 
+const EMPTY_CONTENT: &str = "";
+
 #[derive(Debug, Clone, Copy, Serialize)]
 pub enum TokenKind<'a> {
     Ampersand,
@@ -119,8 +121,6 @@ impl<'a> TryFrom<Token<'a>> for RaToken<'a> {
         }
     }
 }
-
-const EMPTY_CONTENT: &str = "";
 
 impl<'a> Default for Token<'a> {
     fn default() -> Self {
