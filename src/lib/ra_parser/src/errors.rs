@@ -10,7 +10,7 @@ pub enum ParserError {
     UnexpectedIndentLevel(u16, Position, Backtrace),
     #[fail(display = "{} Unexpected {}, \n {}", _1, _0, _2)]
     UnexpectedToken(String, Position, Backtrace),
-    #[fail(display = "{} Expected [{}] got {}, \n {}", _2, _1, _0, _3)]
+    #[fail(display = "{} Expected [{}] got {}, \n {}", _2, _0, _1, _3)]
     ExpectedAGotB(String, String, Position, Backtrace),
     #[fail(display = "Unexpected end of input at {}, \n {}", _0, _1)]
     UnexpectedEndOfInput(Position, Backtrace),

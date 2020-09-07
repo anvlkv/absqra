@@ -116,7 +116,29 @@ impl<'a> ParseByToken<'a> for Expression<'a> {
     }
 
     fn append_token(self, token: RaToken<'a>) -> Result<Self, Vec<ParserError>> {
-        todo!("append token to expression");
+        if self.kind.is_some() {
+            assert_eq!(self.buffer.len(), 0);
+            let kind = Some({
+                match self.kind.unwrap() {
+                    ExpressionKind::OutputExpression(expression) => ExpressionKind::OutputExpression(expression.append_token(token)?),
+                    ExpressionKind::InputExpression(expression) => ExpressionKind::InputExpression(expression.append_token(token)?),
+                    ExpressionKind::ReferenceExpression(expression) => ExpressionKind::ReferenceExpression(expression.append_token(token)?),
+                    ExpressionKind::ContextExpression(expression) => ExpressionKind::ContextExpression(expression.append_token(token)?),
+                    ExpressionKind::AnnotationExpression(expression) => ExpressionKind::AnnotationExpression(expression.append_token(token)?),
+                    ExpressionKind::ContentExpression(expression) => ExpressionKind::ContentExpression(expression.append_token(token)?),
+                }
+            });
+
+            Ok(Self {
+                buffer: self.buffer,
+                kind,
+                position: (self.position.0, token.position.1)
+            })
+        }
+        else {
+            assert!(self.buffer.len() > 0);
+            todo!("implement buffer parsing")
+        }
     }
 
     fn allowed_tokens(&self) -> Vec<TokenKind<'a>> {

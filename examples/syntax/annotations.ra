@@ -1,5 +1,3 @@
 #annotation // this is annotation
 
 #media_context:media_option // ...[:media_option] more options possible
-
-#ln:ru `мяф` // media_context is "ln" and media_option is "ru" annotated block is content "мяф"
