@@ -3,6 +3,7 @@
 target
 Cargo.lock
 
+*.snap.new
 *_ERR.snap
 *_ERR__MESSAGES.snap
 *_ERR.snap.new
