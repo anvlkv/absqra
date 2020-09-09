@@ -1,3 +1,5 @@
 #annotation // this is annotation
 
 #media_context:media_option // ...[:media_option] more options possible
+
+#annotation:option_a:option_b:option_c:option_d

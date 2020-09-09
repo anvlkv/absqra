@@ -139,6 +139,138 @@ expression: block_tree
         }
       },
       "children": []
+    },
+    {
+      "position": [
+        [
+          5,
+          0
+        ],
+        [
+          5,
+          47
+        ]
+      ],
+      "level": 0,
+      "kind": {
+        "Expression": {
+          "buffer": [],
+          "kind": {
+            "AnnotationExpression": [
+              {
+                "kind": {
+                  "Identifier": "annotation"
+                },
+                "len": 10,
+                "content": "annotation",
+                "position": [
+                  [
+                    5,
+                    1
+                  ],
+                  [
+                    5,
+                    11
+                  ]
+                ],
+                "level": 0
+              },
+              [
+                {
+                  "kind": {
+                    "Identifier": "option_a"
+                  },
+                  "len": 8,
+                  "content": "option_a",
+                  "position": [
+                    [
+                      5,
+                      12
+                    ],
+                    [
+                      5,
+                      20
+                    ]
+                  ],
+                  "level": 0
+                },
+                [
+                  {
+                    "kind": {
+                      "Identifier": "option_b"
+                    },
+                    "len": 8,
+                    "content": "option_b",
+                    "position": [
+                      [
+                        5,
+                        21
+                      ],
+                      [
+                        5,
+                        29
+                      ]
+                    ],
+                    "level": 0
+                  },
+                  [
+                    {
+                      "kind": {
+                        "Identifier": "option_c"
+                      },
+                      "len": 8,
+                      "content": "option_c",
+                      "position": [
+                        [
+                          5,
+                          30
+                        ],
+                        [
+                          5,
+                          38
+                        ]
+                      ],
+                      "level": 0
+                    },
+                    [
+                      {
+                        "kind": {
+                          "Identifier": "option_d"
+                        },
+                        "len": 8,
+                        "content": "option_d",
+                        "position": [
+                          [
+                            5,
+                            39
+                          ],
+                          [
+                            5,
+                            47
+                          ]
+                        ],
+                        "level": 0
+                      },
+                      null
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          },
+          "position": [
+            [
+              5,
+              0
+            ],
+            [
+              5,
+              47
+            ]
+          ]
+        }
+      },
+      "children": []
     }
   ]
 }
