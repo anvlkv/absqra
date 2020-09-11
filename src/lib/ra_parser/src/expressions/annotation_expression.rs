@@ -1,4 +1,4 @@
-use super::{ParseByToken, ParserError, RaToken, TokenKind};
+use super::{ParsedByToken, ParserError, RaToken, TokenKind};
 use failure::Backtrace;
 use serde::Serialize;
 
@@ -8,7 +8,7 @@ pub struct AnnotationExpression<'a>(
     pub Option<Option<Box<AnnotationExpression<'a>>>>,
 );
 
-impl<'a> ParseByToken<'a> for AnnotationExpression<'a> {
+impl<'a> ParsedByToken<'a> for AnnotationExpression<'a> {
     fn new(token: RaToken<'a>) -> Result<AnnotationExpression<'a>, Vec<ParserError>> {
         match token.kind {
             TokenKind::HashPound => Ok(Self(None, None)),

@@ -1,12 +1,12 @@
 use serde::Serialize;
-use super::{ParserError, ParseByToken, RaToken, TokenKind};
+use super::{ParserError, ParsedByToken, RaToken, TokenKind};
 
 #[derive(Serialize, Clone, Debug)]
 pub struct ReferenceExpression {
 
 }
 
-impl<'a> ParseByToken<'a> for ReferenceExpression {
+impl<'a> ParsedByToken<'a> for ReferenceExpression {
     fn new(token: RaToken<'a>) -> Result<Self, Vec<ParserError>> { 
         todo!("implement new")
     }

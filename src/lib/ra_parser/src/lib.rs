@@ -2,7 +2,7 @@
 
 
 pub mod errors;
-pub (crate) mod parse_by_token;
+pub (crate) mod parsed_by_token;
 pub mod expressions;
 pub mod block;
 pub mod parser;

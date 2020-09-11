@@ -7,7 +7,7 @@ use crate::expressions::input_expression::InputExpression;
 use crate::expressions::output_expression::OutputExpression;
 use crate::expressions::reference_expression::ReferenceExpression;
 
-use super::{Backtrace, ParseByToken, ParserError, RaToken, TokenKind};
+use super::{Backtrace, ParsedByToken, ParserError, RaToken, TokenKind};
 
 #[derive(Serialize, Clone, Debug)]
 pub struct Expression<'a> {
@@ -26,7 +26,7 @@ pub enum ExpressionKind<'a> {
     ContentExpression(ContentExpression),
 }
 
-impl<'a> ParseByToken<'a> for Expression<'a> {
+impl<'a> ParsedByToken<'a> for Expression<'a> {
     fn new(token: RaToken<'a>) -> Result<Expression<'a>, Vec<ParserError>> {
         let mut errors = Vec::new();
 

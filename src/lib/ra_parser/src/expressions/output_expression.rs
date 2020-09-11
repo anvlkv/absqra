@@ -1,5 +1,5 @@
 use serde::Serialize;
-use super::{ParserError, ParseByToken, RaToken, TokenKind};
+use super::{ParserError, ParsedByToken, RaToken, TokenKind};
 use super::grouping_expression::GroupingExpression;
 use super::logic_expression::LogicExpression;
 
@@ -8,7 +8,7 @@ pub struct OutputExpression {
 
 }
 
-impl<'a> ParseByToken<'a> for OutputExpression {
+impl<'a> ParsedByToken<'a> for OutputExpression {
     fn new(token: RaToken<'a>) -> Result<Self, Vec<ParserError>> { 
         todo!("implement new")
     }

@@ -1,6 +1,6 @@
 use crate::errors::ParserError;
 use crate::block::Block;
-use crate::parse_by_token::ParseByToken;
+use crate::parsed_by_token::ParsedByToken;
 use ra_lexer::tokenize;
 use ra_lexer::token::TokenKind;
 

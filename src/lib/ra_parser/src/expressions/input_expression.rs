@@ -1,10 +1,10 @@
-use super::{ParseByToken, ParserError, RaToken, TokenKind};
+use super::{ParsedByToken, ParserError, RaToken, TokenKind};
 use serde::Serialize;
 
 #[derive(Serialize, Clone, Debug)]
 pub struct InputExpression {}
 
-impl<'a> ParseByToken<'a> for InputExpression {
+impl<'a> ParsedByToken<'a> for InputExpression {
     fn new(token: RaToken<'a>) -> Result<Self, Vec<ParserError>> {
         todo!("implement new")
     }

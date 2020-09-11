@@ -1,8 +1,9 @@
 use super::errors::ParserError;
-use super::parse_by_token::ParseByToken;
+use super::parsed_by_token::ParsedByToken;
 use ra_lexer::token::{RaToken, TokenKind};
 use failure::Backtrace;
 
+pub (crate) mod buffered;
 
 pub mod output_expression;
 pub mod input_expression;

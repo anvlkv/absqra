@@ -1,6 +1,6 @@
 use crate::errors::ParserError;
 use crate::expressions::expression::Expression;
-use crate::parse_by_token::ParseByToken;
+use crate::parsed_by_token::ParsedByToken;
 use failure::Backtrace;
 use ra_lexer::cursor::Position;
 use ra_lexer::token::{RaToken, TokenKind};
@@ -41,7 +41,7 @@ impl<'a> Block<'a> {
     }
 }
 
-impl<'a> ParseByToken<'a> for Block<'a> {
+impl<'a> ParsedByToken<'a> for Block<'a> {
     fn new(token: RaToken<'a>) -> Result<Self, Vec<ParserError>> {
         let expression = Expression::new(token)?;
         Ok(Self {

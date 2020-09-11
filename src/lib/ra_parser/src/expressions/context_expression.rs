@@ -1,10 +1,10 @@
-use super::{ParseByToken, ParserError, RaToken, TokenKind};
+use super::{ParsedByToken, ParserError, RaToken, TokenKind};
 use serde::Serialize;
 
 #[derive(Serialize, Clone, Debug)]
 pub struct ContextExpression {}
 
-impl<'a> ParseByToken<'a> for ContextExpression {
+impl<'a> ParsedByToken<'a> for ContextExpression {
     fn new(token: RaToken<'a>) -> Result<ContextExpression, Vec<ParserError>> {
         todo!("implement new")
     }
