@@ -2,4 +2,733 @@
 source: src/lib/ra_lexer/src/tests.rs
 expression: tokens
 ---
-[]
+[
+  {
+    "kind": {
+      "Identifier": "single_variable"
+    },
+    "len": 15,
+    "content": "single_variable",
+    "position": [
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        15
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Comment",
+    "len": 25,
+    "content": " just an empty variable",
+    "position": [
+      [
+        1,
+        16
+      ],
+      [
+        1,
+        41
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Int": 1
+    },
+    "len": 1,
+    "content": "1",
+    "position": [
+      [
+        3,
+        0
+      ],
+      [
+        3,
+        1
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Plus",
+    "len": 1,
+    "content": "+",
+    "position": [
+      [
+        3,
+        2
+      ],
+      [
+        3,
+        3
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Int": 1
+    },
+    "len": 1,
+    "content": "1",
+    "position": [
+      [
+        3,
+        4
+      ],
+      [
+        3,
+        5
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Comment",
+    "len": 37,
+    "content": " expression that has an output of 2",
+    "position": [
+      [
+        3,
+        6
+      ],
+      [
+        3,
+        43
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Identifier": "assignment"
+    },
+    "len": 10,
+    "content": "assignment",
+    "position": [
+      [
+        5,
+        0
+      ],
+      [
+        5,
+        10
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Comment",
+    "len": 39,
+    "content": " expression that has value 1 assigned",
+    "position": [
+      [
+        5,
+        11
+      ],
+      [
+        5,
+        50
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Int": 1
+    },
+    "len": 1,
+    "content": "1",
+    "position": [
+      [
+        6,
+        4
+      ],
+      [
+        6,
+        5
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Identifier": "assignment"
+    },
+    "len": 10,
+    "content": "assignment",
+    "position": [
+      [
+        8,
+        0
+      ],
+      [
+        8,
+        10
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Plus",
+    "len": 1,
+    "content": "+",
+    "position": [
+      [
+        8,
+        11
+      ],
+      [
+        8,
+        12
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Int": 2
+    },
+    "len": 1,
+    "content": "2",
+    "position": [
+      [
+        8,
+        13
+      ],
+      [
+        8,
+        14
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Comment",
+    "len": 37,
+    "content": " expression that has an output of 3",
+    "position": [
+      [
+        8,
+        15
+      ],
+      [
+        8,
+        52
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Identifier": "nested_variable"
+    },
+    "len": 15,
+    "content": "nested_variable",
+    "position": [
+      [
+        10,
+        0
+      ],
+      [
+        10,
+        15
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Comment",
+    "len": 38,
+    "content": " expression that has output assigned",
+    "position": [
+      [
+        10,
+        16
+      ],
+      [
+        10,
+        54
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Identifier": "assignment"
+    },
+    "len": 10,
+    "content": "assignment",
+    "position": [
+      [
+        11,
+        4
+      ],
+      [
+        11,
+        14
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Plus",
+    "len": 1,
+    "content": "+",
+    "position": [
+      [
+        11,
+        15
+      ],
+      [
+        11,
+        16
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Int": 2
+    },
+    "len": 1,
+    "content": "2",
+    "position": [
+      [
+        11,
+        17
+      ],
+      [
+        11,
+        18
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Comment",
+    "len": 37,
+    "content": " expression that has an output of 3",
+    "position": [
+      [
+        11,
+        19
+      ],
+      [
+        11,
+        56
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Identifier": "assignment"
+    },
+    "len": 10,
+    "content": "assignment",
+    "position": [
+      [
+        13,
+        0
+      ],
+      [
+        13,
+        10
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Pipe",
+    "len": 1,
+    "content": "|",
+    "position": [
+      [
+        13,
+        11
+      ],
+      [
+        13,
+        12
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Identifier": "nested_variable"
+    },
+    "len": 15,
+    "content": "nested_variable",
+    "position": [
+      [
+        13,
+        13
+      ],
+      [
+        13,
+        28
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Comment",
+    "len": 24,
+    "content": " logical expression OR",
+    "position": [
+      [
+        13,
+        29
+      ],
+      [
+        13,
+        53
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Identifier": "assignment"
+    },
+    "len": 10,
+    "content": "assignment",
+    "position": [
+      [
+        15,
+        0
+      ],
+      [
+        15,
+        10
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Greater",
+    "len": 1,
+    "content": ">",
+    "position": [
+      [
+        15,
+        11
+      ],
+      [
+        15,
+        12
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Identifier": "nested_variable"
+    },
+    "len": 15,
+    "content": "nested_variable",
+    "position": [
+      [
+        15,
+        13
+      ],
+      [
+        15,
+        28
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Comment",
+    "len": 35,
+    "content": " logical expression Comparison GT",
+    "position": [
+      [
+        15,
+        29
+      ],
+      [
+        15,
+        64
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "OpenParentheses",
+    "len": 1,
+    "content": "(",
+    "position": [
+      [
+        17,
+        0
+      ],
+      [
+        17,
+        1
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Int": 3
+    },
+    "len": 1,
+    "content": "3",
+    "position": [
+      [
+        17,
+        1
+      ],
+      [
+        17,
+        2
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Asterisk",
+    "len": 1,
+    "content": "*",
+    "position": [
+      [
+        17,
+        2
+      ],
+      [
+        17,
+        3
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Int": 5
+    },
+    "len": 1,
+    "content": "5",
+    "position": [
+      [
+        17,
+        3
+      ],
+      [
+        17,
+        4
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "CloseParentheses",
+    "len": 1,
+    "content": ")",
+    "position": [
+      [
+        17,
+        4
+      ],
+      [
+        17,
+        5
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Plus",
+    "len": 1,
+    "content": "+",
+    "position": [
+      [
+        17,
+        6
+      ],
+      [
+        17,
+        7
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Int": 22
+    },
+    "len": 2,
+    "content": "22",
+    "position": [
+      [
+        17,
+        8
+      ],
+      [
+        17,
+        10
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Comment",
+    "len": 46,
+    "content": " grouped expression that has an output of 37",
+    "position": [
+      [
+        17,
+        11
+      ],
+      [
+        17,
+        57
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "OpenParentheses",
+    "len": 1,
+    "content": "(",
+    "position": [
+      [
+        19,
+        0
+      ],
+      [
+        19,
+        1
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Identifier": "assignment"
+    },
+    "len": 10,
+    "content": "assignment",
+    "position": [
+      [
+        19,
+        1
+      ],
+      [
+        19,
+        11
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Pipe",
+    "len": 1,
+    "content": "|",
+    "position": [
+      [
+        19,
+        12
+      ],
+      [
+        19,
+        13
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Identifier": "nested_variable"
+    },
+    "len": 15,
+    "content": "nested_variable",
+    "position": [
+      [
+        19,
+        14
+      ],
+      [
+        19,
+        29
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "CloseParentheses",
+    "len": 1,
+    "content": ")",
+    "position": [
+      [
+        19,
+        29
+      ],
+      [
+        19,
+        30
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Plus",
+    "len": 1,
+    "content": "+",
+    "position": [
+      [
+        19,
+        31
+      ],
+      [
+        19,
+        32
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Int": 3
+    },
+    "len": 1,
+    "content": "3",
+    "position": [
+      [
+        19,
+        33
+      ],
+      [
+        19,
+        34
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Comment",
+    "len": 65,
+    "content": " grouped expression with logical expression, has an output of 6",
+    "position": [
+      [
+        19,
+        35
+      ],
+      [
+        19,
+        100
+      ]
+    ],
+    "level": 0
+  }
+]

@@ -47,6 +47,7 @@ impl <'a> Cursor<'a> {
                 '*' => self.multi_line_comment(start_position.clone()),
                 _ => self.single_character_token(TokenKind::Slash, start_position, start_consumed),
             },
+            '*' => self.single_character_token(TokenKind::Asterisk, start_position, start_consumed),
             '>' => self.single_character_token(TokenKind::Greater, start_position, start_consumed),
             '<' => self.single_character_token(TokenKind::Less, start_position, start_consumed),
             '!' => self.single_character_token(TokenKind::Exclamation, start_position, start_consumed),

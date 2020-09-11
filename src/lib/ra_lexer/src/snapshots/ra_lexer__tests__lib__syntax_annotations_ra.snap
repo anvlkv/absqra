@@ -155,10 +155,10 @@ expression: tokens
   },
   {
     "kind": {
-      "Identifier": "ln"
+      "Identifier": "annotation"
     },
-    "len": 2,
-    "content": "ln",
+    "len": 10,
+    "content": "annotation",
     "position": [
       [
         5,
@@ -166,7 +166,7 @@ expression: tokens
       ],
       [
         5,
-        3
+        11
       ]
     ],
     "level": 0
@@ -178,41 +178,7 @@ expression: tokens
     "position": [
       [
         5,
-        3
-      ],
-      [
-        5,
-        4
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": {
-      "Identifier": "ru"
-    },
-    "len": 2,
-    "content": "ru",
-    "position": [
-      [
-        5,
-        4
-      ],
-      [
-        5,
-        6
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "ContentBlock",
-    "len": 8,
-    "content": "мяф",
-    "position": [
-      [
-        5,
-        7
+        11
       ],
       [
         5,
@@ -222,17 +188,121 @@ expression: tokens
     "level": 0
   },
   {
-    "kind": "Comment",
-    "len": 85,
-    "content": " media_context is \"ln\" and media_option is \"ru\" annotated block is content \"мяф\"",
+    "kind": {
+      "Identifier": "option_a"
+    },
+    "len": 8,
+    "content": "option_a",
     "position": [
       [
         5,
-        13
+        12
       ],
       [
         5,
-        95
+        20
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        5,
+        20
+      ],
+      [
+        5,
+        21
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Identifier": "option_b"
+    },
+    "len": 8,
+    "content": "option_b",
+    "position": [
+      [
+        5,
+        21
+      ],
+      [
+        5,
+        29
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        5,
+        29
+      ],
+      [
+        5,
+        30
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Identifier": "option_c"
+    },
+    "len": 8,
+    "content": "option_c",
+    "position": [
+      [
+        5,
+        30
+      ],
+      [
+        5,
+        38
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Colon",
+    "len": 1,
+    "content": ":",
+    "position": [
+      [
+        5,
+        38
+      ],
+      [
+        5,
+        39
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Identifier": "option_d"
+    },
+    "len": 8,
+    "content": "option_d",
+    "position": [
+      [
+        5,
+        39
+      ],
+      [
+        5,
+        47
       ]
     ],
     "level": 0
