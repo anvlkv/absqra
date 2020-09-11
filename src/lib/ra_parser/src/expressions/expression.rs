@@ -137,7 +137,132 @@ impl<'a> ParseByToken<'a> for Expression<'a> {
         }
         else {
             assert!(self.buffer.len() > 0);
-            todo!("implement buffer parsing")
+            assert!(self.buffer.len() > 0);
+            let mut candidates: Vec<ExpressionKind> = Vec::new();
+            let mut buffer = self.buffer.clone();
+            buffer.push(token);
+            let mut buffer_iter = buffer.iter();
+            // println!("{:?}", token);
+            while let Some(mut buffered_token) = buffer_iter.next() {
+                // println!("{:?}", buffered_token);
+                if candidates.len() == 0 {
+                    if OutputExpression::starts_with_tokens().contains(&buffered_token.kind) {
+                        candidates.push(ExpressionKind::OutputExpression(OutputExpression::new(
+                            buffered_token.clone()
+                        )?))
+                    }
+                    if InputExpression::starts_with_tokens().contains(&buffered_token.kind) {
+                        candidates.push(ExpressionKind::InputExpression(InputExpression::new(
+                            buffered_token.clone()
+                        )?))
+                    }
+                    if ReferenceExpression::starts_with_tokens().contains(&buffered_token.kind) {
+                        candidates.push(ExpressionKind::ReferenceExpression(
+                            ReferenceExpression::new(buffered_token.clone())?,
+                        ))
+                    }
+                    if ContextExpression::starts_with_tokens().contains(&buffered_token.kind) {
+                        candidates.push(ExpressionKind::ContextExpression(ContextExpression::new(
+                            buffered_token.clone()
+                        )?))
+                    }
+                    if AnnotationExpression::starts_with_tokens().contains(&buffered_token.kind) {
+                        candidates.push(ExpressionKind::AnnotationExpression(
+                            AnnotationExpression::new(buffered_token.clone())?,
+                        ))
+                    }
+                    if ContentExpression::starts_with_tokens().contains(&buffered_token.kind) {
+                        candidates.push(ExpressionKind::ContentExpression(ContentExpression::new(
+                            buffered_token.clone()
+                        )?))
+                    }
+                } else {
+                    let mut candidates_iter = candidates.iter().enumerate();
+                    let mut new_candidates: Vec<ExpressionKind> = Vec::new();
+                    while let Some((index, candidate)) = candidates_iter.next() {
+                        match candidate {
+                            ExpressionKind::OutputExpression(temp_expression) => {
+                                if temp_expression
+                                    .allowed_tokens()
+                                    .contains(&buffered_token.kind)
+                                {
+                                    new_candidates.push(ExpressionKind::OutputExpression(
+                                        temp_expression.clone().append_token(buffered_token.clone())?,
+                                    ))
+                                }
+                            }
+                            ExpressionKind::InputExpression(temp_expression) => {
+                                if temp_expression
+                                    .allowed_tokens()
+                                    .contains(&buffered_token.kind)
+                                {
+                                    new_candidates.push(ExpressionKind::InputExpression(
+                                        temp_expression.clone().append_token(buffered_token.clone())?,
+                                    ))
+                                }
+                            }
+                            ExpressionKind::ReferenceExpression(temp_expression) => {
+                                if temp_expression
+                                    .allowed_tokens()
+                                    .contains(&buffered_token.kind)
+                                {
+                                    new_candidates.push(ExpressionKind::ReferenceExpression(
+                                        temp_expression.clone().append_token(buffered_token.clone())?,
+                                    ))
+                                }
+                            }
+                            ExpressionKind::ContextExpression(temp_expression) => {
+                                if temp_expression
+                                    .allowed_tokens()
+                                    .contains(&buffered_token.kind)
+                                {
+                                    new_candidates.push(ExpressionKind::ContextExpression(
+                                        temp_expression.clone().append_token(buffered_token.clone())?,
+                                    ))
+                                }
+                            }
+                            ExpressionKind::AnnotationExpression(temp_expression) => {
+                                if temp_expression
+                                    .allowed_tokens()
+                                    .contains(&buffered_token.kind)
+                                {
+                                    new_candidates.push(ExpressionKind::AnnotationExpression(
+                                        temp_expression.clone().append_token(buffered_token.clone())?,
+                                    ))
+                                }
+                            }
+                            ExpressionKind::ContentExpression(temp_expression) => {
+                                if temp_expression
+                                    .allowed_tokens()
+                                    .contains(&buffered_token.kind)
+                                {
+                                    new_candidates.push(ExpressionKind::ContentExpression(
+                                        temp_expression.clone().append_token(buffered_token.clone())?,
+                                    ))
+                                }
+                            }
+                        }
+                    }
+                    candidates = new_candidates;
+                }
+            }
+
+            if candidates.len() == 1 {
+                Ok(Self {
+                        kind: candidates.first().map(|e| e.clone()),
+                        buffer: Vec::new(),
+                        ..self
+                    })
+            }
+            else if candidates.len() > 1{
+                Ok(Self {
+                    buffer,
+                    ..self
+                })
+            }
+            else {
+                Err(vec![ParserError::InvalidBlock])
+            }
         }
     }
 
