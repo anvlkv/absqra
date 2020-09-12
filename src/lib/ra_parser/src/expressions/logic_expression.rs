@@ -6,11 +6,11 @@ pub struct LogicExpression {
 
 }
 
-impl<'a> ParsedByToken<'a> for LogicExpression {
-    fn new(token: RaToken<'a>) -> Result<Self, Vec<ParserError>> { 
+impl<'a> ParsedByToken<'a, LogicExpression> for LogicExpression {
+    fn new(token: RaToken<'a>) -> Result<Box<LogicExpression>, Vec<ParserError>> { 
         todo!("implement new")
     }
-    fn append_token(self, token: RaToken<'a>) -> Result<Self, Vec<ParserError>> { 
+    fn append_token(self, token: RaToken<'a>) -> Result<Box<LogicExpression>, Vec<ParserError>> { 
         todo!("implement append_token")
     }
     fn allowed_tokens(&self) -> Vec<TokenKind<'a>> { 

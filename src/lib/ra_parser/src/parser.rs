@@ -38,9 +38,9 @@ pub fn parse<'a>(input: &'a str) -> Result<Block, (Vec<ParserError>, Option<Bloc
     }
 
     if errors.len() == 0 {
-        Ok(block)
+        Ok(*block)
     }
     else {
-        Err((errors, Some(block)))
+        Err((errors, Some(*block)))
     }
 }

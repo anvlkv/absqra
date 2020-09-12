@@ -1,0 +1,19 @@
+---
+source: src/lib/ra_parser/src/tests.rs
+expression: block_tree
+---
+{
+  "position": [
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      0
+    ]
+  ],
+  "level": 0,
+  "kind": "Program",
+  "children": []
+}

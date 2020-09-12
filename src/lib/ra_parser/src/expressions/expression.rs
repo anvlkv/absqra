@@ -1,4 +1,5 @@
 use ra_lexer::cursor::Position;
+use std::rc::Rc;
 
 use crate::expressions::annotation_expression::AnnotationExpression;
 use crate::expressions::content_expression::ContentExpression;
@@ -9,11 +10,14 @@ use crate::expressions::reference_expression::ReferenceExpression;
 
 use super::{Backtrace, ParsedByToken, ParserError, RaToken, TokenKind};
 
+use super::buffered::Buffered;
+
 #[derive(Serialize, Clone, Debug)]
 pub struct Expression<'a> {
-    buffer: Vec<RaToken<'a>>,
     pub kind: Option<ExpressionKind<'a>>,
     pub position: (Position, Position),
+    #[serde(skip_serializing)]
+    buffer: Vec<Rc<Expression<'a>>>,
 }
 
 #[derive(Serialize, Clone, Debug)]
@@ -26,241 +30,237 @@ pub enum ExpressionKind<'a> {
     ContentExpression(ContentExpression),
 }
 
-impl<'a> ParsedByToken<'a> for Expression<'a> {
-    fn new(token: RaToken<'a>) -> Result<Expression<'a>, Vec<ParserError>> {
+impl<'a> Buffered<'a, Expression<'a>> for Expression<'a> {
+    fn new_candidates_from_token(token: &RaToken<'a>) -> Vec<Expression<'a>> {
         let mut errors = Vec::new();
+        let mut kinds = Vec::new();
 
-        let possibly_matching = Self::starts_with_tokens()
-            .into_iter()
-            .filter(|kind| &token.kind == kind)
-            .collect::<Vec<TokenKind>>();
-
-        if possibly_matching.len() == 1 {
-            let kind = {
-                match token.kind {
-                    k if OutputExpression::starts_with_tokens()
-                        .into_iter()
-                        .find(|kind| kind == &k)
-                        .is_some() =>
-                    {
-                        ExpressionKind::OutputExpression(OutputExpression::new(token)?)
+        macro_rules! repeat_kindly {
+            ($find: ident, $create_type:ident) => {
+                if $create_type::starts_with_tokens()
+                    .into_iter()
+                    .find($find)
+                    .is_some() {
+                        match $create_type::new(token.clone()) {
+                            Ok(exp) => kinds.push(ExpressionKind::$create_type(*exp)),
+                            Err(e) => errors.extend(e)
+                        }
                     }
-                    k if InputExpression::starts_with_tokens()
-                        .into_iter()
-                        .find(|kind| kind == &k)
-                        .is_some() =>
-                    {
-                        ExpressionKind::InputExpression(InputExpression::new(token)?)
-                    }
-                    k if ReferenceExpression::starts_with_tokens()
-                        .into_iter()
-                        .find(|kind| kind == &k)
-                        .is_some() =>
-                    {
-                        ExpressionKind::ReferenceExpression(ReferenceExpression::new(token)?)
-                    }
-                    k if ContextExpression::starts_with_tokens()
-                        .into_iter()
-                        .find(|kind| kind == &k)
-                        .is_some() =>
-                    {
-                        ExpressionKind::ContextExpression(ContextExpression::new(token)?)
-                    }
-                    k if AnnotationExpression::starts_with_tokens()
-                        .into_iter()
-                        .find(|kind| kind == &k)
-                        .is_some() =>
-                    {
-                        ExpressionKind::AnnotationExpression(AnnotationExpression::new(token)?)
-                    }
-                    k if ContentExpression::starts_with_tokens()
-                        .into_iter()
-                        .find(|kind| kind == &k)
-                        .is_some() =>
-                    {
-                        ExpressionKind::ContentExpression(ContentExpression::new(token)?)
-                    }
-                    _ => {
-                        errors.push(ParserError::UnexpectedToken(
-                            format!("{:?}", token),
-                            token.position.0,
-                            Backtrace::new(),
-                        ));
-
-                        return Err(errors);
-                    }
-                }
             };
+            ($find: ident,$x: ident, $($y:ident), +) => {
+                repeat_kindly!($find, $x);
+                repeat_kindly!($find, $($y),+);
+            };
+        }
 
-            Ok(Self {
-                buffer: Vec::new(),
+        let find = |kind: &TokenKind<'a>| kind == &token.kind;
+
+        repeat_kindly!(
+            find,
+            OutputExpression,
+            InputExpression,
+            ReferenceExpression,
+            ContextExpression,
+            AnnotationExpression,
+            ContentExpression
+        );
+
+        kinds
+            .into_iter()
+            .map(|kind| Self {
                 kind: Some(kind),
                 position: token.position,
+                buffer: Vec::new(),
             })
-        } else if possibly_matching.len() > 1 {
-            Ok(Self {
-                buffer: vec![token],
-                position: token.position,
-                kind: None,
-            })
-        } else {
-            errors.push(ParserError::ExpectedAGotB(
-                format!("{:?}", Self::starts_with_tokens()),
-                format!("{:?}", token.kind),
+            .collect()
+    }
+
+    fn get_buffer(&self) -> Vec<Rc<Expression<'a>>> {
+        self.buffer.clone()
+    }
+}
+
+impl<'a> ParsedByToken<'a, Expression<'a>> for Expression<'a> {
+    fn new(token: RaToken<'a>) -> Result<Box<Expression<'a>>, Vec<ParserError>> {
+        let mut errors = Vec::new();
+
+        let mut candidates = Expression::new_candidates_from_token(&token);
+
+        if candidates.len() == 1 {
+            Ok(Box::new(candidates.first().unwrap().clone()))
+        } else if candidates.len() == 0 {
+            errors.push(ParserError::UnexpectedToken(
+                format!("{:?}", token),
                 token.position.0,
                 Backtrace::new(),
             ));
 
             Err(errors)
+        } else {
+            Ok(Box::new(Self {
+                buffer: candidates.iter().map(|k| Rc::new(k.clone())).collect(),
+                position: token.position,
+                kind: None,
+            }))
         }
     }
 
-    fn append_token(self, token: RaToken<'a>) -> Result<Self, Vec<ParserError>> {
+    fn append_token(self, token: RaToken<'a>) -> Result<Box<Expression<'a>>, Vec<ParserError>> {
         if self.kind.is_some() {
             assert_eq!(self.buffer.len(), 0);
             let kind = Some({
                 match self.kind.unwrap() {
-                    ExpressionKind::OutputExpression(expression) => ExpressionKind::OutputExpression(expression.append_token(token)?),
-                    ExpressionKind::InputExpression(expression) => ExpressionKind::InputExpression(expression.append_token(token)?),
-                    ExpressionKind::ReferenceExpression(expression) => ExpressionKind::ReferenceExpression(expression.append_token(token)?),
-                    ExpressionKind::ContextExpression(expression) => ExpressionKind::ContextExpression(expression.append_token(token)?),
-                    ExpressionKind::AnnotationExpression(expression) => ExpressionKind::AnnotationExpression(expression.append_token(token)?),
-                    ExpressionKind::ContentExpression(expression) => ExpressionKind::ContentExpression(expression.append_token(token)?),
+                    ExpressionKind::OutputExpression(expression) => {
+                        ExpressionKind::OutputExpression(*expression.append_token(token)?)
+                    }
+                    ExpressionKind::InputExpression(expression) => {
+                        ExpressionKind::InputExpression(*expression.append_token(token)?)
+                    }
+                    ExpressionKind::ReferenceExpression(expression) => {
+                        ExpressionKind::ReferenceExpression(*expression.append_token(token)?)
+                    }
+                    ExpressionKind::ContextExpression(expression) => {
+                        ExpressionKind::ContextExpression(*expression.append_token(token)?)
+                    }
+                    ExpressionKind::AnnotationExpression(expression) => {
+                        ExpressionKind::AnnotationExpression(*expression.append_token(token)?)
+                    }
+                    ExpressionKind::ContentExpression(expression) => {
+                        ExpressionKind::ContentExpression(*expression.append_token(token)?)
+                    }
                 }
             });
 
-            Ok(Self {
-                buffer: self.buffer,
+            Ok(Box::new(Self {
                 kind,
-                position: (self.position.0, token.position.1)
-            })
-        }
-        else {
+                position: (self.position.0, token.position.1),
+                ..self
+            }))
+        } else {
             assert!(self.buffer.len() > 0);
-            assert!(self.buffer.len() > 0);
-            let mut candidates: Vec<ExpressionKind> = Vec::new();
-            let mut buffer = self.buffer.clone();
-            buffer.push(token);
-            let mut buffer_iter = buffer.iter();
+            // let mut candidates: Vec<ExpressionKind> = Vec::new();
+            // let mut buffer = self.buffer.clone();
+            // // buffer.push(token);
+            // let mut buffer_iter = buffer.iter();
             // println!("{:?}", token);
-            while let Some(mut buffered_token) = buffer_iter.next() {
-                // println!("{:?}", buffered_token);
-                if candidates.len() == 0 {
-                    if OutputExpression::starts_with_tokens().contains(&buffered_token.kind) {
-                        candidates.push(ExpressionKind::OutputExpression(OutputExpression::new(
-                            buffered_token.clone()
-                        )?))
-                    }
-                    if InputExpression::starts_with_tokens().contains(&buffered_token.kind) {
-                        candidates.push(ExpressionKind::InputExpression(InputExpression::new(
-                            buffered_token.clone()
-                        )?))
-                    }
-                    if ReferenceExpression::starts_with_tokens().contains(&buffered_token.kind) {
-                        candidates.push(ExpressionKind::ReferenceExpression(
-                            ReferenceExpression::new(buffered_token.clone())?,
-                        ))
-                    }
-                    if ContextExpression::starts_with_tokens().contains(&buffered_token.kind) {
-                        candidates.push(ExpressionKind::ContextExpression(ContextExpression::new(
-                            buffered_token.clone()
-                        )?))
-                    }
-                    if AnnotationExpression::starts_with_tokens().contains(&buffered_token.kind) {
-                        candidates.push(ExpressionKind::AnnotationExpression(
-                            AnnotationExpression::new(buffered_token.clone())?,
-                        ))
-                    }
-                    if ContentExpression::starts_with_tokens().contains(&buffered_token.kind) {
-                        candidates.push(ExpressionKind::ContentExpression(ContentExpression::new(
-                            buffered_token.clone()
-                        )?))
-                    }
-                } else {
-                    let mut candidates_iter = candidates.iter().enumerate();
-                    let mut new_candidates: Vec<ExpressionKind> = Vec::new();
-                    while let Some((index, candidate)) = candidates_iter.next() {
-                        match candidate {
-                            ExpressionKind::OutputExpression(temp_expression) => {
-                                if temp_expression
-                                    .allowed_tokens()
-                                    .contains(&buffered_token.kind)
-                                {
-                                    new_candidates.push(ExpressionKind::OutputExpression(
-                                        temp_expression.clone().append_token(buffered_token.clone())?,
-                                    ))
-                                }
-                            }
-                            ExpressionKind::InputExpression(temp_expression) => {
-                                if temp_expression
-                                    .allowed_tokens()
-                                    .contains(&buffered_token.kind)
-                                {
-                                    new_candidates.push(ExpressionKind::InputExpression(
-                                        temp_expression.clone().append_token(buffered_token.clone())?,
-                                    ))
-                                }
-                            }
-                            ExpressionKind::ReferenceExpression(temp_expression) => {
-                                if temp_expression
-                                    .allowed_tokens()
-                                    .contains(&buffered_token.kind)
-                                {
-                                    new_candidates.push(ExpressionKind::ReferenceExpression(
-                                        temp_expression.clone().append_token(buffered_token.clone())?,
-                                    ))
-                                }
-                            }
-                            ExpressionKind::ContextExpression(temp_expression) => {
-                                if temp_expression
-                                    .allowed_tokens()
-                                    .contains(&buffered_token.kind)
-                                {
-                                    new_candidates.push(ExpressionKind::ContextExpression(
-                                        temp_expression.clone().append_token(buffered_token.clone())?,
-                                    ))
-                                }
-                            }
-                            ExpressionKind::AnnotationExpression(temp_expression) => {
-                                if temp_expression
-                                    .allowed_tokens()
-                                    .contains(&buffered_token.kind)
-                                {
-                                    new_candidates.push(ExpressionKind::AnnotationExpression(
-                                        temp_expression.clone().append_token(buffered_token.clone())?,
-                                    ))
-                                }
-                            }
-                            ExpressionKind::ContentExpression(temp_expression) => {
-                                if temp_expression
-                                    .allowed_tokens()
-                                    .contains(&buffered_token.kind)
-                                {
-                                    new_candidates.push(ExpressionKind::ContentExpression(
-                                        temp_expression.clone().append_token(buffered_token.clone())?,
-                                    ))
-                                }
-                            }
-                        }
-                    }
-                    candidates = new_candidates;
-                }
-            }
+            // while let Some(mut buffered_token) = buffer_iter.next() {
+            //     // println!("{:?}", buffered_token);
+            //     if candidates.len() == 0 {
+            //         if OutputExpression::starts_with_tokens().contains(&buffered_token.kind) {
+            //             candidates.push(ExpressionKind::OutputExpression(OutputExpression::new(
+            //                 buffered_token.clone()
+            //             )?))
+            //         }
+            //         if InputExpression::starts_with_tokens().contains(&buffered_token.kind) {
+            //             candidates.push(ExpressionKind::InputExpression(InputExpression::new(
+            //                 buffered_token.clone()
+            //             )?))
+            //         }
+            //         if ReferenceExpression::starts_with_tokens().contains(&buffered_token.kind) {
+            //             candidates.push(ExpressionKind::ReferenceExpression(
+            //                 ReferenceExpression::new(buffered_token.clone())?,
+            //             ))
+            //         }
+            //         if ContextExpression::starts_with_tokens().contains(&buffered_token.kind) {
+            //             candidates.push(ExpressionKind::ContextExpression(ContextExpression::new(
+            //                 buffered_token.clone()
+            //             )?))
+            //         }
+            //         if AnnotationExpression::starts_with_tokens().contains(&buffered_token.kind) {
+            //             candidates.push(ExpressionKind::AnnotationExpression(
+            //                 AnnotationExpression::new(buffered_token.clone())?,
+            //             ))
+            //         }
+            //         if ContentExpression::starts_with_tokens().contains(&buffered_token.kind) {
+            //             candidates.push(ExpressionKind::ContentExpression(ContentExpression::new(
+            //                 buffered_token.clone()
+            //             )?))
+            //         }
+            //     } else {
+            //         let mut candidates_iter = candidates.iter().enumerate();
+            //         let mut new_candidates: Vec<ExpressionKind> = Vec::new();
+            //         while let Some((index, candidate)) = candidates_iter.next() {
+            //             match candidate {
+            //                 ExpressionKind::OutputExpression(temp_expression) => {
+            //                     if temp_expression
+            //                         .allowed_tokens()
+            //                         .contains(&buffered_token.kind)
+            //                     {
+            //                         new_candidates.push(ExpressionKind::OutputExpression(
+            //                             temp_expression.clone().append_token(buffered_token.clone())?,
+            //                         ))
+            //                     }
+            //                 }
+            //                 ExpressionKind::InputExpression(temp_expression) => {
+            //                     if temp_expression
+            //                         .allowed_tokens()
+            //                         .contains(&buffered_token.kind)
+            //                     {
+            //                         new_candidates.push(ExpressionKind::InputExpression(
+            //                             temp_expression.clone().append_token(buffered_token.clone())?,
+            //                         ))
+            //                     }
+            //                 }
+            //                 ExpressionKind::ReferenceExpression(temp_expression) => {
+            //                     if temp_expression
+            //                         .allowed_tokens()
+            //                         .contains(&buffered_token.kind)
+            //                     {
+            //                         new_candidates.push(ExpressionKind::ReferenceExpression(
+            //                             temp_expression.clone().append_token(buffered_token.clone())?,
+            //                         ))
+            //                     }
+            //                 }
+            //                 ExpressionKind::ContextExpression(temp_expression) => {
+            //                     if temp_expression
+            //                         .allowed_tokens()
+            //                         .contains(&buffered_token.kind)
+            //                     {
+            //                         new_candidates.push(ExpressionKind::ContextExpression(
+            //                             temp_expression.clone().append_token(buffered_token.clone())?,
+            //                         ))
+            //                     }
+            //                 }
+            //                 ExpressionKind::AnnotationExpression(temp_expression) => {
+            //                     if temp_expression
+            //                         .allowed_tokens()
+            //                         .contains(&buffered_token.kind)
+            //                     {
+            //                         new_candidates.push(ExpressionKind::AnnotationExpression(
+            //                             temp_expression.clone().append_token(buffered_token.clone())?,
+            //                         ))
+            //                     }
+            //                 }
+            //                 ExpressionKind::ContentExpression(temp_expression) => {
+            //                     if temp_expression
+            //                         .allowed_tokens()
+            //                         .contains(&buffered_token.kind)
+            //                     {
+            //                         new_candidates.push(ExpressionKind::ContentExpression(
+            //                             temp_expression.clone().append_token(buffered_token.clone())?,
+            //                         ))
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //         candidates = new_candidates;
+            //     }
+            // }
+
+            let candidates = self.get_candidates_for_token(&token)?.clone();
 
             if candidates.len() == 1 {
-                Ok(Self {
-                        kind: candidates.first().map(|e| e.clone()),
-                        buffer: Vec::new(),
-                        ..self
-                    })
-            }
-            else if candidates.len() > 1{
-                Ok(Self {
-                    buffer,
+                Ok(Box::new(Self {
+                    kind: candidates.first().map(|e| e.kind.clone()).unwrap(),
+                    buffer: Vec::new(),
                     ..self
-                })
-            }
-            else {
+                }))
+            } else if candidates.len() > 1 {
+                Ok(Box::new(Self {
+                    buffer: candidates.iter().map(|k| Rc::new(k.clone())).collect(),
+                    ..self
+                }))
+            } else {
                 Err(vec![ParserError::InvalidBlock])
             }
         }

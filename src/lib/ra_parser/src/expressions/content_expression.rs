@@ -6,11 +6,11 @@ pub struct ContentExpression {
 
 }
 
-impl<'a> ParsedByToken<'a> for ContentExpression {
-    fn new(token: RaToken) -> Result<ContentExpression, Vec<ParserError>> { 
+impl<'a> ParsedByToken<'a, ContentExpression> for ContentExpression {
+    fn new(token: RaToken) -> Result<Box<ContentExpression>, Vec<ParserError>> { 
         todo!("implement new")
     }
-    fn append_token(self, token: RaToken) -> Result<ContentExpression, Vec<ParserError>> { 
+    fn append_token(self, token: RaToken) -> Result<Box<ContentExpression>, Vec<ParserError>> { 
         todo!("implement append_token")
     }
     fn allowed_tokens(&self) -> Vec<TokenKind<'a>> { 

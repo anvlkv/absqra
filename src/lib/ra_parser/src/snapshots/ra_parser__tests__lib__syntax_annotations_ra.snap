@@ -30,7 +30,6 @@ expression: block_tree
       "level": 0,
       "kind": {
         "Expression": {
-          "buffer": [],
           "kind": {
             "AnnotationExpression": [
               {
@@ -82,7 +81,6 @@ expression: block_tree
       "level": 0,
       "kind": {
         "Expression": {
-          "buffer": [],
           "kind": {
             "AnnotationExpression": [
               {
@@ -154,7 +152,6 @@ expression: block_tree
       "level": 0,
       "kind": {
         "Expression": {
-          "buffer": [],
           "kind": {
             "AnnotationExpression": [
               {

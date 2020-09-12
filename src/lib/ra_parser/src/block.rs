@@ -22,65 +22,65 @@ pub struct Block<'a> {
 }
 
 impl<'a> Block<'a> {
-    pub fn new_program() -> Result<Self, Vec<ParserError>> {
-        Ok(Self {
+    pub fn new_program() -> Result<Box<Self>, Vec<ParserError>> {
+        Ok(Box::new(Self {
             kind: BlockKind::Program,
             level: 0,
             position: (Position::default(), Position::default()),
             children: Vec::new(),
-        })
+        }))
     }
 
-    pub fn new_union(level: u16) -> Result<Self, Vec<ParserError>> {
-        Ok(Self {
+    pub fn new_union(level: u16) -> Result<Box<Self>, Vec<ParserError>> {
+        Ok(Box::new(Self {
             kind: BlockKind::Union(0),
             level,
             position: (Position::default(), Position::default()),
             children: Vec::new(),
-        })
+        }))
     }
 }
 
-impl<'a> ParsedByToken<'a> for Block<'a> {
-    fn new(token: RaToken<'a>) -> Result<Self, Vec<ParserError>> {
+impl<'a> ParsedByToken<'a, Block<'a>> for Block<'a> {
+    fn new(token: RaToken<'a>) -> Result<Box<Self>, Vec<ParserError>> {
         let expression = Expression::new(token)?;
-        Ok(Self {
-            kind: BlockKind::Expression(expression),
+        Ok(Box::new(Self {
+            kind: BlockKind::Expression(*expression),
             level: token.level,
             position: token.position.clone(),
             children: Vec::new(),
-        })
+        }))
     }
 
-    fn append_token(self, token: RaToken<'a>) -> Result<Self, Vec<ParserError>> {
+    fn append_token(self, token: RaToken<'a>) -> Result<Box<Self>, Vec<ParserError>> {
         match self.kind {
             BlockKind::Expression(old_expression) => {
                 if (token.position.0).0 == (old_expression.position.0).0 {
                     let expression = old_expression.append_token(token)?;
-                    Ok(Self {
-                        kind: BlockKind::Expression(expression),
+                    Ok(Box::new(Self {
+                        kind: BlockKind::Expression(*expression),
                         level: self.level,
                         position: (self.position.0, token.position.1),
                         children: self.children,
-                    })
+                    }))
                 } else if token.level >= self.level + 1 {
                     let mut children = self.children.clone();
                     if children.len() > 0 {
                         let child = children.last().unwrap().clone().append_token(token)?;
                         children.pop();
-                        children.push(Box::new(child));
-                        Ok(Self {
+                        children.push(child);
+                        Ok(Box::new(Self {
                             children,
                             kind: BlockKind::Expression(old_expression),
                             ..self
-                        })
+                        }))
                     } else {
-                        children.push(Box::new(Self::new(token)?));
-                        Ok(Self {
+                        children.push(Self::new(token)?);
+                        Ok(Box::new(Self {
                             children,
                             kind: BlockKind::Expression(old_expression),
                             ..self
-                        })
+                        }))
                     }
                 } else {
                     Err(vec![ParserError::UnexpectedIndentLevel(
@@ -102,12 +102,12 @@ impl<'a> ParsedByToken<'a> for Block<'a> {
                     let child = last_child.unwrap().clone().append_token(token)?;
 
                     children.pop();
-                    children.push(Box::new(child));
-                    Ok(Self { children, ..self })
+                    children.push(child);
+                    Ok(Box::new(Self { children, ..self }))
                 } else {
-                    children.push(Box::new(Block::new(token)?));
+                    children.push(Block::new(token)?);
 
-                    Ok(Self { children, ..self })
+                    Ok(Box::new(Self { children, ..self }))
                 }
             }
             BlockKind::Union(_) => todo!("append to union"),

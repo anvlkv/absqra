@@ -8,10 +8,10 @@ pub struct AnnotationExpression<'a>(
     pub Option<Option<Box<AnnotationExpression<'a>>>>,
 );
 
-impl<'a> ParsedByToken<'a> for AnnotationExpression<'a> {
-    fn new(token: RaToken<'a>) -> Result<AnnotationExpression<'a>, Vec<ParserError>> {
+impl<'a> ParsedByToken<'a, AnnotationExpression<'a>> for AnnotationExpression<'a> {
+    fn new(token: RaToken<'a>) -> Result<Box<AnnotationExpression<'a>>, Vec<ParserError>> {
         match token.kind {
-            TokenKind::HashPound => Ok(Self(None, None)),
+            TokenKind::HashPound => Ok(Box::new(Self(None, None))),
             _ => Err(vec![ParserError::ExpectedAGotB(
                 format!("{:?}", Self::starts_with_tokens()),
                 format!("{:?}", token.kind),
@@ -20,7 +20,7 @@ impl<'a> ParsedByToken<'a> for AnnotationExpression<'a> {
             )]),
         }
     }
-    fn append_token(self, token: RaToken<'a>) -> Result<AnnotationExpression<'a>, Vec<ParserError>> {
+    fn append_token(self, token: RaToken<'a>) -> Result<Box<AnnotationExpression<'a>>, Vec<ParserError>> {
         if self
             .allowed_tokens()
             .into_iter()
@@ -29,18 +29,18 @@ impl<'a> ParsedByToken<'a> for AnnotationExpression<'a> {
         {
             if self.0.is_none() {
                 assert_eq!(token.kind, TokenKind::Identifier(Default::default()));
-                Ok(Self(Some(token), None))
+                Ok(Box::new(Self(Some(token), None)))
             } else if self.1.is_none() {
                 assert_eq!(token.kind, TokenKind::Colon);
-                Ok(Self(self.0, Some(None)))
+                Ok(Box::new(Self(self.0, Some(None))))
             } else {
                 let next = self.1.unwrap();
 
                 if next.is_none() {
-                    Ok(Self(self.0, Some(Some(Box::new(Self(Some(token), None))))))
+                    Ok(Box::new(Self(self.0, Some(Some(Box::new(Self(Some(token), None)))))))
                 } else {
                     match next.unwrap().append_token(token) {
-                        Ok(newChild) => Ok(Self(self.0, Some(Some(Box::new(newChild))))),
+                        Ok(newChild) => Ok(Box::new(Self(self.0, Some(Some(newChild))))),
                         Err(e) => Err(e),
                     }
                 }
