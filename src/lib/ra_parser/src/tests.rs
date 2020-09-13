@@ -1,9 +1,5 @@
 mod lib {
-    use ra_lexer::cursor::Position;
-    use ra_lexer::token::{RaToken, TokenKind};
     use ra_dev_tools::insta::{assert_json_snapshot, assert_snapshot};    
-    use std::fs::{File, DirEntry};
-    use std::io::Read;
     use ra_dev_tools::{make_example_tests};
     use crate::parser::parse;
 

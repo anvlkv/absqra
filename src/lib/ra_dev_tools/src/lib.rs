@@ -1,7 +1,8 @@
 pub extern crate insta;
 pub use files_iterator::for_each_ra_example_file;
-#[macro_use] pub use example_files_macro::make_example_tests;
 
+#[allow(unused_attributes)]
+#[macro_use] pub use example_files_macro::make_example_tests;
 
 #[cfg(test)]
 mod test {

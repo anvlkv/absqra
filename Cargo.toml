@@ -1,5 +1,5 @@
 [package]
-name = "absQra"
+name = "abs_q_ra"
 version = "0.1.0"
 authors = ["a.nvlkv <a.nvlkv@protonmail.ch>"]
 edition = "2018"

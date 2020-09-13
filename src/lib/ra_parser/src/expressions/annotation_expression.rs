@@ -40,7 +40,7 @@ impl<'a> ParsedByToken<'a, AnnotationExpression<'a>> for AnnotationExpression<'a
                     Ok(Box::new(Self(self.0, Some(Some(Box::new(Self(Some(token), None)))))))
                 } else {
                     match next.unwrap().append_token(token) {
-                        Ok(newChild) => Ok(Box::new(Self(self.0, Some(Some(newChild))))),
+                        Ok(new_child) => Ok(Box::new(Self(self.0, Some(Some(new_child))))),
                         Err(e) => Err(e),
                     }
                 }

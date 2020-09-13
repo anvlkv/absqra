@@ -1,4 +1,6 @@
+#[allow(unused_imports)]
 #[macro_use] extern crate failure_derive;
+#[allow(unused_imports)]
 #[macro_use] extern crate serde_derive;
 
 extern crate serde;
