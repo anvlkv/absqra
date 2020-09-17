@@ -17,3 +17,5 @@ assignment > nested_variable // logical expression Comparison GT
 (3*5) + 22 // grouped expression that has an output of 37
 
 (assignment | nested_variable) + 3 // grouped expression with logical expression, has an output of 6
+
+1 + 1 + (2*2) + (3*(2+2)) - 18 // bit more grouping, has an output of 0

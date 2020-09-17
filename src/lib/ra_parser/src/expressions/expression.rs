@@ -22,7 +22,7 @@ pub struct Expression<'a> {
 
 #[derive(Serialize, Clone, Debug)]
 pub enum ExpressionKind<'a> {
-    OutputExpression(OutputExpression),
+    OutputExpression(OutputExpression<'a>),
     InputExpression(InputExpression),
     ReferenceExpression(ReferenceExpression),
     ContextExpression(ContextExpression),
