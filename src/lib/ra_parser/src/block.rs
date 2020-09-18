@@ -67,7 +67,8 @@ impl<'a> ParsedByToken<'a, Block<'a>> for Block<'a> {
                 } else if token.level >= self.level + 1 {
                     let mut children = self.children.clone();
                     if children.len() > 0 {
-                        let child = children.pop().unwrap().clone().append_token(token)?;
+                        let child = children.last().unwrap().clone().append_token(token)?;
+                        children.pop();
                         children.push(child);
                         Ok(Box::new(Self {
                             children,
@@ -76,18 +77,6 @@ impl<'a> ParsedByToken<'a, Block<'a>> for Block<'a> {
                             ..self
                         }))
                     } else {
-                        if let Some(last_child) = children.last() {
-                            if !last_child.is_final() && last_child.is_ready_to_finalize() {
-                                let final_child = children.pop().unwrap().finalize()?;
-                                children.push(final_child);
-                            } else if !last_child.is_final() {
-                                return Err(vec![ParserError::UnexpectedIndentLevel(
-                                    token.level,
-                                    token.position.0,
-                                    Backtrace::new(),
-                                )]);
-                            }
-                        }
                         children.push(Self::new(token)?);
                         Ok(Box::new(Self {
                             children,
@@ -119,15 +108,6 @@ impl<'a> ParsedByToken<'a, Block<'a>> for Block<'a> {
                     children.push(child);
                     Ok(Box::new(Self { children, ..self }))
                 } else {
-                    if last_child.is_some() && !last_child.unwrap().is_final() {
-                        if last_child.unwrap().is_ready_to_finalize() {
-                            let child = last_child.unwrap().clone().finalize()?;
-                            children.pop();
-                            children.push(child);
-                        } else {
-                            return Err(vec![ParserError::InvalidBlock]);
-                        }
-                    }
                     children.push(Block::new(token)?);
 
                     Ok(Box::new(Self { children, ..self }))
