@@ -1,6 +1,5 @@
 pub (crate) mod buffered;
 
-
 #[macro_use]
 mod repeat_kindly_macros;
 

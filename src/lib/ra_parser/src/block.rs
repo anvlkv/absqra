@@ -1,6 +1,5 @@
 use crate::errors::ParserError;
 use crate::expressions::expression::Expression;
-use crate::finalizable::Finalizable;
 use crate::parsed_by_token::ParsedByToken;
 use failure::Backtrace;
 use ra_lexer::cursor::Position;
@@ -126,17 +125,5 @@ impl<'a> ParsedByToken<'a, Block<'a>> for Block<'a> {
 
     fn starts_with_tokens() -> Vec<TokenKind<'static>> {
         Expression::starts_with_tokens()
-    }
-}
-
-impl<'a> Finalizable<Block<'a>> for Block<'a> {
-    fn is_final(&self) -> bool {
-        todo!()
-    }
-    fn is_ready_to_finalize(&self) -> bool {
-        todo!()
-    }
-    fn finalize(self) -> Result<Box<Block<'a>>, ParserError> {
-        todo!()
     }
 }
