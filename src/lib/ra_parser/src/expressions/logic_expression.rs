@@ -1,21 +1,14 @@
 use serde::Serialize;
 use super::{ParserError, ParsedByToken, RaToken, TokenKind};
 use super::output_expression::OutputExpression;
+use super::logic_operation::LogicOperation;
 
 
-#[derive(Serialize, Clone, Debug)]
-pub enum OperationKind {
-
-}
 
 #[derive(Serialize, Clone, Debug)]
-pub struct Operation<'a>{
-    kind: OperationKind,
-    token: RaToken<'a>
-}
+pub struct LogicExpression<'a> (RaToken<'a>, LogicOperation, Option<Box<OutputExpression<'a>>>);
 
-#[derive(Serialize, Clone, Debug)]
-pub struct LogicExpression<'a> (RaToken<'a>, Operation<'a>, Option<Box<OutputExpression<'a>>>);
+
 
 
 impl<'a> ParsedByToken<'a, LogicExpression<'a>> for LogicExpression<'a> {
