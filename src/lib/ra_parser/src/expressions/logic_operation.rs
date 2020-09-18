@@ -25,7 +25,7 @@ pub enum LogicOperationKind {
 
 #[derive(Serialize, Clone, Debug)]
 pub struct LogicOperation {
-    kind: Option<LogicOperationKind>,
+    pub kind: Option<LogicOperationKind>,
     #[serde(skip)]
     buffer: Buffer<LogicOperation>,
 }
