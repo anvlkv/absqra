@@ -72,6 +72,7 @@ impl<'a> ParsedByToken<'a, Block<'a>> for Block<'a> {
                         Ok(Box::new(Self {
                             children,
                             kind: BlockKind::Expression(old_expression),
+                            position: (self.position.0, token.position.1),
                             ..self
                         }))
                     } else {
@@ -79,6 +80,7 @@ impl<'a> ParsedByToken<'a, Block<'a>> for Block<'a> {
                         Ok(Box::new(Self {
                             children,
                             kind: BlockKind::Expression(old_expression),
+                            position: (self.position.0, token.position.1),
                             ..self
                         }))
                     }
