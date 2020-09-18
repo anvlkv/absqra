@@ -3,16 +3,24 @@ use crate::errors::ParserError;
 use crate::parsed_by_token::ParsedByToken;
 use ra_lexer::token::{RaToken, TokenKind};
 use std::rc::Rc;
+use failure::Backtrace;
 
-#[derive(Serialize, Clone, Debug)]
+#[derive(Serialize, Clone, Debug, PartialEq)]
 pub enum LogicOperationKind {
-    AND,  // &
-    OR,   // |
-    XOR,  // ||
-    NAND, // !&
-    NOT,  // !
-    NOR,  // !!
-    XNOR, // !|
+    /// &
+    AND,
+    /// |  
+    OR,
+    /// ||   
+    XOR,
+    /// !&  
+    NAND,
+    /// ! 
+    NOT,
+    /// !!  
+    NOR,
+    /// !|  
+    XNOR, 
 }
 
 #[derive(Serialize, Clone, Debug)]
@@ -67,15 +75,120 @@ impl<'a> Buffered<'a, LogicOperation> for LogicOperation {
 
 impl<'a> ParsedByToken<'a, LogicOperation> for LogicOperation {
     fn new(token: RaToken<'a>) -> Result<Box<LogicOperation>, Vec<ParserError>> {
-        todo!()
+        let mut candidates = Self::new_candidates_from_token(&token);
+        if candidates.len() == 1 {
+            Ok(Box::new(Rc::make_mut(candidates.first_mut().unwrap()).clone()))
+        }
+        else if candidates.len() > 1 {
+            Ok(Box::new(Self{
+                kind: None,
+                buffer: candidates
+            }))
+        }
+        else {
+            Err(vec![
+                ParserError::ExpectedAGotB(
+                    format!("{:?}", Self::starts_with_tokens()),
+                    format!("{:?}", token),
+                    token.position.0,
+                    Backtrace::new()
+                )
+            ])
+        }
     }
+    
     fn append_token(self, token: RaToken<'a>) -> Result<Box<LogicOperation>, Vec<ParserError>> {
-        todo!()
+        match self.kind {
+            Some(_) => Err(vec![
+                ParserError::InvalidExpression(token.position.0, Backtrace::new())
+            ]),
+            None => {
+                let kinds = self.allowed_tokens();
+                let mut kind: Option<LogicOperationKind> = None;
+                let mut errors = Vec::new();
+
+                if kinds.contains(&token.kind) {
+                    kind = Some({
+                        match token.kind {
+                            TokenKind::Pipe => {
+                                if self.buffer.iter().find(|op| op.kind.as_ref().unwrap() == &LogicOperationKind::XOR).is_some() {
+                                    LogicOperationKind::XOR
+                                }
+                                else if self.buffer.iter().find(|op| op.kind.as_ref().unwrap() == &LogicOperationKind::XNOR).is_some() {
+                                    LogicOperationKind::XNOR
+                                }
+                                else {
+                                    panic!("ops changed");
+                                }
+                            },
+                            TokenKind::Ampersand => LogicOperationKind::NAND,
+                            TokenKind::Exclamation => LogicOperationKind::NOR,
+                            _ => {
+                                errors.push(
+                                    ParserError::ExpectedAGotB(
+                                        format!("{:?}", kinds),
+                                        format!("{:?}", token),
+                                        token.position.0,
+                                        Backtrace::new()
+                                    )
+                                );
+
+                                return Err(errors);
+                            }
+                        }
+                    }) 
+                }
+                else {
+                    errors.push(
+                        ParserError::ExpectedAGotB(
+                            format!("{:?}", kinds),
+                            format!("{:?}", token),
+                            token.position.0,
+                            Backtrace::new()
+                        )
+                    )
+                }
+
+                
+
+                if errors.len() != 0 {
+                    Err(errors)
+                }
+                else {
+                    Ok(Box::new(Self {
+                        kind: kind,
+                        buffer: vec![]
+                    }))
+                }
+            }
+        }
     }
     fn allowed_tokens(&self) -> Vec<TokenKind<'a>> {
-        todo!()
+        match self.kind {
+            Some(_) => vec![],
+            None => {
+                let mut kinds = Vec::new();
+                if self.buffer.iter().find(|op| op.kind.as_ref().unwrap() == &LogicOperationKind::OR).is_some() {
+                    kinds.push(TokenKind::Pipe);
+                }
+
+                if self.buffer.iter().find(|op| op.kind.as_ref().unwrap() == &LogicOperationKind::NOT).is_some() {
+                    kinds.extend(vec![
+                        TokenKind::Ampersand,
+                        TokenKind::Exclamation,
+                        TokenKind::Pipe
+                    ]);
+                }
+
+                kinds
+            }
+        }
     }
     fn starts_with_tokens() -> Vec<TokenKind<'a>> {
-        todo!()
+        vec![
+            TokenKind::Ampersand,
+            TokenKind::Pipe,
+            TokenKind::Exclamation,
+        ]
     }
 }
