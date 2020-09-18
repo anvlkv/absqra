@@ -3,6 +3,7 @@ pub (crate) mod buffered;
 #[macro_use]
 mod repeat_kindly_macros;
 
+pub mod output_expression_kind;
 pub mod output_expression;
 pub mod input_expression;
 pub mod reference_expression;
