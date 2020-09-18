@@ -730,5 +730,373 @@ expression: tokens
       ]
     ],
     "level": 0
+  },
+  {
+    "kind": {
+      "Int": 1
+    },
+    "len": 1,
+    "content": "1",
+    "position": [
+      [
+        21,
+        0
+      ],
+      [
+        21,
+        1
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Plus",
+    "len": 1,
+    "content": "+",
+    "position": [
+      [
+        21,
+        2
+      ],
+      [
+        21,
+        3
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Int": 1
+    },
+    "len": 1,
+    "content": "1",
+    "position": [
+      [
+        21,
+        4
+      ],
+      [
+        21,
+        5
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Plus",
+    "len": 1,
+    "content": "+",
+    "position": [
+      [
+        21,
+        6
+      ],
+      [
+        21,
+        7
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "OpenParentheses",
+    "len": 1,
+    "content": "(",
+    "position": [
+      [
+        21,
+        8
+      ],
+      [
+        21,
+        9
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Int": 2
+    },
+    "len": 1,
+    "content": "2",
+    "position": [
+      [
+        21,
+        9
+      ],
+      [
+        21,
+        10
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Asterisk",
+    "len": 1,
+    "content": "*",
+    "position": [
+      [
+        21,
+        10
+      ],
+      [
+        21,
+        11
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Int": 2
+    },
+    "len": 1,
+    "content": "2",
+    "position": [
+      [
+        21,
+        11
+      ],
+      [
+        21,
+        12
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "CloseParentheses",
+    "len": 1,
+    "content": ")",
+    "position": [
+      [
+        21,
+        12
+      ],
+      [
+        21,
+        13
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Plus",
+    "len": 1,
+    "content": "+",
+    "position": [
+      [
+        21,
+        14
+      ],
+      [
+        21,
+        15
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "OpenParentheses",
+    "len": 1,
+    "content": "(",
+    "position": [
+      [
+        21,
+        16
+      ],
+      [
+        21,
+        17
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Int": 3
+    },
+    "len": 1,
+    "content": "3",
+    "position": [
+      [
+        21,
+        17
+      ],
+      [
+        21,
+        18
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Asterisk",
+    "len": 1,
+    "content": "*",
+    "position": [
+      [
+        21,
+        18
+      ],
+      [
+        21,
+        19
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "OpenParentheses",
+    "len": 1,
+    "content": "(",
+    "position": [
+      [
+        21,
+        19
+      ],
+      [
+        21,
+        20
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Int": 2
+    },
+    "len": 1,
+    "content": "2",
+    "position": [
+      [
+        21,
+        20
+      ],
+      [
+        21,
+        21
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Plus",
+    "len": 1,
+    "content": "+",
+    "position": [
+      [
+        21,
+        21
+      ],
+      [
+        21,
+        22
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Int": 2
+    },
+    "len": 1,
+    "content": "2",
+    "position": [
+      [
+        21,
+        22
+      ],
+      [
+        21,
+        23
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "CloseParentheses",
+    "len": 1,
+    "content": ")",
+    "position": [
+      [
+        21,
+        23
+      ],
+      [
+        21,
+        24
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "CloseParentheses",
+    "len": 1,
+    "content": ")",
+    "position": [
+      [
+        21,
+        24
+      ],
+      [
+        21,
+        25
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Minus",
+    "len": 1,
+    "content": "-",
+    "position": [
+      [
+        21,
+        26
+      ],
+      [
+        21,
+        27
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Int": 18
+    },
+    "len": 2,
+    "content": "18",
+    "position": [
+      [
+        21,
+        28
+      ],
+      [
+        21,
+        30
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": "Comment",
+    "len": 40,
+    "content": " bit more grouping, has an output of 0",
+    "position": [
+      [
+        21,
+        31
+      ],
+      [
+        21,
+        71
+      ]
+    ],
+    "level": 0
   }
 ]

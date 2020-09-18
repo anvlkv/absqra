@@ -57,8 +57,22 @@ pub struct MathOperation<'a> {
 }
 
 impl<'a> ParsedByToken<'a, MathOperation<'a>> for MathOperation<'a> {
-    fn new(token: RaToken<'a>) -> Result<Box<MathOperation<'a>>, Vec<ParserError>> { todo!() }
-    fn append_token(self, _: RaToken<'a>) -> Result<Box<MathOperation<'a>>, Vec<ParserError>> { todo!() }
-    fn allowed_tokens(&self) -> Vec<TokenKind<'a>> { todo!() }
-    fn starts_with_tokens() -> Vec<TokenKind<'a>> { todo!() }
+    fn new(token: RaToken<'a>) -> Result<Box<MathOperation<'a>>, Vec<ParserError>> { 
+        let kind = *OperationKind::new(token)?;
+        Ok(Box::new(Self{
+            kind,
+            token:token
+        }))
+     }
+    fn append_token(self, token: RaToken<'a>) -> Result<Box<MathOperation<'a>>, Vec<ParserError>> {
+        let kind = *self.kind.append_token(token)?;
+        Ok(Box::new(Self{
+            kind,
+            token:self.token
+        }))
+    }
+    fn allowed_tokens(&self) -> Vec<TokenKind<'a>> { self.kind.allowed_tokens() }
+    fn starts_with_tokens() -> Vec<TokenKind<'a>> { 
+        OperationKind::starts_with_tokens()
+     }
 }
