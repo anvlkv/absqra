@@ -1,9 +1,6 @@
-use super::buffered::{Buffer, Buffered};
-use crate::errors::ParserError;
-use crate::parsed_by_token::ParsedByToken;
-use ra_lexer::token::{RaToken, TokenKind};
+use super::{Buffered, Buffer, ParsedByToken, ParserError, RaToken, TokenKind, Backtrace};
 use std::rc::Rc;
-use failure::Backtrace;
+
 
 #[derive(Serialize, Clone, Debug, PartialEq)]
 pub enum LogicOperationKind {

@@ -1,7 +1,6 @@
 use serde::Serialize;
-use super::{ParserError, ParsedByToken, RaToken, TokenKind};
-use super::output_expression::OutputExpression;
-use failure::Backtrace;
+use super::{ParserError, ParsedByToken, RaToken, TokenKind, Backtrace};
+use super::expression::OutputExpression;
 
 #[derive(Serialize, Clone, Debug)]
 pub struct GroupingExpression<'a> (Option<Box<OutputExpression<'a>>>, Option<Box<OutputExpression<'a>>>, bool);

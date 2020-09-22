@@ -1,7 +1,7 @@
 use failure::Backtrace;
 use serde::Serialize;
 use super::{ParserError, ParsedByToken, RaToken, TokenKind};
-use super::output_expression::OutputExpression;
+use super::expression::OutputExpression;
 use super::logic_operation::LogicOperation;
 
 

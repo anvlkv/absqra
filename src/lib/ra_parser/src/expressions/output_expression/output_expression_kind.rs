@@ -1,9 +1,9 @@
-use super::buffered::{Buffer, Buffered};
+use super::{Buffer, Buffered, ParsedByToken, ParserError, RaToken, TokenKind};
 use super::grouping_expression::GroupingExpression;
 use super::logic_expression::LogicExpression;
 use super::operation_expression::OperationExpression;
 use super::procedure_expression::ProcedureExpression;
-use super::{ParsedByToken, ParserError, RaToken, TokenKind};
+
 use failure::Backtrace;
 use serde::ser::{Serialize, Serializer, StdError};
 use std::convert::TryInto;

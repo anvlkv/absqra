@@ -1,7 +1,7 @@
 use serde::Serialize;
 use failure::Backtrace;
 use super::{ParserError, ParsedByToken, RaToken, TokenKind};
-use super::output_expression::{OutputExpression};
+use super::expression::{OutputExpression};
 use super::math_operation::MathOperation;
 
 #[derive(Serialize, Clone, Debug)]

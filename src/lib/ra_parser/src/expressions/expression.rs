@@ -1,12 +1,12 @@
 use ra_lexer::cursor::Position;
 use std::rc::Rc;
 
-use crate::expressions::annotation_expression::AnnotationExpression;
-use crate::expressions::content_expression::ContentExpression;
-use crate::expressions::context_expression::ContextExpression;
-use crate::expressions::input_expression::InputExpression;
-use crate::expressions::output_expression::OutputExpression;
-use crate::expressions::reference_expression::ReferenceExpression;
+use super::annotation_expression::AnnotationExpression;
+use super::content_expression::ContentExpression;
+use super::context_expression::ContextExpression;
+use super::input_expression::InputExpression;
+use super::output_expression::expression::OutputExpression;
+use super::reference_expression::ReferenceExpression;
 
 
 use super::{Backtrace, ParsedByToken, ParserError, RaToken, TokenKind};
