@@ -1,11 +1,6 @@
-use super::{ParsedByToken, ParserError};
-use failure::Backtrace;
-use ra_lexer::token::RaToken;
-use std::rc::Rc;
-
+use super::*;
 
 pub type Buffer<T> = Vec<Rc<T>>;
-
 
 pub(crate) trait Buffered<'a, T>: ParsedByToken<'a, T>
 where
