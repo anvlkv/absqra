@@ -1,10 +1,6 @@
-use failure::Backtrace;
-use serde::Serialize;
-use super::{ParserError, ParsedByToken, RaToken, TokenKind};
+use super::*;
 use super::expression::OutputExpression;
 use super::logic_operation::LogicOperation;
-
-
 
 #[derive(Serialize, Clone, Debug)]
 pub struct LogicExpression<'a> (Option<Box<OutputExpression<'a>>>, Option<LogicOperation>, Option<Box<OutputExpression<'a>>>);
