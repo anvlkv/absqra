@@ -1,7 +1,7 @@
 use super::*;
 use super::grouping_expression::GroupingExpression;
 use super::logic_expression::LogicExpression;
-use super::operation_expression::OperationExpression;
+use super::operation_expression::MathExpression;
 use super::procedure_expression::ProcedureExpression;
 use super::output_expression_kind::OutputExpressionKind;
 
@@ -27,7 +27,7 @@ impl<'a> Buffered<'a, OutputExpression<'a>> for OutputExpression<'a> {
                 }
 
             },
-            OperationExpression,
+            MathExpression,
             LogicExpression,
             GroupingExpression,
             ProcedureExpression

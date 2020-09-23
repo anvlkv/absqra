@@ -1,7 +1,7 @@
 use super::*;
 use super::grouping_expression::GroupingExpression;
 use super::logic_expression::LogicExpression;
-use super::operation_expression::OperationExpression;
+use super::operation_expression::MathExpression;
 use super::procedure_expression::ProcedureExpression;
 
 use serde::ser::{Serialize, Serializer};
@@ -10,7 +10,7 @@ use std::convert::TryInto;
 #[derive(Clone, Debug)]
 pub enum OutputExpressionKind<'a> {
     ProcedureExpression(ProcedureExpression<'a>),
-    OperationExpression(OperationExpression<'a>),
+    MathExpression(MathExpression<'a>),
     LogicExpression(LogicExpression<'a>),
     GroupingExpression(GroupingExpression<'a>),
     Buffer(Buffer<OutputExpressionKind<'a>>),
@@ -27,7 +27,7 @@ impl<'a> Serialize for OutputExpressionKind<'a> {
                 serializer.serialize_u64(count)
             }
             Self::ProcedureExpression(exp) => exp.serialize(serializer),
-            Self::OperationExpression(exp) => exp.serialize(serializer),
+            Self::MathExpression(exp) => exp.serialize(serializer),
             Self::LogicExpression(exp) => exp.serialize(serializer),
             Self::GroupingExpression(exp) => exp.serialize(serializer),
         }
@@ -48,9 +48,9 @@ impl<'a> Buffered<'a, OutputExpressionKind<'a>> for OutputExpressionKind<'a> {
             }
         }
 
-        if OperationExpression::starts_with_tokens().contains(&token.kind) {
-            match OperationExpression::new(token.clone()) {
-                Ok(p) => kinds.push(OutputExpressionKind::OperationExpression(*p)),
+        if MathExpression::starts_with_tokens().contains(&token.kind) {
+            match MathExpression::new(token.clone()) {
+                Ok(p) => kinds.push(OutputExpressionKind::MathExpression(*p)),
                 Err(e) => errors.extend(e)
             }
         }
@@ -108,7 +108,7 @@ impl<'a> ParsedByToken<'a, OutputExpressionKind<'a>> for OutputExpressionKind<'a
             Self::ProcedureExpression(exp) => Ok(Box::new(Self::ProcedureExpression(
                 *exp.append_token(token)?,
             ))),
-            Self::OperationExpression(exp) => Ok(Box::new(Self::OperationExpression(
+            Self::MathExpression(exp) => Ok(Box::new(Self::MathExpression(
                 *exp.append_token(token)?,
             ))),
             Self::LogicExpression(exp) => {
@@ -138,7 +138,7 @@ impl<'a> ParsedByToken<'a, OutputExpressionKind<'a>> for OutputExpressionKind<'a
     fn allowed_tokens(&self) -> Vec<TokenKind<'a>> {
         match self {
             Self::ProcedureExpression(exp) => exp.allowed_tokens(),
-            Self::OperationExpression(exp) => exp.allowed_tokens(),
+            Self::MathExpression(exp) => exp.allowed_tokens(),
             Self::LogicExpression(exp) => exp.allowed_tokens(),
             Self::GroupingExpression(exp) => exp.allowed_tokens(),
             Self::Buffer(buf) => buf.iter().map(|e| e.allowed_tokens()).flatten().collect(),
@@ -147,7 +147,7 @@ impl<'a> ParsedByToken<'a, OutputExpressionKind<'a>> for OutputExpressionKind<'a
     fn starts_with_tokens() -> Vec<TokenKind<'a>> {
         let mut kinds = vec![];
         kinds.extend(ProcedureExpression::starts_with_tokens());
-        kinds.extend(OperationExpression::starts_with_tokens());
+        kinds.extend(MathExpression::starts_with_tokens());
         kinds.extend(LogicExpression::starts_with_tokens());
         kinds.extend(GroupingExpression::starts_with_tokens());
 
