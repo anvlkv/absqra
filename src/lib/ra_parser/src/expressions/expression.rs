@@ -264,7 +264,7 @@ impl<'a> ParsedByToken<'a, Expression<'a>> for Expression<'a> {
 
             all_required
                 .first()
-                .unwrap_or(vec![])
+                .unwrap_or(&vec![])
                 .clone()
         }
     }
