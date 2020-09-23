@@ -37,4 +37,8 @@ where
             Ok(result)
         }
     }
+
+    fn finalize(self) -> Result<Box<T>, Vec<ParserError>> {
+        todo!()
+    }
 }
