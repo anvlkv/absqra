@@ -1,14 +1,14 @@
 use super::*;
 
 #[derive(Clone, Debug, Serialize)]
-pub struct ProcedureExpression<'a> (RaToken<'a>);
+pub struct ProcedureExpression<'a> (ExpressionMember<'a>);
 
 impl<'a> ParsedByToken<'a, ProcedureExpression<'a>>  for ProcedureExpression<'a> {
     
     fn new(token: RaToken<'a>) -> Result<Box<ProcedureExpression<'a>>, Vec<ParserError>> { 
         if Self::starts_with_tokens().contains(&token.kind) {
             assert_eq!(token.kind, TokenKind::Identifier(Default::default()));
-            Ok(Box::new(Self(token)))
+            Ok(Box::new(Self(ExpressionMember::Identifier(token))))
         } 
         else {
             Err(vec![ParserError::ExpectedAGotB(
@@ -19,6 +19,9 @@ impl<'a> ParsedByToken<'a, ProcedureExpression<'a>>  for ProcedureExpression<'a>
             )])
         }
      }
+     fn required_tokens(&self) -> Vec<TokenKind<'a>> { 
+        todo!() 
+    }
     fn append_token(self, token: RaToken<'a>) -> Result<Box<ProcedureExpression<'a>>, Vec<ParserError>> { Err(vec![ParserError::InvalidExpression(token.position.0, Backtrace::new())]) }
     fn allowed_tokens(&self) -> Vec<TokenKind<'a>> { vec![] }
     fn starts_with_tokens() -> Vec<TokenKind<'a>> { vec![TokenKind::Identifier(Default::default())] }

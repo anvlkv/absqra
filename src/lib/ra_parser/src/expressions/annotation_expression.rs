@@ -68,6 +68,21 @@ impl<'a> ParsedByToken<'a, AnnotationExpression<'a>> for AnnotationExpression<'a
         }
     }
 
+    fn required_tokens(&self) -> Vec<TokenKind<'a>> {
+        if self.0.is_none() {
+            vec![TokenKind::Identifier(Default::default())]
+        } else if self.1.is_none() {
+            vec![]
+        } else {
+            let next = self.1.as_ref().unwrap();
+            if next.is_none() {
+                vec![TokenKind::Identifier(Default::default())]
+            } else {
+                next.as_ref().unwrap().required_tokens()
+            }
+        }
+    }
+
     fn starts_with_tokens() -> Vec<TokenKind<'static>> {
         vec![TokenKind::HashPound]
     }

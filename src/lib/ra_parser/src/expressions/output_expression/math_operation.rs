@@ -35,6 +35,9 @@ impl<'a> ParsedByToken<'a, MathOperationKind> for MathOperationKind {
      }
     fn append_token(self, token: RaToken<'a>) -> Result<Box<MathOperationKind>, Vec<ParserError>> { Err(vec![ParserError::InvalidExpression(token.position.0, Backtrace::new())]) }
     fn allowed_tokens(&self) -> Vec<TokenKind<'a>> { vec![] }
+    fn required_tokens(&self) -> Vec<TokenKind<'a>> { 
+        todo!() 
+    }
     fn starts_with_tokens() -> Vec<TokenKind<'a>> { 
         vec![
             TokenKind::Plus,

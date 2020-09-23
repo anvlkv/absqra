@@ -123,7 +123,15 @@ impl<'a> ParsedByToken<'a, Block<'a>> for Block<'a> {
         }
     }
 
+    fn required_tokens(&self) -> Vec<TokenKind<'a>> {
+        match &self.kind {
+            BlockKind::Expression(expression) => expression.required_tokens(),
+            _ => Expression::starts_with_tokens(),
+        }
+    }
+
     fn starts_with_tokens() -> Vec<TokenKind<'static>> {
         Expression::starts_with_tokens()
     }
+
 }

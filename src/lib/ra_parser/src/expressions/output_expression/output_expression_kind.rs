@@ -100,6 +100,7 @@ impl<'a> ParsedByToken<'a, OutputExpressionKind<'a>> for OutputExpressionKind<'a
             Err(vec![ParserError::InvalidBlock])
         }
     }
+    
     fn append_token(
         self,
         token: RaToken<'a>,
@@ -144,6 +145,11 @@ impl<'a> ParsedByToken<'a, OutputExpressionKind<'a>> for OutputExpressionKind<'a
             Self::Buffer(buf) => buf.iter().map(|e| e.allowed_tokens()).flatten().collect(),
         }
     }
+
+    fn required_tokens(&self) -> Vec<TokenKind<'a>> { 
+        todo!() 
+    }
+
     fn starts_with_tokens() -> Vec<TokenKind<'a>> {
         let mut kinds = vec![];
         kinds.extend(ProcedureExpression::starts_with_tokens());

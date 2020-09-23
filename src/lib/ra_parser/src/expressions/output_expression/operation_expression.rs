@@ -23,6 +23,7 @@ impl<'a> ParsedByToken<'a, MathExpression<'a>> for MathExpression<'a> {
         //     )])
         // }
     }
+
     fn append_token(self, token: RaToken<'a>) -> Result<Box<MathExpression<'a>>, Vec<ParserError>> { 
         todo!("implement me");
         // if self.allowed_tokens().contains(&token.kind) {
@@ -52,6 +53,7 @@ impl<'a> ParsedByToken<'a, MathExpression<'a>> for MathExpression<'a> {
         //     Err(errors);
         // }
     }
+
     fn allowed_tokens(&self) -> Vec<TokenKind<'a>> { 
         todo!("implement me");
         // let MathExpression(_, operation, next) = self;
@@ -73,6 +75,10 @@ impl<'a> ParsedByToken<'a, MathExpression<'a>> for MathExpression<'a> {
             TokenKind::Int(Default::default()),
             TokenKind::Float(Default::default())
         ]
+    }
+
+    fn required_tokens(&self) -> Vec<TokenKind<'a>> { 
+        todo!() 
     }
 
 }

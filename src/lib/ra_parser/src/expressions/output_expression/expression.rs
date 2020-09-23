@@ -76,6 +76,7 @@ impl<'a> ParsedByToken<'a, OutputExpression<'a>> for OutputExpression<'a> {
             }
         }
     }
+
     fn append_token(
         self,
         token: RaToken<'a>,
@@ -107,6 +108,7 @@ impl<'a> ParsedByToken<'a, OutputExpression<'a>> for OutputExpression<'a> {
             }
         }
     }
+
     fn allowed_tokens(&self) -> Vec<TokenKind<'a>> {
         if self.kind.is_some() {
             self.kind.as_ref().unwrap().allowed_tokens()
@@ -117,6 +119,10 @@ impl<'a> ParsedByToken<'a, OutputExpression<'a>> for OutputExpression<'a> {
                 .flatten()
                 .collect()
         }
+    }
+
+    fn required_tokens(&self) -> Vec<TokenKind<'a>> { 
+        todo!() 
     }
 
     fn starts_with_tokens() -> Vec<TokenKind<'static>> {

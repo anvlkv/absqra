@@ -21,15 +21,21 @@ impl<'a> ParsedByToken<'a, LogicExpression<'a>> for LogicExpression<'a> {
         //     ])
         // }
     }
+
     fn append_token(self, token: RaToken<'a>) -> Result<Box<LogicExpression<'a>>, Vec<ParserError>> { 
         let LogicExpression(left, op, next) = self.clone();
 
         todo!(" implement me! ");
     }
+
     fn allowed_tokens(&self) -> Vec<TokenKind<'a>> { 
         let LogicExpression(left, op, next) = self;
 
         todo!(" implement me! ");
+    }
+
+    fn required_tokens(&self) -> Vec<TokenKind<'a>> { 
+        todo!() 
     }
 
     fn starts_with_tokens() -> Vec<TokenKind<'static>> { 

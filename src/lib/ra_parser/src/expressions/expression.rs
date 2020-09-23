@@ -1,5 +1,6 @@
 use ra_lexer::cursor::Position;
 use std::rc::Rc;
+use std::cmp::Ordering;
 
 use super::annotation_expression::AnnotationExpression;
 use super::content_expression::ContentExpression;
@@ -80,6 +81,18 @@ impl<'a> ParsedByToken<'a, ExpressionKind<'a>> for ExpressionKind<'a> {
             Self::ContentExpression(e) => e.allowed_tokens(),
         }
     }
+
+    fn required_tokens(&self) -> Vec<TokenKind<'a>> { 
+        match self {
+            Self::OutputExpression(e) => e.required_tokens(),
+            Self::InputExpression(e) => e.required_tokens(),
+            Self::ReferenceExpression(e) => e.required_tokens(),
+            Self::ContextExpression(e) => e.required_tokens(),
+            Self::AnnotationExpression(e) => e.required_tokens(),
+            Self::ContentExpression(e) => e.required_tokens(),
+        }
+    }
+
     fn starts_with_tokens() -> Vec<TokenKind<'a>> {
         let mut all_tokens = Vec::new();
 
@@ -225,6 +238,34 @@ impl<'a> ParsedByToken<'a, Expression<'a>> for Expression<'a> {
                 .map(|k| k.allowed_tokens())
                 .flatten()
                 .collect()
+        }
+    }
+
+    fn required_tokens(&self) -> Vec<TokenKind<'a>> {
+        if self.kind.is_some() {
+            self.kind.as_ref().unwrap().required_tokens()
+        } else {
+            let mut all_required = self.buffer
+                .iter()
+                .map(|k| k.required_tokens())
+                .collect::<Vec<Vec<TokenKind<'a>>>>();
+                
+                all_required.sort_by(|a, b| {
+                    if a.len() > b.len() {
+                        Ordering::Greater
+                    }
+                    else if a.len() < b.len() {
+                        Ordering::Less
+                    }
+                    else {
+                        Ordering::Equal
+                    }
+                });
+
+            all_required
+                .first()
+                .unwrap_or(vec![])
+                .clone()
         }
     }
 

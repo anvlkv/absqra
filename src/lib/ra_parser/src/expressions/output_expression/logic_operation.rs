@@ -158,6 +158,7 @@ impl<'a> ParsedByToken<'a, LogicOperation> for LogicOperation {
             }
         }
     }
+
     fn allowed_tokens(&self) -> Vec<TokenKind<'a>> {
         match self.kind {
             Some(_) => vec![],
@@ -179,6 +180,11 @@ impl<'a> ParsedByToken<'a, LogicOperation> for LogicOperation {
             }
         }
     }
+
+    fn required_tokens(&self) -> Vec<TokenKind<'a>> { 
+        todo!() 
+    }
+    
     fn starts_with_tokens() -> Vec<TokenKind<'a>> {
         vec![
             TokenKind::Ampersand,

@@ -21,6 +21,7 @@ impl<'a> ParsedByToken<'a, GroupingExpression<'a>> for GroupingExpression<'a> {
         //     ])
         // }
     }
+
     fn append_token(self, token: RaToken<'a>) -> Result<Box<GroupingExpression<'a>>, Vec<ParserError>> { 
         todo!("implement me");
         // let GroupingExpression(mut left, mut right, mut closed) = self;
@@ -69,6 +70,7 @@ impl<'a> ParsedByToken<'a, GroupingExpression<'a>> for GroupingExpression<'a> {
         //     Ok(Box::new(Self(left, right, closed)))
         // }
     }
+
     fn allowed_tokens(&self) -> Vec<TokenKind<'a>> {
         todo!("implement me");
         // let GroupingExpression(left, right, closed) = self;
@@ -89,6 +91,10 @@ impl<'a> ParsedByToken<'a, GroupingExpression<'a>> for GroupingExpression<'a> {
         // else {
         //     OutputExpression::starts_with_tokens()
         // }
+    }
+
+    fn required_tokens(&self) -> Vec<TokenKind<'a>> { 
+        todo!() 
     }
 
     fn starts_with_tokens() -> Vec<TokenKind<'static>> { 
