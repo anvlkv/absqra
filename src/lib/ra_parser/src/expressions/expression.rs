@@ -245,27 +245,7 @@ impl<'a> ParsedByToken<'a, Expression<'a>> for Expression<'a> {
         if self.kind.is_some() {
             self.kind.as_ref().unwrap().required_tokens()
         } else {
-            let mut all_required = self.buffer
-                .iter()
-                .map(|k| k.required_tokens())
-                .collect::<Vec<Vec<TokenKind<'a>>>>();
-                
-                all_required.sort_by(|a, b| {
-                    if a.len() > b.len() {
-                        Ordering::Greater
-                    }
-                    else if a.len() < b.len() {
-                        Ordering::Less
-                    }
-                    else {
-                        Ordering::Equal
-                    }
-                });
-
-            all_required
-                .first()
-                .unwrap_or(&vec![])
-                .clone()
+            self.min_required_tokens()
         }
     }
 

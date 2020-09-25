@@ -147,7 +147,13 @@ impl<'a> ParsedByToken<'a, OutputExpressionKind<'a>> for OutputExpressionKind<'a
     }
 
     fn required_tokens(&self) -> Vec<TokenKind<'a>> { 
-        todo!() 
+        match self {
+            Self::ProcedureExpression(exp) => exp.required_tokens(),
+            Self::MathExpression(exp) => exp.required_tokens(),
+            Self::LogicExpression(exp) => exp.required_tokens(),
+            Self::GroupingExpression(exp) => exp.required_tokens(),
+            Self::Buffer(_) => self.min_required_tokens(),
+        }
     }
 
     fn starts_with_tokens() -> Vec<TokenKind<'a>> {

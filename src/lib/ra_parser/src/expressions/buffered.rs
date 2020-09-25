@@ -1,5 +1,5 @@
 use super::*;
-
+use std::cmp::Ordering;
 pub type Buffer<T> = Vec<Rc<T>>;
 
 pub(crate) trait Buffered<'a, T>: ParsedByToken<'a, T>
@@ -40,5 +40,29 @@ where
 
     fn finalize(self) -> Result<Box<T>, Vec<ParserError>> {
         todo!()
+    }
+
+    fn min_required_tokens(&self) -> Vec<TokenKind<'a>>{
+            let mut all_required = self.get_buffer()
+                .iter()
+                .map(|k| k.required_tokens())
+                .collect::<Vec<Vec<TokenKind<'a>>>>();
+                
+                all_required.sort_by(|a, b| {
+                    if a.len() > b.len() {
+                        Ordering::Greater
+                    }
+                    else if a.len() < b.len() {
+                        Ordering::Less
+                    }
+                    else {
+                        Ordering::Equal
+                    }
+                });
+
+            all_required
+                .first()
+                .unwrap_or(&vec![])
+                .clone()
     }
 }
