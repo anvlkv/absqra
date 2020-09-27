@@ -122,7 +122,11 @@ impl<'a> ParsedByToken<'a, OutputExpression<'a>> for OutputExpression<'a> {
     }
 
     fn required_tokens(&self) -> Vec<TokenKind<'a>> { 
-        todo!() 
+        if self.kind.is_some() {
+            self.kind.as_ref().unwrap().required_tokens()
+        } else {
+            self.min_required_tokens()
+        }
     }
 
     fn starts_with_tokens() -> Vec<TokenKind<'static>> {
