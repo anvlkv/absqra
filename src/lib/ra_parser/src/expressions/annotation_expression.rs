@@ -6,8 +6,8 @@ pub struct AnnotationExpression<'a>(
     pub Option<Option<Box<AnnotationExpression<'a>>>>,
 );
 
-impl<'a> ParsedByToken<'a, AnnotationExpression<'a>> for AnnotationExpression<'a> {
-    fn new(token: RaToken<'a>) -> Result<Box<AnnotationExpression<'a>>, Vec<ParserError>> {
+impl<'a> ParsedByToken<'a> for AnnotationExpression<'a> {
+    fn new_from_token(token: RaToken<'a>) -> Result<Box<AnnotationExpression<'a>>, Vec<ParserError>> {
         match token.kind {
             TokenKind::HashPound => Ok(Box::new(Self(None, None))),
             _ => Err(vec![ParserError::ExpectedAGotB(

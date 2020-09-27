@@ -41,9 +41,9 @@ impl<'a> Block<'a> {
     }
 }
 
-impl<'a> ParsedByToken<'a, Block<'a>> for Block<'a> {
-    fn new(token: RaToken<'a>) -> Result<Box<Self>, Vec<ParserError>> {
-        let expression = Expression::new(token)?;
+impl<'a> ParsedByToken<'a> for Block<'a> {
+    fn new_from_token(token: RaToken<'a>) -> Result<Box<Self>, Vec<ParserError>> {
+        let expression = Expression::new_from_token(token)?;
         Ok(Box::new(Self {
             kind: BlockKind::Expression(*expression),
             level: token.level,
@@ -76,7 +76,7 @@ impl<'a> ParsedByToken<'a, Block<'a>> for Block<'a> {
                             ..self
                         }))
                     } else {
-                        children.push(Self::new(token)?);
+                        children.push(Self::new_from_token(token)?);
                         Ok(Box::new(Self {
                             children,
                             kind: BlockKind::Expression(old_expression),
@@ -107,7 +107,7 @@ impl<'a> ParsedByToken<'a, Block<'a>> for Block<'a> {
                     children.push(child);
                     Ok(Box::new(Self { children, ..self }))
                 } else {
-                    children.push(Block::new(token)?);
+                    children.push(Block::new_from_token(token)?);
 
                     Ok(Box::new(Self { children, ..self }))
                 }

@@ -3,8 +3,8 @@ use super::*;
 #[derive(Serialize, Clone, Debug)]
 pub struct ContextExpression {}
 
-impl<'a> ParsedByToken<'a, ContextExpression> for ContextExpression {
-    fn new(token: RaToken<'a>) -> Result<Box<ContextExpression>, Vec<ParserError>> {
+impl<'a> ParsedByToken<'a> for ContextExpression {
+    fn new_from_token(token: RaToken<'a>) -> Result<Box<ContextExpression>, Vec<ParserError>> {
         todo!("implement new")
     }
 

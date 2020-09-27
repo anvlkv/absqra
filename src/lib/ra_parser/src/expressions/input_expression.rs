@@ -3,8 +3,8 @@ use super::*;
 #[derive(Serialize, Clone, Debug)]
 pub struct InputExpression {}
 
-impl<'a> ParsedByToken<'a, InputExpression> for InputExpression {
-    fn new(token: RaToken<'a>) -> Result<Box<InputExpression>, Vec<ParserError>> {
+impl<'a> ParsedByToken<'a> for InputExpression {
+    fn new_from_token(token: RaToken<'a>) -> Result<Box<InputExpression>, Vec<ParserError>> {
         todo!("implement new")
     }
     

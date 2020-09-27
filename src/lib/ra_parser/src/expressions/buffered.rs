@@ -2,13 +2,13 @@ use super::*;
 use std::cmp::Ordering;
 pub type Buffer<T> = Vec<Rc<T>>;
 
-pub(crate) trait Buffered<'a, T>: ParsedByToken<'a, T>
+pub(crate) trait Buffered<'a>: ParsedByToken<'a>
 where
-    T: ParsedByToken<'a, T>,
+    Self: ParsedByToken<'a>,
 {
-    fn new_candidates_from_token(token: &RaToken<'a>) -> Buffer<T>;
-    fn get_buffer(&self) -> Buffer<T>;
-    fn get_candidates_for_token(&self, token: &RaToken<'a>) -> Result<Buffer<T>, Vec<ParserError>> {
+    fn new_candidates_from_token(token: &RaToken<'a>) -> Buffer<Self>;
+    fn get_buffer(&self) -> Buffer<Self>;
+    fn get_candidates_for_token(&self, token: &RaToken<'a>) -> Result<Buffer<Self>, Vec<ParserError>> {
         let candidates = self.get_buffer().clone();
         let mut result = Vec::new();
         let mut errors = Vec::new();
@@ -38,31 +38,31 @@ where
         }
     }
 
-    fn finalize(self) -> Result<Box<T>, Vec<ParserError>> {
+    fn finalize(self) -> Result<Box<Self>, Vec<ParserError>> {
         todo!()
     }
 
     fn min_required_tokens(&self) -> Vec<TokenKind<'a>>{
-            let mut all_required = self.get_buffer()
-                .iter()
-                .map(|k| k.required_tokens())
-                .collect::<Vec<Vec<TokenKind<'a>>>>();
-                
-                all_required.sort_by(|a, b| {
-                    if a.len() > b.len() {
-                        Ordering::Greater
-                    }
-                    else if a.len() < b.len() {
-                        Ordering::Less
-                    }
-                    else {
-                        Ordering::Equal
-                    }
-                });
+        let mut all_required = self.get_buffer()
+            .iter()
+            .map(|k| k.required_tokens())
+            .collect::<Vec<Vec<TokenKind<'a>>>>();
+            
+            all_required.sort_by(|a, b| {
+                if a.len() > b.len() {
+                    Ordering::Greater
+                }
+                else if a.len() < b.len() {
+                    Ordering::Less
+                }
+                else {
+                    Ordering::Equal
+                }
+            });
 
-            all_required
-                .first()
-                .unwrap_or(&vec![])
-                .clone()
+        all_required
+            .first()
+            .unwrap_or(&vec![])
+            .clone()
     }
 }

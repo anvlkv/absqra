@@ -5,8 +5,8 @@ pub struct ReferenceExpression {
 
 }
 
-impl<'a> ParsedByToken<'a, ReferenceExpression> for ReferenceExpression {
-    fn new(token: RaToken<'a>) -> Result<Box<ReferenceExpression>, Vec<ParserError>> { 
+impl<'a> ParsedByToken<'a> for ReferenceExpression {
+    fn new_from_token(token: RaToken<'a>) -> Result<Box<ReferenceExpression>, Vec<ParserError>> { 
         todo!("implement new")
     }
 

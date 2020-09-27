@@ -6,7 +6,7 @@ use super::annotation_expression::AnnotationExpression;
 use super::content_expression::ContentExpression;
 use super::context_expression::ContextExpression;
 use super::input_expression::InputExpression;
-use super::output_expression::expression::OutputExpression;
+use super::output_expression::OutputExpression;
 use super::reference_expression::ReferenceExpression;
 
 
@@ -30,26 +30,26 @@ pub enum ExpressionKind<'a> {
     ContentExpression(ContentExpression),
 }
 
-impl<'a> ParsedByToken<'a, ExpressionKind<'a>> for ExpressionKind<'a> {
-    fn new(token: RaToken<'a>) -> Result<Box<Self>, Vec<ParserError>> {
+impl<'a> ParsedByToken<'a> for ExpressionKind<'a> {
+    fn new_from_token(token: RaToken<'a>) -> Result<Box<Self>, Vec<ParserError>> {
         Ok(Box::new(match token.kind {
             k if OutputExpression::starts_with_tokens().contains(&k) => {
-                Self::OutputExpression(*OutputExpression::new(token)?)
+                Self::OutputExpression(*OutputExpression::new_from_token(token)?)
             }
             k if InputExpression::starts_with_tokens().contains(&k) => {
-                Self::InputExpression(*InputExpression::new(token)?)
+                Self::InputExpression(*InputExpression::new_from_token(token)?)
             }
             k if ReferenceExpression::starts_with_tokens().contains(&k) => {
-                Self::ReferenceExpression(*ReferenceExpression::new(token)?)
+                Self::ReferenceExpression(*ReferenceExpression::new_from_token(token)?)
             }
             k if ContextExpression::starts_with_tokens().contains(&k) => {
-                Self::ContextExpression(*ContextExpression::new(token)?)
+                Self::ContextExpression(*ContextExpression::new_from_token(token)?)
             }
             k if AnnotationExpression::starts_with_tokens().contains(&k) => {
-                Self::AnnotationExpression(*AnnotationExpression::new(token)?)
+                Self::AnnotationExpression(*AnnotationExpression::new_from_token(token)?)
             }
             k if ContentExpression::starts_with_tokens().contains(&k) => {
-                Self::ContentExpression(*ContentExpression::new(token)?)
+                Self::ContentExpression(*ContentExpression::new_from_token(token)?)
             }
             k => {
                 return Err(vec![ParserError::ExpectedAGotB(
@@ -107,7 +107,7 @@ impl<'a> ParsedByToken<'a, ExpressionKind<'a>> for ExpressionKind<'a> {
     }
 }
 
-impl<'a> Buffered<'a, Expression<'a>> for Expression<'a> {
+impl<'a> Buffered<'a> for Expression<'a> {
     fn new_candidates_from_token(token: &RaToken<'a>) -> Buffer<Expression<'a>> {
         let mut errors = Vec::new();
         let mut kinds = Vec::new();
@@ -116,7 +116,7 @@ impl<'a> Buffered<'a, Expression<'a>> for Expression<'a> {
         repeat_kindly!(
             find,
             {
-                match ExpressionKind::new(token.clone()) {
+                match ExpressionKind::new_from_token(token.clone()) {
                     Ok(k) => kinds.push(k),
                     Err(e) => errors.extend(e),
                 }
@@ -144,8 +144,8 @@ impl<'a> Buffered<'a, Expression<'a>> for Expression<'a> {
     }
 }
 
-impl<'a> ParsedByToken<'a, Expression<'a>> for Expression<'a> {
-    fn new(token: RaToken<'a>) -> Result<Box<Expression<'a>>, Vec<ParserError>> {
+impl<'a> ParsedByToken<'a> for Expression<'a> {
+    fn new_from_token(token: RaToken<'a>) -> Result<Box<Expression<'a>>, Vec<ParserError>> {
         let mut errors = Vec::new();
 
         let candidates = Expression::new_candidates_from_token(&token);
