@@ -44,7 +44,7 @@ impl<'a> Block<'a> {
         match &self.kind {
             BlockKind::Program => false,
             BlockKind::Union(_) => (self.position.0).0 == (token.position.0).0,
-            BlockKind::Expression(exp) => (exp.position.0).0 == (token.position.0).0
+            BlockKind::Expression(exp) => (exp.position.0).0 == (token.position.0).0,
         }
     }
 
@@ -53,13 +53,17 @@ impl<'a> Block<'a> {
             BlockKind::Program => false,
             BlockKind::Union(_) => {
                 if self.children.last().is_some() {
-                    self.children.last().unwrap().belongs_to_sibling_expression(token)
-                }
-                else {
+                    self.children
+                        .last()
+                        .unwrap()
+                        .belongs_to_sibling_expression(token)
+                } else {
                     false
                 }
-            },
-            BlockKind::Expression(exp) => exp.level == token.level && !self.belongs_to_primary_expression(token)
+            }
+            BlockKind::Expression(exp) => {
+                exp.level == token.level && !self.belongs_to_primary_expression(token)
+            }
         }
     }
 
@@ -68,13 +72,15 @@ impl<'a> Block<'a> {
             BlockKind::Program => true,
             BlockKind::Union(_) => {
                 if self.children.last().is_some() {
-                    self.children.last().unwrap().belongs_to_child_expression(token)
-                }
-                else {
+                    self.children
+                        .last()
+                        .unwrap()
+                        .belongs_to_child_expression(token)
+                } else {
                     false
                 }
-            },
-            BlockKind::Expression(exp) => exp.level > token.level
+            }
+            BlockKind::Expression(exp) => exp.level > token.level,
         }
     }
 
@@ -116,23 +122,34 @@ impl<'a> ParsedByToken<'a> for Block<'a> {
             match self.kind {
                 BlockKind::Expression(old_expression) => {
                     let new_expression = old_expression.append_token(token)?;
-        
-                    Ok(Box::new(Self{
+
+                    Ok(Box::new(Self {
                         kind: BlockKind::Expression(*new_expression),
                         position: (self.position.0, token.position.1),
                         ..self
                     }))
-                },
-                BlockKind::Union(_) => {
-                    self.append_token_child(token)
-                },
-                BlockKind::Program => Err(vec![ParserError::InvalidBlock(Backtrace::new())])
+                }
+                BlockKind::Union(_) => self.append_token_child(token),
+                BlockKind::Program => Err(vec![ParserError::InvalidBlock(Backtrace::new())]),
             }
-        }
-        else if self.belongs_to_child_expression(&token) {
+        } else if self.belongs_to_child_expression(&token) {
             self.append_token_child(token)
-        }
-        else {
+        } else if self
+            .children
+            .iter()
+            .map(|ch| ch.belongs_to_sibling_expression(&token))
+            .collect::<Vec<bool>>()
+            .contains(&true)
+            || self.children.len() == 0
+        {
+            let mut children = self.children.clone();
+            children.push(Self::new_from_token(token)?);
+            Ok(Box::new(Self {
+                children,
+                position: (self.position.0, token.position.1),
+                ..self
+            }))
+        } else {
             Err(vec![ParserError::InvalidBlock(Backtrace::new())])
         }
     }
