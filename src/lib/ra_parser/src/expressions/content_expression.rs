@@ -22,7 +22,9 @@ impl<'a> ParsedByToken<'a> for ContentExpression {
     fn required_tokens(&self) -> Vec<TokenKind<'a>> {
         todo!("required_tokens");
     }
+}
 
+impl<'a> StartsWithTokens<'a> for ContentExpression {
     fn starts_with_tokens() -> Vec<TokenKind<'static>> { 
         vec![
             TokenKind::ContentBlock

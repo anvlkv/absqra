@@ -19,7 +19,9 @@ impl<'a> ParsedByToken<'a> for InputExpression {
     fn required_tokens(&self) -> Vec<TokenKind<'a>> { 
         todo!() 
     }
+}
 
+impl <'a> StartsWithTokens<'a> for InputExpression {
     fn starts_with_tokens() -> Vec<TokenKind<'static>> {
         vec![
             TokenKind::Plus,

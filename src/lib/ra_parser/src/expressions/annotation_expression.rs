@@ -82,7 +82,9 @@ impl<'a> ParsedByToken<'a> for AnnotationExpression<'a> {
             }
         }
     }
+}
 
+impl<'a> StartsWithTokens<'a> for AnnotationExpression<'a> {
     fn starts_with_tokens() -> Vec<TokenKind<'static>> {
         vec![TokenKind::HashPound]
     }

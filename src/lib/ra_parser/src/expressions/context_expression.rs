@@ -19,7 +19,9 @@ impl<'a> ParsedByToken<'a> for ContextExpression {
     fn required_tokens(&self) -> Vec<TokenKind<'a>> {
         todo!("implement required_tokens")
     }
+}
 
+impl <'a> StartsWithTokens<'a> for ContextExpression {
     fn starts_with_tokens() -> Vec<TokenKind<'static>> {
         vec![
             TokenKind::OpenCurlyBrace

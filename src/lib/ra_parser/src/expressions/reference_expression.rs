@@ -21,13 +21,14 @@ impl<'a> ParsedByToken<'a> for ReferenceExpression {
     fn required_tokens(&self) -> Vec<TokenKind<'a>> { 
         todo!() 
     }
+}
 
+impl<'a> StartsWithTokens<'a> for ReferenceExpression {
     fn starts_with_tokens() -> Vec<TokenKind<'static>> { 
         vec![
             TokenKind::At,
             TokenKind::Identifier(Default::default())
         ]
      }
-
 }
 

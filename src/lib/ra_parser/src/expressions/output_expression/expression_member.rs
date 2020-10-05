@@ -1,13 +1,22 @@
 use super::*;
-use super::logic_expression::LogicExpression;
-use super::grouping_expression::GroupingExpression;
-use super::operation_expression::MathExpression;
 
-#[derive(Serialize, Clone, Debug)]
-pub enum ExpressionMember<'a> {
+
+#[derive(Debug, Clone)]
+pub enum OutputExpressionMember<'a> {
     Identifier(RaToken<'a>),
     Literal(RaToken<'a>),
-    LogicExpression(LogicExpression<'a>),
-    GroupingExpression(GroupingExpression<'a>),
-    MathExpression(MathExpression<'a>)
+    // Group(),
+    // Operation(),
+    Buffer(Buffer<OutputExpressionMember<'a>>)
+}
+
+impl <'a> StartsWithTokens<'a> for OutputExpressionMember<'a> {
+    fn starts_with_tokens() -> Vec<TokenKind<'a>> { 
+        vec![
+            TokenKind::Identifier(Default::default()),
+            TokenKind::Int(Default::default()),
+            TokenKind::Float(Default::default()),
+            TokenKind::StringLiteral(Default::default()),
+        ]
+    }
 }
