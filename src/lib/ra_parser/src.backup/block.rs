@@ -174,7 +174,7 @@ impl<'a> Expandable<'a, Block<'a>, RaToken<'a>> for Block<'a> {
         let mut block = self.clone();
         match self.kind {
             BlockKind::Program | BlockKind::Union(_) | BlockKind::Content(_) => {
-                Err(ParserError::InvalidBlock)
+                Err(ParserError::InvalidBlock(Backtrace::new()))
             }
             BlockKind::Output(expression) => {
                 let updated_expression = expression.append_item(token)?;
@@ -222,7 +222,7 @@ impl<'a> Expandable<'a, Block<'a>, RaToken<'a>> for Block<'a> {
             }
             BlockKind::Declaration(declared_token) => {
                 if declared_token.is_some() {
-                    Err(ParserError::InvalidBlock)
+                    Err(ParserError::InvalidBlock(Backtrace::new()))
                 } else {
                     block.kind = BlockKind::Declaration(Some(token));
                     Ok(block)

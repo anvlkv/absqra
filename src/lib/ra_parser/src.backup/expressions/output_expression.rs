@@ -198,7 +198,7 @@ impl<'a> Expandable<'a, OutputExpression<'a>, RaToken<'a>> for OutputExpression<
                             None,
                         ))
                     } else {
-                        Err(ParserError::InvalidBlock)
+                        Err(ParserError::InvalidBlock(Backtrace::new()))
                     }
                 } else if expression.is_none() {
                     Ok(OutputExpression(
@@ -210,7 +210,7 @@ impl<'a> Expandable<'a, OutputExpression<'a>, RaToken<'a>> for OutputExpression<
                         None,
                     ))
                 } else {
-                    Err(ParserError::InvalidBlock)
+                    Err(ParserError::InvalidBlock(Backtrace::new()))
                 }
             }
             ExpressionMember::Literal(tok) => Ok(OutputExpression(

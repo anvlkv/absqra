@@ -126,14 +126,14 @@ impl<'a> ParsedByToken<'a> for Block<'a> {
                 BlockKind::Union(_) => {
                     self.append_token_child(token)
                 },
-                BlockKind::Program => Err(vec![ParserError::InvalidBlock])
+                BlockKind::Program => Err(vec![ParserError::InvalidBlock(Backtrace::new())])
             }
         }
         else if self.belongs_to_child_expression(&token) {
             self.append_token_child(token)
         }
         else {
-            Err(vec![ParserError::InvalidBlock])
+            Err(vec![ParserError::InvalidBlock(Backtrace::new())])
         }
     }
 

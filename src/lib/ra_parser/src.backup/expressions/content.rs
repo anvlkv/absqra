@@ -82,7 +82,7 @@ impl<'a> Content<'a> {
                                             }
                                             break;
                                         }
-                                        _ => return Err(ParserError::InvalidBlock),
+                                        _ => return Err(ParserError::InvalidBlock(Backtrace::new())),
                                     },
                                     _ => {
                                         token_buffer =

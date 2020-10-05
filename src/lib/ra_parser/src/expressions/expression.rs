@@ -136,7 +136,7 @@ impl<'a> ParsedByToken<'a> for Expression<'a> {
                     ..self
                 }))
             } else {
-                Err(vec![ParserError::InvalidBlock])
+                Err(vec![ParserError::InvalidBlock(Backtrace::new())])
             }
         }
     }

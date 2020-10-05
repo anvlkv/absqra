@@ -16,8 +16,8 @@ pub enum ParserError {
     UnexpectedEndOfInput(Position, Backtrace),
     #[fail(display = "Invalid expression at {}, \n {}", _0, _1)]
     InvalidExpression(Position, Backtrace),
-    #[fail(display = "Invalid block")]
-    InvalidBlock,
+    #[fail(display = "Invalid block {}", _0)]
+    InvalidBlock(Backtrace),
     #[fail(display = "LexerError: {}, \n {}", _0, _1)]
     LexerError(#[cause] LexerError, Backtrace),
     // #[fail(display = "Error chain: {}, caused by: {}", _1, _0)]
