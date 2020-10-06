@@ -1,0 +1,330 @@
+---
+source: src/lib/ra_lexer/src/tests.rs
+expression: tokens
+---
+[
+  {
+    "kind": {
+      "Identifier": "first_level"
+    },
+    "len": 11,
+    "content": "first_level",
+    "position": [
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        11
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Identifier": "first_level_child"
+    },
+    "len": 17,
+    "content": "first_level_child",
+    "position": [
+      [
+        2,
+        4
+      ],
+      [
+        2,
+        21
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Identifier": "first_level_child_child"
+    },
+    "len": 23,
+    "content": "first_level_child_child",
+    "position": [
+      [
+        3,
+        8
+      ],
+      [
+        3,
+        31
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "first_level_2nd_child"
+    },
+    "len": 21,
+    "content": "first_level_2nd_child",
+    "position": [
+      [
+        4,
+        4
+      ],
+      [
+        4,
+        25
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Identifier": "first_level_2nd_child_child"
+    },
+    "len": 27,
+    "content": "first_level_2nd_child_child",
+    "position": [
+      [
+        5,
+        8
+      ],
+      [
+        5,
+        35
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "another_first_level"
+    },
+    "len": 19,
+    "content": "another_first_level",
+    "position": [
+      [
+        6,
+        0
+      ],
+      [
+        6,
+        19
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Identifier": "another_first_level_child"
+    },
+    "len": 25,
+    "content": "another_first_level_child",
+    "position": [
+      [
+        7,
+        4
+      ],
+      [
+        7,
+        29
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Identifier": "another_first_level_child_child"
+    },
+    "len": 31,
+    "content": "another_first_level_child_child",
+    "position": [
+      [
+        8,
+        8
+      ],
+      [
+        8,
+        39
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "L0"
+    },
+    "len": 2,
+    "content": "L0",
+    "position": [
+      [
+        10,
+        0
+      ],
+      [
+        10,
+        2
+      ]
+    ],
+    "level": 0
+  },
+  {
+    "kind": {
+      "Identifier": "L1_0"
+    },
+    "len": 4,
+    "content": "L1_0",
+    "position": [
+      [
+        11,
+        4
+      ],
+      [
+        11,
+        8
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Identifier": "L2_0"
+    },
+    "len": 4,
+    "content": "L2_0",
+    "position": [
+      [
+        12,
+        8
+      ],
+      [
+        12,
+        12
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "L2_1"
+    },
+    "len": 4,
+    "content": "L2_1",
+    "position": [
+      [
+        13,
+        8
+      ],
+      [
+        13,
+        12
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "L1_1"
+    },
+    "len": 4,
+    "content": "L1_1",
+    "position": [
+      [
+        14,
+        4
+      ],
+      [
+        14,
+        8
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Identifier": "L1_2"
+    },
+    "len": 4,
+    "content": "L1_2",
+    "position": [
+      [
+        15,
+        4
+      ],
+      [
+        15,
+        8
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Identifier": "L2"
+    },
+    "len": 2,
+    "content": "L2",
+    "position": [
+      [
+        16,
+        8
+      ],
+      [
+        16,
+        10
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "L3"
+    },
+    "len": 2,
+    "content": "L3",
+    "position": [
+      [
+        17,
+        12
+      ],
+      [
+        17,
+        14
+      ]
+    ],
+    "level": 3
+  },
+  {
+    "kind": {
+      "Identifier": "L4"
+    },
+    "len": 2,
+    "content": "L4",
+    "position": [
+      [
+        18,
+        16
+      ],
+      [
+        18,
+        18
+      ]
+    ],
+    "level": 4
+  },
+  {
+    "kind": {
+      "Identifier": "L5"
+    },
+    "len": 2,
+    "content": "L5",
+    "position": [
+      [
+        19,
+        20
+      ],
+      [
+        19,
+        22
+      ]
+    ],
+    "level": 5
+  }
+]
