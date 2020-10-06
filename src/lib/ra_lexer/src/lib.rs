@@ -15,7 +15,7 @@ use errors::LexerError;
 use std::convert::TryInto;
 
 pub fn tokenize<'a>(input: &'a str) -> impl Iterator<Item = Result<RaToken<'a>, LexerError>> + 'a {
-    tokenize_cursor(Cursor::new(input, Position(1, 0), 0, 0)).map(|lexer_result| lexer_result?.try_into())
+    tokenize_cursor(Cursor::new(input, Position(1, 0), 1, 0)).map(|lexer_result| lexer_result?.try_into())
 }
 
 fn tokenize_cursor<'a>(mut cursor: Cursor<'a>) -> impl Iterator<Item = Result<Token<'a>, LexerError>> + 'a {

@@ -5,37 +5,37 @@ mod cursor {
     use super::{Cursor, Position};
     #[test]
     fn it_should_create() {
-        Cursor::new("abc", Position(1, 0), 0, 0);
+        Cursor::new("abc", Position(1, 0), 1, 0);
     }
 
     #[test]
     fn it_should_give_first_char() {
-        let cur = Cursor::new("abc", Position(1, 0), 0, 0);
+        let cur = Cursor::new("abc", Position(1, 0), 1, 0);
         assert_eq!(cur.first_ahead(), 'a');
     }
 
     #[test]
     fn it_should_give_second_char() {
-        let cur = Cursor::new("abc", Position(1, 0), 0, 0);
+        let cur = Cursor::new("abc", Position(1, 0), 1, 0);
         assert_eq!(cur.second_ahead(), 'b');
     }
 
     #[test]
     fn it_should_return_next_char() {
-        let mut cur = Cursor::new("a", Position(1, 0), 0, 0);
+        let mut cur = Cursor::new("a", Position(1, 0), 1, 0);
         assert_eq!(cur.bump().unwrap(), 'a');
     }
 
     #[test]
     fn it_should_return_none_at_end_of_input() {
-        let mut cur = Cursor::new("a", Position(1, 0), 0, 0);
+        let mut cur = Cursor::new("a", Position(1, 0), 1, 0);
         cur.bump();
         assert_eq!(cur.bump(), None);
     }
 
     #[test]
     fn it_should_confirm_eof() {
-        let mut cur = Cursor::new("a", Position(1, 0), 0, 0);
+        let mut cur = Cursor::new("a", Position(1, 0), 1, 0);
         cur.bump();
         cur.bump();
         cur.bump();
@@ -44,7 +44,7 @@ mod cursor {
 
     #[test]
     fn it_should_return_amount_of_consumed_symbols() {
-        let mut cur = Cursor::new("abc", Position(1, 0), 0, 0);
+        let mut cur = Cursor::new("abc", Position(1, 0), 1, 0);
         cur.bump();
         cur.bump();
         cur.bump();
@@ -53,13 +53,13 @@ mod cursor {
 
     #[test]
     fn it_should_not_panic_when_encountering_funny_characters() {
-        let mut cur = Cursor::new("🚬", Position(1, 0), 0, 0);
+        let mut cur = Cursor::new("🚬", Position(1, 0), 1, 0);
         assert_eq!(cur.bump().unwrap(), '🚬');
     }
 
     #[test]
     fn it_should_track_position() {
-        let mut cur = Cursor::new("abc\nSOME", Position(1, 0), 0, 0);
+        let mut cur = Cursor::new("abc\nSOME", Position(1, 0), 1, 0);
         assert_eq!(cur.bump().unwrap(), 'a');
         assert_eq!(cur.position, Position(1, 1));
         assert_eq!(cur.bump().unwrap(), 'b');
@@ -76,16 +76,16 @@ mod cursor {
 
     #[test]
     fn it_should_track_indent_level() {
-        let mut cur = Cursor::new("a\n\tb\n\t\tc\nd", Position(1, 0), 0, 0);
+        let mut cur = Cursor::new("a\n\tb\n\t\tc\nd", Position(1, 0), 1, 0);
         assert_eq!(cur.bump().unwrap(), 'a');
-        assert_eq!(cur.level, 0);
-        assert_eq!(cur.bump().unwrap(), 'b');
         assert_eq!(cur.level, 1);
-        assert_eq!(cur.bump().unwrap(), 'c');
+        assert_eq!(cur.bump().unwrap(), 'b');
         assert_eq!(cur.level, 2);
+        assert_eq!(cur.bump().unwrap(), 'c');
+        assert_eq!(cur.level, 3);
         assert_eq!(cur.position, Position(3, 3));
         assert_eq!(cur.bump().unwrap(), 'd');
-        assert_eq!(cur.level, 0);
+        assert_eq!(cur.level, 1);
     }
 }
 
@@ -112,7 +112,7 @@ mod lib {
                 content: "abc",
                 position: (Position(2, 1), Position(2, 4)),
                 len: 3,
-                level: 1,
+                level: 2,
             }
         )
     }
@@ -127,7 +127,7 @@ mod lib {
                 content: "abc",
                 position: (Position(1, 0), Position(1, 3)),
                 len: 3,
-                level: 0
+                level: 1
             }
         );
     }
@@ -154,7 +154,7 @@ mod lib {
                     content: "some",
                     len: 6,
                     position: (Position(1, 0), Position(1, 6)),
-                    level: 0
+                    level: 1
                 }
             )
         }
@@ -169,7 +169,7 @@ mod lib {
                     content: "some",
                     len: 6,
                     position: (Position(1, 0), Position(1, 6)),
-                    level: 0
+                    level: 1
                 }
             )
         }
@@ -186,7 +186,7 @@ mod lib {
                     content: "abc",
                     position: (Position(1, 0), Position(1, 5)),
                     len: 5,
-                    level: 0
+                    level: 1
                 }
             );
         }
@@ -200,7 +200,7 @@ mod lib {
                     content: "abc\nSOME",
                     position: (Position(1, 0), Position(2, 6)),
                     len: 12,
-                    level: 0
+                    level: 1
                 }
             );
         }
@@ -215,7 +215,7 @@ mod lib {
                     content: "\n* abc\n* SOME\n",
                     position: (Position(1, 0), Position(4, 2)),
                     len: 18,
-                    level: 0
+                    level: 1
                 }
             );
         }
@@ -230,7 +230,7 @@ mod lib {
                     content: "some",
                     position: (Position(1, 0), Position(1, 6)),
                     len: 6,
-                    level: 0
+                    level: 1
                 }
             );
 
@@ -241,7 +241,7 @@ mod lib {
                     content: "\n* abc\n* SOME\n",
                     position: (Position(3, 0), Position(6, 2)),
                     len: 18,
-                    level: 0
+                    level: 1
                 }
             );
         }
@@ -261,7 +261,7 @@ mod lib {
                     content: "123",
                     position: (Position(1, 0), Position(1, 3)),
                     len: 3,
-                    level: 0
+                    level: 1
                 }
             );
             match parsed.kind {
@@ -281,7 +281,7 @@ mod lib {
                     content: "123,321",
                     position: (Position(1, 0), Position(1, 7)),
                     len: 7,
-                    level: 0
+                    level: 1
                 }
             );
             match parsed.kind {
@@ -301,7 +301,7 @@ mod lib {
                     content: "123.321",
                     position: (Position(1, 0), Position(1, 7)),
                     len: 7,
-                    level: 0
+                    level: 1
                 }
             );
             match parsed.kind {
@@ -321,7 +321,7 @@ mod lib {
                     content: "123.321,456",
                     position: (Position(1, 0), Position(1, 11)),
                     len: 11,
-                    level: 0
+                    level: 1
                 }
             );
 
@@ -342,7 +342,7 @@ mod lib {
                     content: "123.321.123,456",
                     position: (Position(1, 0), Position(1, 15)),
                     len: 15,
-                    level: 0
+                    level: 1
                 }
             );
 
@@ -363,7 +363,7 @@ mod lib {
                     content: "123,321,123.456",
                     position: (Position(1, 0), Position(1, 15)),
                     len: 15,
-                    level: 0
+                    level: 1
                 }
             );
 
@@ -396,7 +396,7 @@ mod lib {
                     content: "-123",
                     position: (Position(1, 0), Position(1, 4)),
                     len: 4,
-                    level: 0
+                    level: 1
                 }
             );
             match parsed.kind {
@@ -416,7 +416,7 @@ mod lib {
                     content: "-123.312",
                     position: (Position(1, 0), Position(1, 8)),
                     len: 8,
-                    level: 0
+                    level: 1
                 }
             );
             match parsed.kind {
@@ -440,7 +440,7 @@ mod lib {
                     content: "abc",
                     position: (Position(1, 0), Position(1, 5)),
                     len: 5,
-                    level: 0
+                    level: 1
                 }
             );
         }
@@ -455,7 +455,7 @@ mod lib {
                     content: "\n\tabc\n\t\tabc\n",
                     position: (Position(1, 0), Position(4, 1)),
                     len: 14,
-                    level: 0
+                    level: 1
                 }
             );
         }
@@ -484,7 +484,7 @@ mod lib {
                     kind: TokenKind::Exclamation,
                     position: (Position(1, 0), Position(1, 1)),
                     content: "!",
-                    level: 0,
+                    level: 1,
                     len: 1
                 }
             );
@@ -494,7 +494,7 @@ mod lib {
                     kind: TokenKind::Question,
                     position: (Position(1, 1), Position(1, 2)),
                     content: "?",
-                    level: 0,
+                    level: 1,
                     len: 1
                 }
             );
@@ -504,7 +504,7 @@ mod lib {
                     kind: TokenKind::Ampersand,
                     position: (Position(1, 2), Position(1, 3)),
                     content: "&",
-                    level: 0,
+                    level: 1,
                     len: 1
                 }
             );
@@ -514,7 +514,7 @@ mod lib {
                     kind: TokenKind::Slash,
                     position: (Position(1, 3), Position(1, 4)),
                     content: "/",
-                    level: 0,
+                    level: 1,
                     len: 1
                 }
             );
@@ -524,7 +524,7 @@ mod lib {
                     kind: TokenKind::HashPound,
                     position: (Position(1, 4), Position(1, 5)),
                     content: "#",
-                    level: 0,
+                    level: 1,
                     len: 1
                 }
             );
