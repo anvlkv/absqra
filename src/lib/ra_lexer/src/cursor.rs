@@ -76,7 +76,7 @@ pub fn is_end_of_line(c: &char) -> bool {
 impl <'a> Cursor<'a> {
     pub fn new(input: &'a str, position: Position, level: u16, indent_width: u16) -> Cursor<'a> {
         let initial_level = {
-            if level > 1 {
+            if level > 0 {
                 Some(level)
             }
             else {
@@ -134,14 +134,7 @@ impl <'a> Cursor<'a> {
                 if is_end_of_line(&ch) {
                     self.position.0 += 1;
                     self.consume_indent();
-                    self.position.1 = {
-                        if self.level > 1 {
-                            (self.level - 1) * self.indent_width
-                        }
-                        else {
-                            0
-                        }
-                    };
+                    self.position.1 = self.level * self.indent_width;
                     self.bump()
                 }
                 else {
@@ -196,14 +189,7 @@ impl <'a> Cursor<'a> {
             }
         }
         else {
-            self.level = {
-                if self.initial_level.is_some() {
-                    self.initial_level.unwrap()
-                }
-                else {
-                    1
-                }
-            };
+            self.level = 0;
         }
     }
 

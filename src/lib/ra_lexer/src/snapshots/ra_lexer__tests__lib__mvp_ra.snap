@@ -17,7 +17,7 @@ expression: tokens
         60
       ]
     ],
-    "level": 1
+    "level": 0
   },
   {
     "kind": {
@@ -35,7 +35,7 @@ expression: tokens
         11
       ]
     ],
-    "level": 1
+    "level": 0
   },
   {
     "kind": "Greater",
@@ -44,11 +44,11 @@ expression: tokens
     "position": [
       [
         4,
-        0
+        4
       ],
       [
         4,
-        1
+        5
       ]
     ],
     "level": 1
@@ -60,11 +60,11 @@ expression: tokens
     "position": [
       [
         5,
-        4
+        8
       ],
       [
         5,
-        5
+        9
       ]
     ],
     "level": 2
@@ -78,11 +78,11 @@ expression: tokens
     "position": [
       [
         5,
-        5
+        9
       ],
       [
         5,
-        11
+        15
       ]
     ],
     "level": 2
@@ -94,11 +94,11 @@ expression: tokens
     "position": [
       [
         5,
-        11
+        15
       ],
       [
         5,
-        12
+        16
       ]
     ],
     "level": 2
@@ -112,11 +112,11 @@ expression: tokens
     "position": [
       [
         5,
-        12
+        16
       ],
       [
         5,
-        20
+        24
       ]
     ],
     "level": 2
@@ -128,11 +128,11 @@ expression: tokens
     "position": [
       [
         6,
-        4
+        8
       ],
       [
         6,
-        5
+        9
       ]
     ],
     "level": 2
@@ -146,11 +146,11 @@ expression: tokens
     "position": [
       [
         6,
-        5
+        9
       ],
       [
         6,
-        12
+        16
       ]
     ],
     "level": 2
@@ -162,11 +162,11 @@ expression: tokens
     "position": [
       [
         6,
-        12
+        16
       ],
       [
         6,
-        13
+        17
       ]
     ],
     "level": 2
@@ -178,11 +178,11 @@ expression: tokens
     "position": [
       [
         7,
-        8
+        12
       ],
       [
         7,
-        22
+        26
       ]
     ],
     "level": 3
@@ -194,11 +194,11 @@ expression: tokens
     "position": [
       [
         8,
-        8
+        12
       ],
       [
         8,
-        31
+        35
       ]
     ],
     "level": 3
@@ -210,11 +210,11 @@ expression: tokens
     "position": [
       [
         9,
-        8
+        12
       ],
       [
         9,
-        11
+        15
       ]
     ],
     "level": 3
@@ -226,11 +226,11 @@ expression: tokens
     "position": [
       [
         10,
-        8
+        12
       ],
       [
         10,
-        11
+        15
       ]
     ],
     "level": 3
@@ -251,7 +251,7 @@ expression: tokens
         27
       ]
     ],
-    "level": 1
+    "level": 0
   },
   {
     "kind": "Greater",
@@ -260,11 +260,11 @@ expression: tokens
     "position": [
       [
         13,
-        0
+        4
       ],
       [
         13,
-        1
+        5
       ]
     ],
     "level": 1
@@ -276,11 +276,11 @@ expression: tokens
     "position": [
       [
         14,
-        4
+        8
       ],
       [
         14,
-        5
+        9
       ]
     ],
     "level": 2
@@ -294,11 +294,11 @@ expression: tokens
     "position": [
       [
         14,
-        5
+        9
       ],
       [
         14,
-        11
+        15
       ]
     ],
     "level": 2
@@ -310,11 +310,11 @@ expression: tokens
     "position": [
       [
         14,
-        11
+        15
       ],
       [
         14,
-        12
+        16
       ]
     ],
     "level": 2
@@ -328,11 +328,11 @@ expression: tokens
     "position": [
       [
         14,
-        12
+        16
       ],
       [
         14,
-        20
+        24
       ]
     ],
     "level": 2
@@ -344,11 +344,11 @@ expression: tokens
     "position": [
       [
         15,
-        4
+        8
       ],
       [
         15,
-        5
+        9
       ]
     ],
     "level": 2
@@ -362,11 +362,11 @@ expression: tokens
     "position": [
       [
         15,
-        5
+        9
       ],
       [
         15,
-        12
+        16
       ]
     ],
     "level": 2
@@ -378,11 +378,11 @@ expression: tokens
     "position": [
       [
         15,
-        12
+        16
       ],
       [
         15,
-        13
+        17
       ]
     ],
     "level": 2
@@ -394,11 +394,11 @@ expression: tokens
     "position": [
       [
         16,
-        8
+        12
       ],
       [
         16,
-        18
+        22
       ]
     ],
     "level": 3
@@ -410,11 +410,11 @@ expression: tokens
     "position": [
       [
         17,
-        8
+        12
       ],
       [
         17,
-        25
+        29
       ]
     ],
     "level": 3
@@ -426,11 +426,11 @@ expression: tokens
     "position": [
       [
         18,
-        8
+        12
       ],
       [
         18,
-        26
+        30
       ]
     ],
     "level": 3
@@ -442,11 +442,11 @@ expression: tokens
     "position": [
       [
         19,
-        8
+        12
       ],
       [
         19,
-        22
+        26
       ]
     ],
     "level": 3
@@ -458,11 +458,11 @@ expression: tokens
     "position": [
       [
         20,
-        8
+        12
       ],
       [
         20,
-        21
+        25
       ]
     ],
     "level": 3
@@ -474,11 +474,11 @@ expression: tokens
     "position": [
       [
         21,
-        8
+        12
       ],
       [
         21,
-        26
+        30
       ]
     ],
     "level": 3
@@ -490,11 +490,11 @@ expression: tokens
     "position": [
       [
         22,
-        8
+        12
       ],
       [
         22,
-        23
+        27
       ]
     ],
     "level": 3
@@ -515,7 +515,7 @@ expression: tokens
         15
       ]
     ],
-    "level": 1
+    "level": 0
   },
   {
     "kind": "Greater",
@@ -524,11 +524,11 @@ expression: tokens
     "position": [
       [
         25,
-        0
+        4
       ],
       [
         25,
-        1
+        5
       ]
     ],
     "level": 1
@@ -540,11 +540,11 @@ expression: tokens
     "position": [
       [
         26,
-        4
+        8
       ],
       [
         26,
-        5
+        9
       ]
     ],
     "level": 2
@@ -558,11 +558,11 @@ expression: tokens
     "position": [
       [
         26,
-        5
+        9
       ],
       [
         26,
-        11
+        15
       ]
     ],
     "level": 2
@@ -574,11 +574,11 @@ expression: tokens
     "position": [
       [
         26,
-        11
+        15
       ],
       [
         26,
-        12
+        16
       ]
     ],
     "level": 2
@@ -592,11 +592,11 @@ expression: tokens
     "position": [
       [
         26,
-        12
+        16
       ],
       [
         26,
-        20
+        24
       ]
     ],
     "level": 2
@@ -608,11 +608,11 @@ expression: tokens
     "position": [
       [
         27,
-        4
+        8
       ],
       [
         27,
-        5
+        9
       ]
     ],
     "level": 2
@@ -626,11 +626,11 @@ expression: tokens
     "position": [
       [
         27,
-        5
+        9
       ],
       [
         27,
-        12
+        16
       ]
     ],
     "level": 2
@@ -642,11 +642,11 @@ expression: tokens
     "position": [
       [
         27,
-        12
+        16
       ],
       [
         27,
-        13
+        17
       ]
     ],
     "level": 2
@@ -658,11 +658,11 @@ expression: tokens
     "position": [
       [
         28,
-        8
+        12
       ],
       [
         28,
-        24
+        28
       ]
     ],
     "level": 3
@@ -674,11 +674,11 @@ expression: tokens
     "position": [
       [
         29,
-        8
+        12
       ],
       [
         29,
-        23
+        27
       ]
     ],
     "level": 3
@@ -690,11 +690,11 @@ expression: tokens
     "position": [
       [
         30,
-        8
+        12
       ],
       [
         30,
-        70
+        74
       ]
     ],
     "level": 3
@@ -706,11 +706,11 @@ expression: tokens
     "position": [
       [
         31,
-        8
+        12
       ],
       [
         31,
-        23
+        27
       ]
     ],
     "level": 3
@@ -722,11 +722,11 @@ expression: tokens
     "position": [
       [
         32,
-        8
+        12
       ],
       [
         32,
-        21
+        25
       ]
     ],
     "level": 3
