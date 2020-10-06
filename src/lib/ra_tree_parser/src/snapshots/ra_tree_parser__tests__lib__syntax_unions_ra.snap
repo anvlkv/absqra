@@ -1,0 +1,19 @@
+---
+source: src/lib/ra_tree_parser/src/tests.rs
+expression: tree
+---
+{
+  "tokens": [],
+  "level": 0,
+  "position": [
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      0
+    ]
+  ],
+  "children": []
+}

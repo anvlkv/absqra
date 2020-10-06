@@ -1,0 +1,1927 @@
+---
+source: src/lib/ra_tree_parser/src/tests.rs
+expression: tree
+---
+{
+  "tokens": [],
+  "level": 0,
+  "position": [
+    [
+      0,
+      0
+    ],
+    [
+      57,
+      1
+    ]
+  ],
+  "children": [
+    {
+      "tokens": [
+        {
+          "kind": "Colon",
+          "len": 1,
+          "content": ":",
+          "position": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "level": 1
+        },
+        {
+          "kind": {
+            "Identifier": "navigationItems"
+          },
+          "len": 15,
+          "content": "navigationItems",
+          "position": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              16
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          16
+        ]
+      ],
+      "children": []
+    },
+    {
+      "tokens": [
+        {
+          "kind": {
+            "Identifier": "meals"
+          },
+          "len": 5,
+          "content": "meals",
+          "position": [
+            [
+              2,
+              0
+            ],
+            [
+              2,
+              5
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          2,
+          0
+        ],
+        [
+          8,
+          5
+        ]
+      ],
+      "children": [
+        {
+          "tokens": [
+            {
+              "kind": "HashPound",
+              "len": 1,
+              "content": "#",
+              "position": [
+                [
+                  3,
+                  4
+                ],
+                [
+                  3,
+                  5
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "ln"
+              },
+              "len": 2,
+              "content": "ln",
+              "position": [
+                [
+                  3,
+                  5
+                ],
+                [
+                  3,
+                  7
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "Colon",
+              "len": 1,
+              "content": ":",
+              "position": [
+                [
+                  3,
+                  7
+                ],
+                [
+                  3,
+                  8
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "en"
+              },
+              "len": 2,
+              "content": "en",
+              "position": [
+                [
+                  3,
+                  8
+                ],
+                [
+                  3,
+                  10
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "ContentBlock",
+              "len": 29,
+              "content": "\n            Meals\n        ",
+              "position": [
+                [
+                  3,
+                  10
+                ],
+                [
+                  5,
+                  5
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              3,
+              4
+            ],
+            [
+              5,
+              5
+            ]
+          ],
+          "children": []
+        },
+        {
+          "tokens": [
+            {
+              "kind": "HashPound",
+              "len": 1,
+              "content": "#",
+              "position": [
+                [
+                  6,
+                  4
+                ],
+                [
+                  6,
+                  5
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "ln"
+              },
+              "len": 2,
+              "content": "ln",
+              "position": [
+                [
+                  6,
+                  5
+                ],
+                [
+                  6,
+                  7
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "Colon",
+              "len": 1,
+              "content": ":",
+              "position": [
+                [
+                  6,
+                  7
+                ],
+                [
+                  6,
+                  8
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "ru"
+              },
+              "len": 2,
+              "content": "ru",
+              "position": [
+                [
+                  6,
+                  8
+                ],
+                [
+                  6,
+                  10
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "ContentBlock",
+              "len": 34,
+              "content": "\n            Блюда\n        ",
+              "position": [
+                [
+                  6,
+                  10
+                ],
+                [
+                  8,
+                  5
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              6,
+              4
+            ],
+            [
+              8,
+              5
+            ]
+          ],
+          "children": []
+        }
+      ]
+    },
+    {
+      "tokens": [
+        {
+          "kind": {
+            "Identifier": "countries"
+          },
+          "len": 9,
+          "content": "countries",
+          "position": [
+            [
+              9,
+              0
+            ],
+            [
+              9,
+              9
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          9,
+          0
+        ],
+        [
+          15,
+          5
+        ]
+      ],
+      "children": [
+        {
+          "tokens": [
+            {
+              "kind": "HashPound",
+              "len": 1,
+              "content": "#",
+              "position": [
+                [
+                  10,
+                  4
+                ],
+                [
+                  10,
+                  5
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "ln"
+              },
+              "len": 2,
+              "content": "ln",
+              "position": [
+                [
+                  10,
+                  5
+                ],
+                [
+                  10,
+                  7
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "Colon",
+              "len": 1,
+              "content": ":",
+              "position": [
+                [
+                  10,
+                  7
+                ],
+                [
+                  10,
+                  8
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "en"
+              },
+              "len": 2,
+              "content": "en",
+              "position": [
+                [
+                  10,
+                  8
+                ],
+                [
+                  10,
+                  10
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "ContentBlock",
+              "len": 33,
+              "content": "\n            Countries\n        ",
+              "position": [
+                [
+                  10,
+                  10
+                ],
+                [
+                  12,
+                  5
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              10,
+              4
+            ],
+            [
+              12,
+              5
+            ]
+          ],
+          "children": []
+        },
+        {
+          "tokens": [
+            {
+              "kind": "HashPound",
+              "len": 1,
+              "content": "#",
+              "position": [
+                [
+                  13,
+                  4
+                ],
+                [
+                  13,
+                  5
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "ln"
+              },
+              "len": 2,
+              "content": "ln",
+              "position": [
+                [
+                  13,
+                  5
+                ],
+                [
+                  13,
+                  7
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "Colon",
+              "len": 1,
+              "content": ":",
+              "position": [
+                [
+                  13,
+                  7
+                ],
+                [
+                  13,
+                  8
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "ru"
+              },
+              "len": 2,
+              "content": "ru",
+              "position": [
+                [
+                  13,
+                  8
+                ],
+                [
+                  13,
+                  10
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "ContentBlock",
+              "len": 59,
+              "content": "\n            Национальные кухни\n        ",
+              "position": [
+                [
+                  13,
+                  10
+                ],
+                [
+                  15,
+                  5
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              13,
+              4
+            ],
+            [
+              15,
+              5
+            ]
+          ],
+          "children": []
+        }
+      ]
+    },
+    {
+      "tokens": [
+        {
+          "kind": {
+            "Identifier": "restrictions"
+          },
+          "len": 12,
+          "content": "restrictions",
+          "position": [
+            [
+              16,
+              0
+            ],
+            [
+              16,
+              12
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          16,
+          0
+        ],
+        [
+          22,
+          5
+        ]
+      ],
+      "children": [
+        {
+          "tokens": [
+            {
+              "kind": "HashPound",
+              "len": 1,
+              "content": "#",
+              "position": [
+                [
+                  17,
+                  4
+                ],
+                [
+                  17,
+                  5
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "ln"
+              },
+              "len": 2,
+              "content": "ln",
+              "position": [
+                [
+                  17,
+                  5
+                ],
+                [
+                  17,
+                  7
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "Colon",
+              "len": 1,
+              "content": ":",
+              "position": [
+                [
+                  17,
+                  7
+                ],
+                [
+                  17,
+                  8
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "ru"
+              },
+              "len": 2,
+              "content": "ru",
+              "position": [
+                [
+                  17,
+                  8
+                ],
+                [
+                  17,
+                  10
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "ContentBlock",
+              "len": 35,
+              "content": "\n            Preferences\n        ",
+              "position": [
+                [
+                  17,
+                  10
+                ],
+                [
+                  19,
+                  5
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              17,
+              4
+            ],
+            [
+              19,
+              5
+            ]
+          ],
+          "children": []
+        },
+        {
+          "tokens": [
+            {
+              "kind": "HashPound",
+              "len": 1,
+              "content": "#",
+              "position": [
+                [
+                  20,
+                  4
+                ],
+                [
+                  20,
+                  5
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "ln"
+              },
+              "len": 2,
+              "content": "ln",
+              "position": [
+                [
+                  20,
+                  5
+                ],
+                [
+                  20,
+                  7
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "Colon",
+              "len": 1,
+              "content": ":",
+              "position": [
+                [
+                  20,
+                  7
+                ],
+                [
+                  20,
+                  8
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "ru"
+              },
+              "len": 2,
+              "content": "ru",
+              "position": [
+                [
+                  20,
+                  8
+                ],
+                [
+                  20,
+                  10
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "ContentBlock",
+              "len": 48,
+              "content": "\n            Предпочтения\n        ",
+              "position": [
+                [
+                  20,
+                  10
+                ],
+                [
+                  22,
+                  5
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              20,
+              4
+            ],
+            [
+              22,
+              5
+            ]
+          ],
+          "children": []
+        }
+      ]
+    },
+    {
+      "tokens": [
+        {
+          "kind": "Colon",
+          "len": 1,
+          "content": ":",
+          "position": [
+            [
+              24,
+              0
+            ],
+            [
+              24,
+              1
+            ]
+          ],
+          "level": 1
+        },
+        {
+          "kind": {
+            "Identifier": "userItems"
+          },
+          "len": 9,
+          "content": "userItems",
+          "position": [
+            [
+              24,
+              1
+            ],
+            [
+              24,
+              10
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          24,
+          0
+        ],
+        [
+          24,
+          10
+        ]
+      ],
+      "children": []
+    },
+    {
+      "tokens": [
+        {
+          "kind": {
+            "Identifier": "addRecipe"
+          },
+          "len": 9,
+          "content": "addRecipe",
+          "position": [
+            [
+              25,
+              0
+            ],
+            [
+              25,
+              9
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          25,
+          0
+        ],
+        [
+          34,
+          5
+        ]
+      ],
+      "children": [
+        {
+          "tokens": [
+            {
+              "kind": "HashPound",
+              "len": 1,
+              "content": "#",
+              "position": [
+                [
+                  26,
+                  4
+                ],
+                [
+                  26,
+                  5
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "kind"
+              },
+              "len": 4,
+              "content": "kind",
+              "position": [
+                [
+                  26,
+                  5
+                ],
+                [
+                  26,
+                  9
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "Colon",
+              "len": 1,
+              "content": ":",
+              "position": [
+                [
+                  26,
+                  9
+                ],
+                [
+                  26,
+                  10
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "image"
+              },
+              "len": 5,
+              "content": "image",
+              "position": [
+                [
+                  26,
+                  10
+                ],
+                [
+                  26,
+                  15
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "ContentBlock",
+              "len": 44,
+              "content": "\n            http://path.to.image\n        ",
+              "position": [
+                [
+                  26,
+                  15
+                ],
+                [
+                  28,
+                  5
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              26,
+              4
+            ],
+            [
+              28,
+              5
+            ]
+          ],
+          "children": []
+        },
+        {
+          "tokens": [
+            {
+              "kind": "Coma",
+              "len": 1,
+              "content": ",",
+              "position": [
+                [
+                  28,
+                  5
+                ],
+                [
+                  28,
+                  6
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              28,
+              5
+            ],
+            [
+              28,
+              6
+            ]
+          ],
+          "children": []
+        },
+        {
+          "tokens": [
+            {
+              "kind": "HashPound",
+              "len": 1,
+              "content": "#",
+              "position": [
+                [
+                  29,
+                  4
+                ],
+                [
+                  29,
+                  5
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "ln"
+              },
+              "len": 2,
+              "content": "ln",
+              "position": [
+                [
+                  29,
+                  5
+                ],
+                [
+                  29,
+                  7
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "Colon",
+              "len": 1,
+              "content": ":",
+              "position": [
+                [
+                  29,
+                  7
+                ],
+                [
+                  29,
+                  8
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "en"
+              },
+              "len": 2,
+              "content": "en",
+              "position": [
+                [
+                  29,
+                  8
+                ],
+                [
+                  29,
+                  10
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "ContentBlock",
+              "len": 34,
+              "content": "\n            Add recipe\n        ",
+              "position": [
+                [
+                  29,
+                  10
+                ],
+                [
+                  31,
+                  5
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              29,
+              4
+            ],
+            [
+              31,
+              5
+            ]
+          ],
+          "children": []
+        },
+        {
+          "tokens": [
+            {
+              "kind": "HashPound",
+              "len": 1,
+              "content": "#",
+              "position": [
+                [
+                  32,
+                  4
+                ],
+                [
+                  32,
+                  5
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "ln"
+              },
+              "len": 2,
+              "content": "ln",
+              "position": [
+                [
+                  32,
+                  5
+                ],
+                [
+                  32,
+                  7
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "Colon",
+              "len": 1,
+              "content": ":",
+              "position": [
+                [
+                  32,
+                  7
+                ],
+                [
+                  32,
+                  8
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "ru"
+              },
+              "len": 2,
+              "content": "ru",
+              "position": [
+                [
+                  32,
+                  8
+                ],
+                [
+                  32,
+                  10
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "ContentBlock",
+              "len": 53,
+              "content": "\n            Добавить рецепт\n        ",
+              "position": [
+                [
+                  32,
+                  10
+                ],
+                [
+                  34,
+                  5
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              32,
+              4
+            ],
+            [
+              34,
+              5
+            ]
+          ],
+          "children": []
+        }
+      ]
+    },
+    {
+      "tokens": [
+        {
+          "kind": {
+            "Identifier": "myAccount"
+          },
+          "len": 9,
+          "content": "myAccount",
+          "position": [
+            [
+              35,
+              0
+            ],
+            [
+              35,
+              9
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          35,
+          0
+        ],
+        [
+          41,
+          5
+        ]
+      ],
+      "children": [
+        {
+          "tokens": [
+            {
+              "kind": "HashPound",
+              "len": 1,
+              "content": "#",
+              "position": [
+                [
+                  36,
+                  4
+                ],
+                [
+                  36,
+                  5
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "ln"
+              },
+              "len": 2,
+              "content": "ln",
+              "position": [
+                [
+                  36,
+                  5
+                ],
+                [
+                  36,
+                  7
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "Colon",
+              "len": 1,
+              "content": ":",
+              "position": [
+                [
+                  36,
+                  7
+                ],
+                [
+                  36,
+                  8
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "en"
+              },
+              "len": 2,
+              "content": "en",
+              "position": [
+                [
+                  36,
+                  8
+                ],
+                [
+                  36,
+                  10
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "ContentBlock",
+              "len": 34,
+              "content": "\n            My account\n        ",
+              "position": [
+                [
+                  36,
+                  10
+                ],
+                [
+                  38,
+                  5
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              36,
+              4
+            ],
+            [
+              38,
+              5
+            ]
+          ],
+          "children": []
+        },
+        {
+          "tokens": [
+            {
+              "kind": "HashPound",
+              "len": 1,
+              "content": "#",
+              "position": [
+                [
+                  39,
+                  4
+                ],
+                [
+                  39,
+                  5
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "ln"
+              },
+              "len": 2,
+              "content": "ln",
+              "position": [
+                [
+                  39,
+                  5
+                ],
+                [
+                  39,
+                  7
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "Colon",
+              "len": 1,
+              "content": ":",
+              "position": [
+                [
+                  39,
+                  7
+                ],
+                [
+                  39,
+                  8
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "ru"
+              },
+              "len": 2,
+              "content": "ru",
+              "position": [
+                [
+                  39,
+                  8
+                ],
+                [
+                  39,
+                  10
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "ContentBlock",
+              "len": 45,
+              "content": "\n            Мой аккаунт\n        ",
+              "position": [
+                [
+                  39,
+                  10
+                ],
+                [
+                  41,
+                  5
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              39,
+              4
+            ],
+            [
+              41,
+              5
+            ]
+          ],
+          "children": []
+        }
+      ]
+    },
+    {
+      "tokens": [
+        {
+          "kind": "Colon",
+          "len": 1,
+          "content": ":",
+          "position": [
+            [
+              43,
+              0
+            ],
+            [
+              43,
+              1
+            ]
+          ],
+          "level": 1
+        },
+        {
+          "kind": {
+            "Identifier": "searchPlaceholder"
+          },
+          "len": 17,
+          "content": "searchPlaceholder",
+          "position": [
+            [
+              43,
+              1
+            ],
+            [
+              43,
+              18
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          43,
+          0
+        ],
+        [
+          43,
+          18
+        ]
+      ],
+      "children": []
+    },
+    {
+      "tokens": [
+        {
+          "kind": "HashPound",
+          "len": 1,
+          "content": "#",
+          "position": [
+            [
+              44,
+              0
+            ],
+            [
+              44,
+              1
+            ]
+          ],
+          "level": 1
+        },
+        {
+          "kind": {
+            "Identifier": "ln"
+          },
+          "len": 2,
+          "content": "ln",
+          "position": [
+            [
+              44,
+              1
+            ],
+            [
+              44,
+              3
+            ]
+          ],
+          "level": 1
+        },
+        {
+          "kind": "Colon",
+          "len": 1,
+          "content": ":",
+          "position": [
+            [
+              44,
+              3
+            ],
+            [
+              44,
+              4
+            ]
+          ],
+          "level": 1
+        },
+        {
+          "kind": {
+            "Identifier": "en"
+          },
+          "len": 2,
+          "content": "en",
+          "position": [
+            [
+              44,
+              4
+            ],
+            [
+              44,
+              6
+            ]
+          ],
+          "level": 1
+        },
+        {
+          "kind": "ContentBlock",
+          "len": 29,
+          "content": "\n        Find a recipe\n    ",
+          "position": [
+            [
+              44,
+              6
+            ],
+            [
+              46,
+              1
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          44,
+          0
+        ],
+        [
+          46,
+          1
+        ]
+      ],
+      "children": []
+    },
+    {
+      "tokens": [
+        {
+          "kind": "HashPound",
+          "len": 1,
+          "content": "#",
+          "position": [
+            [
+              47,
+              0
+            ],
+            [
+              47,
+              1
+            ]
+          ],
+          "level": 1
+        },
+        {
+          "kind": {
+            "Identifier": "ln"
+          },
+          "len": 2,
+          "content": "ln",
+          "position": [
+            [
+              47,
+              1
+            ],
+            [
+              47,
+              3
+            ]
+          ],
+          "level": 1
+        },
+        {
+          "kind": "Colon",
+          "len": 1,
+          "content": ":",
+          "position": [
+            [
+              47,
+              3
+            ],
+            [
+              47,
+              4
+            ]
+          ],
+          "level": 1
+        },
+        {
+          "kind": {
+            "Identifier": "ru"
+          },
+          "len": 2,
+          "content": "ru",
+          "position": [
+            [
+              47,
+              4
+            ],
+            [
+              47,
+              6
+            ]
+          ],
+          "level": 1
+        },
+        {
+          "kind": "ContentBlock",
+          "len": 39,
+          "content": "\n        Найти рецепт\n    ",
+          "position": [
+            [
+              47,
+              6
+            ],
+            [
+              49,
+              1
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          47,
+          0
+        ],
+        [
+          49,
+          1
+        ]
+      ],
+      "children": []
+    },
+    {
+      "tokens": [
+        {
+          "kind": "Colon",
+          "len": 1,
+          "content": ":",
+          "position": [
+            [
+              51,
+              0
+            ],
+            [
+              51,
+              1
+            ]
+          ],
+          "level": 1
+        },
+        {
+          "kind": {
+            "Identifier": "pictureLabel"
+          },
+          "len": 12,
+          "content": "pictureLabel",
+          "position": [
+            [
+              51,
+              1
+            ],
+            [
+              51,
+              13
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          51,
+          0
+        ],
+        [
+          51,
+          13
+        ]
+      ],
+      "children": []
+    },
+    {
+      "tokens": [
+        {
+          "kind": "HashPound",
+          "len": 1,
+          "content": "#",
+          "position": [
+            [
+              52,
+              0
+            ],
+            [
+              52,
+              1
+            ]
+          ],
+          "level": 1
+        },
+        {
+          "kind": {
+            "Identifier": "ln"
+          },
+          "len": 2,
+          "content": "ln",
+          "position": [
+            [
+              52,
+              1
+            ],
+            [
+              52,
+              3
+            ]
+          ],
+          "level": 1
+        },
+        {
+          "kind": "Colon",
+          "len": 1,
+          "content": ":",
+          "position": [
+            [
+              52,
+              3
+            ],
+            [
+              52,
+              4
+            ]
+          ],
+          "level": 1
+        },
+        {
+          "kind": {
+            "Identifier": "en"
+          },
+          "len": 2,
+          "content": "en",
+          "position": [
+            [
+              52,
+              4
+            ],
+            [
+              52,
+              6
+            ]
+          ],
+          "level": 1
+        },
+        {
+          "kind": "ContentBlock",
+          "len": 23,
+          "content": "\n        Picture\n    ",
+          "position": [
+            [
+              52,
+              6
+            ],
+            [
+              54,
+              1
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          52,
+          0
+        ],
+        [
+          54,
+          1
+        ]
+      ],
+      "children": []
+    },
+    {
+      "tokens": [
+        {
+          "kind": "HashPound",
+          "len": 1,
+          "content": "#",
+          "position": [
+            [
+              55,
+              0
+            ],
+            [
+              55,
+              1
+            ]
+          ],
+          "level": 1
+        },
+        {
+          "kind": {
+            "Identifier": "ln"
+          },
+          "len": 2,
+          "content": "ln",
+          "position": [
+            [
+              55,
+              1
+            ],
+            [
+              55,
+              3
+            ]
+          ],
+          "level": 1
+        },
+        {
+          "kind": "Colon",
+          "len": 1,
+          "content": ":",
+          "position": [
+            [
+              55,
+              3
+            ],
+            [
+              55,
+              4
+            ]
+          ],
+          "level": 1
+        },
+        {
+          "kind": {
+            "Identifier": "ru"
+          },
+          "len": 2,
+          "content": "ru",
+          "position": [
+            [
+              55,
+              4
+            ],
+            [
+              55,
+              6
+            ]
+          ],
+          "level": 1
+        },
+        {
+          "kind": "ContentBlock",
+          "len": 32,
+          "content": "\n        Картинка\n    ",
+          "position": [
+            [
+              55,
+              6
+            ],
+            [
+              57,
+              1
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          55,
+          0
+        ],
+        [
+          57,
+          1
+        ]
+      ],
+      "children": []
+    }
+  ]
+}

@@ -1,0 +1,640 @@
+---
+source: src/lib/ra_tree_parser/src/tests.rs
+expression: tree
+---
+{
+  "tokens": [],
+  "level": 0,
+  "position": [
+    [
+      0,
+      0
+    ],
+    [
+      19,
+      18
+    ]
+  ],
+  "children": [
+    {
+      "tokens": [
+        {
+          "kind": {
+            "Identifier": "first_level"
+          },
+          "len": 11,
+          "content": "first_level",
+          "position": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              11
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          11
+        ]
+      ],
+      "children": []
+    },
+    {
+      "tokens": [
+        {
+          "kind": {
+            "Identifier": "first_level_child"
+          },
+          "len": 17,
+          "content": "first_level_child",
+          "position": [
+            [
+              2,
+              0
+            ],
+            [
+              2,
+              17
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          27
+        ]
+      ],
+      "children": [
+        {
+          "tokens": [
+            {
+              "kind": {
+                "Identifier": "first_level_child_child"
+              },
+              "len": 23,
+              "content": "first_level_child_child",
+              "position": [
+                [
+                  3,
+                  4
+                ],
+                [
+                  3,
+                  27
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              3,
+              4
+            ],
+            [
+              3,
+              27
+            ]
+          ],
+          "children": []
+        }
+      ]
+    },
+    {
+      "tokens": [
+        {
+          "kind": {
+            "Identifier": "first_level_2nd_child"
+          },
+          "len": 21,
+          "content": "first_level_2nd_child",
+          "position": [
+            [
+              4,
+              0
+            ],
+            [
+              4,
+              21
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          4,
+          0
+        ],
+        [
+          5,
+          31
+        ]
+      ],
+      "children": [
+        {
+          "tokens": [
+            {
+              "kind": {
+                "Identifier": "first_level_2nd_child_child"
+              },
+              "len": 27,
+              "content": "first_level_2nd_child_child",
+              "position": [
+                [
+                  5,
+                  4
+                ],
+                [
+                  5,
+                  31
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              5,
+              4
+            ],
+            [
+              5,
+              31
+            ]
+          ],
+          "children": []
+        }
+      ]
+    },
+    {
+      "tokens": [
+        {
+          "kind": {
+            "Identifier": "another_first_level"
+          },
+          "len": 19,
+          "content": "another_first_level",
+          "position": [
+            [
+              6,
+              0
+            ],
+            [
+              6,
+              19
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          6,
+          0
+        ],
+        [
+          6,
+          19
+        ]
+      ],
+      "children": []
+    },
+    {
+      "tokens": [
+        {
+          "kind": {
+            "Identifier": "another_first_level_child"
+          },
+          "len": 25,
+          "content": "another_first_level_child",
+          "position": [
+            [
+              7,
+              0
+            ],
+            [
+              7,
+              25
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          7,
+          0
+        ],
+        [
+          8,
+          35
+        ]
+      ],
+      "children": [
+        {
+          "tokens": [
+            {
+              "kind": {
+                "Identifier": "another_first_level_child_child"
+              },
+              "len": 31,
+              "content": "another_first_level_child_child",
+              "position": [
+                [
+                  8,
+                  4
+                ],
+                [
+                  8,
+                  35
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              8,
+              4
+            ],
+            [
+              8,
+              35
+            ]
+          ],
+          "children": []
+        }
+      ]
+    },
+    {
+      "tokens": [
+        {
+          "kind": {
+            "Identifier": "L0"
+          },
+          "len": 2,
+          "content": "L0",
+          "position": [
+            [
+              10,
+              0
+            ],
+            [
+              10,
+              2
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          10,
+          0
+        ],
+        [
+          10,
+          2
+        ]
+      ],
+      "children": []
+    },
+    {
+      "tokens": [
+        {
+          "kind": {
+            "Identifier": "L1_0"
+          },
+          "len": 4,
+          "content": "L1_0",
+          "position": [
+            [
+              11,
+              0
+            ],
+            [
+              11,
+              4
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          11,
+          0
+        ],
+        [
+          13,
+          8
+        ]
+      ],
+      "children": [
+        {
+          "tokens": [
+            {
+              "kind": {
+                "Identifier": "L2_0"
+              },
+              "len": 4,
+              "content": "L2_0",
+              "position": [
+                [
+                  12,
+                  4
+                ],
+                [
+                  12,
+                  8
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              12,
+              4
+            ],
+            [
+              12,
+              8
+            ]
+          ],
+          "children": []
+        },
+        {
+          "tokens": [
+            {
+              "kind": {
+                "Identifier": "L2_1"
+              },
+              "len": 4,
+              "content": "L2_1",
+              "position": [
+                [
+                  13,
+                  4
+                ],
+                [
+                  13,
+                  8
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              13,
+              4
+            ],
+            [
+              13,
+              8
+            ]
+          ],
+          "children": []
+        }
+      ]
+    },
+    {
+      "tokens": [
+        {
+          "kind": {
+            "Identifier": "L1_1"
+          },
+          "len": 4,
+          "content": "L1_1",
+          "position": [
+            [
+              14,
+              0
+            ],
+            [
+              14,
+              4
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          14,
+          0
+        ],
+        [
+          14,
+          4
+        ]
+      ],
+      "children": []
+    },
+    {
+      "tokens": [
+        {
+          "kind": {
+            "Identifier": "L1_2"
+          },
+          "len": 4,
+          "content": "L1_2",
+          "position": [
+            [
+              15,
+              0
+            ],
+            [
+              15,
+              4
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          15,
+          0
+        ],
+        [
+          19,
+          18
+        ]
+      ],
+      "children": [
+        {
+          "tokens": [
+            {
+              "kind": {
+                "Identifier": "L2"
+              },
+              "len": 2,
+              "content": "L2",
+              "position": [
+                [
+                  16,
+                  4
+                ],
+                [
+                  16,
+                  6
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              16,
+              4
+            ],
+            [
+              19,
+              18
+            ]
+          ],
+          "children": [
+            {
+              "tokens": [
+                {
+                  "kind": {
+                    "Identifier": "L3"
+                  },
+                  "len": 2,
+                  "content": "L3",
+                  "position": [
+                    [
+                      17,
+                      8
+                    ],
+                    [
+                      17,
+                      10
+                    ]
+                  ],
+                  "level": 3
+                }
+              ],
+              "level": 3,
+              "position": [
+                [
+                  17,
+                  8
+                ],
+                [
+                  19,
+                  18
+                ]
+              ],
+              "children": [
+                {
+                  "tokens": [
+                    {
+                      "kind": {
+                        "Identifier": "L4"
+                      },
+                      "len": 2,
+                      "content": "L4",
+                      "position": [
+                        [
+                          18,
+                          12
+                        ],
+                        [
+                          18,
+                          14
+                        ]
+                      ],
+                      "level": 4
+                    }
+                  ],
+                  "level": 4,
+                  "position": [
+                    [
+                      18,
+                      12
+                    ],
+                    [
+                      19,
+                      18
+                    ]
+                  ],
+                  "children": [
+                    {
+                      "tokens": [
+                        {
+                          "kind": {
+                            "Identifier": "L5"
+                          },
+                          "len": 2,
+                          "content": "L5",
+                          "position": [
+                            [
+                              19,
+                              16
+                            ],
+                            [
+                              19,
+                              18
+                            ]
+                          ],
+                          "level": 5
+                        }
+                      ],
+                      "level": 5,
+                      "position": [
+                        [
+                          19,
+                          16
+                        ],
+                        [
+                          19,
+                          18
+                        ]
+                      ],
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

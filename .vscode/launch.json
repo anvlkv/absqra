@@ -75,6 +75,27 @@
         {
             "type": "lldb",
             "request": "launch",
+            "name": "Debug unit tests in library 'ra_tree_parser'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--package=ra_tree_parser"
+                ],
+                "filter": {
+                    "name": "ra_tree_parser",
+                    "kind": "lib"
+                }
+            },
+            "args": [
+                "${input:pickTest}"
+            ],
+            "cwd": "${workspaceFolder}/src/lib/ra_tree_parser"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
             "name": "Debug executable 'ra_interactive'",
             "cargo": {
                 "args": [
