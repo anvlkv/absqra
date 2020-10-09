@@ -10,6 +10,7 @@ use token::{TokenKind, RaToken};
 use tokenize::tokenize;
 use cursor::Cursor;
 use serde::Serialize;
+use failure::Backtrace;
 
 #[cfg(test)]
 mod tests;

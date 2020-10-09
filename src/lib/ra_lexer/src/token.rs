@@ -1,6 +1,6 @@
 use super::*;
-use core::convert::TryFrom;
-use cursor::{is_end_of_line, is_whitespace};
+use core::convert::{TryFrom, TryInto};
+use cursor::{is_end_of_line};
 
 
 #[derive(Serialize, Debug)]
@@ -56,9 +56,13 @@ impl RaToken {
             '/' => Self::new_comment(cursor),
             '`' => Self::new_content(cursor),
             '"' | '\'' => Self::new_string(cursor),
-            c if c.is_numeric() => Self::new_number(cursor),
-            c if c.is_alphabetic() || c == '_' => Self::new_identifier(cursor),
-            _ => Err(LexerError::UnexpectedCharacter(ch, cursor.position)),
+            c if c.is_numeric() 
+            || c == '-'
+            || c == ','
+            || c == '.'  => Self::new_number(cursor),
+            c if c.is_alphabetic() 
+            || c == '_'=> Self::new_identifier(cursor),
+            _ => Err(LexerError::UnexpectedCharacter(ch, cursor.position, Backtrace::new())),
         }
     }
 
@@ -154,10 +158,10 @@ impl RaToken {
                         position: (start_position, end_position),
                         level,
                     }),
-                    None => Err(LexerError::UnexpectedEndOfInput(start_position)),
+                    None => Err(LexerError::UnexpectedEndOfInput(start_position, Backtrace::new())),
                 }
             }
-            ch => Err(LexerError::UnexpectedCharacter(ch.clone(), start_position)),
+            ch => Err(LexerError::UnexpectedCharacter(ch.clone(), start_position, Backtrace::new())),
         }
     }
 
@@ -185,7 +189,7 @@ impl RaToken {
                 position: (start_position, end_position),
                 level,
             }),
-            None => Err(LexerError::UnexpectedEndOfInput(start_position))
+            None => Err(LexerError::UnexpectedEndOfInput(start_position, Backtrace::new()))
         }
     }
 
@@ -220,7 +224,7 @@ impl RaToken {
                 position: (start_position, end_position),
                 level,
             }),
-            None => Err(LexerError::UnexpectedEndOfInput(start_position))
+            None => Err(LexerError::UnexpectedEndOfInput(start_position, Backtrace::new()))
         }
     }
 
@@ -228,16 +232,33 @@ impl RaToken {
         let start_position = cursor.position.clone();
         let level = cursor.level.clone();
         let mut content = String::from(cursor.ch.unwrap());
-        let mut has_decimal_separator = false;
+        let mut parse_float = match cursor.ch.unwrap() {
+            '.'
+            | ',' => true,
+            _ => false
+        };
         let mut end_position = Position(0, 0);
         cursor.bump();
 
         while cursor.ch.is_some() {
-            match cursor.ch.unwrap() {
-                ch if ch.is_numeric() => content.push(cursor.ch.unwrap()),
+            let ch = cursor.ch.unwrap();
+            match ch {
+                c if c.is_numeric() => content.push(ch),
                 ',' | '.' => {
-                    has_decimal_separator = true;
+                    parse_float = true;
                     content.push('.');
+                },
+                'e' => {
+                    match cursor.first_ahead() {
+                        '-'
+                        |'+' =>  {
+                            content.push(ch);
+                            cursor.bump();
+                            content.push(cursor.ch.unwrap());
+                            parse_float = true;
+                        }
+                        ch => return Err(LexerError::UnexpectedCharacter(ch, cursor.position, Backtrace::new()))
+                    }
                 }
                 _ => break,
             }
@@ -245,13 +266,33 @@ impl RaToken {
             cursor.bump();
         }
 
-        if has_decimal_separator {
+        if parse_float {
             match content.parse::<f64>() {
-                Ok(num) => Ok(Self {
-                    kind: TokenKind::Float(num),
-                    position: (start_position, end_position),
-                    level,
-                }),
+                Ok(num) => {
+                    if num % 1.0 == 0.0 {
+                        match format!("{}", num).parse::<i64>() {
+                            Ok(num) => Ok(Self {
+                                kind: TokenKind::Int(num),
+                                position: (start_position, end_position),
+                                level,
+                            }),
+                            Err(_) => {
+                                Ok(Self {
+                                    kind: TokenKind::Float(num),
+                                    position: (start_position, end_position),
+                                    level,
+                                })        
+                            }
+                        }
+                    }
+                    else {
+                        Ok(Self {
+                            kind: TokenKind::Float(num),
+                            position: (start_position, end_position),
+                            level,
+                        })
+                    }
+                },
                 Err(e) => Err(LexerError::InvalidFloat(e, start_position)),
             }
         } else {
@@ -302,6 +343,19 @@ impl<'c> TryFrom<&mut Cursor<'c>> for RaToken {
                     '/' | '*' => Self::new_multi_char_token(cursor),
                     _ => Self::new_single_char_token(cursor, TokenKind::Slash),
                 },
+                '-'
+                |'.'
+                |',' => match cursor.first_ahead() {
+                    c if c.is_numeric() => Self::new_multi_char_token(cursor),
+                    _ => {
+                        match ch {
+                            '-' => Self::new_single_char_token(cursor, TokenKind::Minus),
+                            ',' => Self::new_single_char_token(cursor, TokenKind::Coma),
+                            '.' => Self::new_single_char_token(cursor, TokenKind::Dot),
+                            _ => panic!("what have you done!?")
+                        }
+                    }
+                },
                 '*' => Self::new_single_char_token(cursor, TokenKind::Asterisk),
                 '>' => Self::new_single_char_token(cursor, TokenKind::Greater),
                 '<' => Self::new_single_char_token(cursor, TokenKind::Less),
@@ -314,8 +368,6 @@ impl<'c> TryFrom<&mut Cursor<'c>> for RaToken {
                 ']' => Self::new_single_char_token(cursor, TokenKind::CloseSquareBrace),
                 ')' => Self::new_single_char_token(cursor, TokenKind::CloseParentheses),
                 ':' => Self::new_single_char_token(cursor, TokenKind::Colon),
-                ',' => Self::new_single_char_token(cursor, TokenKind::Coma),
-                '.' => Self::new_single_char_token(cursor, TokenKind::Dot),
                 '+' => Self::new_single_char_token(cursor, TokenKind::Plus),
                 '=' => Self::new_single_char_token(cursor, TokenKind::Equals),
                 ';' => Self::new_single_char_token(cursor, TokenKind::SemiColon),
@@ -328,13 +380,9 @@ impl<'c> TryFrom<&mut Cursor<'c>> for RaToken {
                 '$' => Self::new_single_char_token(cursor, TokenKind::Dollar),
                 '^' => Self::new_single_char_token(cursor, TokenKind::Power),
                 '~' => Self::new_single_char_token(cursor, TokenKind::Tilde),
-                '-' => match cursor.first_ahead() {
-                    c if c.is_numeric() => Self::new_multi_char_token(cursor),
-                    _ => Self::new_single_char_token(cursor, TokenKind::Minus),
-                },
                 _ => Self::new_multi_char_token(cursor),
             },
-            None => Err(LexerError::UnexpectedEndOfInput(cursor.position)),
+            None => Err(LexerError::UnexpectedEndOfInput(cursor.position, Backtrace::new())),
         }
     }
 }
