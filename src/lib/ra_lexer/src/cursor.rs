@@ -1,45 +1,21 @@
-use std::str::Chars;
-use std::fmt;
-use crate::errors::LexerError;
-use serde::{Serialize};
+use super::*;
+// use std::str::Chars;
+use std::convert::{TryInto, TryFrom};
 
-pub const EOF_CHAR: char = '\0';
-pub const EOL_CHAR: char = '\n';
-
-#[derive(Copy, Clone, PartialEq, Serialize)]
-pub struct Position(pub u16, pub u16);
-
-impl Default for Position {
-    fn default() -> Self {
-        Position(0, 0)
-    }
-}
-
-impl fmt::Debug for Position {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "[{}:{}]", self.0, self.1)
-    }
-}
-
-impl fmt::Display for Position {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "[{}:{}]", self.0, self.1)
-    }
-}
-
-pub struct Cursor<'a> {
-    input: &'a str,
-    initial_len: usize,
-    chars: Chars<'a>,
-    initial_level: Option<u16>,
+pub (crate) struct Cursor {
     pub position: Position,
     pub level: u16,
-    pub indent_width: u16,
+    pub ch: Option<char>,
+    pub is_line_start: bool,
+    input: String,
+    idx: usize,
+    indent_width: u8
 }
 
+pub (crate) const EOF_CHAR: char = '\0';
 
 /// True if `c` is considered a whitespace
-pub fn is_whitespace(c: &char) -> bool {
+pub (crate) fn is_whitespace(c: &char) -> bool {
     match c {
         // Usual ASCII suspects
         | '\u{0009}' // \t
@@ -56,7 +32,7 @@ pub fn is_whitespace(c: &char) -> bool {
 }
 
 /// True if `c` is considered an end of line
-pub fn is_end_of_line(c: &char) -> bool {
+pub (crate) fn is_end_of_line(c: &char) -> bool {
     match c {
         // Usual ASCII suspects
         | '\u{000A}' // \n
@@ -73,138 +49,100 @@ pub fn is_end_of_line(c: &char) -> bool {
     }
 }
 
-impl <'a> Cursor<'a> {
-    pub fn new(input: &'a str, position: Position, level: u16, indent_width: u16) -> Cursor<'a> {
-        let initial_level = {
-            if level > 0 {
-                Some(level)
-            }
-            else {
-                None
-            }
-        };
-
-        Cursor {
-            input,
-            initial_len: input.len(),
-            chars: input.chars(),
-            position,
-            level,
-            indent_width,
-            initial_level
-        }
-    }
-
-    /// Returns nth character relative to the current cursor position.
-    /// If requested position doesn't exist, `EOF_CHAR` is returned.
-    /// However, getting `EOF_CHAR` doesn't always mean actual end of file,
-    /// it should be checked with `is_eof` method.
-    fn nth_char(&self, n: usize) -> char {
-        match self.chars().nth(n).unwrap_or(EOF_CHAR) {
-            c if is_end_of_line(&c) => EOL_CHAR,
-            t => t
-        }
-    }
-
-    /// Returns a `Chars` iterator over the remaining characters.
-    fn chars(&self) -> Chars<'a> {
-        self.chars.clone()
-    }
-
-    /// Peeks the next symbol from the input stream without consuming it.
-    pub fn first_ahead(&self) -> char {
-        self.nth_char(0)
-    }
-
-    /// Peeks the second symbol from the input stream without consuming it.
-    pub fn second_ahead(&self) -> char {
-        self.nth_char(1)
-    }
-
-    /// Checks if there is nothing more to consume.
-    pub fn is_eof(&self) -> bool {
-        self.chars.as_str().trim().is_empty()
-    }
-
-    /// Moves to the next character.
-    pub fn bump(&mut self) -> Option<char> {
-        let character = self.chars.next();
-        match character {
+impl Cursor {
+    pub fn bump(&mut self) {
+        let idx = self.idx + 1;
+        match self.input.chars().nth(idx) {
             Some(ch) => {
+                self.idx = idx;
+                self.ch = Some(ch);
                 if is_end_of_line(&ch) {
                     self.position.0 += 1;
-                    self.consume_indent();
-                    self.position.1 = self.level * self.indent_width;
-                    self.bump()
+                    self.position.1 = 0;
+                    self.level();
                 }
                 else {
                     self.position.1 += 1;
-                    Some(ch)
+                    self.is_line_start = false;
                 }
+            }
+            None => {
+                self.ch = None;
+            }
+        }
+    }
+
+    fn level(&mut self) {
+        match self.first_ahead() {
+            EOF_CHAR => {
+                self.ch = None;
+            },
+            mut ch => {
+                let mut new_indent_width = None;
+                let mut new_level = None;
+                if is_whitespace(&ch) {
+                    let white_space_ch = ch.clone();
+                    while is_whitespace(&ch) && white_space_ch == ch {
+                        if self.indent_width == 0 {
+                            new_level = Some(self.level + 1);
+                            new_indent_width = Some((self.position.1).try_into().unwrap());
+                        }
+                        else {
+                            new_level = Some(self.position.1 / u16::from(self.indent_width));
+                        }
+
+                        self.bump();
+                        ch = self.first_ahead();
+                    }
+                }
+                else {
+                    self.bump();
+                }
+                self.level = new_level.unwrap_or(self.level);
+                if new_indent_width.is_some() {
+                    self.indent_width = new_indent_width.unwrap();
+                }
+                // self.ch = Some(ch);
+                // self.idx += 1;
+            }
+        }
+       
+        self.is_line_start = true;
+    }
+
+    pub fn first_ahead(&self) -> char {
+        self.input.chars().nth(self.idx + 1).unwrap_or(EOF_CHAR)
+    }
+}
+
+impl <'a> From<& 'a str> for Cursor {
+    fn from(input: & 'a str) -> Self { 
+        let ch = input.chars().nth(0);
+        Self {
+            input: input.to_owned(),
+            level: 1,
+            ch,
+            position: Position(1, 1),
+            is_line_start: true,
+            idx: 0,
+            indent_width: 0
+        }
+    }
+}
+
+impl Iterator for Cursor {
+    type Item = Result<RaToken, LexerError>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        match self.ch {
+            Some(ch) => match ch {
+                ch if is_whitespace(&ch) || is_end_of_line(&ch) => {
+                    self.bump();
+                    self.next()
+                },
+                _ => Some(RaToken::try_from(self))
             },
             None => None
         }
-    }
-
-    /// Returns amount of already consumed symbols.
-    pub fn len_consumed(&self) -> usize {
-        self.initial_len - self.chars.as_str().len()
-    }
-
-    pub fn slice(&self, start: usize, end: usize) -> &'a str {
-        &self.input[start..end]
-    }
-
-    /// Consumes indent level and returns indentation level
-    fn consume_indent(&mut self) {
-        if is_whitespace(&self.first_ahead()) {
-            if self.indent_width == 0 {
-                self.level = {
-                    if self.initial_level.is_some() {
-                        self.initial_level.unwrap()
-                    }
-                    else {
-                        1
-                    }
-                };
-
-                self.indent_width = self.eat_while(|c, _| is_whitespace(&c)) / self.level;
-            }
-            else {
-                let initial_level = self.initial_level.clone();
-                let indent_width = self.indent_width.clone();
-
-                let inner_width = self.eat_while(|c, eaten| {
-                    match initial_level {
-                        Some(lvl) => eaten / indent_width  > lvl.to_owned() && is_whitespace(&c),
-                        None => is_whitespace(&c)
-                    }
-                });
-                if inner_width % indent_width == 0 {
-                    self.level =  inner_width / indent_width;
-                } 
-                else {
-                    panic!(LexerError::UnexpectedIndentLevel(inner_width, self.position));
-                }
-            }
-        }
-        else {
-            self.level = 0;
-        }
-    }
-
-    /// Eats symbols while predicate returns true or until the end of file is reached.
-    /// Returns amount of eaten symbols.
-    fn eat_while<F>(&mut self, mut predicate: F) -> u16
-    where
-        F: FnMut(char, &u16) -> bool,
-    {
-        let mut eaten: u16 = 0;
-        while predicate(self.first_ahead(), &eaten) && !self.is_eof() {
-            eaten += 1;
-            self.bump();
-        }
-
-        eaten
     }
 }

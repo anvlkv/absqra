@@ -2,7 +2,6 @@ use ra_lexer::cursor::Position;
 use serde::Serialize;
 use super::*;
 
-
 #[derive(Serialize, Debug, Clone, Default)]
 pub struct RaTree<'a> {
     tokens: Vec<RaToken<'a>>,

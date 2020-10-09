@@ -4,67 +4,64 @@ expression: tokens
 ---
 [
   {
-    "kind": "Comment",
-    "len": 60,
-    "content": " this file is my todo list and also should render like one",
-    "position": [
-      [
-        1,
-        0
-      ],
-      [
-        1,
-        60
-      ]
-    ],
-    "level": 0
-  },
-  {
     "kind": {
-      "Identifier": "parseBlocks"
-    },
-    "len": 11,
-    "content": "parseBlocks",
-    "position": [
-      [
-        3,
-        0
-      ],
-      [
-        3,
-        11
+      "Comment": [
+        " this file is my todo list and also should render like one",
+        false
       ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Greater",
-    "len": 1,
-    "content": ">",
+    },
     "position": [
       [
-        4,
-        4
+        1,
+        1
       ],
       [
-        4,
-        5
+        2,
+        0
       ]
     ],
     "level": 1
   },
   {
+    "kind": {
+      "Identifier": "parseBlocks"
+    },
+    "position": [
+      [
+        3,
+        1
+      ],
+      [
+        4,
+        4
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Greater",
+    "position": [
+      [
+        4,
+        5
+      ],
+      [
+        4,
+        6
+      ]
+    ],
+    "level": 2
+  },
+  {
     "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
     "position": [
       [
         5,
-        8
+        9
       ],
       [
         5,
-        9
+        10
       ]
     ],
     "level": 2
@@ -73,32 +70,28 @@ expression: tokens
     "kind": {
       "Identifier": "choice"
     },
-    "len": 6,
-    "content": "choice",
     "position": [
       [
         5,
-        9
+        10
       ],
       [
         5,
-        15
+        16
       ]
     ],
     "level": 2
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         5,
-        15
+        16
       ],
       [
         5,
-        16
+        17
       ]
     ],
     "level": 2
@@ -107,32 +100,28 @@ expression: tokens
     "kind": {
       "Identifier": "multiple"
     },
-    "len": 8,
-    "content": "multiple",
     "position": [
       [
         5,
-        16
+        17
       ],
       [
-        5,
-        24
+        6,
+        8
       ]
     ],
     "level": 2
   },
   {
     "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
     "position": [
       [
         6,
-        8
+        9
       ],
       [
         6,
-        9
+        10
       ]
     ],
     "level": 2
@@ -141,28 +130,10 @@ expression: tokens
     "kind": {
       "Identifier": "options"
     },
-    "len": 7,
-    "content": "options",
     "position": [
       [
         6,
-        9
-      ],
-      [
-        6,
-        16
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
-    "position": [
-      [
-        6,
-        16
+        10
       ],
       [
         6,
@@ -172,65 +143,79 @@ expression: tokens
     "level": 2
   },
   {
-    "kind": "ContentBlock",
-    "len": 14,
-    "content": "parse blocks",
+    "kind": "Colon",
+    "position": [
+      [
+        6,
+        17
+      ],
+      [
+        6,
+        18
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "ContentBlock": "parse blocks"
+    },
     "position": [
       [
         7,
-        12
-      ],
-      [
-        7,
-        26
-      ]
-    ],
-    "level": 3
-  },
-  {
-    "kind": "ContentBlock",
-    "len": 26,
-    "content": "and funny chars too 😠",
-    "position": [
-      [
-        8,
-        12
+        13
       ],
       [
         8,
-        35
+        12
       ]
     ],
     "level": 3
   },
   {
-    "kind": "ContentBlock",
-    "len": 5,
-    "content": "₰",
+    "kind": {
+      "ContentBlock": "and funny chars too 😠"
+    },
     "position": [
       [
-        9,
-        12
+        8,
+        13
       ],
       [
         9,
-        15
+        12
       ]
     ],
     "level": 3
   },
   {
-    "kind": "ContentBlock",
-    "len": 4,
-    "content": "Ͽ",
+    "kind": {
+      "ContentBlock": "₰"
+    },
     "position": [
       [
-        10,
-        12
+        9,
+        13
       ],
       [
         10,
-        15
+        12
+      ]
+    ],
+    "level": 3
+  },
+  {
+    "kind": {
+      "ContentBlock": "Ͽ"
+    },
+    "position": [
+      [
+        10,
+        13
+      ],
+      [
+        11,
+        0
       ]
     ],
     "level": 3
@@ -239,48 +224,42 @@ expression: tokens
     "kind": {
       "Identifier": "parseDifferentTypesOfBlocks"
     },
-    "len": 27,
-    "content": "parseDifferentTypesOfBlocks",
     "position": [
       [
         12,
-        0
+        1
       ],
-      [
-        12,
-        27
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Greater",
-    "len": 1,
-    "content": ">",
-    "position": [
       [
         13,
         4
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Greater",
+    "position": [
       [
         13,
         5
+      ],
+      [
+        13,
+        6
       ]
     ],
     "level": 1
   },
   {
     "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
     "position": [
       [
         14,
-        8
+        9
       ],
       [
         14,
-        9
+        10
       ]
     ],
     "level": 2
@@ -289,32 +268,28 @@ expression: tokens
     "kind": {
       "Identifier": "choice"
     },
-    "len": 6,
-    "content": "choice",
     "position": [
       [
         14,
-        9
+        10
       ],
       [
         14,
-        15
+        16
       ]
     ],
     "level": 2
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         14,
-        15
+        16
       ],
       [
         14,
-        16
+        17
       ]
     ],
     "level": 2
@@ -323,32 +298,28 @@ expression: tokens
     "kind": {
       "Identifier": "multiple"
     },
-    "len": 8,
-    "content": "multiple",
     "position": [
       [
         14,
-        16
+        17
       ],
       [
-        14,
-        24
+        15,
+        8
       ]
     ],
     "level": 2
   },
   {
     "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
     "position": [
       [
         15,
-        8
+        9
       ],
       [
         15,
-        9
+        10
       ]
     ],
     "level": 2
@@ -357,28 +328,10 @@ expression: tokens
     "kind": {
       "Identifier": "options"
     },
-    "len": 7,
-    "content": "options",
     "position": [
       [
         15,
-        9
-      ],
-      [
-        15,
-        16
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
-    "position": [
-      [
-        15,
-        16
+        10
       ],
       [
         15,
@@ -388,113 +341,127 @@ expression: tokens
     "level": 2
   },
   {
-    "kind": "ContentBlock",
-    "len": 10,
-    "content": "comments",
+    "kind": "Colon",
+    "position": [
+      [
+        15,
+        17
+      ],
+      [
+        15,
+        18
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "ContentBlock": "comments"
+    },
     "position": [
       [
         16,
-        12
-      ],
-      [
-        16,
-        22
-      ]
-    ],
-    "level": 3
-  },
-  {
-    "kind": "ContentBlock",
-    "len": 17,
-    "content": "var declaration",
-    "position": [
-      [
-        17,
-        12
+        13
       ],
       [
         17,
-        29
+        12
       ]
     ],
     "level": 3
   },
   {
-    "kind": "ContentBlock",
-    "len": 18,
-    "content": "rule declaration",
+    "kind": {
+      "ContentBlock": "var declaration"
+    },
     "position": [
       [
-        18,
-        12
+        17,
+        13
       ],
       [
         18,
-        30
+        12
       ]
     ],
     "level": 3
   },
   {
-    "kind": "ContentBlock",
-    "len": 14,
-    "content": "applied rule",
+    "kind": {
+      "ContentBlock": "rule declaration"
+    },
     "position": [
       [
-        19,
-        12
+        18,
+        13
       ],
       [
         19,
-        26
+        12
       ]
     ],
     "level": 3
   },
   {
-    "kind": "ContentBlock",
-    "len": 13,
-    "content": "input block",
+    "kind": {
+      "ContentBlock": "applied rule"
+    },
     "position": [
       [
-        20,
-        12
+        19,
+        13
       ],
       [
         20,
-        25
+        12
       ]
     ],
     "level": 3
   },
   {
-    "kind": "ContentBlock",
-    "len": 18,
-    "content": "context switches",
+    "kind": {
+      "ContentBlock": "input block"
+    },
     "position": [
       [
-        21,
-        12
+        20,
+        13
       ],
       [
         21,
-        30
+        12
       ]
     ],
     "level": 3
   },
   {
-    "kind": "ContentBlock",
-    "len": 15,
-    "content": "content block",
+    "kind": {
+      "ContentBlock": "context switches"
+    },
     "position": [
       [
-        22,
-        12
+        21,
+        13
       ],
       [
         22,
-        27
+        12
+      ]
+    ],
+    "level": 3
+  },
+  {
+    "kind": {
+      "ContentBlock": "content block"
+    },
+    "position": [
+      [
+        22,
+        13
+      ],
+      [
+        23,
+        0
       ]
     ],
     "level": 3
@@ -503,48 +470,42 @@ expression: tokens
     "kind": {
       "Identifier": "generateRuntime"
     },
-    "len": 15,
-    "content": "generateRuntime",
     "position": [
       [
         24,
-        0
+        1
       ],
-      [
-        24,
-        15
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Greater",
-    "len": 1,
-    "content": ">",
-    "position": [
       [
         25,
         4
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Greater",
+    "position": [
       [
         25,
         5
+      ],
+      [
+        25,
+        6
       ]
     ],
     "level": 1
   },
   {
     "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
     "position": [
       [
         26,
-        8
+        9
       ],
       [
         26,
-        9
+        10
       ]
     ],
     "level": 2
@@ -553,32 +514,28 @@ expression: tokens
     "kind": {
       "Identifier": "choice"
     },
-    "len": 6,
-    "content": "choice",
     "position": [
       [
         26,
-        9
+        10
       ],
       [
         26,
-        15
+        16
       ]
     ],
     "level": 2
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         26,
-        15
+        16
       ],
       [
         26,
-        16
+        17
       ]
     ],
     "level": 2
@@ -587,32 +544,28 @@ expression: tokens
     "kind": {
       "Identifier": "multiple"
     },
-    "len": 8,
-    "content": "multiple",
     "position": [
       [
         26,
-        16
+        17
       ],
       [
-        26,
-        24
+        27,
+        8
       ]
     ],
     "level": 2
   },
   {
     "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
     "position": [
       [
         27,
-        8
+        9
       ],
       [
         27,
-        9
+        10
       ]
     ],
     "level": 2
@@ -621,28 +574,10 @@ expression: tokens
     "kind": {
       "Identifier": "options"
     },
-    "len": 7,
-    "content": "options",
     "position": [
       [
         27,
-        9
-      ],
-      [
-        27,
-        16
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
-    "position": [
-      [
-        27,
-        16
+        10
       ],
       [
         27,
@@ -652,81 +587,95 @@ expression: tokens
     "level": 2
   },
   {
-    "kind": "ContentBlock",
-    "len": 16,
-    "content": "render content",
+    "kind": "Colon",
+    "position": [
+      [
+        27,
+        17
+      ],
+      [
+        27,
+        18
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "ContentBlock": "render content"
+    },
     "position": [
       [
         28,
-        12
-      ],
-      [
-        28,
-        28
-      ]
-    ],
-    "level": 3
-  },
-  {
-    "kind": "ContentBlock",
-    "len": 15,
-    "content": "render inputs",
-    "position": [
-      [
-        29,
-        12
+        13
       ],
       [
         29,
-        27
+        12
       ]
     ],
     "level": 3
   },
   {
-    "kind": "ContentBlock",
-    "len": 62,
-    "content": "group inputs as long as there no dependency on previous step",
+    "kind": {
+      "ContentBlock": "render inputs"
+    },
     "position": [
       [
-        30,
-        12
+        29,
+        13
       ],
       [
         30,
-        74
+        12
       ]
     ],
     "level": 3
   },
   {
-    "kind": "ContentBlock",
-    "len": 15,
-    "content": "execute logic",
+    "kind": {
+      "ContentBlock": "group inputs as long as there no dependency on previous step"
+    },
     "position": [
       [
-        31,
-        12
+        30,
+        13
       ],
       [
         31,
-        27
+        12
       ]
     ],
     "level": 3
   },
   {
-    "kind": "ContentBlock",
-    "len": 13,
-    "content": "apply rules",
+    "kind": {
+      "ContentBlock": "execute logic"
+    },
     "position": [
       [
-        32,
-        12
+        31,
+        13
       ],
       [
         32,
-        25
+        12
+      ]
+    ],
+    "level": 3
+  },
+  {
+    "kind": {
+      "ContentBlock": "apply rules"
+    },
+    "position": [
+      [
+        32,
+        13
+      ],
+      [
+        33,
+        0
       ]
     ],
     "level": 3

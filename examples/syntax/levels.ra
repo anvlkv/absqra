@@ -7,13 +7,13 @@ another_first_level
     another_first_level_child
         another_first_level_child_child
 
-L0
-    L1_0
-        L2_0
-        L2_1
-    L1_1
-    L1_2
-        L2
-            L3
-                L4
-                    L5
+L1
+    L2_1
+        L3_1
+        L3_2
+    L2_1
+    L2_2
+        L3_3
+            L4
+                L5
+                    L6

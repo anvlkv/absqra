@@ -1,8 +1,6 @@
 use std::num;
-use crate::cursor::Position;
-
-extern crate failure;
 use failure::Fail;
+use super::*;
 
 
 #[derive(Debug, Fail, PartialEq)]

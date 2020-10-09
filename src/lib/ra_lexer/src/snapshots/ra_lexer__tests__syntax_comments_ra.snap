@@ -1,0 +1,101 @@
+---
+source: src/lib/ra_lexer/src/tests.rs
+expression: tokens
+---
+[
+  {
+    "kind": {
+      "Comment": [
+        " simply a one line comment",
+        false
+      ]
+    },
+    "position": [
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        0
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Comment": [
+        "/ fancy one line comment",
+        true
+      ]
+    },
+    "position": [
+      [
+        3,
+        1
+      ],
+      [
+        4,
+        0
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Comment": [
+        "\n  fancy multi line comment\n  \n",
+        false
+      ]
+    },
+    "position": [
+      [
+        5,
+        1
+      ],
+      [
+        9,
+        0
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Comment": [
+        "\nsimply \na multi line\ncomment\n",
+        false
+      ]
+    },
+    "position": [
+      [
+        10,
+        1
+      ],
+      [
+        15,
+        0
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Comment": [
+        " на этом всё, ребята! 😇",
+        false
+      ]
+    },
+    "position": [
+      [
+        16,
+        1
+      ],
+      [
+        16,
+        25
+      ]
+    ],
+    "level": 1
+  }
+]

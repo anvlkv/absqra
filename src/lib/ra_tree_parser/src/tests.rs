@@ -3,9 +3,6 @@ mod lib {
     use ra_dev_tools::{make_example_tests};
     use ra_lexer::tokenize;
     use crate::parser::parse;
-    use std::fs::remove_file;
-    use std::path::{PathBuf};
-    use std::env::current_dir;
 
     #[make_example_tests]
     #[test]

@@ -7,152 +7,98 @@ expression: tokens
     "kind": {
       "Identifier": "single_variable"
     },
-    "len": 15,
-    "content": "single_variable",
     "position": [
       [
         1,
-        0
+        1
       ],
-      [
-        1,
-        15
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Comment",
-    "len": 25,
-    "content": " just an empty variable",
-    "position": [
       [
         1,
         16
-      ],
-      [
-        1,
-        41
       ]
     ],
-    "level": 0
+    "level": 1
+  },
+  {
+    "kind": {
+      "Comment": [
+        " just an empty variable",
+        false
+      ]
+    },
+    "position": [
+      [
+        1,
+        17
+      ],
+      [
+        2,
+        0
+      ]
+    ],
+    "level": 1
   },
   {
     "kind": {
       "Int": 1
     },
-    "len": 1,
-    "content": "1",
     "position": [
-      [
-        3,
-        0
-      ],
       [
         3,
         1
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Plus",
-    "len": 1,
-    "content": "+",
-    "position": [
+      ],
       [
         3,
         2
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Plus",
+    "position": [
       [
         3,
         3
+      ],
+      [
+        3,
+        4
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
     "kind": {
       "Int": 1
     },
-    "len": 1,
-    "content": "1",
     "position": [
-      [
-        3,
-        4
-      ],
       [
         3,
         5
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Comment",
-    "len": 37,
-    "content": " expression that has an output of 2",
-    "position": [
+      ],
       [
         3,
         6
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Comment": [
+        " expression that has an output of 2",
+        false
+      ]
+    },
+    "position": [
       [
         3,
-        43
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": {
-      "Identifier": "assignment"
-    },
-    "len": 10,
-    "content": "assignment",
-    "position": [
+        7
+      ],
       [
-        5,
+        4,
         0
-      ],
-      [
-        5,
-        10
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Comment",
-    "len": 39,
-    "content": " expression that has value 1 assigned",
-    "position": [
-      [
-        5,
-        11
-      ],
-      [
-        5,
-        50
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": {
-      "Int": 1
-    },
-    "len": 1,
-    "content": "1",
-    "position": [
-      [
-        6,
-        4
-      ],
-      [
-        6,
-        5
       ]
     ],
     "level": 1
@@ -161,133 +107,129 @@ expression: tokens
     "kind": {
       "Identifier": "assignment"
     },
-    "len": 10,
-    "content": "assignment",
     "position": [
       [
-        8,
-        0
+        5,
+        1
       ],
       [
-        8,
-        10
+        5,
+        11
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "Plus",
-    "len": 1,
-    "content": "+",
+    "kind": {
+      "Comment": [
+        " expression that has value 1 assigned",
+        false
+      ]
+    },
     "position": [
+      [
+        5,
+        12
+      ],
+      [
+        6,
+        4
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Int": 1
+    },
+    "position": [
+      [
+        6,
+        5
+      ],
+      [
+        7,
+        0
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "assignment"
+    },
+    "position": [
+      [
+        8,
+        1
+      ],
       [
         8,
         11
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Plus",
+    "position": [
       [
         8,
         12
+      ],
+      [
+        8,
+        13
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
     "kind": {
       "Int": 2
     },
-    "len": 1,
-    "content": "2",
     "position": [
-      [
-        8,
-        13
-      ],
       [
         8,
         14
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Comment",
-    "len": 37,
-    "content": " expression that has an output of 3",
-    "position": [
-      [
-        8,
-        15
       ],
       [
         8,
-        52
+        15
       ]
     ],
-    "level": 0
+    "level": 1
+  },
+  {
+    "kind": {
+      "Comment": [
+        " expression that has an output of 3",
+        false
+      ]
+    },
+    "position": [
+      [
+        8,
+        16
+      ],
+      [
+        9,
+        0
+      ]
+    ],
+    "level": 1
   },
   {
     "kind": {
       "Identifier": "nested_variable"
     },
-    "len": 15,
-    "content": "nested_variable",
     "position": [
       [
         10,
-        0
+        1
       ],
       [
         10,
-        15
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Comment",
-    "len": 38,
-    "content": " expression that has output assigned",
-    "position": [
-      [
-        10,
-        16
-      ],
-      [
-        10,
-        54
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": {
-      "Identifier": "assignment"
-    },
-    "len": 10,
-    "content": "assignment",
-    "position": [
-      [
-        11,
-        4
-      ],
-      [
-        11,
-        14
-      ]
-    ],
-    "level": 1
-  },
-  {
-    "kind": "Plus",
-    "len": 1,
-    "content": "+",
-    "position": [
-      [
-        11,
-        15
-      ],
-      [
-        11,
         16
       ]
     ],
@@ -295,34 +237,84 @@ expression: tokens
   },
   {
     "kind": {
-      "Int": 2
+      "Comment": [
+        " expression that has output assigned",
+        false
+      ]
     },
-    "len": 1,
-    "content": "2",
     "position": [
       [
-        11,
+        10,
         17
       ],
       [
         11,
-        18
+        4
       ]
     ],
     "level": 1
   },
   {
-    "kind": "Comment",
-    "len": 37,
-    "content": " expression that has an output of 3",
+    "kind": {
+      "Identifier": "assignment"
+    },
     "position": [
+      [
+        11,
+        5
+      ],
+      [
+        11,
+        15
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Plus",
+    "position": [
+      [
+        11,
+        16
+      ],
+      [
+        11,
+        17
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Int": 2
+    },
+    "position": [
+      [
+        11,
+        18
+      ],
       [
         11,
         19
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Comment": [
+        " expression that has an output of 3",
+        false
+      ]
+    },
+    "position": [
       [
         11,
-        56
+        20
+      ],
+      [
+        12,
+        0
       ]
     ],
     "level": 1
@@ -331,176 +323,150 @@ expression: tokens
     "kind": {
       "Identifier": "assignment"
     },
-    "len": 10,
-    "content": "assignment",
     "position": [
       [
         13,
-        0
+        1
       ],
-      [
-        13,
-        10
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Pipe",
-    "len": 1,
-    "content": "|",
-    "position": [
       [
         13,
         11
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Pipe",
+    "position": [
       [
         13,
         12
+      ],
+      [
+        13,
+        13
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
     "kind": {
       "Identifier": "nested_variable"
     },
-    "len": 15,
-    "content": "nested_variable",
     "position": [
       [
         13,
-        13
+        14
       ],
-      [
-        13,
-        28
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Comment",
-    "len": 24,
-    "content": " logical expression OR",
-    "position": [
       [
         13,
         29
-      ],
-      [
-        13,
-        53
       ]
     ],
-    "level": 0
+    "level": 1
+  },
+  {
+    "kind": {
+      "Comment": [
+        " logical expression OR",
+        false
+      ]
+    },
+    "position": [
+      [
+        13,
+        30
+      ],
+      [
+        14,
+        0
+      ]
+    ],
+    "level": 1
   },
   {
     "kind": {
       "Identifier": "assignment"
     },
-    "len": 10,
-    "content": "assignment",
     "position": [
       [
         15,
-        0
+        1
       ],
-      [
-        15,
-        10
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Greater",
-    "len": 1,
-    "content": ">",
-    "position": [
       [
         15,
         11
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Greater",
+    "position": [
       [
         15,
         12
+      ],
+      [
+        15,
+        13
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
     "kind": {
       "Identifier": "nested_variable"
     },
-    "len": 15,
-    "content": "nested_variable",
     "position": [
       [
         15,
-        13
+        14
       ],
-      [
-        15,
-        28
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Comment",
-    "len": 35,
-    "content": " logical expression Comparison GT",
-    "position": [
       [
         15,
         29
-      ],
-      [
-        15,
-        64
       ]
     ],
-    "level": 0
+    "level": 1
+  },
+  {
+    "kind": {
+      "Comment": [
+        " logical expression Comparison GT",
+        false
+      ]
+    },
+    "position": [
+      [
+        15,
+        30
+      ],
+      [
+        16,
+        0
+      ]
+    ],
+    "level": 1
   },
   {
     "kind": "OpenParentheses",
-    "len": 1,
-    "content": "(",
     "position": [
       [
         17,
-        0
+        1
       ],
       [
         17,
-        1
+        2
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
     "kind": {
       "Int": 3
     },
-    "len": 1,
-    "content": "3",
-    "position": [
-      [
-        17,
-        1
-      ],
-      [
-        17,
-        2
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Asterisk",
-    "len": 1,
-    "content": "*",
     "position": [
       [
         17,
@@ -511,14 +477,10 @@ expression: tokens
         3
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": {
-      "Int": 5
-    },
-    "len": 1,
-    "content": "5",
+    "kind": "Asterisk",
     "position": [
       [
         17,
@@ -529,12 +491,12 @@ expression: tokens
         4
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "CloseParentheses",
-    "len": 1,
-    "content": ")",
+    "kind": {
+      "Int": 5
+    },
     "position": [
       [
         17,
@@ -545,282 +507,256 @@ expression: tokens
         5
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "Plus",
-    "len": 1,
-    "content": "+",
+    "kind": "CloseParentheses",
     "position": [
       [
         17,
-        6
+        5
       ],
       [
         17,
-        7
+        6
       ]
     ],
-    "level": 0
+    "level": 1
+  },
+  {
+    "kind": "Plus",
+    "position": [
+      [
+        17,
+        7
+      ],
+      [
+        17,
+        8
+      ]
+    ],
+    "level": 1
   },
   {
     "kind": {
       "Int": 22
     },
-    "len": 2,
-    "content": "22",
     "position": [
       [
         17,
-        8
+        9
       ],
-      [
-        17,
-        10
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Comment",
-    "len": 46,
-    "content": " grouped expression that has an output of 37",
-    "position": [
       [
         17,
         11
-      ],
-      [
-        17,
-        57
       ]
     ],
-    "level": 0
+    "level": 1
+  },
+  {
+    "kind": {
+      "Comment": [
+        " grouped expression that has an output of 37",
+        false
+      ]
+    },
+    "position": [
+      [
+        17,
+        12
+      ],
+      [
+        18,
+        0
+      ]
+    ],
+    "level": 1
   },
   {
     "kind": "OpenParentheses",
-    "len": 1,
-    "content": "(",
     "position": [
       [
         19,
-        0
+        1
       ],
       [
         19,
-        1
+        2
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
     "kind": {
       "Identifier": "assignment"
     },
-    "len": 10,
-    "content": "assignment",
     "position": [
       [
         19,
-        1
+        2
       ],
-      [
-        19,
-        11
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Pipe",
-    "len": 1,
-    "content": "|",
-    "position": [
       [
         19,
         12
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Pipe",
+    "position": [
       [
         19,
         13
+      ],
+      [
+        19,
+        14
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
     "kind": {
       "Identifier": "nested_variable"
     },
-    "len": 15,
-    "content": "nested_variable",
     "position": [
       [
         19,
-        14
-      ],
-      [
-        19,
-        29
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "CloseParentheses",
-    "len": 1,
-    "content": ")",
-    "position": [
-      [
-        19,
-        29
+        15
       ],
       [
         19,
         30
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "Plus",
-    "len": 1,
-    "content": "+",
+    "kind": "CloseParentheses",
     "position": [
       [
         19,
-        31
+        30
       ],
       [
         19,
-        32
+        31
       ]
     ],
-    "level": 0
+    "level": 1
+  },
+  {
+    "kind": "Plus",
+    "position": [
+      [
+        19,
+        32
+      ],
+      [
+        19,
+        33
+      ]
+    ],
+    "level": 1
   },
   {
     "kind": {
       "Int": 3
     },
-    "len": 1,
-    "content": "3",
     "position": [
-      [
-        19,
-        33
-      ],
       [
         19,
         34
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Comment",
-    "len": 65,
-    "content": " grouped expression with logical expression, has an output of 6",
-    "position": [
+      ],
       [
         19,
         35
-      ],
-      [
-        19,
-        100
       ]
     ],
-    "level": 0
+    "level": 1
+  },
+  {
+    "kind": {
+      "Comment": [
+        " grouped expression with logical expression, has an output of 6",
+        false
+      ]
+    },
+    "position": [
+      [
+        19,
+        36
+      ],
+      [
+        20,
+        0
+      ]
+    ],
+    "level": 1
   },
   {
     "kind": {
       "Int": 1
     },
-    "len": 1,
-    "content": "1",
     "position": [
-      [
-        21,
-        0
-      ],
       [
         21,
         1
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Plus",
-    "len": 1,
-    "content": "+",
-    "position": [
-      [
-        21,
-        2
       ],
       [
         21,
-        3
+        2
       ]
     ],
-    "level": 0
+    "level": 1
+  },
+  {
+    "kind": "Plus",
+    "position": [
+      [
+        21,
+        3
+      ],
+      [
+        21,
+        4
+      ]
+    ],
+    "level": 1
   },
   {
     "kind": {
       "Int": 1
     },
-    "len": 1,
-    "content": "1",
     "position": [
-      [
-        21,
-        4
-      ],
       [
         21,
         5
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Plus",
-    "len": 1,
-    "content": "+",
-    "position": [
+      ],
       [
         21,
         6
-      ],
-      [
-        21,
-        7
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "OpenParentheses",
-    "len": 1,
-    "content": "(",
+    "kind": "Plus",
     "position": [
       [
         21,
-        8
+        7
       ],
       [
         21,
-        9
+        8
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": {
-      "Int": 2
-    },
-    "len": 1,
-    "content": "2",
+    "kind": "OpenParentheses",
     "position": [
       [
         21,
@@ -831,12 +767,12 @@ expression: tokens
         10
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "Asterisk",
-    "len": 1,
-    "content": "*",
+    "kind": {
+      "Int": 2
+    },
     "position": [
       [
         21,
@@ -847,14 +783,10 @@ expression: tokens
         11
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": {
-      "Int": 2
-    },
-    "len": 1,
-    "content": "2",
+    "kind": "Asterisk",
     "position": [
       [
         21,
@@ -865,12 +797,12 @@ expression: tokens
         12
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "CloseParentheses",
-    "len": 1,
-    "content": ")",
+    "kind": {
+      "Int": 2
+    },
     "position": [
       [
         21,
@@ -881,46 +813,38 @@ expression: tokens
         13
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "Plus",
-    "len": 1,
-    "content": "+",
+    "kind": "CloseParentheses",
     "position": [
+      [
+        21,
+        13
+      ],
       [
         21,
         14
-      ],
-      [
-        21,
-        15
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "OpenParentheses",
-    "len": 1,
-    "content": "(",
+    "kind": "Plus",
     "position": [
       [
         21,
-        16
+        15
       ],
       [
         21,
-        17
+        16
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": {
-      "Int": 3
-    },
-    "len": 1,
-    "content": "3",
+    "kind": "OpenParentheses",
     "position": [
       [
         21,
@@ -931,12 +855,12 @@ expression: tokens
         18
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "Asterisk",
-    "len": 1,
-    "content": "*",
+    "kind": {
+      "Int": 3
+    },
     "position": [
       [
         21,
@@ -947,12 +871,10 @@ expression: tokens
         19
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "OpenParentheses",
-    "len": 1,
-    "content": "(",
+    "kind": "Asterisk",
     "position": [
       [
         21,
@@ -963,14 +885,10 @@ expression: tokens
         20
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": {
-      "Int": 2
-    },
-    "len": 1,
-    "content": "2",
+    "kind": "OpenParentheses",
     "position": [
       [
         21,
@@ -981,12 +899,12 @@ expression: tokens
         21
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "Plus",
-    "len": 1,
-    "content": "+",
+    "kind": {
+      "Int": 2
+    },
     "position": [
       [
         21,
@@ -997,14 +915,10 @@ expression: tokens
         22
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": {
-      "Int": 2
-    },
-    "len": 1,
-    "content": "2",
+    "kind": "Plus",
     "position": [
       [
         21,
@@ -1015,12 +929,12 @@ expression: tokens
         23
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "CloseParentheses",
-    "len": 1,
-    "content": ")",
+    "kind": {
+      "Int": 2
+    },
     "position": [
       [
         21,
@@ -1031,12 +945,10 @@ expression: tokens
         24
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
     "kind": "CloseParentheses",
-    "len": 1,
-    "content": ")",
     "position": [
       [
         21,
@@ -1047,56 +959,69 @@ expression: tokens
         25
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "Minus",
-    "len": 1,
-    "content": "-",
+    "kind": "CloseParentheses",
     "position": [
       [
         21,
-        26
+        25
       ],
       [
         21,
-        27
+        26
       ]
     ],
-    "level": 0
+    "level": 1
+  },
+  {
+    "kind": "Minus",
+    "position": [
+      [
+        21,
+        27
+      ],
+      [
+        21,
+        28
+      ]
+    ],
+    "level": 1
   },
   {
     "kind": {
       "Int": 18
     },
-    "len": 2,
-    "content": "18",
     "position": [
       [
         21,
-        28
+        29
       ],
-      [
-        21,
-        30
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Comment",
-    "len": 40,
-    "content": " bit more grouping, has an output of 0",
-    "position": [
       [
         21,
         31
-      ],
-      [
-        21,
-        71
       ]
     ],
-    "level": 0
+    "level": 1
+  },
+  {
+    "kind": {
+      "Comment": [
+        " bit more grouping, has an output of 0",
+        false
+      ]
+    },
+    "position": [
+      [
+        21,
+        32
+      ],
+      [
+        22,
+        0
+      ]
+    ],
+    "level": 1
   }
 ]

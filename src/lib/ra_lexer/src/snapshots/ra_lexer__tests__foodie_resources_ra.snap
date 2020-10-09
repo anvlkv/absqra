@@ -5,26 +5,6 @@ expression: tokens
 [
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
-    "position": [
-      [
-        1,
-        0
-      ],
-      [
-        1,
-        1
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": {
-      "Identifier": "navigationItems"
-    },
-    "len": 15,
-    "content": "navigationItems",
     "position": [
       [
         1,
@@ -32,41 +12,53 @@ expression: tokens
       ],
       [
         1,
-        16
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": {
-      "Identifier": "meals"
-    },
-    "len": 5,
-    "content": "meals",
-    "position": [
-      [
-        2,
-        4
-      ],
-      [
-        2,
-        9
+        2
       ]
     ],
     "level": 1
   },
   {
-    "kind": "HashPound",
-    "len": 1,
-    "content": "#",
+    "kind": {
+      "Identifier": "navigationItems"
+    },
     "position": [
       [
-        3,
-        8
+        1,
+        2
+      ],
+      [
+        2,
+        4
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Identifier": "meals"
+    },
+    "position": [
+      [
+        2,
+        5
       ],
       [
         3,
+        8
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": "HashPound",
+    "position": [
+      [
+        3,
         9
+      ],
+      [
+        3,
+        10
       ]
     ],
     "level": 2
@@ -75,32 +67,28 @@ expression: tokens
     "kind": {
       "Identifier": "ln"
     },
-    "len": 2,
-    "content": "ln",
     "position": [
       [
         3,
-        9
+        10
       ],
       [
         3,
-        11
+        12
       ]
     ],
     "level": 2
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         3,
-        11
+        12
       ],
       [
         3,
-        12
+        13
       ]
     ],
     "level": 2
@@ -109,48 +97,44 @@ expression: tokens
     "kind": {
       "Identifier": "en"
     },
-    "len": 2,
-    "content": "en",
     "position": [
       [
         3,
-        12
+        13
       ],
       [
         3,
-        14
+        15
       ]
     ],
     "level": 2
   },
   {
-    "kind": "ContentBlock",
-    "len": 29,
-    "content": "\n            Meals\n        ",
+    "kind": {
+      "ContentBlock": " Meals "
+    },
     "position": [
       [
         3,
-        14
+        15
       ],
       [
-        5,
-        9
+        6,
+        8
       ]
     ],
     "level": 2
   },
   {
     "kind": "HashPound",
-    "len": 1,
-    "content": "#",
     "position": [
       [
         6,
-        8
+        9
       ],
       [
         6,
-        9
+        10
       ]
     ],
     "level": 2
@@ -159,32 +143,28 @@ expression: tokens
     "kind": {
       "Identifier": "ln"
     },
-    "len": 2,
-    "content": "ln",
     "position": [
       [
         6,
-        9
+        10
       ],
       [
         6,
-        11
+        12
       ]
     ],
     "level": 2
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         6,
-        11
+        12
       ],
       [
         6,
-        12
+        13
       ]
     ],
     "level": 2
@@ -193,32 +173,30 @@ expression: tokens
     "kind": {
       "Identifier": "ru"
     },
-    "len": 2,
-    "content": "ru",
     "position": [
       [
         6,
-        12
+        13
       ],
       [
         6,
-        14
+        15
       ]
     ],
     "level": 2
   },
   {
-    "kind": "ContentBlock",
-    "len": 34,
-    "content": "\n            Блюда\n        ",
+    "kind": {
+      "ContentBlock": " Блюда "
+    },
     "position": [
       [
         6,
-        14
+        15
       ],
       [
-        8,
-        9
+        9,
+        4
       ]
     ],
     "level": 2
@@ -227,32 +205,28 @@ expression: tokens
     "kind": {
       "Identifier": "countries"
     },
-    "len": 9,
-    "content": "countries",
     "position": [
       [
         9,
-        4
+        5
       ],
       [
-        9,
-        13
+        10,
+        8
       ]
     ],
     "level": 1
   },
   {
     "kind": "HashPound",
-    "len": 1,
-    "content": "#",
     "position": [
       [
         10,
-        8
+        9
       ],
       [
         10,
-        9
+        10
       ]
     ],
     "level": 2
@@ -261,32 +235,28 @@ expression: tokens
     "kind": {
       "Identifier": "ln"
     },
-    "len": 2,
-    "content": "ln",
     "position": [
       [
         10,
-        9
+        10
       ],
       [
         10,
-        11
+        12
       ]
     ],
     "level": 2
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         10,
-        11
+        12
       ],
       [
         10,
-        12
+        13
       ]
     ],
     "level": 2
@@ -295,48 +265,44 @@ expression: tokens
     "kind": {
       "Identifier": "en"
     },
-    "len": 2,
-    "content": "en",
     "position": [
       [
         10,
-        12
+        13
       ],
       [
         10,
-        14
+        15
       ]
     ],
     "level": 2
   },
   {
-    "kind": "ContentBlock",
-    "len": 33,
-    "content": "\n            Countries\n        ",
+    "kind": {
+      "ContentBlock": " Countries "
+    },
     "position": [
       [
         10,
-        14
+        15
       ],
       [
-        12,
-        9
+        13,
+        8
       ]
     ],
     "level": 2
   },
   {
     "kind": "HashPound",
-    "len": 1,
-    "content": "#",
     "position": [
       [
         13,
-        8
+        9
       ],
       [
         13,
-        9
+        10
       ]
     ],
     "level": 2
@@ -345,32 +311,28 @@ expression: tokens
     "kind": {
       "Identifier": "ln"
     },
-    "len": 2,
-    "content": "ln",
     "position": [
       [
         13,
-        9
+        10
       ],
       [
         13,
-        11
+        12
       ]
     ],
     "level": 2
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         13,
-        11
+        12
       ],
       [
         13,
-        12
+        13
       ]
     ],
     "level": 2
@@ -379,32 +341,30 @@ expression: tokens
     "kind": {
       "Identifier": "ru"
     },
-    "len": 2,
-    "content": "ru",
     "position": [
       [
         13,
-        12
+        13
       ],
       [
         13,
-        14
+        15
       ]
     ],
     "level": 2
   },
   {
-    "kind": "ContentBlock",
-    "len": 59,
-    "content": "\n            Национальные кухни\n        ",
+    "kind": {
+      "ContentBlock": " Национальные кухни "
+    },
     "position": [
       [
         13,
-        14
+        15
       ],
       [
-        15,
-        9
+        16,
+        4
       ]
     ],
     "level": 2
@@ -413,32 +373,28 @@ expression: tokens
     "kind": {
       "Identifier": "restrictions"
     },
-    "len": 12,
-    "content": "restrictions",
     "position": [
       [
         16,
-        4
+        5
       ],
       [
-        16,
-        16
+        17,
+        8
       ]
     ],
     "level": 1
   },
   {
     "kind": "HashPound",
-    "len": 1,
-    "content": "#",
     "position": [
       [
         17,
-        8
+        9
       ],
       [
         17,
-        9
+        10
       ]
     ],
     "level": 2
@@ -447,32 +403,28 @@ expression: tokens
     "kind": {
       "Identifier": "ln"
     },
-    "len": 2,
-    "content": "ln",
     "position": [
       [
         17,
-        9
+        10
       ],
       [
         17,
-        11
+        12
       ]
     ],
     "level": 2
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         17,
-        11
+        12
       ],
       [
         17,
-        12
+        13
       ]
     ],
     "level": 2
@@ -481,48 +433,44 @@ expression: tokens
     "kind": {
       "Identifier": "ru"
     },
-    "len": 2,
-    "content": "ru",
     "position": [
       [
         17,
-        12
+        13
       ],
       [
         17,
-        14
+        15
       ]
     ],
     "level": 2
   },
   {
-    "kind": "ContentBlock",
-    "len": 35,
-    "content": "\n            Preferences\n        ",
+    "kind": {
+      "ContentBlock": " Preferences "
+    },
     "position": [
       [
         17,
-        14
+        15
       ],
       [
-        19,
-        9
+        20,
+        8
       ]
     ],
     "level": 2
   },
   {
     "kind": "HashPound",
-    "len": 1,
-    "content": "#",
     "position": [
       [
         20,
-        8
+        9
       ],
       [
         20,
-        9
+        10
       ]
     ],
     "level": 2
@@ -531,32 +479,28 @@ expression: tokens
     "kind": {
       "Identifier": "ln"
     },
-    "len": 2,
-    "content": "ln",
     "position": [
       [
         20,
-        9
+        10
       ],
       [
         20,
-        11
+        12
       ]
     ],
     "level": 2
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         20,
-        11
+        12
       ],
       [
         20,
-        12
+        13
       ]
     ],
     "level": 2
@@ -565,100 +509,90 @@ expression: tokens
     "kind": {
       "Identifier": "ru"
     },
-    "len": 2,
-    "content": "ru",
     "position": [
       [
         20,
-        12
+        13
       ],
       [
         20,
-        14
+        15
       ]
     ],
     "level": 2
   },
   {
-    "kind": "ContentBlock",
-    "len": 48,
-    "content": "\n            Предпочтения\n        ",
+    "kind": {
+      "ContentBlock": " Предпочтения "
+    },
     "position": [
       [
         20,
-        14
+        15
       ],
       [
-        22,
-        9
+        23,
+        4
       ]
     ],
     "level": 2
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         24,
-        0
+        1
       ],
       [
         24,
-        1
+        2
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
     "kind": {
       "Identifier": "userItems"
     },
-    "len": 9,
-    "content": "userItems",
     "position": [
       [
         24,
-        1
+        2
       ],
       [
-        24,
-        10
+        25,
+        4
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
     "kind": {
       "Identifier": "addRecipe"
     },
-    "len": 9,
-    "content": "addRecipe",
     "position": [
       [
         25,
-        4
+        5
       ],
       [
-        25,
-        13
+        26,
+        8
       ]
     ],
     "level": 1
   },
   {
     "kind": "HashPound",
-    "len": 1,
-    "content": "#",
     "position": [
       [
         26,
-        8
+        9
       ],
       [
         26,
-        9
+        10
       ]
     ],
     "level": 2
@@ -667,32 +601,28 @@ expression: tokens
     "kind": {
       "Identifier": "kind"
     },
-    "len": 4,
-    "content": "kind",
     "position": [
       [
         26,
-        9
+        10
       ],
       [
         26,
-        13
+        14
       ]
     ],
     "level": 2
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         26,
-        13
+        14
       ],
       [
         26,
-        14
+        15
       ]
     ],
     "level": 2
@@ -701,44 +631,26 @@ expression: tokens
     "kind": {
       "Identifier": "image"
     },
-    "len": 5,
-    "content": "image",
     "position": [
       [
         26,
-        14
+        15
       ],
       [
         26,
-        19
+        20
       ]
     ],
     "level": 2
   },
   {
-    "kind": "ContentBlock",
-    "len": 44,
-    "content": "\n            http://path.to.image\n        ",
+    "kind": {
+      "ContentBlock": " http://path.to.image "
+    },
     "position": [
       [
         26,
-        19
-      ],
-      [
-        28,
-        9
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Coma",
-    "len": 1,
-    "content": ",",
-    "position": [
-      [
-        28,
-        9
+        20
       ],
       [
         28,
@@ -748,17 +660,29 @@ expression: tokens
     "level": 2
   },
   {
+    "kind": "Coma",
+    "position": [
+      [
+        28,
+        10
+      ],
+      [
+        28,
+        11
+      ]
+    ],
+    "level": 2
+  },
+  {
     "kind": "HashPound",
-    "len": 1,
-    "content": "#",
     "position": [
       [
         29,
-        8
+        9
       ],
       [
         29,
-        9
+        10
       ]
     ],
     "level": 2
@@ -767,32 +691,28 @@ expression: tokens
     "kind": {
       "Identifier": "ln"
     },
-    "len": 2,
-    "content": "ln",
     "position": [
       [
         29,
-        9
+        10
       ],
       [
         29,
-        11
+        12
       ]
     ],
     "level": 2
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         29,
-        11
+        12
       ],
       [
         29,
-        12
+        13
       ]
     ],
     "level": 2
@@ -801,48 +721,44 @@ expression: tokens
     "kind": {
       "Identifier": "en"
     },
-    "len": 2,
-    "content": "en",
     "position": [
       [
         29,
-        12
+        13
       ],
       [
         29,
-        14
+        15
       ]
     ],
     "level": 2
   },
   {
-    "kind": "ContentBlock",
-    "len": 34,
-    "content": "\n            Add recipe\n        ",
+    "kind": {
+      "ContentBlock": " Add recipe "
+    },
     "position": [
       [
         29,
-        14
+        15
       ],
       [
-        31,
-        9
+        32,
+        8
       ]
     ],
     "level": 2
   },
   {
     "kind": "HashPound",
-    "len": 1,
-    "content": "#",
     "position": [
       [
         32,
-        8
+        9
       ],
       [
         32,
-        9
+        10
       ]
     ],
     "level": 2
@@ -851,32 +767,28 @@ expression: tokens
     "kind": {
       "Identifier": "ln"
     },
-    "len": 2,
-    "content": "ln",
     "position": [
       [
         32,
-        9
+        10
       ],
       [
         32,
-        11
+        12
       ]
     ],
     "level": 2
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         32,
-        11
+        12
       ],
       [
         32,
-        12
+        13
       ]
     ],
     "level": 2
@@ -885,32 +797,30 @@ expression: tokens
     "kind": {
       "Identifier": "ru"
     },
-    "len": 2,
-    "content": "ru",
     "position": [
       [
         32,
-        12
+        13
       ],
       [
         32,
-        14
+        15
       ]
     ],
     "level": 2
   },
   {
-    "kind": "ContentBlock",
-    "len": 53,
-    "content": "\n            Добавить рецепт\n        ",
+    "kind": {
+      "ContentBlock": " Добавить рецепт "
+    },
     "position": [
       [
         32,
-        14
+        15
       ],
       [
-        34,
-        9
+        35,
+        4
       ]
     ],
     "level": 2
@@ -919,32 +829,28 @@ expression: tokens
     "kind": {
       "Identifier": "myAccount"
     },
-    "len": 9,
-    "content": "myAccount",
     "position": [
       [
         35,
-        4
+        5
       ],
       [
-        35,
-        13
+        36,
+        8
       ]
     ],
     "level": 1
   },
   {
     "kind": "HashPound",
-    "len": 1,
-    "content": "#",
     "position": [
       [
         36,
-        8
+        9
       ],
       [
         36,
-        9
+        10
       ]
     ],
     "level": 2
@@ -953,32 +859,28 @@ expression: tokens
     "kind": {
       "Identifier": "ln"
     },
-    "len": 2,
-    "content": "ln",
     "position": [
       [
         36,
-        9
+        10
       ],
       [
         36,
-        11
+        12
       ]
     ],
     "level": 2
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         36,
-        11
+        12
       ],
       [
         36,
-        12
+        13
       ]
     ],
     "level": 2
@@ -987,48 +889,44 @@ expression: tokens
     "kind": {
       "Identifier": "en"
     },
-    "len": 2,
-    "content": "en",
     "position": [
       [
         36,
-        12
+        13
       ],
       [
         36,
-        14
+        15
       ]
     ],
     "level": 2
   },
   {
-    "kind": "ContentBlock",
-    "len": 34,
-    "content": "\n            My account\n        ",
+    "kind": {
+      "ContentBlock": " My account "
+    },
     "position": [
       [
         36,
-        14
+        15
       ],
       [
-        38,
-        9
+        39,
+        8
       ]
     ],
     "level": 2
   },
   {
     "kind": "HashPound",
-    "len": 1,
-    "content": "#",
     "position": [
       [
         39,
-        8
+        9
       ],
       [
         39,
-        9
+        10
       ]
     ],
     "level": 2
@@ -1037,32 +935,28 @@ expression: tokens
     "kind": {
       "Identifier": "ln"
     },
-    "len": 2,
-    "content": "ln",
     "position": [
       [
         39,
-        9
+        10
       ],
       [
         39,
-        11
+        12
       ]
     ],
     "level": 2
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         39,
-        11
+        12
       ],
       [
         39,
-        12
+        13
       ]
     ],
     "level": 2
@@ -1071,82 +965,74 @@ expression: tokens
     "kind": {
       "Identifier": "ru"
     },
-    "len": 2,
-    "content": "ru",
     "position": [
       [
         39,
-        12
+        13
       ],
       [
         39,
-        14
+        15
       ]
     ],
     "level": 2
   },
   {
-    "kind": "ContentBlock",
-    "len": 45,
-    "content": "\n            Мой аккаунт\n        ",
+    "kind": {
+      "ContentBlock": " Мой аккаунт "
+    },
     "position": [
       [
         39,
-        14
+        15
       ],
       [
-        41,
-        9
+        42,
+        0
       ]
     ],
     "level": 2
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         43,
-        0
+        1
       ],
       [
         43,
-        1
+        2
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
     "kind": {
       "Identifier": "searchPlaceholder"
     },
-    "len": 17,
-    "content": "searchPlaceholder",
     "position": [
       [
         43,
-        1
+        2
       ],
-      [
-        43,
-        18
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "HashPound",
-    "len": 1,
-    "content": "#",
-    "position": [
       [
         44,
         4
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "HashPound",
+    "position": [
       [
         44,
         5
+      ],
+      [
+        44,
+        6
       ]
     ],
     "level": 1
@@ -1155,32 +1041,28 @@ expression: tokens
     "kind": {
       "Identifier": "ln"
     },
-    "len": 2,
-    "content": "ln",
     "position": [
       [
         44,
-        5
+        6
       ],
       [
         44,
-        7
+        8
       ]
     ],
     "level": 1
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         44,
-        7
+        8
       ],
       [
         44,
-        8
+        9
       ]
     ],
     "level": 1
@@ -1189,48 +1071,44 @@ expression: tokens
     "kind": {
       "Identifier": "en"
     },
-    "len": 2,
-    "content": "en",
     "position": [
       [
         44,
-        8
+        9
       ],
       [
         44,
-        10
+        11
       ]
     ],
     "level": 1
   },
   {
-    "kind": "ContentBlock",
-    "len": 29,
-    "content": "\n        Find a recipe\n    ",
+    "kind": {
+      "ContentBlock": " Find a recipe "
+    },
     "position": [
       [
         44,
-        10
+        11
       ],
       [
-        46,
-        5
+        47,
+        4
       ]
     ],
     "level": 1
   },
   {
     "kind": "HashPound",
-    "len": 1,
-    "content": "#",
     "position": [
       [
         47,
-        4
+        5
       ],
       [
         47,
-        5
+        6
       ]
     ],
     "level": 1
@@ -1239,32 +1117,28 @@ expression: tokens
     "kind": {
       "Identifier": "ln"
     },
-    "len": 2,
-    "content": "ln",
     "position": [
       [
         47,
-        5
+        6
       ],
       [
         47,
-        7
+        8
       ]
     ],
     "level": 1
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         47,
-        7
+        8
       ],
       [
         47,
-        8
+        9
       ]
     ],
     "level": 1
@@ -1273,82 +1147,74 @@ expression: tokens
     "kind": {
       "Identifier": "ru"
     },
-    "len": 2,
-    "content": "ru",
     "position": [
       [
         47,
-        8
+        9
       ],
       [
         47,
-        10
+        11
       ]
     ],
     "level": 1
   },
   {
-    "kind": "ContentBlock",
-    "len": 39,
-    "content": "\n        Найти рецепт\n    ",
+    "kind": {
+      "ContentBlock": " Найти рецепт "
+    },
     "position": [
       [
         47,
-        10
+        11
       ],
       [
-        49,
-        5
+        50,
+        4
       ]
     ],
     "level": 1
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         51,
-        0
+        1
       ],
       [
         51,
-        1
+        2
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
     "kind": {
       "Identifier": "pictureLabel"
     },
-    "len": 12,
-    "content": "pictureLabel",
     "position": [
       [
         51,
-        1
+        2
       ],
-      [
-        51,
-        13
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "HashPound",
-    "len": 1,
-    "content": "#",
-    "position": [
       [
         52,
         4
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "HashPound",
+    "position": [
       [
         52,
         5
+      ],
+      [
+        52,
+        6
       ]
     ],
     "level": 1
@@ -1357,32 +1223,28 @@ expression: tokens
     "kind": {
       "Identifier": "ln"
     },
-    "len": 2,
-    "content": "ln",
     "position": [
       [
         52,
-        5
+        6
       ],
       [
         52,
-        7
+        8
       ]
     ],
     "level": 1
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         52,
-        7
+        8
       ],
       [
         52,
-        8
+        9
       ]
     ],
     "level": 1
@@ -1391,48 +1253,44 @@ expression: tokens
     "kind": {
       "Identifier": "en"
     },
-    "len": 2,
-    "content": "en",
     "position": [
       [
         52,
-        8
+        9
       ],
       [
         52,
-        10
+        11
       ]
     ],
     "level": 1
   },
   {
-    "kind": "ContentBlock",
-    "len": 23,
-    "content": "\n        Picture\n    ",
+    "kind": {
+      "ContentBlock": " Picture "
+    },
     "position": [
       [
         52,
-        10
+        11
       ],
       [
-        54,
-        5
+        55,
+        4
       ]
     ],
     "level": 1
   },
   {
     "kind": "HashPound",
-    "len": 1,
-    "content": "#",
     "position": [
       [
         55,
-        4
+        5
       ],
       [
         55,
-        5
+        6
       ]
     ],
     "level": 1
@@ -1441,32 +1299,28 @@ expression: tokens
     "kind": {
       "Identifier": "ln"
     },
-    "len": 2,
-    "content": "ln",
     "position": [
       [
         55,
-        5
+        6
       ],
       [
         55,
-        7
+        8
       ]
     ],
     "level": 1
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         55,
-        7
+        8
       ],
       [
         55,
-        8
+        9
       ]
     ],
     "level": 1
@@ -1475,32 +1329,30 @@ expression: tokens
     "kind": {
       "Identifier": "ru"
     },
-    "len": 2,
-    "content": "ru",
     "position": [
       [
         55,
-        8
+        9
       ],
       [
         55,
-        10
+        11
       ]
     ],
     "level": 1
   },
   {
-    "kind": "ContentBlock",
-    "len": 32,
-    "content": "\n        Картинка\n    ",
+    "kind": {
+      "ContentBlock": " Картинка "
+    },
     "position": [
       [
         55,
-        10
+        11
       ],
       [
-        57,
-        5
+        58,
+        0
       ]
     ],
     "level": 1

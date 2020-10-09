@@ -4,167 +4,174 @@ expression: tokens
 ---
 [
   {
-    "kind": "Comment",
-    "len": 30,
-    "content": " this is single line comment",
+    "kind": {
+      "Comment": [
+        " this is single line comment",
+        false
+      ]
+    },
     "position": [
       [
         1,
-        0
+        1
       ],
       [
-        1,
-        30
+        2,
+        0
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "Comment",
-    "len": 41,
-    "content": "\n* this\n* is\n* multi-line\n* comment \n",
+    "kind": {
+      "Comment": [
+        "\n  this\n  is\n  multi-line\n  comment \n",
+        false
+      ]
+    },
     "position": [
       [
         3,
-        0
+        1
       ],
       [
-        8,
-        2
+        9,
+        0
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
     "kind": {
       "Identifier": "this_is_a_block_name"
     },
-    "len": 20,
-    "content": "this_is_a_block_name",
     "position": [
       [
         10,
-        0
+        1
       ],
-      [
-        10,
-        20
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Comment",
-    "len": 41,
-    "content": " blocks map output and define structure",
-    "position": [
       [
         10,
         21
-      ],
-      [
-        10,
-        62
       ]
     ],
-    "level": 0
+    "level": 1
+  },
+  {
+    "kind": {
+      "Comment": [
+        " blocks map output and define structure",
+        false
+      ]
+    },
+    "position": [
+      [
+        10,
+        22
+      ],
+      [
+        11,
+        0
+      ]
+    ],
+    "level": 1
   },
   {
     "kind": {
       "Identifier": "this_block_is_a_variable"
     },
-    "len": 24,
-    "content": "this_block_is_a_variable",
     "position": [
       [
         12,
-        0
+        1
       ],
       [
         12,
-        24
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "ContentBlock",
-    "len": 9,
-    "content": "content",
-    "position": [
-      [
-        13,
-        2
-      ],
-      [
-        13,
-        11
-      ]
-    ],
-    "level": 1
-  },
-  {
-    "kind": "Comment",
-    "len": 40,
-    "content": " same as block but already has a value",
-    "position": [
-      [
-        13,
-        12
-      ],
-      [
-        13,
-        52
+        25
       ]
     ],
     "level": 1
   },
   {
     "kind": {
-      "Identifier": "contents_might_have_multiple_definitions"
+      "ContentBlock": "content"
     },
-    "len": 40,
-    "content": "contents_might_have_multiple_definitions",
     "position": [
       [
-        15,
-        0
+        13,
+        3
       ],
       [
-        15,
-        40
+        13,
+        12
       ]
     ],
-    "level": 0
+    "level": 2
   },
   {
-    "kind": "Comment",
-    "len": 20,
-    "content": " e.g. translations",
+    "kind": {
+      "Comment": [
+        " same as block but already has a value",
+        false
+      ]
+    },
     "position": [
+      [
+        13,
+        13
+      ],
+      [
+        14,
+        0
+      ]
+    ],
+    "level": 2
+  },
+  {
+    "kind": {
+      "Identifier": "contents_might_have_multiple_definitions"
+    },
+    "position": [
+      [
+        15,
+        1
+      ],
       [
         15,
         41
-      ],
-      [
-        15,
-        61
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "HashPound",
-    "len": 1,
-    "content": "#",
+    "kind": {
+      "Comment": [
+        " e.g. translations",
+        false
+      ]
+    },
     "position": [
+      [
+        15,
+        42
+      ],
       [
         16,
         2
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "HashPound",
+    "position": [
       [
         16,
         3
+      ],
+      [
+        16,
+        4
       ]
     ],
     "level": 1
@@ -173,32 +180,28 @@ expression: tokens
     "kind": {
       "Identifier": "ln"
     },
-    "len": 2,
-    "content": "ln",
     "position": [
       [
         16,
-        3
+        4
       ],
       [
         16,
-        5
+        6
       ]
     ],
     "level": 1
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         16,
-        5
+        6
       ],
       [
         16,
-        6
+        7
       ]
     ],
     "level": 1
@@ -207,48 +210,44 @@ expression: tokens
     "kind": {
       "Identifier": "en"
     },
-    "len": 2,
-    "content": "en",
     "position": [
       [
         16,
-        6
+        7
       ],
       [
         16,
-        8
+        9
       ]
     ],
     "level": 1
   },
   {
-    "kind": "ContentBlock",
-    "len": 36,
-    "content": "\n    This is content in english\n  ",
+    "kind": {
+      "ContentBlock": " This is content in english "
+    },
     "position": [
       [
         16,
-        8
+        9
       ],
       [
-        18,
-        3
+        19,
+        2
       ]
     ],
     "level": 1
   },
   {
     "kind": "HashPound",
-    "len": 1,
-    "content": "#",
     "position": [
       [
         19,
-        2
+        3
       ],
       [
         19,
-        3
+        4
       ]
     ],
     "level": 1
@@ -257,32 +256,28 @@ expression: tokens
     "kind": {
       "Identifier": "ln"
     },
-    "len": 2,
-    "content": "ln",
     "position": [
       [
         19,
-        3
+        4
       ],
       [
         19,
-        5
+        6
       ]
     ],
     "level": 1
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         19,
-        5
+        6
       ],
       [
         19,
-        6
+        7
       ]
     ],
     "level": 1
@@ -291,32 +286,30 @@ expression: tokens
     "kind": {
       "Identifier": "ru"
     },
-    "len": 2,
-    "content": "ru",
     "position": [
       [
         19,
-        6
+        7
       ],
       [
         19,
-        8
+        9
       ]
     ],
     "level": 1
   },
   {
-    "kind": "ContentBlock",
-    "len": 53,
-    "content": "\n    Этот контент на русском\n  ",
+    "kind": {
+      "ContentBlock": " Этот контент на русском "
+    },
     "position": [
       [
         19,
-        8
+        9
       ],
       [
-        21,
-        3
+        22,
+        0
       ]
     ],
     "level": 1
@@ -325,32 +318,28 @@ expression: tokens
     "kind": {
       "Identifier": "option_B"
     },
-    "len": 8,
-    "content": "option_B",
     "position": [
       [
         23,
-        0
+        1
       ],
-      [
-        23,
-        8
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "HashPound",
-    "len": 1,
-    "content": "#",
-    "position": [
       [
         24,
         2
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "HashPound",
+    "position": [
       [
         24,
         3
+      ],
+      [
+        24,
+        4
       ]
     ],
     "level": 1
@@ -359,32 +348,28 @@ expression: tokens
     "kind": {
       "Identifier": "ln"
     },
-    "len": 2,
-    "content": "ln",
     "position": [
       [
         24,
-        3
+        4
       ],
       [
         24,
-        5
+        6
       ]
     ],
     "level": 1
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         24,
-        5
+        6
       ],
       [
         24,
-        6
+        7
       ]
     ],
     "level": 1
@@ -393,48 +378,44 @@ expression: tokens
     "kind": {
       "Identifier": "en"
     },
-    "len": 2,
-    "content": "en",
     "position": [
       [
         24,
-        6
+        7
       ],
       [
         24,
-        8
+        9
       ]
     ],
     "level": 1
   },
   {
-    "kind": "ContentBlock",
-    "len": 18,
-    "content": "\n    Option B\n  ",
+    "kind": {
+      "ContentBlock": " Option B "
+    },
     "position": [
       [
         24,
-        8
+        9
       ],
       [
-        26,
-        3
+        27,
+        2
       ]
     ],
     "level": 1
   },
   {
     "kind": "HashPound",
-    "len": 1,
-    "content": "#",
     "position": [
       [
         27,
-        2
+        3
       ],
       [
         27,
-        3
+        4
       ]
     ],
     "level": 1
@@ -443,32 +424,28 @@ expression: tokens
     "kind": {
       "Identifier": "ln"
     },
-    "len": 2,
-    "content": "ln",
     "position": [
       [
         27,
-        3
+        4
       ],
       [
         27,
-        5
+        6
       ]
     ],
     "level": 1
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         27,
-        5
+        6
       ],
       [
         27,
-        6
+        7
       ]
     ],
     "level": 1
@@ -477,32 +454,30 @@ expression: tokens
     "kind": {
       "Identifier": "ru"
     },
-    "len": 2,
-    "content": "ru",
     "position": [
       [
         27,
-        6
+        7
       ],
       [
         27,
-        8
+        9
       ]
     ],
     "level": 1
   },
   {
-    "kind": "ContentBlock",
-    "len": 27,
-    "content": "\n    Вариант Б\n  ",
+    "kind": {
+      "ContentBlock": " Вариант Б "
+    },
     "position": [
       [
         27,
-        8
+        9
       ],
       [
-        29,
-        3
+        30,
+        0
       ]
     ],
     "level": 1
@@ -511,198 +486,191 @@ expression: tokens
     "kind": {
       "Identifier": "this_block_provides_choices"
     },
-    "len": 27,
-    "content": "this_block_provides_choices",
     "position": [
       [
         31,
-        0
+        1
       ],
-      [
-        31,
-        27
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Greater",
-    "len": 1,
-    "content": ">",
-    "position": [
       [
         32,
         2
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Greater",
+    "position": [
       [
         32,
         3
+      ],
+      [
+        32,
+        4
       ]
     ],
     "level": 1
   },
   {
     "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
     "position": [
       [
         33,
-        4
+        5
       ],
       [
         33,
-        5
+        6
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "options"
     },
-    "len": 7,
-    "content": "options",
     "position": [
       [
         33,
-        5
-      ],
-      [
-        33,
-        12
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
-    "position": [
-      [
-        33,
-        12
+        6
       ],
       [
         33,
         13
       ]
     ],
-    "level": 2
-  },
-  {
-    "kind": "ContentBlock",
-    "len": 11,
-    "content": "An option",
-    "position": [
-      [
-        34,
-        6
-      ],
-      [
-        34,
-        17
-      ]
-    ],
     "level": 3
   },
   {
-    "kind": "Comment",
-    "len": 9,
-    "content": " static",
+    "kind": "Colon",
     "position": [
       [
-        34,
-        18
+        33,
+        13
       ],
       [
-        34,
-        27
-      ]
-    ],
-    "level": 3
-  },
-  {
-    "kind": {
-      "Identifier": "option_B"
-    },
-    "len": 8,
-    "content": "option_B",
-    "position": [
-      [
-        35,
-        6
-      ],
-      [
-        35,
+        33,
         14
       ]
     ],
     "level": 3
   },
   {
-    "kind": "Comment",
-    "len": 22,
-    "content": " or using a variable",
+    "kind": {
+      "ContentBlock": "An option"
+    },
     "position": [
       [
-        35,
-        15
+        34,
+        7
+      ],
+      [
+        34,
+        18
+      ]
+    ],
+    "level": 5
+  },
+  {
+    "kind": {
+      "Comment": [
+        " static",
+        false
+      ]
+    },
+    "position": [
+      [
+        34,
+        19
       ],
       [
         35,
-        37
+        6
       ]
     ],
-    "level": 3
+    "level": 5
+  },
+  {
+    "kind": {
+      "Identifier": "option_B"
+    },
+    "position": [
+      [
+        35,
+        7
+      ],
+      [
+        35,
+        15
+      ]
+    ],
+    "level": 5
+  },
+  {
+    "kind": {
+      "Comment": [
+        " or using a variable",
+        false
+      ]
+    },
+    "position": [
+      [
+        35,
+        16
+      ],
+      [
+        36,
+        0
+      ]
+    ],
+    "level": 5
   },
   {
     "kind": {
       "Identifier": "THIS_BLOCK_PROVIDES_A_TEXT_INPUT"
     },
-    "len": 32,
-    "content": "THIS_BLOCK_PROVIDES_A_TEXT_INPUT",
     "position": [
       [
         37,
-        0
+        1
       ],
-      [
-        37,
-        32
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Comment",
-    "len": 23,
-    "content": " in caps just for fun",
-    "position": [
       [
         37,
         33
-      ],
-      [
-        37,
-        56
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "Greater",
-    "len": 1,
-    "content": ">",
+    "kind": {
+      "Comment": [
+        " in caps just for fun",
+        false
+      ]
+    },
     "position": [
+      [
+        37,
+        34
+      ],
       [
         38,
         2
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Greater",
+    "position": [
       [
         38,
         3
+      ],
+      [
+        38,
+        4
       ]
     ],
     "level": 1
@@ -711,320 +679,282 @@ expression: tokens
     "kind": {
       "Identifier": "this_block_provides_a_number_input"
     },
-    "len": 34,
-    "content": "this_block_provides_a_number_input",
     "position": [
       [
         40,
-        0
+        1
       ],
-      [
-        40,
-        34
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Greater",
-    "len": 1,
-    "content": ">",
-    "position": [
       [
         41,
         2
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Greater",
+    "position": [
       [
         41,
         3
+      ],
+      [
+        41,
+        4
       ]
     ],
     "level": 1
   },
   {
     "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
     "position": [
       [
         42,
-        4
+        5
       ],
       [
         42,
-        5
+        6
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "number"
     },
-    "len": 6,
-    "content": "number",
     "position": [
       [
         42,
-        5
+        6
       ],
       [
-        42,
-        11
+        43,
+        0
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "this_block_provides_a_number_input_with_constraints"
     },
-    "len": 51,
-    "content": "this_block_provides_a_number_input_with_constraints",
     "position": [
       [
         44,
-        0
+        1
       ],
-      [
-        44,
-        51
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Greater",
-    "len": 1,
-    "content": ">",
-    "position": [
       [
         45,
         2
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Greater",
+    "position": [
       [
         45,
         3
+      ],
+      [
+        45,
+        4
       ]
     ],
     "level": 1
   },
   {
     "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
     "position": [
       [
         46,
-        4
+        5
       ],
       [
         46,
-        5
+        6
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "number"
     },
-    "len": 6,
-    "content": "number",
     "position": [
       [
         46,
-        5
-      ],
-      [
-        46,
-        11
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
-    "position": [
-      [
-        46,
-        11
+        6
       ],
       [
         46,
         12
       ]
     ],
-    "level": 2
+    "level": 3
+  },
+  {
+    "kind": "Colon",
+    "position": [
+      [
+        46,
+        12
+      ],
+      [
+        46,
+        13
+      ]
+    ],
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "max"
     },
-    "len": 3,
-    "content": "max",
     "position": [
       [
         46,
-        12
-      ],
-      [
-        46,
-        15
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Equals",
-    "len": 1,
-    "content": "=",
-    "position": [
-      [
-        46,
-        15
+        13
       ],
       [
         46,
         16
       ]
     ],
-    "level": 2
+    "level": 3
+  },
+  {
+    "kind": "Equals",
+    "position": [
+      [
+        46,
+        16
+      ],
+      [
+        46,
+        17
+      ]
+    ],
+    "level": 3
   },
   {
     "kind": {
       "Int": 100
     },
-    "len": 3,
-    "content": "100",
     "position": [
       [
         46,
-        16
-      ],
-      [
-        46,
-        19
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
-    "position": [
-      [
-        46,
-        19
+        17
       ],
       [
         46,
         20
       ]
     ],
-    "level": 2
+    "level": 3
+  },
+  {
+    "kind": "Colon",
+    "position": [
+      [
+        46,
+        20
+      ],
+      [
+        46,
+        21
+      ]
+    ],
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "min"
     },
-    "len": 3,
-    "content": "min",
     "position": [
       [
         46,
-        20
-      ],
-      [
-        46,
-        23
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Equals",
-    "len": 1,
-    "content": "=",
-    "position": [
-      [
-        46,
-        23
+        21
       ],
       [
         46,
         24
       ]
     ],
-    "level": 2
+    "level": 3
+  },
+  {
+    "kind": "Equals",
+    "position": [
+      [
+        46,
+        24
+      ],
+      [
+        46,
+        25
+      ]
+    ],
+    "level": 3
   },
   {
     "kind": {
       "Int": 20
     },
-    "len": 2,
-    "content": "20",
     "position": [
       [
         46,
-        24
+        25
       ],
       [
-        46,
-        26
+        47,
+        0
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "this_block_provides_a_number_input_with_constraints_and_a_default_value"
     },
-    "len": 71,
-    "content": "this_block_provides_a_number_input_with_constraints_and_a_default_value",
     "position": [
       [
         48,
-        0
+        1
       ],
-      [
-        48,
-        71
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Greater",
-    "len": 1,
-    "content": ">",
-    "position": [
       [
         49,
         2
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Greater",
+    "position": [
       [
         49,
         3
+      ],
+      [
+        49,
+        4
       ]
     ],
     "level": 1
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         49,
-        4
+        5
       ],
       [
         49,
-        5
+        6
       ]
     ],
     "level": 1
@@ -1033,32 +963,28 @@ expression: tokens
     "kind": {
       "Identifier": "default"
     },
-    "len": 7,
-    "content": "default",
     "position": [
       [
         49,
-        5
+        6
       ],
       [
         49,
-        12
+        13
       ]
     ],
     "level": 1
   },
   {
     "kind": "Equals",
-    "len": 1,
-    "content": "=",
     "position": [
       [
         49,
-        12
+        13
       ],
       [
         49,
-        13
+        14
       ]
     ],
     "level": 1
@@ -1067,668 +993,587 @@ expression: tokens
     "kind": {
       "Int": 42
     },
-    "len": 2,
-    "content": "42",
     "position": [
       [
         49,
-        13
+        14
       ],
       [
-        49,
-        15
+        50,
+        4
       ]
     ],
     "level": 1
   },
   {
     "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
     "position": [
       [
         50,
-        4
+        5
       ],
       [
         50,
-        5
+        6
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "number"
     },
-    "len": 6,
-    "content": "number",
     "position": [
       [
         50,
-        5
-      ],
-      [
-        50,
-        11
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
-    "position": [
-      [
-        50,
-        11
+        6
       ],
       [
         50,
         12
       ]
     ],
-    "level": 2
+    "level": 3
+  },
+  {
+    "kind": "Colon",
+    "position": [
+      [
+        50,
+        12
+      ],
+      [
+        50,
+        13
+      ]
+    ],
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "max"
     },
-    "len": 3,
-    "content": "max",
     "position": [
       [
         50,
-        12
-      ],
-      [
-        50,
-        15
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Equals",
-    "len": 1,
-    "content": "=",
-    "position": [
-      [
-        50,
-        15
+        13
       ],
       [
         50,
         16
       ]
     ],
-    "level": 2
+    "level": 3
+  },
+  {
+    "kind": "Equals",
+    "position": [
+      [
+        50,
+        16
+      ],
+      [
+        50,
+        17
+      ]
+    ],
+    "level": 3
   },
   {
     "kind": {
       "Int": 100
     },
-    "len": 3,
-    "content": "100",
     "position": [
       [
         50,
-        16
-      ],
-      [
-        50,
-        19
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
-    "position": [
-      [
-        50,
-        19
+        17
       ],
       [
         50,
         20
       ]
     ],
-    "level": 2
+    "level": 3
+  },
+  {
+    "kind": "Colon",
+    "position": [
+      [
+        50,
+        20
+      ],
+      [
+        50,
+        21
+      ]
+    ],
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "min"
     },
-    "len": 3,
-    "content": "min",
     "position": [
       [
         50,
-        20
-      ],
-      [
-        50,
-        23
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Equals",
-    "len": 1,
-    "content": "=",
-    "position": [
-      [
-        50,
-        23
+        21
       ],
       [
         50,
         24
       ]
     ],
-    "level": 2
+    "level": 3
+  },
+  {
+    "kind": "Equals",
+    "position": [
+      [
+        50,
+        24
+      ],
+      [
+        50,
+        25
+      ]
+    ],
+    "level": 3
   },
   {
     "kind": {
       "Int": 20
     },
-    "len": 2,
-    "content": "20",
     "position": [
       [
         50,
-        24
+        25
       ],
       [
-        50,
-        26
+        51,
+        0
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "this_block_provides_an_email_input"
     },
-    "len": 34,
-    "content": "this_block_provides_an_email_input",
     "position": [
       [
         52,
-        0
+        1
       ],
-      [
-        52,
-        34
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Greater",
-    "len": 1,
-    "content": ">",
-    "position": [
       [
         53,
         2
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Greater",
+    "position": [
       [
         53,
         3
+      ],
+      [
+        53,
+        4
       ]
     ],
     "level": 1
   },
   {
     "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
     "position": [
       [
         54,
-        4
+        5
       ],
       [
         54,
-        5
+        6
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "pattern"
     },
-    "len": 7,
-    "content": "pattern",
     "position": [
       [
         54,
-        5
-      ],
-      [
-        54,
-        12
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
-    "position": [
-      [
-        54,
-        12
+        6
       ],
       [
         54,
         13
       ]
     ],
-    "level": 2
+    "level": 3
+  },
+  {
+    "kind": "Colon",
+    "position": [
+      [
+        54,
+        13
+      ],
+      [
+        54,
+        14
+      ]
+    ],
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "email"
     },
-    "len": 5,
-    "content": "email",
     "position": [
       [
         54,
-        13
+        14
       ],
       [
-        54,
-        18
+        55,
+        0
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "block_can_be_nested_to_create_a_sequence"
     },
-    "len": 40,
-    "content": "block_can_be_nested_to_create_a_sequence",
     "position": [
       [
         56,
-        0
+        1
       ],
       [
-        56,
-        40
+        57,
+        2
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
     "kind": {
       "Identifier": "a_property"
     },
-    "len": 10,
-    "content": "a_property",
     "position": [
       [
         57,
-        2
+        3
       ],
       [
         57,
-        12
+        13
       ]
     ],
     "level": 1
   },
   {
-    "kind": "Comment",
-    "len": 13,
-    "content": " any string",
+    "kind": {
+      "Comment": [
+        " any string",
+        false
+      ]
+    },
     "position": [
       [
         57,
-        13
+        14
       ],
       [
-        57,
-        26
+        58,
+        4
       ]
     ],
     "level": 1
   },
   {
     "kind": "Greater",
-    "len": 1,
-    "content": ">",
     "position": [
       [
         58,
-        4
+        5
       ],
       [
         58,
-        5
+        6
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "b_property"
     },
-    "len": 10,
-    "content": "b_property",
     "position": [
       [
         59,
-        2
+        3
       ],
       [
         59,
-        12
+        13
       ]
     ],
     "level": 1
   },
   {
-    "kind": "Comment",
-    "len": 40,
-    "content": " string, with 42 as its maximum length",
+    "kind": {
+      "Comment": [
+        " string, with 42 as its maximum length",
+        false
+      ]
+    },
     "position": [
       [
         59,
-        13
+        14
       ],
       [
-        59,
-        53
+        60,
+        4
       ]
     ],
     "level": 1
   },
   {
     "kind": "Greater",
-    "len": 1,
-    "content": ">",
     "position": [
-      [
-        60,
-        4
-      ],
       [
         60,
         5
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
-    "position": [
-      [
-        61,
-        6
       ],
       [
-        61,
-        7
+        60,
+        6
       ]
     ],
     "level": 3
+  },
+  {
+    "kind": "Exclamation",
+    "position": [
+      [
+        61,
+        7
+      ],
+      [
+        61,
+        8
+      ]
+    ],
+    "level": 5
   },
   {
     "kind": {
       "Identifier": "length"
     },
-    "len": 6,
-    "content": "length",
     "position": [
       [
         61,
-        7
-      ],
-      [
-        61,
-        13
-      ]
-    ],
-    "level": 3
-  },
-  {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
-    "position": [
-      [
-        61,
-        13
+        8
       ],
       [
         61,
         14
       ]
     ],
-    "level": 3
+    "level": 5
+  },
+  {
+    "kind": "Colon",
+    "position": [
+      [
+        61,
+        14
+      ],
+      [
+        61,
+        15
+      ]
+    ],
+    "level": 5
   },
   {
     "kind": {
       "Identifier": "max"
     },
-    "len": 3,
-    "content": "max",
     "position": [
       [
         61,
-        14
-      ],
-      [
-        61,
-        17
-      ]
-    ],
-    "level": 3
-  },
-  {
-    "kind": "Equals",
-    "len": 1,
-    "content": "=",
-    "position": [
-      [
-        61,
-        17
+        15
       ],
       [
         61,
         18
       ]
     ],
-    "level": 3
+    "level": 5
+  },
+  {
+    "kind": "Equals",
+    "position": [
+      [
+        61,
+        18
+      ],
+      [
+        61,
+        19
+      ]
+    ],
+    "level": 5
   },
   {
     "kind": {
       "Int": 24
     },
-    "len": 2,
-    "content": "24",
     "position": [
       [
         61,
-        18
+        19
       ],
       [
-        61,
-        20
+        62,
+        0
       ]
     ],
-    "level": 3
+    "level": 5
   },
   {
     "kind": {
       "Identifier": "lists_can_be_created_as_well"
     },
-    "len": 28,
-    "content": "lists_can_be_created_as_well",
     "position": [
       [
         63,
-        0
+        1
       ],
-      [
-        63,
-        28
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Comment",
-    "len": 22,
-    "content": " maximum of 3 emails",
-    "position": [
       [
         63,
         29
-      ],
-      [
-        63,
-        51
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "Plus",
-    "len": 1,
-    "content": "+",
+    "kind": {
+      "Comment": [
+        " maximum of 3 emails",
+        false
+      ]
+    },
     "position": [
+      [
+        63,
+        30
+      ],
       [
         64,
         2
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Plus",
+    "position": [
       [
         64,
         3
+      ],
+      [
+        64,
+        4
       ]
     ],
     "level": 1
   },
   {
     "kind": "Greater",
-    "len": 1,
-    "content": ">",
     "position": [
       [
         64,
-        3
+        4
       ],
       [
         64,
-        4
+        5
       ]
     ],
     "level": 1
   },
   {
     "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
     "position": [
       [
         65,
-        4
+        5
       ],
       [
         65,
-        5
+        6
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "count"
     },
-    "len": 5,
-    "content": "count",
     "position": [
       [
         65,
-        5
-      ],
-      [
-        65,
-        10
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
-    "position": [
-      [
-        65,
-        10
+        6
       ],
       [
         65,
         11
       ]
     ],
-    "level": 2
+    "level": 3
+  },
+  {
+    "kind": "Colon",
+    "position": [
+      [
+        65,
+        11
+      ],
+      [
+        65,
+        12
+      ]
+    ],
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "max"
     },
-    "len": 3,
-    "content": "max",
     "position": [
       [
         65,
-        11
-      ],
-      [
-        65,
-        14
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Equals",
-    "len": 1,
-    "content": "=",
-    "position": [
-      [
-        65,
-        14
+        12
       ],
       [
         65,
         15
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
-    "kind": {
-      "Int": 3
-    },
-    "len": 1,
-    "content": "3",
+    "kind": "Equals",
     "position": [
       [
         65,
@@ -1739,140 +1584,140 @@ expression: tokens
         16
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
-    "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
+    "kind": {
+      "Int": 3
+    },
     "position": [
       [
-        66,
-        4
+        65,
+        16
       ],
       [
         66,
-        5
+        4
       ]
     ],
-    "level": 2
+    "level": 3
+  },
+  {
+    "kind": "Exclamation",
+    "position": [
+      [
+        66,
+        5
+      ],
+      [
+        66,
+        6
+      ]
+    ],
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "format"
     },
-    "len": 6,
-    "content": "format",
     "position": [
       [
         66,
-        5
-      ],
-      [
-        66,
-        11
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
-    "position": [
-      [
-        66,
-        11
+        6
       ],
       [
         66,
         12
       ]
     ],
-    "level": 2
+    "level": 3
+  },
+  {
+    "kind": "Colon",
+    "position": [
+      [
+        66,
+        12
+      ],
+      [
+        66,
+        13
+      ]
+    ],
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "email"
     },
-    "len": 5,
-    "content": "email",
     "position": [
       [
         66,
-        12
-      ],
-      [
-        66,
-        17
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Equals",
-    "len": 1,
-    "content": "=",
-    "position": [
-      [
-        66,
-        17
+        13
       ],
       [
         66,
         18
       ]
     ],
-    "level": 2
+    "level": 3
+  },
+  {
+    "kind": "Equals",
+    "position": [
+      [
+        66,
+        18
+      ],
+      [
+        66,
+        19
+      ]
+    ],
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "true"
     },
-    "len": 4,
-    "content": "true",
     "position": [
       [
         66,
-        18
+        19
       ],
       [
-        66,
-        22
+        67,
+        0
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "block_that_refers_to_another_sequence"
     },
-    "len": 37,
-    "content": "block_that_refers_to_another_sequence",
     "position": [
       [
         68,
-        0
+        1
       ],
-      [
-        68,
-        37
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "At",
-    "len": 1,
-    "content": "@",
-    "position": [
       [
         69,
         2
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "At",
+    "position": [
       [
         69,
         3
+      ],
+      [
+        69,
+        4
       ]
     ],
     "level": 1
@@ -1881,32 +1726,28 @@ expression: tokens
     "kind": {
       "Identifier": "basic"
     },
-    "len": 5,
-    "content": "basic",
     "position": [
       [
         69,
-        3
+        4
       ],
       [
         69,
-        8
+        9
       ]
     ],
     "level": 1
   },
   {
     "kind": "Dot",
-    "len": 1,
-    "content": ".",
     "position": [
       [
         69,
-        8
+        9
       ],
       [
         69,
-        9
+        10
       ]
     ],
     "level": 1
@@ -1915,208 +1756,178 @@ expression: tokens
     "kind": {
       "Identifier": "demographics"
     },
-    "len": 12,
-    "content": "demographics",
     "position": [
       [
         69,
-        9
+        10
       ],
       [
-        69,
-        21
+        70,
+        0
       ]
     ],
     "level": 1
   },
   {
-    "kind": "Comment",
-    "len": 59,
-    "content": " following example shows how to reuse data between blocks",
+    "kind": {
+      "Comment": [
+        " following example shows how to reuse data between blocks",
+        false
+      ]
+    },
     "position": [
       [
         71,
-        0
+        1
       ],
       [
-        71,
-        59
+        72,
+        0
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
     "kind": {
       "Identifier": "my_initial_block"
     },
-    "len": 16,
-    "content": "my_initial_block",
     "position": [
       [
         73,
-        0
+        1
       ],
-      [
-        73,
-        16
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Comment",
-    "len": 26,
-    "content": " list of 1 to 30 strings",
-    "position": [
       [
         73,
         17
-      ],
-      [
-        73,
-        43
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "Plus",
-    "len": 1,
-    "content": "+",
+    "kind": {
+      "Comment": [
+        " list of 1 to 30 strings",
+        false
+      ]
+    },
     "position": [
+      [
+        73,
+        18
+      ],
       [
         74,
         2
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Plus",
+    "position": [
       [
         74,
         3
+      ],
+      [
+        74,
+        4
       ]
     ],
     "level": 1
   },
   {
     "kind": "Greater",
-    "len": 1,
-    "content": ">",
     "position": [
       [
         74,
-        3
+        4
       ],
       [
         74,
-        4
+        5
       ]
     ],
     "level": 1
   },
   {
     "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
     "position": [
       [
         75,
-        4
+        5
       ],
       [
         75,
-        5
+        6
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "count"
     },
-    "len": 5,
-    "content": "count",
     "position": [
       [
         75,
-        5
-      ],
-      [
-        75,
-        10
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
-    "position": [
-      [
-        75,
-        10
+        6
       ],
       [
         75,
         11
       ]
     ],
-    "level": 2
+    "level": 3
+  },
+  {
+    "kind": "Colon",
+    "position": [
+      [
+        75,
+        11
+      ],
+      [
+        75,
+        12
+      ]
+    ],
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "min"
     },
-    "len": 3,
-    "content": "min",
     "position": [
       [
         75,
-        11
-      ],
-      [
-        75,
-        14
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Equals",
-    "len": 1,
-    "content": "=",
-    "position": [
-      [
-        75,
-        14
+        12
       ],
       [
         75,
         15
       ]
     ],
-    "level": 2
+    "level": 3
+  },
+  {
+    "kind": "Equals",
+    "position": [
+      [
+        75,
+        15
+      ],
+      [
+        75,
+        16
+      ]
+    ],
+    "level": 3
   },
   {
     "kind": {
       "Int": 1
     },
-    "len": 1,
-    "content": "1",
-    "position": [
-      [
-        75,
-        15
-      ],
-      [
-        75,
-        16
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         75,
@@ -2127,106 +1938,113 @@ expression: tokens
         17
       ]
     ],
-    "level": 2
+    "level": 3
+  },
+  {
+    "kind": "Colon",
+    "position": [
+      [
+        75,
+        17
+      ],
+      [
+        75,
+        18
+      ]
+    ],
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "max"
     },
-    "len": 3,
-    "content": "max",
     "position": [
       [
         75,
-        17
-      ],
-      [
-        75,
-        20
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Equals",
-    "len": 1,
-    "content": "=",
-    "position": [
-      [
-        75,
-        20
+        18
       ],
       [
         75,
         21
       ]
     ],
-    "level": 2
+    "level": 3
+  },
+  {
+    "kind": "Equals",
+    "position": [
+      [
+        75,
+        21
+      ],
+      [
+        75,
+        22
+      ]
+    ],
+    "level": 3
   },
   {
     "kind": {
       "Int": 30
     },
-    "len": 2,
-    "content": "30",
     "position": [
       [
         75,
-        21
+        22
       ],
       [
-        75,
-        23
+        76,
+        0
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "another_block"
     },
-    "len": 13,
-    "content": "another_block",
     "position": [
       [
         77,
-        0
+        1
       ],
-      [
-        77,
-        13
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Comment",
-    "len": 61,
-    "content": " enter number from 0 to 10 for each of the items, default 6",
-    "position": [
       [
         77,
         14
-      ],
-      [
-        77,
-        75
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
+    "kind": {
+      "Comment": [
+        " enter number from 0 to 10 for each of the items, default 6",
+        false
+      ]
+    },
     "position": [
+      [
+        77,
+        15
+      ],
       [
         78,
         2
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Exclamation",
+    "position": [
       [
         78,
         3
+      ],
+      [
+        78,
+        4
       ]
     ],
     "level": 1
@@ -2235,32 +2053,28 @@ expression: tokens
     "kind": {
       "Identifier": "iterate"
     },
-    "len": 7,
-    "content": "iterate",
     "position": [
       [
         78,
-        3
+        4
       ],
       [
         78,
-        10
+        11
       ]
     ],
     "level": 1
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         78,
-        10
+        11
       ],
       [
         78,
-        11
+        12
       ]
     ],
     "level": 1
@@ -2269,92 +2083,64 @@ expression: tokens
     "kind": {
       "Identifier": "my_initial_block"
     },
-    "len": 16,
-    "content": "my_initial_block",
     "position": [
       [
         78,
-        11
+        12
       ],
       [
-        78,
-        27
+        79,
+        4
       ]
     ],
     "level": 1
   },
   {
     "kind": "Greater",
-    "len": 1,
-    "content": ">",
     "position": [
-      [
-        79,
-        4
-      ],
       [
         79,
         5
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
-    "position": [
-      [
-        79,
-        6
       ],
       [
         79,
-        7
+        6
       ]
     ],
-    "level": 2
+    "level": 3
+  },
+  {
+    "kind": "Colon",
+    "position": [
+      [
+        79,
+        7
+      ],
+      [
+        79,
+        8
+      ]
+    ],
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "default"
     },
-    "len": 7,
-    "content": "default",
     "position": [
       [
         79,
-        7
-      ],
-      [
-        79,
-        14
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Equals",
-    "len": 1,
-    "content": "=",
-    "position": [
-      [
-        79,
-        14
+        8
       ],
       [
         79,
         15
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
-    "kind": {
-      "Int": 6
-    },
-    "len": 1,
-    "content": "6",
+    "kind": "Equals",
     "position": [
       [
         79,
@@ -2365,114 +2151,102 @@ expression: tokens
         16
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
-    "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
+    "kind": {
+      "Int": 6
+    },
     "position": [
       [
-        80,
-        6
+        79,
+        16
       ],
       [
         80,
-        7
+        6
       ]
     ],
     "level": 3
+  },
+  {
+    "kind": "Exclamation",
+    "position": [
+      [
+        80,
+        7
+      ],
+      [
+        80,
+        8
+      ]
+    ],
+    "level": 5
   },
   {
     "kind": {
       "Identifier": "number"
     },
-    "len": 6,
-    "content": "number",
     "position": [
       [
         80,
-        7
-      ],
-      [
-        80,
-        13
-      ]
-    ],
-    "level": 3
-  },
-  {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
-    "position": [
-      [
-        80,
-        13
+        8
       ],
       [
         80,
         14
       ]
     ],
-    "level": 3
+    "level": 5
+  },
+  {
+    "kind": "Colon",
+    "position": [
+      [
+        80,
+        14
+      ],
+      [
+        80,
+        15
+      ]
+    ],
+    "level": 5
   },
   {
     "kind": {
       "Identifier": "min"
     },
-    "len": 3,
-    "content": "min",
     "position": [
       [
         80,
-        14
-      ],
-      [
-        80,
-        17
-      ]
-    ],
-    "level": 3
-  },
-  {
-    "kind": "Equals",
-    "len": 1,
-    "content": "=",
-    "position": [
-      [
-        80,
-        17
+        15
       ],
       [
         80,
         18
       ]
     ],
-    "level": 3
+    "level": 5
+  },
+  {
+    "kind": "Equals",
+    "position": [
+      [
+        80,
+        18
+      ],
+      [
+        80,
+        19
+      ]
+    ],
+    "level": 5
   },
   {
     "kind": {
       "Int": 0
     },
-    "len": 1,
-    "content": "0",
-    "position": [
-      [
-        80,
-        18
-      ],
-      [
-        80,
-        19
-      ]
-    ],
-    "level": 3
-  },
-  {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         80,
@@ -2483,314 +2257,296 @@ expression: tokens
         20
       ]
     ],
-    "level": 3
+    "level": 5
+  },
+  {
+    "kind": "Colon",
+    "position": [
+      [
+        80,
+        20
+      ],
+      [
+        80,
+        21
+      ]
+    ],
+    "level": 5
   },
   {
     "kind": {
       "Identifier": "max"
     },
-    "len": 3,
-    "content": "max",
     "position": [
       [
         80,
-        20
-      ],
-      [
-        80,
-        23
-      ]
-    ],
-    "level": 3
-  },
-  {
-    "kind": "Equals",
-    "len": 1,
-    "content": "=",
-    "position": [
-      [
-        80,
-        23
+        21
       ],
       [
         80,
         24
       ]
     ],
-    "level": 3
+    "level": 5
+  },
+  {
+    "kind": "Equals",
+    "position": [
+      [
+        80,
+        24
+      ],
+      [
+        80,
+        25
+      ]
+    ],
+    "level": 5
   },
   {
     "kind": {
       "Int": 10
     },
-    "len": 2,
-    "content": "10",
     "position": [
       [
         80,
-        24
+        25
       ],
       [
-        80,
-        26
+        81,
+        0
       ]
     ],
-    "level": 3
+    "level": 5
   },
   {
-    "kind": "Comment",
-    "len": 32,
-    "content": "\n* Declaring your own rules\n",
+    "kind": {
+      "Comment": [
+        "\n  Declaring your own rules\n",
+        false
+      ]
+    },
     "position": [
       [
         82,
-        0
+        1
       ],
       [
-        84,
-        2
+        85,
+        0
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         86,
-        0
+        1
       ],
       [
         86,
-        1
+        2
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
     "kind": {
       "Identifier": "my_rule"
     },
-    "len": 7,
-    "content": "my_rule",
     "position": [
       [
         86,
-        1
+        2
       ],
-      [
-        86,
-        8
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Comment",
-    "len": 66,
-    "content": " yes colon at the start of the line means it's a rule definition",
-    "position": [
       [
         86,
         9
-      ],
-      [
-        86,
-        75
       ]
     ],
-    "level": 0
+    "level": 1
+  },
+  {
+    "kind": {
+      "Comment": [
+        " yes colon at the start of the line means it's a rule definition",
+        false
+      ]
+    },
+    "position": [
+      [
+        86,
+        10
+      ],
+      [
+        87,
+        2
+      ]
+    ],
+    "level": 1
   },
   {
     "kind": {
       "Identifier": "argument_1"
     },
-    "len": 10,
-    "content": "argument_1",
     "position": [
       [
         87,
-        2
+        3
       ],
       [
         87,
-        12
+        13
       ]
     ],
     "level": 1
   },
   {
-    "kind": "Comment",
-    "len": 23,
-    "content": " arguments are blocks",
+    "kind": {
+      "Comment": [
+        " arguments are blocks",
+        false
+      ]
+    },
     "position": [
       [
         87,
-        13
+        14
       ],
       [
-        87,
-        36
+        88,
+        4
       ]
     ],
     "level": 1
   },
   {
     "kind": "Greater",
-    "len": 1,
-    "content": ">",
     "position": [
-      [
-        88,
-        4
-      ],
       [
         88,
         5
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
-    "position": [
-      [
-        89,
-        6
       ],
       [
-        89,
-        7
+        88,
+        6
       ]
     ],
     "level": 3
+  },
+  {
+    "kind": "Exclamation",
+    "position": [
+      [
+        89,
+        7
+      ],
+      [
+        89,
+        8
+      ]
+    ],
+    "level": 5
   },
   {
     "kind": {
       "Identifier": "number"
     },
-    "len": 6,
-    "content": "number",
     "position": [
       [
         89,
-        7
+        8
       ],
-      [
-        89,
-        13
-      ]
-    ],
-    "level": 3
-  },
-  {
-    "kind": "Comment",
-    "len": 24,
-    "content": " with validated inputs",
-    "position": [
       [
         89,
         14
-      ],
-      [
-        89,
-        38
       ]
     ],
-    "level": 3
+    "level": 5
+  },
+  {
+    "kind": {
+      "Comment": [
+        " with validated inputs",
+        false
+      ]
+    },
+    "position": [
+      [
+        89,
+        15
+      ],
+      [
+        90,
+        2
+      ]
+    ],
+    "level": 5
   },
   {
     "kind": {
       "Identifier": "argument_2"
     },
-    "len": 10,
-    "content": "argument_2",
     "position": [
       [
         90,
-        2
+        3
       ],
       [
-        90,
-        12
+        91,
+        4
       ]
     ],
     "level": 1
   },
   {
     "kind": "Greater",
-    "len": 1,
-    "content": ">",
     "position": [
-      [
-        91,
-        4
-      ],
       [
         91,
         5
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
-    "position": [
-      [
-        91,
-        6
       ],
       [
         91,
-        7
+        6
       ]
     ],
-    "level": 2
+    "level": 3
+  },
+  {
+    "kind": "Colon",
+    "position": [
+      [
+        91,
+        7
+      ],
+      [
+        91,
+        8
+      ]
+    ],
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "default"
     },
-    "len": 7,
-    "content": "default",
     "position": [
       [
         91,
-        7
+        8
       ],
       [
         91,
-        14
+        15
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
     "kind": "Equals",
-    "len": 1,
-    "content": "=",
-    "position": [
-      [
-        91,
-        14
-      ],
-      [
-        91,
-        15
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "ContentBlock",
-    "len": 9,
-    "content": "default",
     "position": [
       [
         91,
@@ -2798,39 +2554,56 @@ expression: tokens
       ],
       [
         91,
-        24
+        16
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
-    "kind": "Comment",
-    "len": 46,
-    "content": " content below will be executed in a sandbox",
+    "kind": {
+      "ContentBlock": "default"
+    },
     "position": [
+      [
+        91,
+        16
+      ],
       [
         92,
         2
-      ],
+      ]
+    ],
+    "level": 3
+  },
+  {
+    "kind": {
+      "Comment": [
+        " content below will be executed in a sandbox",
+        false
+      ]
+    },
+    "position": [
       [
         92,
-        48
+        3
+      ],
+      [
+        93,
+        2
       ]
     ],
     "level": 1
   },
   {
     "kind": "HashPound",
-    "len": 1,
-    "content": "#",
     "position": [
       [
         93,
-        2
+        3
       ],
       [
         93,
-        3
+        4
       ]
     ],
     "level": 1
@@ -2839,32 +2612,28 @@ expression: tokens
     "kind": {
       "Identifier": "lang"
     },
-    "len": 4,
-    "content": "lang",
     "position": [
       [
         93,
-        3
+        4
       ],
       [
         93,
-        7
+        8
       ]
     ],
     "level": 1
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         93,
-        7
+        8
       ],
       [
         93,
-        8
+        9
       ]
     ],
     "level": 1
@@ -2873,32 +2642,30 @@ expression: tokens
     "kind": {
       "Identifier": "typescript"
     },
-    "len": 10,
-    "content": "typescript",
     "position": [
       [
         93,
-        8
+        9
       ],
       [
         93,
-        18
+        19
       ]
     ],
     "level": 1
   },
   {
-    "kind": "ContentBlock",
-    "len": 352,
-    "content": "\n    export default function(\n      in /* \"in\" will prepare the inputs */,\n      out /* \"out\" should be called with valid inputs */,\n      arg1, arg2 /* \"arg1\" and \"arg2\" are your arguments */\n    ) {\n      in((el, context) => {\n        // create UI things here\n\n        // call out with the value if valid\n        out('my value');\n      });\n    }\n  ",
+    "kind": {
+      "ContentBlock": " export default function( in /* \"in\" will prepare the inputs */, out /* \"out\" should be called with valid inputs */, arg1, arg2 /* \"arg1\" and \"arg2\" are your arguments */ ) { in((el, context) => { // create UI things here\n // call out with the value if valid out('my value'); }); } "
+    },
     "position": [
       [
         93,
-        18
+        19
       ],
       [
-        106,
-        3
+        107,
+        0
       ]
     ],
     "level": 1
@@ -2907,48 +2674,42 @@ expression: tokens
     "kind": {
       "Identifier": "block_that_uses_the_rule"
     },
-    "len": 24,
-    "content": "block_that_uses_the_rule",
     "position": [
       [
         108,
-        0
+        1
       ],
-      [
-        108,
-        24
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Greater",
-    "len": 1,
-    "content": ">",
-    "position": [
       [
         109,
         2
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Greater",
+    "position": [
       [
         109,
         3
+      ],
+      [
+        109,
+        4
       ]
     ],
     "level": 1
   },
   {
     "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
     "position": [
       [
         110,
-        2
+        3
       ],
       [
         110,
-        3
+        4
       ]
     ],
     "level": 1
@@ -2957,32 +2718,28 @@ expression: tokens
     "kind": {
       "Identifier": "my_rule"
     },
-    "len": 7,
-    "content": "my_rule",
     "position": [
       [
         110,
-        3
+        4
       ],
       [
         110,
-        10
+        11
       ]
     ],
     "level": 1
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         110,
-        11
+        12
       ],
       [
         110,
-        12
+        13
       ]
     ],
     "level": 1
@@ -2991,32 +2748,28 @@ expression: tokens
     "kind": {
       "Identifier": "argument_1"
     },
-    "len": 10,
-    "content": "argument_1",
     "position": [
       [
         110,
-        13
+        14
       ],
       [
         110,
-        23
+        24
       ]
     ],
     "level": 1
   },
   {
     "kind": "Equals",
-    "len": 1,
-    "content": "=",
     "position": [
       [
         110,
-        24
+        25
       ],
       [
         110,
-        25
+        26
       ]
     ],
     "level": 1
@@ -3025,32 +2778,28 @@ expression: tokens
     "kind": {
       "Int": 10
     },
-    "len": 2,
-    "content": "10",
     "position": [
       [
         110,
-        26
+        27
       ],
       [
         110,
-        28
+        29
       ]
     ],
     "level": 1
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         110,
-        29
+        30
       ],
       [
         110,
-        30
+        31
       ]
     ],
     "level": 1
@@ -3059,114 +2808,112 @@ expression: tokens
     "kind": {
       "Identifier": "argument_2"
     },
-    "len": 10,
-    "content": "argument_2",
     "position": [
       [
         110,
-        31
+        32
       ],
       [
         110,
-        41
+        42
       ]
     ],
     "level": 1
   },
   {
     "kind": "Equals",
-    "len": 1,
-    "content": "=",
     "position": [
-      [
-        110,
-        42
-      ],
       [
         110,
         43
-      ]
-    ],
-    "level": 1
-  },
-  {
-    "kind": "ContentBlock",
-    "len": 11,
-    "content": "something",
-    "position": [
+      ],
       [
         110,
         44
-      ],
-      [
-        110,
-        55
       ]
     ],
     "level": 1
   },
   {
-    "kind": "Comment",
-    "len": 133,
-    "content": " следубщий блок использует логический оператор, сравнение и метаданные",
+    "kind": {
+      "ContentBlock": "something"
+    },
     "position": [
       [
-        112,
-        0
+        110,
+        45
       ],
       [
-        112,
-        72
+        111,
+        0
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "Comment",
-    "len": 57,
-    "content": " об одном из предыдущих блоков",
+    "kind": {
+      "Comment": [
+        " следубщий блок использует логический оператор, сравнение и метаданные",
+        false
+      ]
+    },
     "position": [
       [
-        113,
-        0
+        112,
+        1
       ],
       [
         113,
-        32
+        0
       ]
     ],
-    "level": 0
+    "level": 1
+  },
+  {
+    "kind": {
+      "Comment": [
+        " об одном из предыдущих блоков",
+        false
+      ]
+    },
+    "position": [
+      [
+        113,
+        1
+      ],
+      [
+        114,
+        0
+      ]
+    ],
+    "level": 1
   },
   {
     "kind": {
       "Identifier": "conditioned_block"
     },
-    "len": 17,
-    "content": "conditioned_block",
     "position": [
       [
         115,
-        0
+        1
       ],
-      [
-        115,
-        17
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
-    "position": [
       [
         116,
         2
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Exclamation",
+    "position": [
       [
         116,
         3
+      ],
+      [
+        116,
+        4
       ]
     ],
     "level": 1
@@ -3175,32 +2922,28 @@ expression: tokens
     "kind": {
       "Identifier": "if"
     },
-    "len": 2,
-    "content": "if",
     "position": [
       [
         116,
-        3
+        4
       ],
       [
         116,
-        5
+        6
       ]
     ],
     "level": 1
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         116,
-        5
+        6
       ],
       [
         116,
-        6
+        7
       ]
     ],
     "level": 1
@@ -3209,32 +2952,28 @@ expression: tokens
     "kind": {
       "Identifier": "my_initial_block"
     },
-    "len": 16,
-    "content": "my_initial_block",
     "position": [
       [
         116,
-        6
+        7
       ],
       [
         116,
-        22
+        23
       ]
     ],
     "level": 1
   },
   {
     "kind": "Dot",
-    "len": 1,
-    "content": ".",
     "position": [
       [
         116,
-        22
+        23
       ],
       [
         116,
-        23
+        24
       ]
     ],
     "level": 1
@@ -3243,32 +2982,28 @@ expression: tokens
     "kind": {
       "Identifier": "count"
     },
-    "len": 5,
-    "content": "count",
     "position": [
       [
         116,
-        23
+        24
       ],
       [
         116,
-        28
+        29
       ]
     ],
     "level": 1
   },
   {
     "kind": "Greater",
-    "len": 1,
-    "content": ">",
     "position": [
       [
         116,
-        29
+        30
       ],
       [
         116,
-        30
+        31
       ]
     ],
     "level": 1
@@ -3277,276 +3012,230 @@ expression: tokens
     "kind": {
       "Int": 3
     },
-    "len": 1,
-    "content": "3",
     "position": [
       [
         116,
-        31
+        32
       ],
       [
-        116,
-        32
+        117,
+        4
       ]
     ],
     "level": 1
   },
   {
-    "kind": "ContentBlock",
-    "len": 56,
-    "content": "\n      ## Какой элемент лишний?\n    ",
+    "kind": {
+      "ContentBlock": " ## Какой элемент лишний? "
+    },
     "position": [
       [
         117,
-        4
-      ],
-      [
-        119,
         5
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Greater",
-    "len": 1,
-    "content": ">",
-    "position": [
+      ],
       [
         120,
         4
-      ],
-      [
-        120,
-        5
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
-    "position": [
-      [
-        121,
-        6
-      ],
-      [
-        121,
-        7
       ]
     ],
     "level": 3
+  },
+  {
+    "kind": "Greater",
+    "position": [
+      [
+        120,
+        5
+      ],
+      [
+        120,
+        6
+      ]
+    ],
+    "level": 3
+  },
+  {
+    "kind": "Exclamation",
+    "position": [
+      [
+        121,
+        7
+      ],
+      [
+        121,
+        8
+      ]
+    ],
+    "level": 5
   },
   {
     "kind": {
       "Identifier": "options"
     },
-    "len": 7,
-    "content": "options",
     "position": [
       [
         121,
-        7
-      ],
-      [
-        121,
-        14
-      ]
-    ],
-    "level": 3
-  },
-  {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
-    "position": [
-      [
-        121,
-        14
+        8
       ],
       [
         121,
         15
       ]
     ],
-    "level": 3
+    "level": 5
+  },
+  {
+    "kind": "Colon",
+    "position": [
+      [
+        121,
+        15
+      ],
+      [
+        121,
+        16
+      ]
+    ],
+    "level": 5
   },
   {
     "kind": {
       "Identifier": "my_initial_block"
     },
-    "len": 16,
-    "content": "my_initial_block",
     "position": [
       [
         121,
-        15
+        16
       ],
-      [
-        121,
-        31
-      ]
-    ],
-    "level": 3
-  },
-  {
-    "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
-    "position": [
       [
         122,
         6
-      ],
+      ]
+    ],
+    "level": 5
+  },
+  {
+    "kind": "Exclamation",
+    "position": [
       [
         122,
         7
+      ],
+      [
+        122,
+        8
       ]
     ],
-    "level": 3
+    "level": 5
   },
   {
     "kind": {
       "Identifier": "choice"
     },
-    "len": 6,
-    "content": "choice",
     "position": [
       [
         122,
-        7
-      ],
-      [
-        122,
-        13
-      ]
-    ],
-    "level": 3
-  },
-  {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
-    "position": [
-      [
-        122,
-        13
+        8
       ],
       [
         122,
         14
       ]
     ],
-    "level": 3
+    "level": 5
+  },
+  {
+    "kind": "Colon",
+    "position": [
+      [
+        122,
+        14
+      ],
+      [
+        122,
+        15
+      ]
+    ],
+    "level": 5
   },
   {
     "kind": {
       "Identifier": "multiple"
     },
-    "len": 8,
-    "content": "multiple",
     "position": [
       [
         122,
-        14
+        15
       ],
-      [
-        122,
-        22
-      ]
-    ],
-    "level": 3
-  },
-  {
-    "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
-    "position": [
       [
         123,
         6
-      ],
+      ]
+    ],
+    "level": 5
+  },
+  {
+    "kind": "Exclamation",
+    "position": [
       [
         123,
         7
+      ],
+      [
+        123,
+        8
       ]
     ],
-    "level": 3
+    "level": 5
   },
   {
     "kind": {
       "Identifier": "count"
     },
-    "len": 5,
-    "content": "count",
     "position": [
       [
         123,
-        7
-      ],
-      [
-        123,
-        12
-      ]
-    ],
-    "level": 3
-  },
-  {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
-    "position": [
-      [
-        123,
-        12
+        8
       ],
       [
         123,
         13
       ]
     ],
-    "level": 3
+    "level": 5
+  },
+  {
+    "kind": "Colon",
+    "position": [
+      [
+        123,
+        13
+      ],
+      [
+        123,
+        14
+      ]
+    ],
+    "level": 5
   },
   {
     "kind": {
       "Identifier": "min"
     },
-    "len": 3,
-    "content": "min",
     "position": [
       [
         123,
-        13
-      ],
-      [
-        123,
-        16
-      ]
-    ],
-    "level": 3
-  },
-  {
-    "kind": "Equals",
-    "len": 1,
-    "content": "=",
-    "position": [
-      [
-        123,
-        16
+        14
       ],
       [
         123,
         17
       ]
     ],
-    "level": 3
+    "level": 5
   },
   {
-    "kind": "OpenParentheses",
-    "len": 1,
-    "content": "(",
+    "kind": "Equals",
     "position": [
       [
         123,
@@ -3557,98 +3246,86 @@ expression: tokens
         18
       ]
     ],
-    "level": 3
+    "level": 5
+  },
+  {
+    "kind": "OpenParentheses",
+    "position": [
+      [
+        123,
+        18
+      ],
+      [
+        123,
+        19
+      ]
+    ],
+    "level": 5
   },
   {
     "kind": {
       "Identifier": "my_initial_block"
     },
-    "len": 16,
-    "content": "my_initial_block",
     "position": [
       [
         123,
-        18
-      ],
-      [
-        123,
-        34
-      ]
-    ],
-    "level": 3
-  },
-  {
-    "kind": "Dot",
-    "len": 1,
-    "content": ".",
-    "position": [
-      [
-        123,
-        34
+        19
       ],
       [
         123,
         35
       ]
     ],
-    "level": 3
+    "level": 5
+  },
+  {
+    "kind": "Dot",
+    "position": [
+      [
+        123,
+        35
+      ],
+      [
+        123,
+        36
+      ]
+    ],
+    "level": 5
   },
   {
     "kind": {
       "Identifier": "count"
     },
-    "len": 5,
-    "content": "count",
     "position": [
       [
         123,
-        35
+        36
       ],
-      [
-        123,
-        40
-      ]
-    ],
-    "level": 3
-  },
-  {
-    "kind": "Minus",
-    "len": 1,
-    "content": "-",
-    "position": [
       [
         123,
         41
-      ],
+      ]
+    ],
+    "level": 5
+  },
+  {
+    "kind": "Minus",
+    "position": [
       [
         123,
         42
+      ],
+      [
+        123,
+        43
       ]
     ],
-    "level": 3
+    "level": 5
   },
   {
     "kind": {
       "Int": 3
     },
-    "len": 1,
-    "content": "3",
-    "position": [
-      [
-        123,
-        43
-      ],
-      [
-        123,
-        44
-      ]
-    ],
-    "level": 3
-  },
-  {
-    "kind": "CloseParentheses",
-    "len": 1,
-    "content": ")",
     "position": [
       [
         123,
@@ -3659,20 +3336,32 @@ expression: tokens
         45
       ]
     ],
-    "level": 3
+    "level": 5
+  },
+  {
+    "kind": "CloseParentheses",
+    "position": [
+      [
+        123,
+        45
+      ],
+      [
+        123,
+        46
+      ]
+    ],
+    "level": 5
   },
   {
     "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
     "position": [
       [
         124,
-        2
+        3
       ],
       [
         124,
-        3
+        4
       ]
     ],
     "level": 1
@@ -3681,66 +3370,60 @@ expression: tokens
     "kind": {
       "Identifier": "else"
     },
-    "len": 4,
-    "content": "else",
     "position": [
       [
         124,
-        3
+        4
       ],
       [
-        124,
-        7
+        125,
+        4
       ]
     ],
     "level": 1
   },
   {
-    "kind": "ContentBlock",
-    "len": 24,
-    "content": "Все отлично!",
+    "kind": {
+      "ContentBlock": "Все отлично!"
+    },
     "position": [
       [
         125,
-        4
+        5
       ],
       [
-        125,
-        18
+        126,
+        0
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "switching_block"
     },
-    "len": 15,
-    "content": "switching_block",
     "position": [
       [
         127,
-        0
+        1
       ],
-      [
-        127,
-        15
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
-    "position": [
       [
         128,
         2
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Exclamation",
+    "position": [
       [
         128,
         3
+      ],
+      [
+        128,
+        4
       ]
     ],
     "level": 1
@@ -3749,158 +3432,129 @@ expression: tokens
     "kind": {
       "Identifier": "switch"
     },
-    "len": 6,
-    "content": "switch",
     "position": [
       [
         128,
-        3
+        4
       ],
       [
         128,
-        9
+        10
       ]
     ],
     "level": 1
   },
   {
-    "kind": "Comment",
-    "len": 62,
-    "content": " without a parameter will evaluate expressions for each case",
+    "kind": {
+      "Comment": [
+        " without a parameter will evaluate expressions for each case",
+        false
+      ]
+    },
     "position": [
       [
         128,
-        10
+        11
       ],
       [
-        128,
-        72
+        129,
+        4
       ]
     ],
     "level": 1
   },
   {
     "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
     "position": [
       [
         129,
-        4
+        5
       ],
       [
         129,
-        5
+        6
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "case"
     },
-    "len": 4,
-    "content": "case",
     "position": [
       [
         129,
-        5
-      ],
-      [
-        129,
-        9
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
-    "position": [
-      [
-        129,
-        9
+        6
       ],
       [
         129,
         10
       ]
     ],
-    "level": 2
+    "level": 3
+  },
+  {
+    "kind": "Colon",
+    "position": [
+      [
+        129,
+        10
+      ],
+      [
+        129,
+        11
+      ]
+    ],
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "conditioned_block"
     },
-    "len": 17,
-    "content": "conditioned_block",
     "position": [
       [
         129,
-        10
-      ],
-      [
-        129,
-        27
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Dot",
-    "len": 1,
-    "content": ".",
-    "position": [
-      [
-        129,
-        27
+        11
       ],
       [
         129,
         28
       ]
     ],
-    "level": 2
+    "level": 3
+  },
+  {
+    "kind": "Dot",
+    "position": [
+      [
+        129,
+        28
+      ],
+      [
+        129,
+        29
+      ]
+    ],
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "count"
     },
-    "len": 5,
-    "content": "count",
     "position": [
       [
         129,
-        28
+        29
       ],
-      [
-        129,
-        33
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
-    "position": [
       [
         129,
         34
-      ],
-      [
-        129,
-        35
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
-    "kind": "Equals",
-    "len": 1,
-    "content": "=",
+    "kind": "Exclamation",
     "position": [
       [
         129,
@@ -3911,232 +3565,209 @@ expression: tokens
         36
       ]
     ],
-    "level": 2
+    "level": 3
+  },
+  {
+    "kind": "Equals",
+    "position": [
+      [
+        129,
+        36
+      ],
+      [
+        129,
+        37
+      ]
+    ],
+    "level": 3
   },
   {
     "kind": {
       "Int": 0
     },
-    "len": 1,
-    "content": "0",
     "position": [
-      [
-        129,
-        37
-      ],
       [
         129,
         38
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Comment",
-    "len": 87,
-    "content": " :case accepts exactly one argument \"case\", so the argument assignment can be omitted",
-    "position": [
+      ],
       [
         129,
         39
-      ],
-      [
-        129,
-        126
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "ContentBlock",
-    "len": 53,
-    "content": "Самый неподходящий варинат?",
-    "position": [
-      [
-        130,
-        6
-      ],
-      [
-        130,
-        35
       ]
     ],
     "level": 3
+  },
+  {
+    "kind": {
+      "Comment": [
+        " :case accepts exactly one argument \"case\", so the argument assignment can be omitted",
+        false
+      ]
+    },
+    "position": [
+      [
+        129,
+        40
+      ],
+      [
+        130,
+        6
+      ]
+    ],
+    "level": 3
+  },
+  {
+    "kind": {
+      "ContentBlock": "Самый неподходящий варинат?"
+    },
+    "position": [
+      [
+        130,
+        7
+      ],
+      [
+        131,
+        6
+      ]
+    ],
+    "level": 5
   },
   {
     "kind": "Greater",
-    "len": 1,
-    "content": ">",
     "position": [
-      [
-        131,
-        6
-      ],
       [
         131,
         7
+      ],
+      [
+        131,
+        8
       ]
     ],
-    "level": 3
+    "level": 5
   },
   {
     "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
     "position": [
       [
         132,
-        8
+        9
       ],
       [
         132,
-        9
+        10
       ]
     ],
-    "level": 4
+    "level": 7
   },
   {
     "kind": {
       "Identifier": "options"
     },
-    "len": 7,
-    "content": "options",
     "position": [
       [
         132,
-        9
-      ],
-      [
-        132,
-        16
-      ]
-    ],
-    "level": 4
-  },
-  {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
-    "position": [
-      [
-        132,
-        16
+        10
       ],
       [
         132,
         17
       ]
     ],
-    "level": 4
+    "level": 7
+  },
+  {
+    "kind": "Colon",
+    "position": [
+      [
+        132,
+        17
+      ],
+      [
+        132,
+        18
+      ]
+    ],
+    "level": 7
   },
   {
     "kind": {
       "Identifier": "conditioned_block"
     },
-    "len": 17,
-    "content": "conditioned_block",
     "position": [
       [
         132,
-        17
+        18
       ],
-      [
-        132,
-        34
-      ]
-    ],
-    "level": 4
-  },
-  {
-    "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
-    "position": [
       [
         133,
         8
-      ],
+      ]
+    ],
+    "level": 7
+  },
+  {
+    "kind": "Exclamation",
+    "position": [
       [
         133,
         9
+      ],
+      [
+        133,
+        10
       ]
     ],
-    "level": 4
+    "level": 7
   },
   {
     "kind": {
       "Identifier": "choice"
     },
-    "len": 6,
-    "content": "choice",
     "position": [
       [
         133,
-        9
-      ],
-      [
-        133,
-        15
-      ]
-    ],
-    "level": 4
-  },
-  {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
-    "position": [
-      [
-        133,
-        15
+        10
       ],
       [
         133,
         16
       ]
     ],
-    "level": 4
+    "level": 7
+  },
+  {
+    "kind": "Colon",
+    "position": [
+      [
+        133,
+        16
+      ],
+      [
+        133,
+        17
+      ]
+    ],
+    "level": 7
   },
   {
     "kind": {
       "Identifier": "multiple"
     },
-    "len": 8,
-    "content": "multiple",
     "position": [
       [
         133,
-        16
+        17
       ],
-      [
-        133,
-        24
-      ]
-    ],
-    "level": 4
-  },
-  {
-    "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
-    "position": [
       [
         134,
         4
-      ],
-      [
-        134,
-        5
       ]
     ],
-    "level": 2
+    "level": 7
   },
   {
-    "kind": {
-      "Identifier": "default"
-    },
-    "len": 7,
-    "content": "default",
+    "kind": "Exclamation",
     "position": [
       [
         134,
@@ -4144,57 +3775,69 @@ expression: tokens
       ],
       [
         134,
-        12
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "ContentBlock",
-    "len": 31,
-    "content": "Спасибо большое",
-    "position": [
-      [
-        135,
         6
-      ],
-      [
-        135,
-        23
       ]
     ],
     "level": 3
   },
   {
     "kind": {
-      "Identifier": "another_switching_block"
+      "Identifier": "default"
     },
-    "len": 23,
-    "content": "another_switching_block",
     "position": [
       [
-        137,
-        0
+        134,
+        6
       ],
       [
-        137,
-        23
+        135,
+        6
       ]
     ],
-    "level": 0
+    "level": 3
   },
   {
-    "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
+    "kind": {
+      "ContentBlock": "Спасибо большое"
+    },
     "position": [
+      [
+        135,
+        7
+      ],
+      [
+        136,
+        0
+      ]
+    ],
+    "level": 5
+  },
+  {
+    "kind": {
+      "Identifier": "another_switching_block"
+    },
+    "position": [
+      [
+        137,
+        1
+      ],
       [
         138,
         2
-      ],
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Exclamation",
+    "position": [
       [
         138,
         3
+      ],
+      [
+        138,
+        4
       ]
     ],
     "level": 1
@@ -4203,32 +3846,28 @@ expression: tokens
     "kind": {
       "Identifier": "switch"
     },
-    "len": 6,
-    "content": "switch",
     "position": [
       [
         138,
-        3
+        4
       ],
       [
         138,
-        9
+        10
       ]
     ],
     "level": 1
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         138,
-        9
+        10
       ],
       [
         138,
-        10
+        11
       ]
     ],
     "level": 1
@@ -4237,32 +3876,28 @@ expression: tokens
     "kind": {
       "Identifier": "conditioned_block"
     },
-    "len": 17,
-    "content": "conditioned_block",
     "position": [
       [
         138,
-        10
+        11
       ],
       [
         138,
-        27
+        28
       ]
     ],
     "level": 1
   },
   {
     "kind": "Dot",
-    "len": 1,
-    "content": ".",
     "position": [
       [
         138,
-        27
+        28
       ],
       [
         138,
-        28
+        29
       ]
     ],
     "level": 1
@@ -4271,110 +3906,80 @@ expression: tokens
     "kind": {
       "Identifier": "count"
     },
-    "len": 5,
-    "content": "count",
     "position": [
       [
         138,
-        28
+        29
       ],
       [
-        138,
-        33
+        139,
+        4
       ]
     ],
     "level": 1
   },
   {
     "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
     "position": [
       [
         139,
-        4
+        5
       ],
       [
         139,
-        5
+        6
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "case"
     },
-    "len": 4,
-    "content": "case",
     "position": [
       [
         139,
-        5
+        6
       ],
       [
         139,
-        9
+        10
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
     "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         139,
-        9
+        10
       ],
       [
         139,
-        10
+        11
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "case"
     },
-    "len": 4,
-    "content": "case",
     "position": [
       [
         139,
-        10
-      ],
-      [
-        139,
-        14
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "Equals",
-    "len": 1,
-    "content": "=",
-    "position": [
-      [
-        139,
-        14
+        11
       ],
       [
         139,
         15
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
-    "kind": {
-      "Int": 0
-    },
-    "len": 1,
-    "content": "0",
+    "kind": "Equals",
     "position": [
       [
         139,
@@ -4385,112 +3990,107 @@ expression: tokens
         16
       ]
     ],
-    "level": 2
+    "level": 3
   },
   {
-    "kind": "Comment",
-    "len": 48,
-    "content": " or a more verbose way same as writing !case:0",
+    "kind": {
+      "Int": 0
+    },
     "position": [
+      [
+        139,
+        16
+      ],
       [
         139,
         17
-      ],
-      [
-        139,
-        65
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "ContentBlock",
-    "len": 61,
-    "content": "че то вы ничо нам не написали... :-(",
-    "position": [
-      [
-        140,
-        6
-      ],
-      [
-        140,
-        44
       ]
     ],
     "level": 3
   },
   {
-    "kind": "Exclamation",
-    "len": 1,
-    "content": "!",
+    "kind": {
+      "Comment": [
+        " or a more verbose way same as writing !case:0",
+        false
+      ]
+    },
     "position": [
       [
-        141,
-        4
+        139,
+        18
+      ],
+      [
+        140,
+        6
+      ]
+    ],
+    "level": 3
+  },
+  {
+    "kind": {
+      "ContentBlock": "че то вы ничо нам не написали... :-("
+    },
+    "position": [
+      [
+        140,
+        7
       ],
       [
         141,
-        5
+        4
       ]
     ],
-    "level": 2
+    "level": 5
+  },
+  {
+    "kind": "Exclamation",
+    "position": [
+      [
+        141,
+        5
+      ],
+      [
+        141,
+        6
+      ]
+    ],
+    "level": 3
   },
   {
     "kind": {
       "Identifier": "default"
     },
-    "len": 7,
-    "content": "default",
     "position": [
       [
         141,
-        5
-      ],
-      [
-        141,
-        12
-      ]
-    ],
-    "level": 2
-  },
-  {
-    "kind": "ContentBlock",
-    "len": 31,
-    "content": "ну все на этом :-)",
-    "position": [
-      [
-        142,
         6
       ],
       [
         142,
-        26
+        6
       ]
     ],
     "level": 3
   },
   {
-    "kind": "OpenCurlyBrace",
-    "len": 1,
-    "content": "{",
+    "kind": {
+      "ContentBlock": "ну все на этом :-)"
+    },
     "position": [
       [
-        144,
-        0
+        142,
+        7
       ],
       [
-        144,
-        1
+        143,
+        0
       ]
     ],
-    "level": 0
+    "level": 5
   },
   {
-    "kind": {
-      "Int": 1
-    },
-    "len": 1,
-    "content": "1",
+    "kind": "OpenCurlyBrace",
     "position": [
       [
         144,
@@ -4501,12 +4101,12 @@ expression: tokens
         2
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
+    "kind": {
+      "Int": 1
+    },
     "position": [
       [
         144,
@@ -4517,14 +4117,10 @@ expression: tokens
         3
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": {
-      "Int": 1
-    },
-    "len": 1,
-    "content": "1",
+    "kind": "Colon",
     "position": [
       [
         144,
@@ -4535,12 +4131,12 @@ expression: tokens
         4
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "CloseCurlyBrace",
-    "len": 1,
-    "content": "}",
+    "kind": {
+      "Int": 1
+    },
     "position": [
       [
         144,
@@ -4551,62 +4147,59 @@ expression: tokens
         5
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "Comment",
-    "len": 77,
-    "content": " is switching contexts. 1:1 is default one and stands for one entry at once",
+    "kind": "CloseCurlyBrace",
     "position": [
+      [
+        144,
+        5
+      ],
       [
         144,
         6
-      ],
-      [
-        144,
-        83
       ]
     ],
-    "level": 0
+    "level": 1
+  },
+  {
+    "kind": {
+      "Comment": [
+        " is switching contexts. 1:1 is default one and stands for one entry at once",
+        false
+      ]
+    },
+    "position": [
+      [
+        144,
+        7
+      ],
+      [
+        145,
+        0
+      ]
+    ],
+    "level": 1
   },
   {
     "kind": "OpenCurlyBrace",
-    "len": 1,
-    "content": "{",
     "position": [
       [
         146,
-        0
+        1
       ],
       [
         146,
-        1
+        2
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
     "kind": {
       "Identifier": "N"
     },
-    "len": 1,
-    "content": "N",
-    "position": [
-      [
-        146,
-        1
-      ],
-      [
-        146,
-        2
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
     "position": [
       [
         146,
@@ -4617,14 +4210,10 @@ expression: tokens
         3
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": {
-      "Int": 1
-    },
-    "len": 1,
-    "content": "1",
+    "kind": "Colon",
     "position": [
       [
         146,
@@ -4635,12 +4224,12 @@ expression: tokens
         4
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "CloseCurlyBrace",
-    "len": 1,
-    "content": "}",
+    "kind": {
+      "Int": 1
+    },
     "position": [
       [
         146,
@@ -4651,46 +4240,43 @@ expression: tokens
         5
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "Comment",
-    "len": 117,
-    "content": " is common for many apps - multiple enries at once. For example in a note taking app there are N notes for one user",
+    "kind": "CloseCurlyBrace",
     "position": [
+      [
+        146,
+        5
+      ],
       [
         146,
         6
-      ],
-      [
-        146,
-        123
       ]
     ],
-    "level": 0
-  },
-  {
-    "kind": "OpenCurlyBrace",
-    "len": 1,
-    "content": "{",
-    "position": [
-      [
-        148,
-        0
-      ],
-      [
-        148,
-        1
-      ]
-    ],
-    "level": 0
+    "level": 1
   },
   {
     "kind": {
-      "Int": 1
+      "Comment": [
+        " is common for many apps - multiple enries at once. For example in a note taking app there are N notes for one user",
+        false
+      ]
     },
-    "len": 1,
-    "content": "1",
+    "position": [
+      [
+        146,
+        7
+      ],
+      [
+        147,
+        0
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "OpenCurlyBrace",
     "position": [
       [
         148,
@@ -4701,12 +4287,12 @@ expression: tokens
         2
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "Colon",
-    "len": 1,
-    "content": ":",
+    "kind": {
+      "Int": 1
+    },
     "position": [
       [
         148,
@@ -4717,30 +4303,26 @@ expression: tokens
         3
       ]
     ],
-    "level": 0
+    "level": 1
+  },
+  {
+    "kind": "Colon",
+    "position": [
+      [
+        148,
+        3
+      ],
+      [
+        148,
+        4
+      ]
+    ],
+    "level": 1
   },
   {
     "kind": {
       "Identifier": "N"
     },
-    "len": 1,
-    "content": "N",
-    "position": [
-      [
-        148,
-        3
-      ],
-      [
-        148,
-        4
-      ]
-    ],
-    "level": 0
-  },
-  {
-    "kind": "CloseCurlyBrace",
-    "len": 1,
-    "content": "}",
     "position": [
       [
         148,
@@ -4751,22 +4333,39 @@ expression: tokens
         5
       ]
     ],
-    "level": 0
+    "level": 1
   },
   {
-    "kind": "Comment",
-    "len": 27,
-    "content": " collaborate on one entry",
+    "kind": "CloseCurlyBrace",
     "position": [
       [
         148,
+        5
+      ],
+      [
+        148,
         6
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Comment": [
+        " collaborate on one entry",
+        false
+      ]
+    },
+    "position": [
+      [
+        148,
+        7
       ],
       [
         148,
         33
       ]
     ],
-    "level": 0
+    "level": 1
   }
 ]
