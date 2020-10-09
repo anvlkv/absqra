@@ -1,0 +1,330 @@
+---
+source: src/lib/ra_lexer/src/tests.rs
+expression: tokens
+---
+[
+  {
+    "kind": "Exclamation",
+    "position": [
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "At",
+    "position": [
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "HashPound",
+    "position": [
+      [
+        1,
+        3
+      ],
+      [
+        1,
+        4
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Dollar",
+    "position": [
+      [
+        1,
+        4
+      ],
+      [
+        1,
+        5
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Percent",
+    "position": [
+      [
+        1,
+        5
+      ],
+      [
+        1,
+        6
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Power",
+    "position": [
+      [
+        1,
+        6
+      ],
+      [
+        1,
+        7
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Ampersand",
+    "position": [
+      [
+        1,
+        7
+      ],
+      [
+        1,
+        8
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Asterisk",
+    "position": [
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "OpenParentheses",
+    "position": [
+      [
+        1,
+        9
+      ],
+      [
+        1,
+        10
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "CloseParentheses",
+    "position": [
+      [
+        1,
+        10
+      ],
+      [
+        1,
+        11
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Identifier": "_"
+    },
+    "position": [
+      [
+        1,
+        11
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Plus",
+    "position": [
+      [
+        1,
+        12
+      ],
+      [
+        1,
+        13
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Equals",
+    "position": [
+      [
+        1,
+        13
+      ],
+      [
+        1,
+        14
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Minus",
+    "position": [
+      [
+        1,
+        14
+      ],
+      [
+        1,
+        15
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "OpenCurlyBrace",
+    "position": [
+      [
+        1,
+        15
+      ],
+      [
+        1,
+        16
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "CloseCurlyBrace",
+    "position": [
+      [
+        1,
+        16
+      ],
+      [
+        1,
+        17
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Question",
+    "position": [
+      [
+        1,
+        17
+      ],
+      [
+        1,
+        18
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Colon",
+    "position": [
+      [
+        1,
+        18
+      ],
+      [
+        1,
+        19
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "SemiColon",
+    "position": [
+      [
+        1,
+        19
+      ],
+      [
+        1,
+        20
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "ForwardSlash",
+    "position": [
+      [
+        1,
+        20
+      ],
+      [
+        1,
+        21
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Slash",
+    "position": [
+      [
+        1,
+        21
+      ],
+      [
+        1,
+        22
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Pipe",
+    "position": [
+      [
+        1,
+        22
+      ],
+      [
+        1,
+        23
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Tilde",
+    "position": [
+      [
+        1,
+        23
+      ],
+      [
+        1,
+        24
+      ]
+    ],
+    "level": 1
+  }
+]

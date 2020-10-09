@@ -68,6 +68,7 @@ where F: FnMut(String, String)  {
                     .to_string()
                     .replace("/", "_")
                     .replace(".", "_")
+                    .replace("-", "_")
 
             };
 
