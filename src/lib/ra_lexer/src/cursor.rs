@@ -1,15 +1,16 @@
+use core::iter::Peekable;
+use std::str::Chars;
 use super::*;
 // use std::str::Chars;
 use std::convert::{TryInto, TryFrom};
 
-pub (crate) struct Cursor {
+pub (crate) struct Cursor<'char> {
     pub position: Position,
     pub level: u16,
     pub ch: Option<char>,
     pub is_line_start: bool,
-    input: String,
-    idx: usize,
-    indent_width: u8
+    indent_width: u8,
+    chars: Peekable<Chars<'char>>
 }
 
 pub (crate) const EOF_CHAR: char = '\0';
@@ -49,88 +50,90 @@ pub (crate) fn is_end_of_line(c: &char) -> bool {
     }
 }
 
-impl Cursor {
+impl <'c> Cursor<'c> {
     pub fn bump(&mut self) {
-        let idx = self.idx + 1;
-        match self.input.chars().nth(idx) {
-            Some(ch) => {
-                self.idx = idx;
-                self.ch = Some(ch);
-                if is_end_of_line(&ch) {
-                    self.position.0 += 1;
-                    self.position.1 = 0;
-                    self.level();
-                }
-                else {
-                    self.position.1 += 1;
-                    self.is_line_start = false;
-                }
+        if let Some(ch) = self.ch {
+            if is_end_of_line(&ch) {
+                self.level();
             }
-            None => {
-                self.ch = None;
+            else {
+                match self.chars.next() {
+                    Some(ch) => {
+                        self.ch = Some(ch);
+                        self.position.1 += 1;
+                        self.is_line_start = false;
+                    }
+                    None => {
+                        self.ch = None;
+                    }
+                }
             }
         }
     }
 
     fn level(&mut self) {
+        assert!(self.ch.is_some() && is_end_of_line(&self.ch.unwrap()));
+        self.position.0 += 1;
+        self.position.1 = 0;
+
         match self.first_ahead() {
             EOF_CHAR => {
                 self.ch = None;
             },
-            mut ch => {
+            mut ch if is_whitespace(&ch) => {
                 let mut new_indent_width = None;
-                let mut new_level = None;
-                if is_whitespace(&ch) {
-                    let white_space_ch = ch.clone();
-                    while is_whitespace(&ch) && white_space_ch == ch {
-                        if self.indent_width == 0 {
-                            new_level = Some(self.level + 1);
-                            new_indent_width = Some((self.position.1).try_into().unwrap());
-                        }
-                        else {
-                            new_level = Some(self.position.1 / u16::from(self.indent_width));
-                        }
-
-                        self.bump();
-                        ch = self.first_ahead();
+                let mut new_level = self.level + 1;
+                let white_space_ch = ch.clone();
+                while is_whitespace(&ch) && white_space_ch == ch {
+                    if self.indent_width == 0 {
+                        new_indent_width = Some((self.position.1).try_into().unwrap());
                     }
+                    else {
+                        new_level = self.position.1 / u16::from(self.indent_width);
+                    }
+
+                    self.position.1 += 1;
+                    self.ch = self.chars.next();
+
+                    ch = self.first_ahead();
                 }
-                else {
-                    self.bump();
-                }
-                self.level = new_level.unwrap_or(self.level);
+                self.level = new_level;
+
                 if new_indent_width.is_some() {
                     self.indent_width = new_indent_width.unwrap();
                 }
-                // self.ch = Some(ch);
-                // self.idx += 1;
+            }
+            _ => {
+                self.level = 1;
+                self.ch = self.chars.next();
+                self.position.1 += 1;
             }
         }
        
         self.is_line_start = true;
     }
 
-    pub fn first_ahead(&self) -> char {
-        self.input.chars().nth(self.idx + 1).unwrap_or(EOF_CHAR)
+    pub fn first_ahead(&mut self) -> char {
+        self.chars.peek().unwrap_or(&EOF_CHAR).clone()
     }
 }
 
-impl <'a> From<& 'a str> for Cursor {
-    fn from(input: & 'a str) -> Self { 
-        let ch = input.chars().nth(0);
+impl <'c> From<& 'c str> for Cursor<'c> {
+    fn from(input: & 'c str) -> Self {
+        let input_c = input.clone(); 
+        let mut chars = input_c.chars().peekable();
         Self {
-            input: input.to_owned(),
             level: 1,
-            ch,
+            ch: chars.next(),
             position: Position(1, 1),
             is_line_start: true,
-            idx: 0,
-            indent_width: 0
+            indent_width: 0,
+            chars
         }
     }
 }
 
-impl Iterator for Cursor {
+impl <'c> Iterator for Cursor<'c> {
     type Item = Result<RaToken, LexerError>;
 
     fn next(&mut self) -> Option<Self::Item> {

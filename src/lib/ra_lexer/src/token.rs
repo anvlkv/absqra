@@ -1,5 +1,7 @@
 use super::*;
 use core::convert::TryFrom;
+use cursor::{is_end_of_line, is_whitespace};
+
 
 #[derive(Serialize, Debug)]
 pub enum TokenKind {
@@ -65,7 +67,7 @@ impl RaToken {
             kind,
             position: (
                 cursor.position.clone(),
-                Position(cursor.position.0, cursor.position.1 + 1),
+                cursor.position + Position(0, 1)
             ),
             level: cursor.level,
         });
@@ -85,16 +87,28 @@ impl RaToken {
             '/' => {
                 cursor.bump();
                 cursor.bump();
-                fringed = { cursor.ch.is_some() && cursor.ch.unwrap() == '/' };
+                fringed = {
+                    let fringed = cursor.ch.is_some() && cursor.ch.unwrap() == '/';
 
+                    if fringed {
+                        cursor.bump();
+                    }
+
+                    fringed
+                };
+
+                let mut end_position = Position(0, 0);
                 while cursor.position.0 == start_position.0 && cursor.ch.is_some() {
-                    content.push(cursor.ch.unwrap());
+                    if !is_end_of_line(&cursor.ch.unwrap()) {
+                        content.push(cursor.ch.unwrap());
+                        end_position = cursor.position + Position(0, 1);
+                    }
                     cursor.bump();
                 }
 
                 Ok(Self {
                     kind: TokenKind::Comment(content, fringed),
-                    position: (start_position, cursor.position.clone()),
+                    position: (start_position, end_position),
                     level,
                 })
             }
@@ -118,12 +132,12 @@ impl RaToken {
                         '*' => match cursor.first_ahead() {
                             '/' => {
                                 cursor.bump();
-                                end_position = Some(cursor.position.clone());
+                                end_position = Some(cursor.position + Position(0, 1));
                                 cursor.bump();
                                 break;
                             }
-                            ch => {
-                                content.push(ch);
+                            _ => {
+                                content.push('*');
                                 cursor.bump();
                             }
                         },
@@ -140,10 +154,10 @@ impl RaToken {
                         position: (start_position, end_position),
                         level,
                     }),
-                    None => Err(LexerError::UnexpectedEndOfInput(cursor.position)),
+                    None => Err(LexerError::UnexpectedEndOfInput(start_position)),
                 }
             }
-            ch => Err(LexerError::UnexpectedCharacter(ch, cursor.position)),
+            ch => Err(LexerError::UnexpectedCharacter(ch.clone(), start_position)),
         }
     }
 
@@ -156,7 +170,7 @@ impl RaToken {
         cursor.bump();
         while cursor.ch.is_some() {
             if cursor.ch.unwrap() == '`' && cursor.level == level {
-                end_position = Some(cursor.position.clone());
+                end_position = Some(cursor.position.clone() + Position(0, 1));
                 cursor.bump();
                 break;
             } else {
@@ -171,9 +185,10 @@ impl RaToken {
                 position: (start_position, end_position),
                 level,
             }),
-            None => Err(LexerError::UnexpectedEndOfInput(cursor.position))
+            None => Err(LexerError::UnexpectedEndOfInput(start_position))
         }
     }
+
     fn new_string(cursor: &mut Cursor) -> Result<Self, LexerError> {
         let start_position = cursor.position.clone();
         let level = cursor.level.clone();
@@ -187,12 +202,15 @@ impl RaToken {
                 cursor.bump();
                 content.push(cursor.ch.unwrap());
             } else if cursor.ch.unwrap() == opening_char {
-                end_position = Some(cursor.position.clone());
+                end_position = Some(cursor.position + Position(0, 1));
                 cursor.bump();
                 break;
-            } else {
+            } else if !is_end_of_line(&cursor.ch.unwrap()) {
                 content.push(cursor.ch.unwrap());
                 cursor.bump();
+            }
+            else {
+                break;
             }
         }
 
@@ -202,7 +220,7 @@ impl RaToken {
                 position: (start_position, end_position),
                 level,
             }),
-            None => Err(LexerError::UnexpectedEndOfInput(cursor.position))
+            None => Err(LexerError::UnexpectedEndOfInput(start_position))
         }
     }
 
@@ -211,7 +229,7 @@ impl RaToken {
         let level = cursor.level.clone();
         let mut content = String::from(cursor.ch.unwrap());
         let mut has_decimal_separator = false;
-
+        let mut end_position = Position(0, 0);
         cursor.bump();
 
         while cursor.ch.is_some() {
@@ -223,6 +241,7 @@ impl RaToken {
                 }
                 _ => break,
             }
+            end_position = cursor.position + Position(0, 1);
             cursor.bump();
         }
 
@@ -230,25 +249,26 @@ impl RaToken {
             match content.parse::<f64>() {
                 Ok(num) => Ok(Self {
                     kind: TokenKind::Float(num),
-                    position: (start_position, cursor.position.clone()),
+                    position: (start_position, end_position),
                     level,
                 }),
-                Err(e) => Err(LexerError::InvalidFloat(e, cursor.position)),
+                Err(e) => Err(LexerError::InvalidFloat(e, start_position)),
             }
         } else {
             match content.parse::<i64>() {
                 Ok(num) => Ok(Self {
                     kind: TokenKind::Int(num),
-                    position: (start_position, cursor.position.clone()),
+                    position: (start_position, end_position),
                     level,
                 }),
-                Err(e) => Err(LexerError::InvalidInt(e, cursor.position)),
+                Err(e) => Err(LexerError::InvalidInt(e, start_position)),
             }
         }
     }
 
     fn new_identifier(cursor: &mut Cursor) -> Result<Self, LexerError> {
         let start_position = cursor.position.clone();
+        let mut end_position = Position(0, 0);
         let level = cursor.level.clone();
         let mut content = String::from(cursor.ch.unwrap());
         cursor.bump();
@@ -261,18 +281,19 @@ impl RaToken {
                 }
                 _ => break,
             }
+            end_position = cursor.position + Position(0, 1);
             cursor.bump();
         }
 
         Ok(Self {
             kind: TokenKind::Identifier(content),
-            position: (start_position, cursor.position.clone()),
+            position: (start_position, end_position),
             level,
         })
     }
 }
 
-impl TryFrom<&mut Cursor> for RaToken {
+impl<'c> TryFrom<&mut Cursor<'c>> for RaToken {
     type Error = LexerError;
     fn try_from(cursor: &mut Cursor) -> Result<Self, Self::Error> {
         match cursor.ch {

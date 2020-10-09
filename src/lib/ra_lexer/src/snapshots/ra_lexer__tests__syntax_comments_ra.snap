@@ -16,8 +16,8 @@ expression: tokens
         1
       ],
       [
-        2,
-        0
+        1,
+        29
       ]
     ],
     "level": 1
@@ -25,7 +25,7 @@ expression: tokens
   {
     "kind": {
       "Comment": [
-        "/ fancy one line comment",
+        " fancy one line comment",
         true
       ]
     },
@@ -35,8 +35,8 @@ expression: tokens
         1
       ],
       [
-        4,
-        0
+        3,
+        27
       ]
     ],
     "level": 1
@@ -44,8 +44,8 @@ expression: tokens
   {
     "kind": {
       "Comment": [
-        "\n  fancy multi line comment\n  \n",
-        false
+        "\n fancy multi line comment\n \n",
+        true
       ]
     },
     "position": [
@@ -54,8 +54,8 @@ expression: tokens
         1
       ],
       [
-        9,
-        0
+        8,
+        4
       ]
     ],
     "level": 1
@@ -73,8 +73,8 @@ expression: tokens
         1
       ],
       [
-        15,
-        0
+        14,
+        3
       ]
     ],
     "level": 1
@@ -93,7 +93,7 @@ expression: tokens
       ],
       [
         16,
-        25
+        26
       ]
     ],
     "level": 1
