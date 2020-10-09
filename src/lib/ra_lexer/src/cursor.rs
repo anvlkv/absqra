@@ -10,7 +10,8 @@ pub (crate) struct Cursor<'char> {
     pub ch: Option<char>,
     pub is_line_start: bool,
     indent_width: u8,
-    chars: Peekable<Chars<'char>>
+    chars: Peekable<Chars<'char>>,
+    initial_level: u16
 }
 
 pub (crate) const EOF_CHAR: char = '\0';
@@ -80,31 +81,38 @@ impl <'c> Cursor<'c> {
             EOF_CHAR => {
                 self.ch = None;
             },
-            mut ch if is_whitespace(&ch) => {
+            mut f_ch if is_whitespace(&f_ch) => {
                 let mut new_indent_width = None;
                 let mut new_level = self.level + 1;
-                let white_space_ch = ch.clone();
-                while is_whitespace(&ch) && white_space_ch == ch {
+                let white_space_ch = f_ch.clone();
+
+                while is_whitespace(&f_ch) && white_space_ch == f_ch {
+                    self.position.1 += 1;
+                    self.ch = self.chars.next();
+
                     if self.indent_width == 0 {
                         new_indent_width = Some((self.position.1).try_into().unwrap());
                     }
                     else {
-                        new_level = self.position.1 / u16::from(self.indent_width);
+                        new_level = self.position.1 / u16::from(self.indent_width) + 1;
                     }
 
-                    self.position.1 += 1;
-                    self.ch = self.chars.next();
-
-                    ch = self.first_ahead();
+                    f_ch = self.first_ahead();
                 }
+
                 self.level = new_level;
 
                 if new_indent_width.is_some() {
                     self.indent_width = new_indent_width.unwrap();
                 }
-            }
+
+            },
+            c if is_end_of_line(&c) => {
+                self.ch = self.chars.next();
+                self.level();
+            },
             _ => {
-                self.level = 1;
+                self.level = self.initial_level;
                 self.ch = self.chars.next();
                 self.position.1 += 1;
             }
@@ -128,7 +136,8 @@ impl <'c> From<& 'c str> for Cursor<'c> {
             position: Position(1, 1),
             is_line_start: true,
             indent_width: 0,
-            chars
+            chars,
+            initial_level: 1
         }
     }
 }
