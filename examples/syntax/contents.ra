@@ -1,0 +1,19 @@
+`one line`
+`
+    multiple 
+    lines
+`
+`
+    multiple
+        lines
+            keeping
+                indents
+`
+`
+    with some characters
+    !@#$%^&*()_+
+`
+`
+    with templates {{var}}
+`
+

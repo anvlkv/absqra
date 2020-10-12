@@ -19,12 +19,12 @@ pub enum TokenKind {
     Dot,
     Equals,
     Exclamation,
-    Float(f64),
+    FloatLiteral(f64),
     ForwardSlash,
     Greater,
     HashPound,
     Identifier(String),
-    Int(i64),
+    IntegerLiteral(i64),
     Less,
     Minus,
     OpenCurlyBrace,
@@ -171,6 +171,8 @@ impl RaToken {
         let mut content = String::new();
         let mut end_position = None;
 
+        cursor.ruler = Some(level + 1);
+
         cursor.bump();
         while cursor.ch.is_some() {
             if cursor.ch.unwrap() == '`' && cursor.level == level {
@@ -182,6 +184,8 @@ impl RaToken {
                 cursor.bump();
             }
         }
+
+        cursor.ruler = None;
 
         match end_position {
             Some(end_position) => Ok(Self {
@@ -272,13 +276,13 @@ impl RaToken {
                     if num % 1.0 == 0.0 {
                         match format!("{}", num).parse::<i64>() {
                             Ok(num) => Ok(Self {
-                                kind: TokenKind::Int(num),
+                                kind: TokenKind::IntegerLiteral(num),
                                 position: (start_position, end_position),
                                 level,
                             }),
                             Err(_) => {
                                 Ok(Self {
-                                    kind: TokenKind::Float(num),
+                                    kind: TokenKind::FloatLiteral(num),
                                     position: (start_position, end_position),
                                     level,
                                 })        
@@ -287,7 +291,7 @@ impl RaToken {
                     }
                     else {
                         Ok(Self {
-                            kind: TokenKind::Float(num),
+                            kind: TokenKind::FloatLiteral(num),
                             position: (start_position, end_position),
                             level,
                         })
@@ -298,7 +302,7 @@ impl RaToken {
         } else {
             match content.parse::<i64>() {
                 Ok(num) => Ok(Self {
-                    kind: TokenKind::Int(num),
+                    kind: TokenKind::IntegerLiteral(num),
                     position: (start_position, end_position),
                     level,
                 }),

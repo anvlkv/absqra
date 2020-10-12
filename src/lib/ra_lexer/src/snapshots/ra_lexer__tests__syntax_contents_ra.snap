@@ -2,4 +2,85 @@
 source: src/lib/ra_lexer/src/tests.rs
 expression: tokens
 ---
-[]
+[
+  {
+    "kind": {
+      "ContentBlock": "one line"
+    },
+    "position": [
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        11
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "ContentBlock": "\n multiple \n    lines\n"
+    },
+    "position": [
+      [
+        2,
+        1
+      ],
+      [
+        5,
+        2
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "ContentBlock": "\n multiple\n        lines\n            keeping\n                indents\n"
+    },
+    "position": [
+      [
+        6,
+        1
+      ],
+      [
+        11,
+        2
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "ContentBlock": "\n with some characters\n    !@#$%^&*()_+\n"
+    },
+    "position": [
+      [
+        12,
+        1
+      ],
+      [
+        15,
+        2
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "ContentBlock": "\n with templates {{var}}\n"
+    },
+    "position": [
+      [
+        16,
+        1
+      ],
+      [
+        18,
+        2
+      ]
+    ],
+    "level": 1
+  }
+]

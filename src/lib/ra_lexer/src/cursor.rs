@@ -9,6 +9,7 @@ pub (crate) struct Cursor<'char> {
     pub level: u16,
     pub ch: Option<char>,
     pub is_line_start: bool,
+    pub ruler: Option<u16>,
     indent_width: u8,
     chars: Peekable<Chars<'char>>,
     initial_level: u16
@@ -83,12 +84,20 @@ impl <'c> Cursor<'c> {
             },
             mut f_ch if is_whitespace(&f_ch) => {
                 let mut new_indent_width = None;
-                let mut new_level = self.level + 1;
+                let mut new_level = self.level;
                 let white_space_ch = f_ch.clone();
+                let limit = match self.ruler {
+                    Some(l) => l,
+                    None => std::u16::MAX
+                };
 
                 while is_whitespace(&f_ch) && white_space_ch == f_ch {
                     self.position.1 += 1;
                     self.ch = self.chars.next();
+
+                    if new_level >= limit {
+                        break;
+                    }
 
                     if self.indent_width == 0 {
                         new_indent_width = Some((self.position.1).try_into().unwrap());
@@ -100,12 +109,13 @@ impl <'c> Cursor<'c> {
                     f_ch = self.first_ahead();
                 }
 
-                self.level = new_level;
-
-                if new_indent_width.is_some() {
-                    self.indent_width = new_indent_width.unwrap();
+                match new_indent_width {
+                    Some(width) => {
+                        self.indent_width = width;
+                        self.level += 1
+                    },
+                    None => self.level = new_level
                 }
-
             },
             c if is_end_of_line(&c) => {
                 self.ch = self.chars.next();
@@ -135,9 +145,10 @@ impl <'c> From<& 'c str> for Cursor<'c> {
             ch: chars.next(),
             position: Position(1, 1),
             is_line_start: true,
+            ruler: None,
             indent_width: 0,
             chars,
-            initial_level: 1
+            initial_level: 1,
         }
     }
 }
