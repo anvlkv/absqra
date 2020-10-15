@@ -3,7 +3,7 @@ use core::convert::{TryFrom, TryInto};
 use cursor::{is_end_of_line};
 
 
-#[derive(Serialize, Debug)]
+#[derive(Serialize, Debug, Clone)]
 pub enum TokenKind {
     Ampersand,
     Asterisk,
@@ -41,11 +41,11 @@ pub enum TokenKind {
     Tilde,
 }
 
-#[derive(Serialize, Debug)]
+#[derive(Serialize, Debug, Clone)]
 pub struct RaToken {
-    kind: TokenKind,
-    position: (Position, Position),
-    level: u16,
+    pub kind: TokenKind,
+    pub position: (Position, Position),
+    pub level: u16,
 }
 
 impl RaToken {
@@ -278,9 +278,11 @@ impl RaToken {
                 }
                 _ => break,
             }
-            end_position = cursor.position + Position(0, 1);
+            end_position = cursor.position;
             cursor.bump();
         }
+
+        end_position = end_position + Position(0, 1);
 
         if parse_float {
             match content.parse::<f64>() {
@@ -338,9 +340,11 @@ impl RaToken {
                 }
                 _ => break,
             }
-            end_position = cursor.position + Position(0, 1);
+            end_position = cursor.position;
             cursor.bump();
         }
+
+        end_position = end_position + Position(0, 1);
 
         Ok(Self {
             kind: TokenKind::Identifier(content),

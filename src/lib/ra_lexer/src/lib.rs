@@ -1,15 +1,15 @@
 #[macro_use] extern crate serde_derive;
 
+mod tokenize;
 pub mod errors;
 pub mod position;
-pub mod tokenize;
 pub mod token;
 pub mod cursor;
 
 use errors::LexerError;
-use position::Position;
-use token::{TokenKind, RaToken};
-use tokenize::tokenize;
+pub use position::Position;
+pub use token::{TokenKind, RaToken};
+pub use tokenize::tokenize;
 use cursor::Cursor;
 use serde::Serialize;
 use failure::Backtrace;
