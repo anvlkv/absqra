@@ -5,7 +5,7 @@ expression: tokens
 [
   {
     "kind": {
-      "Int": 1
+      "IntegerLiteral": 1
     },
     "position": [
       [
@@ -21,7 +21,7 @@ expression: tokens
   },
   {
     "kind": {
-      "Int": 321
+      "IntegerLiteral": 321
     },
     "position": [
       [
@@ -37,7 +37,7 @@ expression: tokens
   },
   {
     "kind": {
-      "Int": 4567
+      "IntegerLiteral": 4567
     },
     "position": [
       [
@@ -53,7 +53,7 @@ expression: tokens
   },
   {
     "kind": {
-      "Int": -9223372036854775808
+      "IntegerLiteral": -9223372036854775808
     },
     "position": [
       [
@@ -69,7 +69,7 @@ expression: tokens
   },
   {
     "kind": {
-      "Int": 9223372036854775807
+      "IntegerLiteral": 9223372036854775807
     },
     "position": [
       [
@@ -85,7 +85,7 @@ expression: tokens
   },
   {
     "kind": {
-      "Float": 1234567890.0987654
+      "FloatLiteral": 1234567890.0987654
     },
     "position": [
       [
@@ -101,7 +101,7 @@ expression: tokens
   },
   {
     "kind": {
-      "Float": 1.2345678900987653
+      "FloatLiteral": 1.2345678900987653
     },
     "position": [
       [
@@ -117,7 +117,7 @@ expression: tokens
   },
   {
     "kind": {
-      "Int": 1234567890098765300
+      "IntegerLiteral": 1234567890098765300
     },
     "position": [
       [
@@ -133,7 +133,7 @@ expression: tokens
   },
   {
     "kind": {
-      "Float": 0.3456
+      "FloatLiteral": 0.3456
     },
     "position": [
       [
@@ -149,7 +149,7 @@ expression: tokens
   },
   {
     "kind": {
-      "Int": 100500
+      "IntegerLiteral": 100500
     },
     "position": [
       [

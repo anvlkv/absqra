@@ -175,15 +175,27 @@ impl RaToken {
 
         cursor.bump();
         while cursor.ch.is_some() {
-            if cursor.ch.unwrap() == '`' && cursor.level == level {
+            let ch = cursor.ch.unwrap();
+
+            if content.len() == 0 && is_end_of_line(&ch) { // skip first new line
+                cursor.bump();
+            }
+            else if ch == '`' && cursor.level == level { // close block
                 end_position = Some(cursor.position.clone() + Position(0, 1));
                 cursor.bump();
+                let last_char = content.chars().last();
+        
+                if last_char.is_some() && is_end_of_line(&last_char.unwrap()) { // remove trailing new line
+                    content.pop();
+                }
                 break;
-            } else {
-                content.push(cursor.ch.unwrap());
+            }
+            else { // push ch
+                content.push(ch);
                 cursor.bump();
             }
         }
+
 
         cursor.ruler = None;
 

@@ -1,3 +1,5 @@
+#[macro_use] extern crate serde_derive;
+
 pub mod errors;
 pub mod position;
 pub mod tokenize;
@@ -11,6 +13,7 @@ use tokenize::tokenize;
 use cursor::Cursor;
 use serde::Serialize;
 use failure::Backtrace;
+
 
 #[cfg(test)]
 mod tests;

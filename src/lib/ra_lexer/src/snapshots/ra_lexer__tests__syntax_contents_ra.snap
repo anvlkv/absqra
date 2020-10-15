@@ -21,7 +21,7 @@ expression: tokens
   },
   {
     "kind": {
-      "ContentBlock": "\n multiple \n    lines\n"
+      "ContentBlock": "multiple \nlines"
     },
     "position": [
       [
@@ -37,7 +37,7 @@ expression: tokens
   },
   {
     "kind": {
-      "ContentBlock": "\n multiple\n        lines\n            keeping\n                indents\n"
+      "ContentBlock": "multiple\nlines\n    keeping\n        indents"
     },
     "position": [
       [
@@ -53,7 +53,7 @@ expression: tokens
   },
   {
     "kind": {
-      "ContentBlock": "\n with some characters\n    !@#$%^&*()_+\n"
+      "ContentBlock": "with some characters\n!@#$%^&*()_+"
     },
     "position": [
       [
@@ -69,7 +69,7 @@ expression: tokens
   },
   {
     "kind": {
-      "ContentBlock": "\n with templates {{var}}\n"
+      "ContentBlock": "with templates {{var}}"
     },
     "position": [
       [

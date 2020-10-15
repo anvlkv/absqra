@@ -1,7 +1,6 @@
+use super::*;
 use core::iter::Peekable;
 use std::str::Chars;
-use super::*;
-// use std::str::Chars;
 use std::convert::{TryInto, TryFrom};
 
 pub (crate) struct Cursor<'char> {
@@ -55,18 +54,20 @@ pub (crate) fn is_end_of_line(c: &char) -> bool {
 impl <'c> Cursor<'c> {
     pub fn bump(&mut self) {
         if let Some(ch) = self.ch {
-            if is_end_of_line(&ch) {
-                self.level();
-            }
-            else {
-                match self.chars.next() {
-                    Some(ch) => {
-                        self.ch = Some(ch);
-                        self.position.1 += 1;
-                        self.is_line_start = false;
-                    }
-                    None => {
-                        self.ch = None;
+            match ch {
+                c if is_end_of_line(&c) => {
+                    self.level();
+                },
+                _ => {
+                    match self.chars.next() {
+                        Some(ch) => {
+                            self.ch = Some(ch);
+                            self.position.1 += 1;
+                            self.is_line_start = false;
+                        }
+                        None => {
+                            self.ch = None;
+                        }
                     }
                 }
             }
@@ -84,37 +85,46 @@ impl <'c> Cursor<'c> {
             },
             mut f_ch if is_whitespace(&f_ch) => {
                 let mut new_indent_width = None;
-                let mut new_level = self.level;
+                let mut new_level = 0;
                 let white_space_ch = f_ch.clone();
                 let limit = match self.ruler {
                     Some(l) => l,
                     None => std::u16::MAX
                 };
-
+                
                 while is_whitespace(&f_ch) && white_space_ch == f_ch {
                     self.position.1 += 1;
                     self.ch = self.chars.next();
-
-                    if new_level >= limit {
-                        break;
-                    }
-
+                    
+                    
                     if self.indent_width == 0 {
                         new_indent_width = Some((self.position.1).try_into().unwrap());
                     }
                     else {
-                        new_level = self.position.1 / u16::from(self.indent_width) + 1;
+                        let indent_16 = u16::from(self.indent_width);
+                        if self.position.1 % indent_16  == 0 {
+                            new_level = self.position.1 / indent_16;
+                        }
                     }
 
                     f_ch = self.first_ahead();
+
+                    if new_level >= limit {
+                        break;
+                    }
                 }
+
+                self.position.1 += 1;
+                self.ch = self.chars.next();
 
                 match new_indent_width {
                     Some(width) => {
                         self.indent_width = width;
-                        self.level += 1
+                        self.level = 2;
                     },
-                    None => self.level = new_level
+                    None => {
+                        self.level = new_level + 1;
+                    }
                 }
             },
             c if is_end_of_line(&c) => {
