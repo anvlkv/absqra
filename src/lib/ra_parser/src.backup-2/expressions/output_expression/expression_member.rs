@@ -14,8 +14,8 @@ impl <'a> StartsWithTokens<'a> for OutputExpressionMember<'a> {
     fn starts_with_tokens() -> Vec<TokenKind<'a>> { 
         vec![
             TokenKind::Identifier(Default::default()),
-            TokenKind::Int(Default::default()),
-            TokenKind::Float(Default::default()),
+            TokenKind::IntegerLiteral(Default::default()),
+            TokenKind::FloatLiteral(Default::default()),
             TokenKind::StringLiteral(Default::default()),
         ]
     }

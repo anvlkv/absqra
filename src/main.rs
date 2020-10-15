@@ -3,7 +3,7 @@ use std::io::Read;
 use std::path::Path;
 use std::env;
 // extern crate ra;
-use ra_parser;
+// use ra_parser;
 // use ra_parser;
 
 fn main() {
@@ -16,7 +16,7 @@ fn main() {
     file.read_to_string(&mut contents).unwrap();
     // let bts:() = file.bytes();
 
-    let mut prog = ra_parser::parser::parse(&contents);
+    // let mut prog = ra_parser::parser::parse(&contents);
 
-    println!("{:?}", prog);
+    // println!("{:?}", prog);
 }
