@@ -11,8 +11,8 @@ expression: tree
       0
     ],
     [
-      18,
-      2
+      16,
+      26
     ]
   ],
   "children": [
@@ -20,7 +20,10 @@ expression: tree
       "tokens": [
         {
           "kind": {
-            "ContentBlock": "one line"
+            "Comment": [
+              " simply a one line comment",
+              false
+            ]
           },
           "position": [
             [
@@ -29,7 +32,7 @@ expression: tree
             ],
             [
               1,
-              11
+              29
             ]
           ],
           "level": 1
@@ -43,7 +46,7 @@ expression: tree
         ],
         [
           1,
-          11
+          29
         ]
       ],
       "children": []
@@ -52,16 +55,54 @@ expression: tree
       "tokens": [
         {
           "kind": {
-            "ContentBlock": "multiple \nlines"
+            "Comment": [
+              " fancy one line comment",
+              true
+            ]
           },
           "position": [
             [
-              2,
+              3,
               1
             ],
+            [
+              3,
+              27
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          27
+        ]
+      ],
+      "children": []
+    },
+    {
+      "tokens": [
+        {
+          "kind": {
+            "Comment": [
+              "\n fancy multi line comment\n \n",
+              true
+            ]
+          },
+          "position": [
             [
               5,
-              2
+              1
+            ],
+            [
+              8,
+              4
             ]
           ],
           "level": 1
@@ -69,13 +110,13 @@ expression: tree
       ],
       "level": 1,
       "position": [
-        [
-          2,
-          1
-        ],
         [
           5,
-          2
+          1
+        ],
+        [
+          8,
+          4
         ]
       ],
       "children": []
@@ -84,16 +125,19 @@ expression: tree
       "tokens": [
         {
           "kind": {
-            "ContentBlock": "multiple\nlines\n    keeping\n        indents"
+            "Comment": [
+              "\nsimply \na multi line\ncomment\n",
+              false
+            ]
           },
           "position": [
             [
-              6,
+              10,
               1
             ],
             [
-              11,
-              2
+              14,
+              3
             ]
           ],
           "level": 1
@@ -102,12 +146,12 @@ expression: tree
       "level": 1,
       "position": [
         [
-          6,
+          10,
           1
         ],
         [
-          11,
-          2
+          14,
+          3
         ]
       ],
       "children": []
@@ -116,39 +160,10 @@ expression: tree
       "tokens": [
         {
           "kind": {
-            "ContentBlock": "with some characters\n!@#$%^&*()_+"
-          },
-          "position": [
-            [
-              12,
-              1
-            ],
-            [
-              15,
-              2
+            "Comment": [
+              " на этом всё, ребята! 😇",
+              false
             ]
-          ],
-          "level": 1
-        }
-      ],
-      "level": 1,
-      "position": [
-        [
-          12,
-          1
-        ],
-        [
-          15,
-          2
-        ]
-      ],
-      "children": []
-    },
-    {
-      "tokens": [
-        {
-          "kind": {
-            "ContentBlock": "with templates {{var}}"
           },
           "position": [
             [
@@ -156,8 +171,8 @@ expression: tree
               1
             ],
             [
-              18,
-              2
+              16,
+              26
             ]
           ],
           "level": 1
@@ -170,8 +185,8 @@ expression: tree
           1
         ],
         [
-          18,
-          2
+          16,
+          26
         ]
       ],
       "children": []

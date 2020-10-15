@@ -12,7 +12,7 @@ expression: tree
     ],
     [
       64,
-      36
+      41
     ]
   ],
   "children": [
@@ -20,26 +20,6 @@ expression: tree
       "tokens": [
         {
           "kind": "OpenCurlyBrace",
-          "len": 1,
-          "content": "{",
-          "position": [
-            [
-              2,
-              0
-            ],
-            [
-              2,
-              1
-            ]
-          ],
-          "level": 1
-        },
-        {
-          "kind": {
-            "Int": 1
-          },
-          "len": 1,
-          "content": "1",
           "position": [
             [
               2,
@@ -48,1667 +28,49 @@ expression: tree
             [
               2,
               2
+            ]
+          ],
+          "level": 1
+        },
+        {
+          "kind": {
+            "IntegerLiteral": 1
+          },
+          "position": [
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              3
             ]
           ],
           "level": 1
         },
         {
           "kind": "Colon",
-          "len": 1,
-          "content": ":",
           "position": [
             [
               2,
-              2
+              3
             ],
             [
               2,
-              3
+              4
             ]
           ],
           "level": 1
         },
         {
           "kind": "OpenCurlyBrace",
-          "len": 1,
-          "content": "{",
           "position": [
             [
               2,
-              3
+              4
             ],
             [
               2,
-              4
-            ]
-          ],
-          "level": 1
-        }
-      ],
-      "level": 1,
-      "position": [
-        [
-          2,
-          0
-        ],
-        [
-          2,
-          4
-        ]
-      ],
-      "children": []
-    },
-    {
-      "tokens": [
-        {
-          "kind": {
-            "Identifier": "recipe"
-          },
-          "len": 6,
-          "content": "recipe",
-          "position": [
-            [
-              3,
-              0
-            ],
-            [
-              3,
-              6
-            ]
-          ],
-          "level": 1
-        },
-        {
-          "kind": "Dot",
-          "len": 1,
-          "content": ".",
-          "position": [
-            [
-              3,
-              6
-            ],
-            [
-              3,
-              7
-            ]
-          ],
-          "level": 1
-        },
-        {
-          "kind": {
-            "Identifier": "publisher"
-          },
-          "len": 9,
-          "content": "publisher",
-          "position": [
-            [
-              3,
-              7
-            ],
-            [
-              3,
-              16
-            ]
-          ],
-          "level": 1
-        },
-        {
-          "kind": "Equals",
-          "len": 1,
-          "content": "=",
-          "position": [
-            [
-              3,
-              17
-            ],
-            [
-              3,
-              18
-            ]
-          ],
-          "level": 1
-        },
-        {
-          "kind": "Equals",
-          "len": 1,
-          "content": "=",
-          "position": [
-            [
-              3,
-              18
-            ],
-            [
-              3,
-              19
-            ]
-          ],
-          "level": 1
-        },
-        {
-          "kind": {
-            "Identifier": "user"
-          },
-          "len": 4,
-          "content": "user",
-          "position": [
-            [
-              3,
-              20
-            ],
-            [
-              3,
-              24
-            ]
-          ],
-          "level": 1
-        }
-      ],
-      "level": 1,
-      "position": [
-        [
-          3,
-          0
-        ],
-        [
-          3,
-          24
-        ]
-      ],
-      "children": []
-    },
-    {
-      "tokens": [
-        {
-          "kind": "CloseCurlyBrace",
-          "len": 1,
-          "content": "}",
-          "position": [
-            [
-              4,
-              0
-            ],
-            [
-              4,
-              1
-            ]
-          ],
-          "level": 1
-        },
-        {
-          "kind": "CloseCurlyBrace",
-          "len": 1,
-          "content": "}",
-          "position": [
-            [
-              4,
-              1
-            ],
-            [
-              4,
-              2
-            ]
-          ],
-          "level": 1
-        }
-      ],
-      "level": 1,
-      "position": [
-        [
-          4,
-          0
-        ],
-        [
-          4,
-          2
-        ]
-      ],
-      "children": []
-    },
-    {
-      "tokens": [
-        {
-          "kind": {
-            "Identifier": "recipe"
-          },
-          "len": 6,
-          "content": "recipe",
-          "position": [
-            [
-              6,
-              0
-            ],
-            [
-              6,
-              6
-            ]
-          ],
-          "level": 1
-        }
-      ],
-      "level": 1,
-      "position": [
-        [
-          6,
-          0
-        ],
-        [
-          6,
-          6
-        ]
-      ],
-      "children": []
-    },
-    {
-      "tokens": [
-        {
-          "kind": {
-            "Identifier": "publisher"
-          },
-          "len": 9,
-          "content": "publisher",
-          "position": [
-            [
-              7,
-              0
-            ],
-            [
-              7,
-              9
-            ]
-          ],
-          "level": 1
-        }
-      ],
-      "level": 1,
-      "position": [
-        [
-          7,
-          0
-        ],
-        [
-          8,
-          8
-        ]
-      ],
-      "children": [
-        {
-          "tokens": [
-            {
-              "kind": {
-                "Identifier": "user"
-              },
-              "len": 4,
-              "content": "user",
-              "position": [
-                [
-                  8,
-                  4
-                ],
-                [
-                  8,
-                  8
-                ]
-              ],
-              "level": 2
-            }
-          ],
-          "level": 2,
-          "position": [
-            [
-              8,
-              4
-            ],
-            [
-              8,
-              8
-            ]
-          ],
-          "children": []
-        }
-      ]
-    },
-    {
-      "tokens": [
-        {
-          "kind": {
-            "Identifier": "name"
-          },
-          "len": 4,
-          "content": "name",
-          "position": [
-            [
-              9,
-              0
-            ],
-            [
-              9,
-              4
-            ]
-          ],
-          "level": 1
-        }
-      ],
-      "level": 1,
-      "position": [
-        [
-          9,
-          0
-        ],
-        [
-          13,
-          23
-        ]
-      ],
-      "children": [
-        {
-          "tokens": [
-            {
-              "kind": "Greater",
-              "len": 1,
-              "content": ">",
-              "position": [
-                [
-                  10,
-                  4
-                ],
-                [
-                  10,
-                  5
-                ]
-              ],
-              "level": 2
-            },
-            {
-              "kind": "Colon",
-              "len": 1,
-              "content": ":",
-              "position": [
-                [
-                  10,
-                  6
-                ],
-                [
-                  10,
-                  7
-                ]
-              ],
-              "level": 2
-            },
-            {
-              "kind": {
-                "Identifier": "placeholder"
-              },
-              "len": 11,
-              "content": "placeholder",
-              "position": [
-                [
-                  10,
-                  7
-                ],
-                [
-                  10,
-                  18
-                ]
-              ],
-              "level": 2
-            },
-            {
-              "kind": "Equals",
-              "len": 1,
-              "content": "=",
-              "position": [
-                [
-                  10,
-                  18
-                ],
-                [
-                  10,
-                  19
-                ]
-              ],
-              "level": 2
-            },
-            {
-              "kind": "ContentBlock",
-              "len": 6,
-              "content": "Name",
-              "position": [
-                [
-                  10,
-                  19
-                ],
-                [
-                  10,
-                  25
-                ]
-              ],
-              "level": 2
-            }
-          ],
-          "level": 2,
-          "position": [
-            [
-              10,
-              4
-            ],
-            [
-              13,
-              23
-            ]
-          ],
-          "children": [
-            {
-              "tokens": [
-                {
-                  "kind": "Exclamation",
-                  "len": 1,
-                  "content": "!",
-                  "position": [
-                    [
-                      11,
-                      8
-                    ],
-                    [
-                      11,
-                      9
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": {
-                    "Identifier": "required"
-                  },
-                  "len": 8,
-                  "content": "required",
-                  "position": [
-                    [
-                      11,
-                      9
-                    ],
-                    [
-                      11,
-                      17
-                    ]
-                  ],
-                  "level": 3
-                }
-              ],
-              "level": 3,
-              "position": [
-                [
-                  11,
-                  8
-                ],
-                [
-                  11,
-                  17
-                ]
-              ],
-              "children": []
-            },
-            {
-              "tokens": [
-                {
-                  "kind": "Exclamation",
-                  "len": 1,
-                  "content": "!",
-                  "position": [
-                    [
-                      12,
-                      8
-                    ],
-                    [
-                      12,
-                      9
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": {
-                    "Identifier": "text"
-                  },
-                  "len": 4,
-                  "content": "text",
-                  "position": [
-                    [
-                      12,
-                      9
-                    ],
-                    [
-                      12,
-                      13
-                    ]
-                  ],
-                  "level": 3
-                }
-              ],
-              "level": 3,
-              "position": [
-                [
-                  12,
-                  8
-                ],
-                [
-                  12,
-                  13
-                ]
-              ],
-              "children": []
-            },
-            {
-              "tokens": [
-                {
-                  "kind": "Exclamation",
-                  "len": 1,
-                  "content": "!",
-                  "position": [
-                    [
-                      13,
-                      8
-                    ],
-                    [
-                      13,
-                      9
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": {
-                    "Identifier": "maxLength"
-                  },
-                  "len": 9,
-                  "content": "maxLength",
-                  "position": [
-                    [
-                      13,
-                      9
-                    ],
-                    [
-                      13,
-                      18
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": "Colon",
-                  "len": 1,
-                  "content": ":",
-                  "position": [
-                    [
-                      13,
-                      18
-                    ],
-                    [
-                      13,
-                      19
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": "Equals",
-                  "len": 1,
-                  "content": "=",
-                  "position": [
-                    [
-                      13,
-                      19
-                    ],
-                    [
-                      13,
-                      20
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": {
-                    "Int": 100
-                  },
-                  "len": 3,
-                  "content": "100",
-                  "position": [
-                    [
-                      13,
-                      20
-                    ],
-                    [
-                      13,
-                      23
-                    ]
-                  ],
-                  "level": 3
-                }
-              ],
-              "level": 3,
-              "position": [
-                [
-                  13,
-                  8
-                ],
-                [
-                  13,
-                  23
-                ]
-              ],
-              "children": []
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "tokens": [
-        {
-          "kind": {
-            "Identifier": "pictures"
-          },
-          "len": 8,
-          "content": "pictures",
-          "position": [
-            [
-              14,
-              0
-            ],
-            [
-              14,
-              8
-            ]
-          ],
-          "level": 1
-        }
-      ],
-      "level": 1,
-      "position": [
-        [
-          14,
-          0
-        ],
-        [
-          17,
-          20
-        ]
-      ],
-      "children": [
-        {
-          "tokens": [
-            {
-              "kind": "Plus",
-              "len": 1,
-              "content": "+",
-              "position": [
-                [
-                  15,
-                  4
-                ],
-                [
-                  15,
-                  5
-                ]
-              ],
-              "level": 2
-            },
-            {
-              "kind": "Greater",
-              "len": 1,
-              "content": ">",
-              "position": [
-                [
-                  15,
-                  5
-                ],
-                [
-                  15,
-                  6
-                ]
-              ],
-              "level": 2
-            },
-            {
-              "kind": "Colon",
-              "len": 1,
-              "content": ":",
-              "position": [
-                [
-                  15,
-                  7
-                ],
-                [
-                  15,
-                  8
-                ]
-              ],
-              "level": 2
-            },
-            {
-              "kind": {
-                "Identifier": "placeholder"
-              },
-              "len": 11,
-              "content": "placeholder",
-              "position": [
-                [
-                  15,
-                  8
-                ],
-                [
-                  15,
-                  19
-                ]
-              ],
-              "level": 2
-            },
-            {
-              "kind": "Equals",
-              "len": 1,
-              "content": "=",
-              "position": [
-                [
-                  15,
-                  19
-                ],
-                [
-                  15,
-                  20
-                ]
-              ],
-              "level": 2
-            },
-            {
-              "kind": "At",
-              "len": 1,
-              "content": "@",
-              "position": [
-                [
-                  15,
-                  20
-                ],
-                [
-                  15,
-                  21
-                ]
-              ],
-              "level": 2
-            },
-            {
-              "kind": {
-                "Identifier": "resources"
-              },
-              "len": 9,
-              "content": "resources",
-              "position": [
-                [
-                  15,
-                  21
-                ],
-                [
-                  15,
-                  30
-                ]
-              ],
-              "level": 2
-            },
-            {
-              "kind": "Dot",
-              "len": 1,
-              "content": ".",
-              "position": [
-                [
-                  15,
-                  30
-                ],
-                [
-                  15,
-                  31
-                ]
-              ],
-              "level": 2
-            },
-            {
-              "kind": {
-                "Identifier": "pictureLabel"
-              },
-              "len": 12,
-              "content": "pictureLabel",
-              "position": [
-                [
-                  15,
-                  31
-                ],
-                [
-                  15,
-                  43
-                ]
-              ],
-              "level": 2
-            }
-          ],
-          "level": 2,
-          "position": [
-            [
-              15,
-              4
-            ],
-            [
-              17,
-              20
-            ]
-          ],
-          "children": [
-            {
-              "tokens": [
-                {
-                  "kind": "Exclamation",
-                  "len": 1,
-                  "content": "!",
-                  "position": [
-                    [
-                      16,
-                      8
-                    ],
-                    [
-                      16,
-                      9
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": {
-                    "Identifier": "file"
-                  },
-                  "len": 4,
-                  "content": "file",
-                  "position": [
-                    [
-                      16,
-                      9
-                    ],
-                    [
-                      16,
-                      13
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": "Colon",
-                  "len": 1,
-                  "content": ":",
-                  "position": [
-                    [
-                      16,
-                      13
-                    ],
-                    [
-                      16,
-                      14
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": {
-                    "Identifier": "type"
-                  },
-                  "len": 4,
-                  "content": "type",
-                  "position": [
-                    [
-                      16,
-                      14
-                    ],
-                    [
-                      16,
-                      18
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": "Equals",
-                  "len": 1,
-                  "content": "=",
-                  "position": [
-                    [
-                      16,
-                      18
-                    ],
-                    [
-                      16,
-                      19
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": {
-                    "Identifier": "image"
-                  },
-                  "len": 5,
-                  "content": "image",
-                  "position": [
-                    [
-                      16,
-                      19
-                    ],
-                    [
-                      16,
-                      24
-                    ]
-                  ],
-                  "level": 3
-                }
-              ],
-              "level": 3,
-              "position": [
-                [
-                  16,
-                  8
-                ],
-                [
-                  16,
-                  24
-                ]
-              ],
-              "children": []
-            },
-            {
-              "tokens": [
-                {
-                  "kind": "Exclamation",
-                  "len": 1,
-                  "content": "!",
-                  "position": [
-                    [
-                      17,
-                      8
-                    ],
-                    [
-                      17,
-                      9
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": {
-                    "Identifier": "minCount"
-                  },
-                  "len": 8,
-                  "content": "minCount",
-                  "position": [
-                    [
-                      17,
-                      9
-                    ],
-                    [
-                      17,
-                      17
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": "Colon",
-                  "len": 1,
-                  "content": ":",
-                  "position": [
-                    [
-                      17,
-                      17
-                    ],
-                    [
-                      17,
-                      18
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": "Equals",
-                  "len": 1,
-                  "content": "=",
-                  "position": [
-                    [
-                      17,
-                      18
-                    ],
-                    [
-                      17,
-                      19
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": {
-                    "Int": 1
-                  },
-                  "len": 1,
-                  "content": "1",
-                  "position": [
-                    [
-                      17,
-                      19
-                    ],
-                    [
-                      17,
-                      20
-                    ]
-                  ],
-                  "level": 3
-                }
-              ],
-              "level": 3,
-              "position": [
-                [
-                  17,
-                  8
-                ],
-                [
-                  17,
-                  20
-                ]
-              ],
-              "children": []
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "tokens": [
-        {
-          "kind": {
-            "Identifier": "ingredients"
-          },
-          "len": 11,
-          "content": "ingredients",
-          "position": [
-            [
-              18,
-              0
-            ],
-            [
-              18,
-              11
-            ]
-          ],
-          "level": 1
-        }
-      ],
-      "level": 1,
-      "position": [
-        [
-          18,
-          0
-        ],
-        [
-          30,
-          35
-        ]
-      ],
-      "children": [
-        {
-          "tokens": [
-            {
-              "kind": "Plus",
-              "len": 1,
-              "content": "+",
-              "position": [
-                [
-                  19,
-                  4
-                ],
-                [
-                  19,
-                  5
-                ]
-              ],
-              "level": 2
-            },
-            {
-              "kind": "Greater",
-              "len": 1,
-              "content": ">",
-              "position": [
-                [
-                  19,
-                  5
-                ],
-                [
-                  19,
-                  6
-                ]
-              ],
-              "level": 2
-            }
-          ],
-          "level": 2,
-          "position": [
-            [
-              19,
-              4
-            ],
-            [
-              30,
-              35
-            ]
-          ],
-          "children": [
-            {
-              "tokens": [
-                {
-                  "kind": {
-                    "Identifier": "ingredient"
-                  },
-                  "len": 10,
-                  "content": "ingredient",
-                  "position": [
-                    [
-                      20,
-                      8
-                    ],
-                    [
-                      20,
-                      18
-                    ]
-                  ],
-                  "level": 3
-                }
-              ],
-              "level": 3,
-              "position": [
-                [
-                  20,
-                  8
-                ],
-                [
-                  30,
-                  35
-                ]
-              ],
-              "children": [
-                {
-                  "tokens": [
-                    {
-                      "kind": {
-                        "Identifier": "name"
-                      },
-                      "len": 4,
-                      "content": "name",
-                      "position": [
-                        [
-                          21,
-                          12
-                        ],
-                        [
-                          21,
-                          16
-                        ]
-                      ],
-                      "level": 4
-                    }
-                  ],
-                  "level": 4,
-                  "position": [
-                    [
-                      21,
-                      12
-                    ],
-                    [
-                      23,
-                      25
-                    ]
-                  ],
-                  "children": [
-                    {
-                      "tokens": [
-                        {
-                          "kind": "Greater",
-                          "len": 1,
-                          "content": ">",
-                          "position": [
-                            [
-                              22,
-                              16
-                            ],
-                            [
-                              22,
-                              17
-                            ]
-                          ],
-                          "level": 5
-                        }
-                      ],
-                      "level": 5,
-                      "position": [
-                        [
-                          22,
-                          16
-                        ],
-                        [
-                          23,
-                          25
-                        ]
-                      ],
-                      "children": [
-                        {
-                          "tokens": [
-                            {
-                              "kind": "Exclamation",
-                              "len": 1,
-                              "content": "!",
-                              "position": [
-                                [
-                                  23,
-                                  20
-                                ],
-                                [
-                                  23,
-                                  21
-                                ]
-                              ],
-                              "level": 6
-                            },
-                            {
-                              "kind": {
-                                "Identifier": "text"
-                              },
-                              "len": 4,
-                              "content": "text",
-                              "position": [
-                                [
-                                  23,
-                                  21
-                                ],
-                                [
-                                  23,
-                                  25
-                                ]
-                              ],
-                              "level": 6
-                            }
-                          ],
-                          "level": 6,
-                          "position": [
-                            [
-                              23,
-                              20
-                            ],
-                            [
-                              23,
-                              25
-                            ]
-                          ],
-                          "children": []
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "tokens": [
-                    {
-                      "kind": {
-                        "Identifier": "amount"
-                      },
-                      "len": 6,
-                      "content": "amount",
-                      "position": [
-                        [
-                          24,
-                          12
-                        ],
-                        [
-                          24,
-                          18
-                        ]
-                      ],
-                      "level": 4
-                    }
-                  ],
-                  "level": 4,
-                  "position": [
-                    [
-                      24,
-                      12
-                    ],
-                    [
-                      26,
-                      27
-                    ]
-                  ],
-                  "children": [
-                    {
-                      "tokens": [
-                        {
-                          "kind": "Greater",
-                          "len": 1,
-                          "content": ">",
-                          "position": [
-                            [
-                              25,
-                              16
-                            ],
-                            [
-                              25,
-                              17
-                            ]
-                          ],
-                          "level": 5
-                        }
-                      ],
-                      "level": 5,
-                      "position": [
-                        [
-                          25,
-                          16
-                        ],
-                        [
-                          26,
-                          27
-                        ]
-                      ],
-                      "children": [
-                        {
-                          "tokens": [
-                            {
-                              "kind": "Exclamation",
-                              "len": 1,
-                              "content": "!",
-                              "position": [
-                                [
-                                  26,
-                                  20
-                                ],
-                                [
-                                  26,
-                                  21
-                                ]
-                              ],
-                              "level": 6
-                            },
-                            {
-                              "kind": {
-                                "Identifier": "number"
-                              },
-                              "len": 6,
-                              "content": "number",
-                              "position": [
-                                [
-                                  26,
-                                  21
-                                ],
-                                [
-                                  26,
-                                  27
-                                ]
-                              ],
-                              "level": 6
-                            }
-                          ],
-                          "level": 6,
-                          "position": [
-                            [
-                              26,
-                              20
-                            ],
-                            [
-                              26,
-                              27
-                            ]
-                          ],
-                          "children": []
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "tokens": [
-                    {
-                      "kind": {
-                        "Identifier": "unit"
-                      },
-                      "len": 4,
-                      "content": "unit",
-                      "position": [
-                        [
-                          27,
-                          12
-                        ],
-                        [
-                          27,
-                          16
-                        ]
-                      ],
-                      "level": 4
-                    }
-                  ],
-                  "level": 4,
-                  "position": [
-                    [
-                      27,
-                      12
-                    ],
-                    [
-                      30,
-                      35
-                    ]
-                  ],
-                  "children": [
-                    {
-                      "tokens": [
-                        {
-                          "kind": "Greater",
-                          "len": 1,
-                          "content": ">",
-                          "position": [
-                            [
-                              28,
-                              16
-                            ],
-                            [
-                              28,
-                              17
-                            ]
-                          ],
-                          "level": 5
-                        }
-                      ],
-                      "level": 5,
-                      "position": [
-                        [
-                          28,
-                          16
-                        ],
-                        [
-                          30,
-                          35
-                        ]
-                      ],
-                      "children": [
-                        {
-                          "tokens": [
-                            {
-                              "kind": "Exclamation",
-                              "len": 1,
-                              "content": "!",
-                              "position": [
-                                [
-                                  29,
-                                  20
-                                ],
-                                [
-                                  29,
-                                  21
-                                ]
-                              ],
-                              "level": 6
-                            },
-                            {
-                              "kind": {
-                                "Identifier": "text"
-                              },
-                              "len": 4,
-                              "content": "text",
-                              "position": [
-                                [
-                                  29,
-                                  21
-                                ],
-                                [
-                                  29,
-                                  25
-                                ]
-                              ],
-                              "level": 6
-                            }
-                          ],
-                          "level": 6,
-                          "position": [
-                            [
-                              29,
-                              20
-                            ],
-                            [
-                              29,
-                              25
-                            ]
-                          ],
-                          "children": []
-                        },
-                        {
-                          "tokens": [
-                            {
-                              "kind": "Exclamation",
-                              "len": 1,
-                              "content": "!",
-                              "position": [
-                                [
-                                  30,
-                                  20
-                                ],
-                                [
-                                  30,
-                                  21
-                                ]
-                              ],
-                              "level": 6
-                            },
-                            {
-                              "kind": {
-                                "Identifier": "maxLength"
-                              },
-                              "len": 9,
-                              "content": "maxLength",
-                              "position": [
-                                [
-                                  30,
-                                  21
-                                ],
-                                [
-                                  30,
-                                  30
-                                ]
-                              ],
-                              "level": 6
-                            },
-                            {
-                              "kind": "Colon",
-                              "len": 1,
-                              "content": ":",
-                              "position": [
-                                [
-                                  30,
-                                  30
-                                ],
-                                [
-                                  30,
-                                  31
-                                ]
-                              ],
-                              "level": 6
-                            },
-                            {
-                              "kind": "Equals",
-                              "len": 1,
-                              "content": "=",
-                              "position": [
-                                [
-                                  30,
-                                  31
-                                ],
-                                [
-                                  30,
-                                  32
-                                ]
-                              ],
-                              "level": 6
-                            },
-                            {
-                              "kind": {
-                                "Int": 100
-                              },
-                              "len": 3,
-                              "content": "100",
-                              "position": [
-                                [
-                                  30,
-                                  32
-                                ],
-                                [
-                                  30,
-                                  35
-                                ]
-                              ],
-                              "level": 6
-                            }
-                          ],
-                          "level": 6,
-                          "position": [
-                            [
-                              30,
-                              20
-                            ],
-                            [
-                              30,
-                              35
-                            ]
-                          ],
-                          "children": []
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "tokens": [
-        {
-          "kind": {
-            "Identifier": "tools"
-          },
-          "len": 5,
-          "content": "tools",
-          "position": [
-            [
-              31,
-              0
-            ],
-            [
-              31,
               5
             ]
           ],
@@ -1718,45 +80,103 @@ expression: tree
       "level": 1,
       "position": [
         [
-          31,
-          0
+          2,
+          1
         ],
         [
-          33,
-          13
+          3,
+          29
         ]
       ],
       "children": [
         {
           "tokens": [
             {
-              "kind": "Plus",
-              "len": 1,
-              "content": "+",
+              "kind": {
+                "Identifier": "recipe"
+              },
               "position": [
                 [
-                  32,
-                  4
+                  3,
+                  5
                 ],
                 [
-                  32,
-                  5
+                  3,
+                  11
                 ]
               ],
               "level": 2
             },
             {
-              "kind": "Greater",
-              "len": 1,
-              "content": ">",
+              "kind": "Dot",
               "position": [
                 [
-                  32,
-                  5
+                  3,
+                  11
                 ],
                 [
-                  32,
-                  6
+                  3,
+                  12
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "publisher"
+              },
+              "position": [
+                [
+                  3,
+                  12
+                ],
+                [
+                  3,
+                  21
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "Equals",
+              "position": [
+                [
+                  3,
+                  22
+                ],
+                [
+                  3,
+                  23
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "Equals",
+              "position": [
+                [
+                  3,
+                  23
+                ],
+                [
+                  3,
+                  24
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "user"
+              },
+              "position": [
+                [
+                  3,
+                  25
+                ],
+                [
+                  3,
+                  29
                 ]
               ],
               "level": 2
@@ -1765,11 +185,120 @@ expression: tree
           "level": 2,
           "position": [
             [
-              32,
-              4
+              3,
+              5
             ],
             [
-              33,
+              3,
+              29
+            ]
+          ],
+          "children": []
+        }
+      ]
+    },
+    {
+      "tokens": [
+        {
+          "kind": "CloseCurlyBrace",
+          "position": [
+            [
+              4,
+              1
+            ],
+            [
+              4,
+              2
+            ]
+          ],
+          "level": 1
+        },
+        {
+          "kind": "CloseCurlyBrace",
+          "position": [
+            [
+              4,
+              2
+            ],
+            [
+              4,
+              3
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          4,
+          1
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "children": []
+    },
+    {
+      "tokens": [
+        {
+          "kind": {
+            "Identifier": "recipe"
+          },
+          "position": [
+            [
+              6,
+              1
+            ],
+            [
+              6,
+              7
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          6,
+          1
+        ],
+        [
+          64,
+          41
+        ]
+      ],
+      "children": [
+        {
+          "tokens": [
+            {
+              "kind": {
+                "Identifier": "publisher"
+              },
+              "position": [
+                [
+                  7,
+                  5
+                ],
+                [
+                  7,
+                  14
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              7,
+              5
+            ],
+            [
+              8,
               13
             ]
           ],
@@ -1777,34 +306,16 @@ expression: tree
             {
               "tokens": [
                 {
-                  "kind": "Exclamation",
-                  "len": 1,
-                  "content": "!",
-                  "position": [
-                    [
-                      33,
-                      8
-                    ],
-                    [
-                      33,
-                      9
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
                   "kind": {
-                    "Identifier": "text"
+                    "Identifier": "user"
                   },
-                  "len": 4,
-                  "content": "text",
                   "position": [
                     [
-                      33,
+                      8,
                       9
                     ],
                     [
-                      33,
+                      8,
                       13
                     ]
                   ],
@@ -1814,67 +325,32 @@ expression: tree
               "level": 3,
               "position": [
                 [
-                  33,
-                  8
+                  8,
+                  9
                 ],
                 [
-                  33,
+                  8,
                   13
                 ]
               ],
               "children": []
             }
           ]
-        }
-      ]
-    },
-    {
-      "tokens": [
-        {
-          "kind": {
-            "Identifier": "kindOfMeal"
-          },
-          "len": 10,
-          "content": "kindOfMeal",
-          "position": [
-            [
-              34,
-              0
-            ],
-            [
-              34,
-              10
-            ]
-          ],
-          "level": 1
-        }
-      ],
-      "level": 1,
-      "position": [
-        [
-          34,
-          0
-        ],
-        [
-          38,
-          22
-        ]
-      ],
-      "children": [
+        },
         {
           "tokens": [
             {
-              "kind": "Greater",
-              "len": 1,
-              "content": ">",
+              "kind": {
+                "Identifier": "name"
+              },
               "position": [
                 [
-                  35,
-                  4
+                  9,
+                  5
                 ],
                 [
-                  35,
-                  5
+                  9,
+                  9
                 ]
               ],
               "level": 2
@@ -1883,1055 +359,87 @@ expression: tree
           "level": 2,
           "position": [
             [
-              35,
-              4
+              9,
+              5
             ],
             [
-              38,
-              22
+              13,
+              28
             ]
           ],
           "children": [
             {
               "tokens": [
                 {
-                  "kind": "Exclamation",
-                  "len": 1,
-                  "content": "!",
+                  "kind": "Greater",
                   "position": [
                     [
-                      36,
-                      8
-                    ],
-                    [
-                      36,
-                      9
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": {
-                    "Identifier": "options"
-                  },
-                  "len": 7,
-                  "content": "options",
-                  "position": [
-                    [
-                      36,
+                      10,
                       9
                     ],
                     [
-                      36,
-                      16
+                      10,
+                      10
                     ]
                   ],
                   "level": 3
                 },
                 {
                   "kind": "Colon",
-                  "len": 1,
-                  "content": ":",
                   "position": [
                     [
-                      36,
-                      16
+                      10,
+                      11
                     ],
                     [
-                      36,
-                      17
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": "At",
-                  "len": 1,
-                  "content": "@",
-                  "position": [
-                    [
-                      36,
-                      17
-                    ],
-                    [
-                      36,
-                      18
+                      10,
+                      12
                     ]
                   ],
                   "level": 3
                 },
                 {
                   "kind": {
-                    "Identifier": "resources"
+                    "Identifier": "placeholder"
                   },
-                  "len": 9,
-                  "content": "resources",
                   "position": [
                     [
-                      36,
-                      18
+                      10,
+                      12
                     ],
                     [
-                      36,
-                      27
+                      10,
+                      23
                     ]
                   ],
                   "level": 3
                 },
                 {
-                  "kind": "Dot",
-                  "len": 1,
-                  "content": ".",
+                  "kind": "Equals",
                   "position": [
                     [
-                      36,
-                      27
+                      10,
+                      23
                     ],
                     [
-                      36,
-                      28
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": {
-                    "Identifier": "mealsTypes"
-                  },
-                  "len": 10,
-                  "content": "mealsTypes",
-                  "position": [
-                    [
-                      36,
-                      28
-                    ],
-                    [
-                      36,
-                      38
-                    ]
-                  ],
-                  "level": 3
-                }
-              ],
-              "level": 3,
-              "position": [
-                [
-                  36,
-                  8
-                ],
-                [
-                  36,
-                  38
-                ]
-              ],
-              "children": []
-            },
-            {
-              "tokens": [
-                {
-                  "kind": "Exclamation",
-                  "len": 1,
-                  "content": "!",
-                  "position": [
-                    [
-                      37,
-                      8
-                    ],
-                    [
-                      37,
-                      9
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": {
-                    "Identifier": "required"
-                  },
-                  "len": 8,
-                  "content": "required",
-                  "position": [
-                    [
-                      37,
-                      9
-                    ],
-                    [
-                      37,
-                      17
-                    ]
-                  ],
-                  "level": 3
-                }
-              ],
-              "level": 3,
-              "position": [
-                [
-                  37,
-                  8
-                ],
-                [
-                  37,
-                  17
-                ]
-              ],
-              "children": []
-            },
-            {
-              "tokens": [
-                {
-                  "kind": "Exclamation",
-                  "len": 1,
-                  "content": "!",
-                  "position": [
-                    [
-                      38,
-                      8
-                    ],
-                    [
-                      38,
-                      9
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": {
-                    "Identifier": "select"
-                  },
-                  "len": 6,
-                  "content": "select",
-                  "position": [
-                    [
-                      38,
-                      9
-                    ],
-                    [
-                      38,
-                      15
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": "Colon",
-                  "len": 1,
-                  "content": ":",
-                  "position": [
-                    [
-                      38,
-                      15
-                    ],
-                    [
-                      38,
-                      16
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": {
-                    "Identifier": "single"
-                  },
-                  "len": 6,
-                  "content": "single",
-                  "position": [
-                    [
-                      38,
-                      16
-                    ],
-                    [
-                      38,
-                      22
-                    ]
-                  ],
-                  "level": 3
-                }
-              ],
-              "level": 3,
-              "position": [
-                [
-                  38,
-                  8
-                ],
-                [
-                  38,
-                  22
-                ]
-              ],
-              "children": []
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "tokens": [
-        {
-          "kind": {
-            "Identifier": "countryOfOrigin"
-          },
-          "len": 15,
-          "content": "countryOfOrigin",
-          "position": [
-            [
-              39,
-              0
-            ],
-            [
-              39,
-              15
-            ]
-          ],
-          "level": 1
-        }
-      ],
-      "level": 1,
-      "position": [
-        [
-          39,
-          0
-        ],
-        [
-          43,
-          22
-        ]
-      ],
-      "children": [
-        {
-          "tokens": [
-            {
-              "kind": "Greater",
-              "len": 1,
-              "content": ">",
-              "position": [
-                [
-                  40,
-                  4
-                ],
-                [
-                  40,
-                  5
-                ]
-              ],
-              "level": 2
-            }
-          ],
-          "level": 2,
-          "position": [
-            [
-              40,
-              4
-            ],
-            [
-              43,
-              22
-            ]
-          ],
-          "children": [
-            {
-              "tokens": [
-                {
-                  "kind": "Exclamation",
-                  "len": 1,
-                  "content": "!",
-                  "position": [
-                    [
-                      41,
-                      8
-                    ],
-                    [
-                      41,
-                      9
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": {
-                    "Identifier": "options"
-                  },
-                  "len": 7,
-                  "content": "options",
-                  "position": [
-                    [
-                      41,
-                      9
-                    ],
-                    [
-                      41,
-                      16
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": "Colon",
-                  "len": 1,
-                  "content": ":",
-                  "position": [
-                    [
-                      41,
-                      16
-                    ],
-                    [
-                      41,
-                      17
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": "At",
-                  "len": 1,
-                  "content": "@",
-                  "position": [
-                    [
-                      41,
-                      17
-                    ],
-                    [
-                      41,
-                      18
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": {
-                    "Identifier": "resources"
-                  },
-                  "len": 9,
-                  "content": "resources",
-                  "position": [
-                    [
-                      41,
-                      18
-                    ],
-                    [
-                      41,
-                      27
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": "Dot",
-                  "len": 1,
-                  "content": ".",
-                  "position": [
-                    [
-                      41,
-                      27
-                    ],
-                    [
-                      41,
-                      28
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": {
-                    "Identifier": "countries"
-                  },
-                  "len": 9,
-                  "content": "countries",
-                  "position": [
-                    [
-                      41,
-                      28
-                    ],
-                    [
-                      41,
-                      37
-                    ]
-                  ],
-                  "level": 3
-                }
-              ],
-              "level": 3,
-              "position": [
-                [
-                  41,
-                  8
-                ],
-                [
-                  41,
-                  37
-                ]
-              ],
-              "children": []
-            },
-            {
-              "tokens": [
-                {
-                  "kind": "Exclamation",
-                  "len": 1,
-                  "content": "!",
-                  "position": [
-                    [
-                      42,
-                      8
-                    ],
-                    [
-                      42,
-                      9
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": {
-                    "Identifier": "required"
-                  },
-                  "len": 8,
-                  "content": "required",
-                  "position": [
-                    [
-                      42,
-                      9
-                    ],
-                    [
-                      42,
-                      17
-                    ]
-                  ],
-                  "level": 3
-                }
-              ],
-              "level": 3,
-              "position": [
-                [
-                  42,
-                  8
-                ],
-                [
-                  42,
-                  17
-                ]
-              ],
-              "children": []
-            },
-            {
-              "tokens": [
-                {
-                  "kind": "Exclamation",
-                  "len": 1,
-                  "content": "!",
-                  "position": [
-                    [
-                      43,
-                      8
-                    ],
-                    [
-                      43,
-                      9
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": {
-                    "Identifier": "select"
-                  },
-                  "len": 6,
-                  "content": "select",
-                  "position": [
-                    [
-                      43,
-                      9
-                    ],
-                    [
-                      43,
-                      15
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": "Colon",
-                  "len": 1,
-                  "content": ":",
-                  "position": [
-                    [
-                      43,
-                      15
-                    ],
-                    [
-                      43,
-                      16
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": {
-                    "Identifier": "single"
-                  },
-                  "len": 6,
-                  "content": "single",
-                  "position": [
-                    [
-                      43,
-                      16
-                    ],
-                    [
-                      43,
-                      22
-                    ]
-                  ],
-                  "level": 3
-                }
-              ],
-              "level": 3,
-              "position": [
-                [
-                  43,
-                  8
-                ],
-                [
-                  43,
-                  22
-                ]
-              ],
-              "children": []
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "tokens": [
-        {
-          "kind": {
-            "Identifier": "restrictions"
-          },
-          "len": 12,
-          "content": "restrictions",
-          "position": [
-            [
-              44,
-              0
-            ],
-            [
-              44,
-              12
-            ]
-          ],
-          "level": 1
-        }
-      ],
-      "level": 1,
-      "position": [
-        [
-          44,
-          0
-        ],
-        [
-          48,
-          24
-        ]
-      ],
-      "children": [
-        {
-          "tokens": [
-            {
-              "kind": "Greater",
-              "len": 1,
-              "content": ">",
-              "position": [
-                [
-                  45,
-                  4
-                ],
-                [
-                  45,
-                  5
-                ]
-              ],
-              "level": 2
-            }
-          ],
-          "level": 2,
-          "position": [
-            [
-              45,
-              4
-            ],
-            [
-              48,
-              24
-            ]
-          ],
-          "children": [
-            {
-              "tokens": [
-                {
-                  "kind": "Exclamation",
-                  "len": 1,
-                  "content": "!",
-                  "position": [
-                    [
-                      46,
-                      8
-                    ],
-                    [
-                      46,
-                      9
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": {
-                    "Identifier": "options"
-                  },
-                  "len": 7,
-                  "content": "options",
-                  "position": [
-                    [
-                      46,
-                      9
-                    ],
-                    [
-                      46,
-                      16
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": "Colon",
-                  "len": 1,
-                  "content": ":",
-                  "position": [
-                    [
-                      46,
-                      16
-                    ],
-                    [
-                      46,
-                      17
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": "At",
-                  "len": 1,
-                  "content": "@",
-                  "position": [
-                    [
-                      46,
-                      17
-                    ],
-                    [
-                      46,
-                      18
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": {
-                    "Identifier": "resources"
-                  },
-                  "len": 9,
-                  "content": "resources",
-                  "position": [
-                    [
-                      46,
-                      18
-                    ],
-                    [
-                      46,
-                      27
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": "Dot",
-                  "len": 1,
-                  "content": ".",
-                  "position": [
-                    [
-                      46,
-                      27
-                    ],
-                    [
-                      46,
-                      28
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": {
-                    "Identifier": "foodRestrictions"
-                  },
-                  "len": 16,
-                  "content": "foodRestrictions",
-                  "position": [
-                    [
-                      46,
-                      28
-                    ],
-                    [
-                      46,
-                      44
-                    ]
-                  ],
-                  "level": 3
-                }
-              ],
-              "level": 3,
-              "position": [
-                [
-                  46,
-                  8
-                ],
-                [
-                  46,
-                  44
-                ]
-              ],
-              "children": []
-            },
-            {
-              "tokens": [
-                {
-                  "kind": "Exclamation",
-                  "len": 1,
-                  "content": "!",
-                  "position": [
-                    [
-                      47,
-                      8
-                    ],
-                    [
-                      47,
-                      9
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": {
-                    "Identifier": "required"
-                  },
-                  "len": 8,
-                  "content": "required",
-                  "position": [
-                    [
-                      47,
-                      9
-                    ],
-                    [
-                      47,
-                      17
-                    ]
-                  ],
-                  "level": 3
-                }
-              ],
-              "level": 3,
-              "position": [
-                [
-                  47,
-                  8
-                ],
-                [
-                  47,
-                  17
-                ]
-              ],
-              "children": []
-            },
-            {
-              "tokens": [
-                {
-                  "kind": "Exclamation",
-                  "len": 1,
-                  "content": "!",
-                  "position": [
-                    [
-                      48,
-                      8
-                    ],
-                    [
-                      48,
-                      9
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": {
-                    "Identifier": "select"
-                  },
-                  "len": 6,
-                  "content": "select",
-                  "position": [
-                    [
-                      48,
-                      9
-                    ],
-                    [
-                      48,
-                      15
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": "Colon",
-                  "len": 1,
-                  "content": ":",
-                  "position": [
-                    [
-                      48,
-                      15
-                    ],
-                    [
-                      48,
-                      16
-                    ]
-                  ],
-                  "level": 3
-                },
-                {
-                  "kind": {
-                    "Identifier": "multiple"
-                  },
-                  "len": 8,
-                  "content": "multiple",
-                  "position": [
-                    [
-                      48,
-                      16
-                    ],
-                    [
-                      48,
+                      10,
                       24
                     ]
                   ],
                   "level": 3
-                }
-              ],
-              "level": 3,
-              "position": [
-                [
-                  48,
-                  8
-                ],
-                [
-                  48,
-                  24
-                ]
-              ],
-              "children": []
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "tokens": [
-        {
-          "kind": {
-            "Identifier": "preparation"
-          },
-          "len": 11,
-          "content": "preparation",
-          "position": [
-            [
-              49,
-              0
-            ],
-            [
-              49,
-              11
-            ]
-          ],
-          "level": 1
-        }
-      ],
-      "level": 1,
-      "position": [
-        [
-          49,
-          0
-        ],
-        [
-          64,
-          36
-        ]
-      ],
-      "children": [
-        {
-          "tokens": [
-            {
-              "kind": "Plus",
-              "len": 1,
-              "content": "+",
-              "position": [
-                [
-                  50,
-                  4
-                ],
-                [
-                  50,
-                  5
-                ]
-              ],
-              "level": 2
-            },
-            {
-              "kind": "Greater",
-              "len": 1,
-              "content": ">",
-              "position": [
-                [
-                  50,
-                  5
-                ],
-                [
-                  50,
-                  6
-                ]
-              ],
-              "level": 2
-            }
-          ],
-          "level": 2,
-          "position": [
-            [
-              50,
-              4
-            ],
-            [
-              64,
-              36
-            ]
-          ],
-          "children": [
-            {
-              "tokens": [
+                },
                 {
                   "kind": {
-                    "Identifier": "preparationSteps"
+                    "ContentBlock": "Name"
                   },
-                  "len": 16,
-                  "content": "preparationSteps",
                   "position": [
                     [
-                      51,
-                      8
+                      10,
+                      24
                     ],
                     [
-                      51,
-                      24
+                      10,
+                      30
                     ]
                   ],
                   "level": 3
@@ -2940,12 +448,650 @@ expression: tree
               "level": 3,
               "position": [
                 [
-                  51,
-                  8
+                  10,
+                  9
                 ],
                 [
-                  64,
-                  36
+                  13,
+                  28
+                ]
+              ],
+              "children": [
+                {
+                  "tokens": [
+                    {
+                      "kind": "Exclamation",
+                      "position": [
+                        [
+                          11,
+                          13
+                        ],
+                        [
+                          11,
+                          14
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "Identifier": "required"
+                      },
+                      "position": [
+                        [
+                          11,
+                          14
+                        ],
+                        [
+                          11,
+                          22
+                        ]
+                      ],
+                      "level": 4
+                    }
+                  ],
+                  "level": 4,
+                  "position": [
+                    [
+                      11,
+                      13
+                    ],
+                    [
+                      11,
+                      22
+                    ]
+                  ],
+                  "children": []
+                },
+                {
+                  "tokens": [
+                    {
+                      "kind": "Exclamation",
+                      "position": [
+                        [
+                          12,
+                          13
+                        ],
+                        [
+                          12,
+                          14
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "Identifier": "text"
+                      },
+                      "position": [
+                        [
+                          12,
+                          14
+                        ],
+                        [
+                          12,
+                          18
+                        ]
+                      ],
+                      "level": 4
+                    }
+                  ],
+                  "level": 4,
+                  "position": [
+                    [
+                      12,
+                      13
+                    ],
+                    [
+                      12,
+                      18
+                    ]
+                  ],
+                  "children": []
+                },
+                {
+                  "tokens": [
+                    {
+                      "kind": "Exclamation",
+                      "position": [
+                        [
+                          13,
+                          13
+                        ],
+                        [
+                          13,
+                          14
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "Identifier": "maxLength"
+                      },
+                      "position": [
+                        [
+                          13,
+                          14
+                        ],
+                        [
+                          13,
+                          23
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": "Colon",
+                      "position": [
+                        [
+                          13,
+                          23
+                        ],
+                        [
+                          13,
+                          24
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": "Equals",
+                      "position": [
+                        [
+                          13,
+                          24
+                        ],
+                        [
+                          13,
+                          25
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "IntegerLiteral": 100
+                      },
+                      "position": [
+                        [
+                          13,
+                          25
+                        ],
+                        [
+                          13,
+                          28
+                        ]
+                      ],
+                      "level": 4
+                    }
+                  ],
+                  "level": 4,
+                  "position": [
+                    [
+                      13,
+                      13
+                    ],
+                    [
+                      13,
+                      28
+                    ]
+                  ],
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tokens": [
+            {
+              "kind": {
+                "Identifier": "pictures"
+              },
+              "position": [
+                [
+                  14,
+                  5
+                ],
+                [
+                  14,
+                  13
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              14,
+              5
+            ],
+            [
+              17,
+              25
+            ]
+          ],
+          "children": [
+            {
+              "tokens": [
+                {
+                  "kind": "Plus",
+                  "position": [
+                    [
+                      15,
+                      9
+                    ],
+                    [
+                      15,
+                      10
+                    ]
+                  ],
+                  "level": 3
+                },
+                {
+                  "kind": "Greater",
+                  "position": [
+                    [
+                      15,
+                      10
+                    ],
+                    [
+                      15,
+                      11
+                    ]
+                  ],
+                  "level": 3
+                },
+                {
+                  "kind": "Colon",
+                  "position": [
+                    [
+                      15,
+                      12
+                    ],
+                    [
+                      15,
+                      13
+                    ]
+                  ],
+                  "level": 3
+                },
+                {
+                  "kind": {
+                    "Identifier": "placeholder"
+                  },
+                  "position": [
+                    [
+                      15,
+                      13
+                    ],
+                    [
+                      15,
+                      24
+                    ]
+                  ],
+                  "level": 3
+                },
+                {
+                  "kind": "Equals",
+                  "position": [
+                    [
+                      15,
+                      24
+                    ],
+                    [
+                      15,
+                      25
+                    ]
+                  ],
+                  "level": 3
+                },
+                {
+                  "kind": "At",
+                  "position": [
+                    [
+                      15,
+                      25
+                    ],
+                    [
+                      15,
+                      26
+                    ]
+                  ],
+                  "level": 3
+                },
+                {
+                  "kind": {
+                    "Identifier": "resources"
+                  },
+                  "position": [
+                    [
+                      15,
+                      26
+                    ],
+                    [
+                      15,
+                      35
+                    ]
+                  ],
+                  "level": 3
+                },
+                {
+                  "kind": "Dot",
+                  "position": [
+                    [
+                      15,
+                      35
+                    ],
+                    [
+                      15,
+                      36
+                    ]
+                  ],
+                  "level": 3
+                },
+                {
+                  "kind": {
+                    "Identifier": "pictureLabel"
+                  },
+                  "position": [
+                    [
+                      15,
+                      36
+                    ],
+                    [
+                      15,
+                      48
+                    ]
+                  ],
+                  "level": 3
+                }
+              ],
+              "level": 3,
+              "position": [
+                [
+                  15,
+                  9
+                ],
+                [
+                  17,
+                  25
+                ]
+              ],
+              "children": [
+                {
+                  "tokens": [
+                    {
+                      "kind": "Exclamation",
+                      "position": [
+                        [
+                          16,
+                          13
+                        ],
+                        [
+                          16,
+                          14
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "Identifier": "file"
+                      },
+                      "position": [
+                        [
+                          16,
+                          14
+                        ],
+                        [
+                          16,
+                          18
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": "Colon",
+                      "position": [
+                        [
+                          16,
+                          18
+                        ],
+                        [
+                          16,
+                          19
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "Identifier": "type"
+                      },
+                      "position": [
+                        [
+                          16,
+                          19
+                        ],
+                        [
+                          16,
+                          23
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": "Equals",
+                      "position": [
+                        [
+                          16,
+                          23
+                        ],
+                        [
+                          16,
+                          24
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "Identifier": "image"
+                      },
+                      "position": [
+                        [
+                          16,
+                          24
+                        ],
+                        [
+                          16,
+                          29
+                        ]
+                      ],
+                      "level": 4
+                    }
+                  ],
+                  "level": 4,
+                  "position": [
+                    [
+                      16,
+                      13
+                    ],
+                    [
+                      16,
+                      29
+                    ]
+                  ],
+                  "children": []
+                },
+                {
+                  "tokens": [
+                    {
+                      "kind": "Exclamation",
+                      "position": [
+                        [
+                          17,
+                          13
+                        ],
+                        [
+                          17,
+                          14
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "Identifier": "minCount"
+                      },
+                      "position": [
+                        [
+                          17,
+                          14
+                        ],
+                        [
+                          17,
+                          22
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": "Colon",
+                      "position": [
+                        [
+                          17,
+                          22
+                        ],
+                        [
+                          17,
+                          23
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": "Equals",
+                      "position": [
+                        [
+                          17,
+                          23
+                        ],
+                        [
+                          17,
+                          24
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "IntegerLiteral": 1
+                      },
+                      "position": [
+                        [
+                          17,
+                          24
+                        ],
+                        [
+                          17,
+                          25
+                        ]
+                      ],
+                      "level": 4
+                    }
+                  ],
+                  "level": 4,
+                  "position": [
+                    [
+                      17,
+                      13
+                    ],
+                    [
+                      17,
+                      25
+                    ]
+                  ],
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tokens": [
+            {
+              "kind": {
+                "Identifier": "ingredients"
+              },
+              "position": [
+                [
+                  18,
+                  5
+                ],
+                [
+                  18,
+                  16
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              18,
+              5
+            ],
+            [
+              30,
+              40
+            ]
+          ],
+          "children": [
+            {
+              "tokens": [
+                {
+                  "kind": "Plus",
+                  "position": [
+                    [
+                      19,
+                      9
+                    ],
+                    [
+                      19,
+                      10
+                    ]
+                  ],
+                  "level": 3
+                },
+                {
+                  "kind": "Greater",
+                  "position": [
+                    [
+                      19,
+                      10
+                    ],
+                    [
+                      19,
+                      11
+                    ]
+                  ],
+                  "level": 3
+                }
+              ],
+              "level": 3,
+              "position": [
+                [
+                  19,
+                  9
+                ],
+                [
+                  30,
+                  40
                 ]
               ],
               "children": [
@@ -2953,17 +1099,15 @@ expression: tree
                   "tokens": [
                     {
                       "kind": {
-                        "Identifier": "description"
+                        "Identifier": "ingredient"
                       },
-                      "len": 11,
-                      "content": "description",
                       "position": [
                         [
-                          52,
-                          12
+                          20,
+                          13
                         ],
                         [
-                          52,
+                          20,
                           23
                         ]
                       ],
@@ -2973,97 +1117,29 @@ expression: tree
                   "level": 4,
                   "position": [
                     [
-                      52,
-                      12
+                      20,
+                      13
                     ],
                     [
-                      60,
-                      25
+                      30,
+                      40
                     ]
                   ],
                   "children": [
                     {
                       "tokens": [
                         {
-                          "kind": "HashPound",
-                          "len": 1,
-                          "content": "#",
-                          "position": [
-                            [
-                              53,
-                              16
-                            ],
-                            [
-                              53,
-                              17
-                            ]
-                          ],
-                          "level": 5
-                        },
-                        {
                           "kind": {
-                            "Identifier": "ln"
+                            "Identifier": "name"
                           },
-                          "len": 2,
-                          "content": "ln",
                           "position": [
                             [
-                              53,
+                              21,
                               17
                             ],
                             [
-                              53,
-                              19
-                            ]
-                          ],
-                          "level": 5
-                        },
-                        {
-                          "kind": "Colon",
-                          "len": 1,
-                          "content": ":",
-                          "position": [
-                            [
-                              53,
-                              19
-                            ],
-                            [
-                              53,
-                              20
-                            ]
-                          ],
-                          "level": 5
-                        },
-                        {
-                          "kind": {
-                            "Identifier": "en"
-                          },
-                          "len": 2,
-                          "content": "en",
-                          "position": [
-                            [
-                              53,
-                              20
-                            ],
-                            [
-                              53,
-                              22
-                            ]
-                          ],
-                          "level": 5
-                        },
-                        {
-                          "kind": "ContentBlock",
-                          "len": 64,
-                          "content": "\n                        Step description\n                    ",
-                          "position": [
-                            [
-                              53,
-                              22
-                            ],
-                            [
-                              55,
-                              17
+                              21,
+                              21
                             ]
                           ],
                           "level": 5
@@ -3072,211 +1148,27 @@ expression: tree
                       "level": 5,
                       "position": [
                         [
-                          53,
-                          16
-                        ],
-                        [
-                          55,
-                          17
-                        ]
-                      ],
-                      "children": []
-                    },
-                    {
-                      "tokens": [
-                        {
-                          "kind": "HashPound",
-                          "len": 1,
-                          "content": "#",
-                          "position": [
-                            [
-                              56,
-                              16
-                            ],
-                            [
-                              56,
-                              17
-                            ]
-                          ],
-                          "level": 5
-                        },
-                        {
-                          "kind": {
-                            "Identifier": "ln"
-                          },
-                          "len": 2,
-                          "content": "ln",
-                          "position": [
-                            [
-                              56,
-                              17
-                            ],
-                            [
-                              56,
-                              19
-                            ]
-                          ],
-                          "level": 5
-                        },
-                        {
-                          "kind": "Colon",
-                          "len": 1,
-                          "content": ":",
-                          "position": [
-                            [
-                              56,
-                              19
-                            ],
-                            [
-                              56,
-                              20
-                            ]
-                          ],
-                          "level": 5
-                        },
-                        {
-                          "kind": {
-                            "Identifier": "ru"
-                          },
-                          "len": 2,
-                          "content": "ru",
-                          "position": [
-                            [
-                              56,
-                              20
-                            ],
-                            [
-                              56,
-                              22
-                            ]
-                          ],
-                          "level": 5
-                        },
-                        {
-                          "kind": "ContentBlock",
-                          "len": 73,
-                          "content": "\n                        Описание шага\n                    ",
-                          "position": [
-                            [
-                              56,
-                              22
-                            ],
-                            [
-                              58,
-                              17
-                            ]
-                          ],
-                          "level": 5
-                        }
-                      ],
-                      "level": 5,
-                      "position": [
-                        [
-                          56,
-                          16
-                        ],
-                        [
-                          58,
-                          17
-                        ]
-                      ],
-                      "children": []
-                    },
-                    {
-                      "tokens": [
-                        {
-                          "kind": "Coma",
-                          "len": 1,
-                          "content": ",",
-                          "position": [
-                            [
-                              58,
-                              17
-                            ],
-                            [
-                              58,
-                              18
-                            ]
-                          ],
-                          "level": 5
-                        }
-                      ],
-                      "level": 5,
-                      "position": [
-                        [
-                          58,
+                          21,
                           17
                         ],
                         [
-                          58,
-                          18
-                        ]
-                      ],
-                      "children": []
-                    },
-                    {
-                      "tokens": [
-                        {
-                          "kind": "Greater",
-                          "len": 1,
-                          "content": ">",
-                          "position": [
-                            [
-                              59,
-                              16
-                            ],
-                            [
-                              59,
-                              17
-                            ]
-                          ],
-                          "level": 5
-                        }
-                      ],
-                      "level": 5,
-                      "position": [
-                        [
-                          59,
-                          16
-                        ],
-                        [
-                          60,
-                          25
+                          23,
+                          30
                         ]
                       ],
                       "children": [
                         {
                           "tokens": [
                             {
-                              "kind": "Exclamation",
-                              "len": 1,
-                              "content": "!",
+                              "kind": "Greater",
                               "position": [
                                 [
-                                  60,
-                                  20
-                                ],
-                                [
-                                  60,
-                                  21
-                                ]
-                              ],
-                              "level": 6
-                            },
-                            {
-                              "kind": {
-                                "Identifier": "text"
-                              },
-                              "len": 4,
-                              "content": "text",
-                              "position": [
-                                [
-                                  60,
+                                  22,
                                   21
                                 ],
                                 [
-                                  60,
-                                  25
+                                  22,
+                                  22
                                 ]
                               ],
                               "level": 6
@@ -3285,36 +1177,483 @@ expression: tree
                           "level": 6,
                           "position": [
                             [
-                              60,
-                              20
+                              22,
+                              21
                             ],
                             [
-                              60,
-                              25
+                              23,
+                              30
                             ]
                           ],
-                          "children": []
+                          "children": [
+                            {
+                              "tokens": [
+                                {
+                                  "kind": "Exclamation",
+                                  "position": [
+                                    [
+                                      23,
+                                      25
+                                    ],
+                                    [
+                                      23,
+                                      26
+                                    ]
+                                  ],
+                                  "level": 7
+                                },
+                                {
+                                  "kind": {
+                                    "Identifier": "text"
+                                  },
+                                  "position": [
+                                    [
+                                      23,
+                                      26
+                                    ],
+                                    [
+                                      23,
+                                      30
+                                    ]
+                                  ],
+                                  "level": 7
+                                }
+                              ],
+                              "level": 7,
+                              "position": [
+                                [
+                                  23,
+                                  25
+                                ],
+                                [
+                                  23,
+                                  30
+                                ]
+                              ],
+                              "children": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tokens": [
+                        {
+                          "kind": {
+                            "Identifier": "amount"
+                          },
+                          "position": [
+                            [
+                              24,
+                              17
+                            ],
+                            [
+                              24,
+                              23
+                            ]
+                          ],
+                          "level": 5
+                        }
+                      ],
+                      "level": 5,
+                      "position": [
+                        [
+                          24,
+                          17
+                        ],
+                        [
+                          26,
+                          32
+                        ]
+                      ],
+                      "children": [
+                        {
+                          "tokens": [
+                            {
+                              "kind": "Greater",
+                              "position": [
+                                [
+                                  25,
+                                  21
+                                ],
+                                [
+                                  25,
+                                  22
+                                ]
+                              ],
+                              "level": 6
+                            }
+                          ],
+                          "level": 6,
+                          "position": [
+                            [
+                              25,
+                              21
+                            ],
+                            [
+                              26,
+                              32
+                            ]
+                          ],
+                          "children": [
+                            {
+                              "tokens": [
+                                {
+                                  "kind": "Exclamation",
+                                  "position": [
+                                    [
+                                      26,
+                                      25
+                                    ],
+                                    [
+                                      26,
+                                      26
+                                    ]
+                                  ],
+                                  "level": 7
+                                },
+                                {
+                                  "kind": {
+                                    "Identifier": "number"
+                                  },
+                                  "position": [
+                                    [
+                                      26,
+                                      26
+                                    ],
+                                    [
+                                      26,
+                                      32
+                                    ]
+                                  ],
+                                  "level": 7
+                                }
+                              ],
+                              "level": 7,
+                              "position": [
+                                [
+                                  26,
+                                  25
+                                ],
+                                [
+                                  26,
+                                  32
+                                ]
+                              ],
+                              "children": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tokens": [
+                        {
+                          "kind": {
+                            "Identifier": "unit"
+                          },
+                          "position": [
+                            [
+                              27,
+                              17
+                            ],
+                            [
+                              27,
+                              21
+                            ]
+                          ],
+                          "level": 5
+                        }
+                      ],
+                      "level": 5,
+                      "position": [
+                        [
+                          27,
+                          17
+                        ],
+                        [
+                          30,
+                          40
+                        ]
+                      ],
+                      "children": [
+                        {
+                          "tokens": [
+                            {
+                              "kind": "Greater",
+                              "position": [
+                                [
+                                  28,
+                                  21
+                                ],
+                                [
+                                  28,
+                                  22
+                                ]
+                              ],
+                              "level": 6
+                            }
+                          ],
+                          "level": 6,
+                          "position": [
+                            [
+                              28,
+                              21
+                            ],
+                            [
+                              30,
+                              40
+                            ]
+                          ],
+                          "children": [
+                            {
+                              "tokens": [
+                                {
+                                  "kind": "Exclamation",
+                                  "position": [
+                                    [
+                                      29,
+                                      25
+                                    ],
+                                    [
+                                      29,
+                                      26
+                                    ]
+                                  ],
+                                  "level": 7
+                                },
+                                {
+                                  "kind": {
+                                    "Identifier": "text"
+                                  },
+                                  "position": [
+                                    [
+                                      29,
+                                      26
+                                    ],
+                                    [
+                                      29,
+                                      30
+                                    ]
+                                  ],
+                                  "level": 7
+                                }
+                              ],
+                              "level": 7,
+                              "position": [
+                                [
+                                  29,
+                                  25
+                                ],
+                                [
+                                  29,
+                                  30
+                                ]
+                              ],
+                              "children": []
+                            },
+                            {
+                              "tokens": [
+                                {
+                                  "kind": "Exclamation",
+                                  "position": [
+                                    [
+                                      30,
+                                      25
+                                    ],
+                                    [
+                                      30,
+                                      26
+                                    ]
+                                  ],
+                                  "level": 7
+                                },
+                                {
+                                  "kind": {
+                                    "Identifier": "maxLength"
+                                  },
+                                  "position": [
+                                    [
+                                      30,
+                                      26
+                                    ],
+                                    [
+                                      30,
+                                      35
+                                    ]
+                                  ],
+                                  "level": 7
+                                },
+                                {
+                                  "kind": "Colon",
+                                  "position": [
+                                    [
+                                      30,
+                                      35
+                                    ],
+                                    [
+                                      30,
+                                      36
+                                    ]
+                                  ],
+                                  "level": 7
+                                },
+                                {
+                                  "kind": "Equals",
+                                  "position": [
+                                    [
+                                      30,
+                                      36
+                                    ],
+                                    [
+                                      30,
+                                      37
+                                    ]
+                                  ],
+                                  "level": 7
+                                },
+                                {
+                                  "kind": {
+                                    "IntegerLiteral": 100
+                                  },
+                                  "position": [
+                                    [
+                                      30,
+                                      37
+                                    ],
+                                    [
+                                      30,
+                                      40
+                                    ]
+                                  ],
+                                  "level": 7
+                                }
+                              ],
+                              "level": 7,
+                              "position": [
+                                [
+                                  30,
+                                  25
+                                ],
+                                [
+                                  30,
+                                  40
+                                ]
+                              ],
+                              "children": []
+                            }
+                          ]
                         }
                       ]
                     }
                   ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tokens": [
+            {
+              "kind": {
+                "Identifier": "tools"
+              },
+              "position": [
+                [
+                  31,
+                  5
+                ],
+                [
+                  31,
+                  10
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              31,
+              5
+            ],
+            [
+              33,
+              18
+            ]
+          ],
+          "children": [
+            {
+              "tokens": [
+                {
+                  "kind": "Plus",
+                  "position": [
+                    [
+                      32,
+                      9
+                    ],
+                    [
+                      32,
+                      10
+                    ]
+                  ],
+                  "level": 3
                 },
+                {
+                  "kind": "Greater",
+                  "position": [
+                    [
+                      32,
+                      10
+                    ],
+                    [
+                      32,
+                      11
+                    ]
+                  ],
+                  "level": 3
+                }
+              ],
+              "level": 3,
+              "position": [
+                [
+                  32,
+                  9
+                ],
+                [
+                  33,
+                  18
+                ]
+              ],
+              "children": [
                 {
                   "tokens": [
                     {
-                      "kind": {
-                        "Identifier": "picture"
-                      },
-                      "len": 7,
-                      "content": "picture",
+                      "kind": "Exclamation",
                       "position": [
                         [
-                          61,
-                          12
+                          33,
+                          13
                         ],
                         [
-                          61,
-                          19
+                          33,
+                          14
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "Identifier": "text"
+                      },
+                      "position": [
+                        [
+                          33,
+                          14
+                        ],
+                        [
+                          33,
+                          18
                         ]
                       ],
                       "level": 4
@@ -3323,97 +1662,1057 @@ expression: tree
                   "level": 4,
                   "position": [
                     [
-                      61,
-                      12
+                      33,
+                      13
+                    ],
+                    [
+                      33,
+                      18
+                    ]
+                  ],
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tokens": [
+            {
+              "kind": {
+                "Identifier": "kindOfMeal"
+              },
+              "position": [
+                [
+                  34,
+                  5
+                ],
+                [
+                  34,
+                  15
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              34,
+              5
+            ],
+            [
+              38,
+              27
+            ]
+          ],
+          "children": [
+            {
+              "tokens": [
+                {
+                  "kind": "Greater",
+                  "position": [
+                    [
+                      35,
+                      9
+                    ],
+                    [
+                      35,
+                      10
+                    ]
+                  ],
+                  "level": 3
+                }
+              ],
+              "level": 3,
+              "position": [
+                [
+                  35,
+                  9
+                ],
+                [
+                  38,
+                  27
+                ]
+              ],
+              "children": [
+                {
+                  "tokens": [
+                    {
+                      "kind": "Exclamation",
+                      "position": [
+                        [
+                          36,
+                          13
+                        ],
+                        [
+                          36,
+                          14
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "Identifier": "options"
+                      },
+                      "position": [
+                        [
+                          36,
+                          14
+                        ],
+                        [
+                          36,
+                          21
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": "Colon",
+                      "position": [
+                        [
+                          36,
+                          21
+                        ],
+                        [
+                          36,
+                          22
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": "At",
+                      "position": [
+                        [
+                          36,
+                          22
+                        ],
+                        [
+                          36,
+                          23
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "Identifier": "resources"
+                      },
+                      "position": [
+                        [
+                          36,
+                          23
+                        ],
+                        [
+                          36,
+                          32
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": "Dot",
+                      "position": [
+                        [
+                          36,
+                          32
+                        ],
+                        [
+                          36,
+                          33
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "Identifier": "mealsTypes"
+                      },
+                      "position": [
+                        [
+                          36,
+                          33
+                        ],
+                        [
+                          36,
+                          43
+                        ]
+                      ],
+                      "level": 4
+                    }
+                  ],
+                  "level": 4,
+                  "position": [
+                    [
+                      36,
+                      13
+                    ],
+                    [
+                      36,
+                      43
+                    ]
+                  ],
+                  "children": []
+                },
+                {
+                  "tokens": [
+                    {
+                      "kind": "Exclamation",
+                      "position": [
+                        [
+                          37,
+                          13
+                        ],
+                        [
+                          37,
+                          14
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "Identifier": "required"
+                      },
+                      "position": [
+                        [
+                          37,
+                          14
+                        ],
+                        [
+                          37,
+                          22
+                        ]
+                      ],
+                      "level": 4
+                    }
+                  ],
+                  "level": 4,
+                  "position": [
+                    [
+                      37,
+                      13
+                    ],
+                    [
+                      37,
+                      22
+                    ]
+                  ],
+                  "children": []
+                },
+                {
+                  "tokens": [
+                    {
+                      "kind": "Exclamation",
+                      "position": [
+                        [
+                          38,
+                          13
+                        ],
+                        [
+                          38,
+                          14
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "Identifier": "select"
+                      },
+                      "position": [
+                        [
+                          38,
+                          14
+                        ],
+                        [
+                          38,
+                          20
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": "Colon",
+                      "position": [
+                        [
+                          38,
+                          20
+                        ],
+                        [
+                          38,
+                          21
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "Identifier": "single"
+                      },
+                      "position": [
+                        [
+                          38,
+                          21
+                        ],
+                        [
+                          38,
+                          27
+                        ]
+                      ],
+                      "level": 4
+                    }
+                  ],
+                  "level": 4,
+                  "position": [
+                    [
+                      38,
+                      13
+                    ],
+                    [
+                      38,
+                      27
+                    ]
+                  ],
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tokens": [
+            {
+              "kind": {
+                "Identifier": "countryOfOrigin"
+              },
+              "position": [
+                [
+                  39,
+                  5
+                ],
+                [
+                  39,
+                  20
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              39,
+              5
+            ],
+            [
+              43,
+              27
+            ]
+          ],
+          "children": [
+            {
+              "tokens": [
+                {
+                  "kind": "Greater",
+                  "position": [
+                    [
+                      40,
+                      9
+                    ],
+                    [
+                      40,
+                      10
+                    ]
+                  ],
+                  "level": 3
+                }
+              ],
+              "level": 3,
+              "position": [
+                [
+                  40,
+                  9
+                ],
+                [
+                  43,
+                  27
+                ]
+              ],
+              "children": [
+                {
+                  "tokens": [
+                    {
+                      "kind": "Exclamation",
+                      "position": [
+                        [
+                          41,
+                          13
+                        ],
+                        [
+                          41,
+                          14
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "Identifier": "options"
+                      },
+                      "position": [
+                        [
+                          41,
+                          14
+                        ],
+                        [
+                          41,
+                          21
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": "Colon",
+                      "position": [
+                        [
+                          41,
+                          21
+                        ],
+                        [
+                          41,
+                          22
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": "At",
+                      "position": [
+                        [
+                          41,
+                          22
+                        ],
+                        [
+                          41,
+                          23
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "Identifier": "resources"
+                      },
+                      "position": [
+                        [
+                          41,
+                          23
+                        ],
+                        [
+                          41,
+                          32
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": "Dot",
+                      "position": [
+                        [
+                          41,
+                          32
+                        ],
+                        [
+                          41,
+                          33
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "Identifier": "countries"
+                      },
+                      "position": [
+                        [
+                          41,
+                          33
+                        ],
+                        [
+                          41,
+                          42
+                        ]
+                      ],
+                      "level": 4
+                    }
+                  ],
+                  "level": 4,
+                  "position": [
+                    [
+                      41,
+                      13
+                    ],
+                    [
+                      41,
+                      42
+                    ]
+                  ],
+                  "children": []
+                },
+                {
+                  "tokens": [
+                    {
+                      "kind": "Exclamation",
+                      "position": [
+                        [
+                          42,
+                          13
+                        ],
+                        [
+                          42,
+                          14
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "Identifier": "required"
+                      },
+                      "position": [
+                        [
+                          42,
+                          14
+                        ],
+                        [
+                          42,
+                          22
+                        ]
+                      ],
+                      "level": 4
+                    }
+                  ],
+                  "level": 4,
+                  "position": [
+                    [
+                      42,
+                      13
+                    ],
+                    [
+                      42,
+                      22
+                    ]
+                  ],
+                  "children": []
+                },
+                {
+                  "tokens": [
+                    {
+                      "kind": "Exclamation",
+                      "position": [
+                        [
+                          43,
+                          13
+                        ],
+                        [
+                          43,
+                          14
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "Identifier": "select"
+                      },
+                      "position": [
+                        [
+                          43,
+                          14
+                        ],
+                        [
+                          43,
+                          20
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": "Colon",
+                      "position": [
+                        [
+                          43,
+                          20
+                        ],
+                        [
+                          43,
+                          21
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "Identifier": "single"
+                      },
+                      "position": [
+                        [
+                          43,
+                          21
+                        ],
+                        [
+                          43,
+                          27
+                        ]
+                      ],
+                      "level": 4
+                    }
+                  ],
+                  "level": 4,
+                  "position": [
+                    [
+                      43,
+                      13
+                    ],
+                    [
+                      43,
+                      27
+                    ]
+                  ],
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tokens": [
+            {
+              "kind": {
+                "Identifier": "restrictions"
+              },
+              "position": [
+                [
+                  44,
+                  5
+                ],
+                [
+                  44,
+                  17
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              44,
+              5
+            ],
+            [
+              48,
+              29
+            ]
+          ],
+          "children": [
+            {
+              "tokens": [
+                {
+                  "kind": "Greater",
+                  "position": [
+                    [
+                      45,
+                      9
+                    ],
+                    [
+                      45,
+                      10
+                    ]
+                  ],
+                  "level": 3
+                }
+              ],
+              "level": 3,
+              "position": [
+                [
+                  45,
+                  9
+                ],
+                [
+                  48,
+                  29
+                ]
+              ],
+              "children": [
+                {
+                  "tokens": [
+                    {
+                      "kind": "Exclamation",
+                      "position": [
+                        [
+                          46,
+                          13
+                        ],
+                        [
+                          46,
+                          14
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "Identifier": "options"
+                      },
+                      "position": [
+                        [
+                          46,
+                          14
+                        ],
+                        [
+                          46,
+                          21
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": "Colon",
+                      "position": [
+                        [
+                          46,
+                          21
+                        ],
+                        [
+                          46,
+                          22
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": "At",
+                      "position": [
+                        [
+                          46,
+                          22
+                        ],
+                        [
+                          46,
+                          23
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "Identifier": "resources"
+                      },
+                      "position": [
+                        [
+                          46,
+                          23
+                        ],
+                        [
+                          46,
+                          32
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": "Dot",
+                      "position": [
+                        [
+                          46,
+                          32
+                        ],
+                        [
+                          46,
+                          33
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "Identifier": "foodRestrictions"
+                      },
+                      "position": [
+                        [
+                          46,
+                          33
+                        ],
+                        [
+                          46,
+                          49
+                        ]
+                      ],
+                      "level": 4
+                    }
+                  ],
+                  "level": 4,
+                  "position": [
+                    [
+                      46,
+                      13
+                    ],
+                    [
+                      46,
+                      49
+                    ]
+                  ],
+                  "children": []
+                },
+                {
+                  "tokens": [
+                    {
+                      "kind": "Exclamation",
+                      "position": [
+                        [
+                          47,
+                          13
+                        ],
+                        [
+                          47,
+                          14
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "Identifier": "required"
+                      },
+                      "position": [
+                        [
+                          47,
+                          14
+                        ],
+                        [
+                          47,
+                          22
+                        ]
+                      ],
+                      "level": 4
+                    }
+                  ],
+                  "level": 4,
+                  "position": [
+                    [
+                      47,
+                      13
+                    ],
+                    [
+                      47,
+                      22
+                    ]
+                  ],
+                  "children": []
+                },
+                {
+                  "tokens": [
+                    {
+                      "kind": "Exclamation",
+                      "position": [
+                        [
+                          48,
+                          13
+                        ],
+                        [
+                          48,
+                          14
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "Identifier": "select"
+                      },
+                      "position": [
+                        [
+                          48,
+                          14
+                        ],
+                        [
+                          48,
+                          20
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": "Colon",
+                      "position": [
+                        [
+                          48,
+                          20
+                        ],
+                        [
+                          48,
+                          21
+                        ]
+                      ],
+                      "level": 4
+                    },
+                    {
+                      "kind": {
+                        "Identifier": "multiple"
+                      },
+                      "position": [
+                        [
+                          48,
+                          21
+                        ],
+                        [
+                          48,
+                          29
+                        ]
+                      ],
+                      "level": 4
+                    }
+                  ],
+                  "level": 4,
+                  "position": [
+                    [
+                      48,
+                      13
+                    ],
+                    [
+                      48,
+                      29
+                    ]
+                  ],
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tokens": [
+            {
+              "kind": {
+                "Identifier": "preparation"
+              },
+              "position": [
+                [
+                  49,
+                  5
+                ],
+                [
+                  49,
+                  16
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              49,
+              5
+            ],
+            [
+              64,
+              41
+            ]
+          ],
+          "children": [
+            {
+              "tokens": [
+                {
+                  "kind": "Plus",
+                  "position": [
+                    [
+                      50,
+                      9
+                    ],
+                    [
+                      50,
+                      10
+                    ]
+                  ],
+                  "level": 3
+                },
+                {
+                  "kind": "Greater",
+                  "position": [
+                    [
+                      50,
+                      10
+                    ],
+                    [
+                      50,
+                      11
+                    ]
+                  ],
+                  "level": 3
+                }
+              ],
+              "level": 3,
+              "position": [
+                [
+                  50,
+                  9
+                ],
+                [
+                  64,
+                  41
+                ]
+              ],
+              "children": [
+                {
+                  "tokens": [
+                    {
+                      "kind": {
+                        "Identifier": "preparationSteps"
+                      },
+                      "position": [
+                        [
+                          51,
+                          13
+                        ],
+                        [
+                          51,
+                          29
+                        ]
+                      ],
+                      "level": 4
+                    }
+                  ],
+                  "level": 4,
+                  "position": [
+                    [
+                      51,
+                      13
                     ],
                     [
                       64,
-                      36
+                      41
                     ]
                   ],
                   "children": [
                     {
                       "tokens": [
                         {
-                          "kind": "At",
-                          "len": 1,
-                          "content": "@",
-                          "position": [
-                            [
-                              62,
-                              16
-                            ],
-                            [
-                              62,
-                              17
-                            ]
-                          ],
-                          "level": 5
-                        },
-                        {
                           "kind": {
-                            "Identifier": "resources"
+                            "Identifier": "description"
                           },
-                          "len": 9,
-                          "content": "resources",
                           "position": [
                             [
-                              62,
+                              52,
                               17
                             ],
                             [
-                              62,
-                              26
-                            ]
-                          ],
-                          "level": 5
-                        },
-                        {
-                          "kind": "Dot",
-                          "len": 1,
-                          "content": ".",
-                          "position": [
-                            [
-                              62,
-                              26
-                            ],
-                            [
-                              62,
-                              27
-                            ]
-                          ],
-                          "level": 5
-                        },
-                        {
-                          "kind": {
-                            "Identifier": "pictureLabel"
-                          },
-                          "len": 12,
-                          "content": "pictureLabel",
-                          "position": [
-                            [
-                              62,
-                              27
-                            ],
-                            [
-                              62,
-                              39
-                            ]
-                          ],
-                          "level": 5
-                        },
-                        {
-                          "kind": "Coma",
-                          "len": 1,
-                          "content": ",",
-                          "position": [
-                            [
-                              62,
-                              39
-                            ],
-                            [
-                              62,
-                              40
+                              52,
+                              28
                             ]
                           ],
                           "level": 5
@@ -3422,147 +2721,89 @@ expression: tree
                       "level": 5,
                       "position": [
                         [
-                          62,
-                          16
+                          52,
+                          17
                         ],
                         [
-                          62,
-                          40
-                        ]
-                      ],
-                      "children": []
-                    },
-                    {
-                      "tokens": [
-                        {
-                          "kind": "Greater",
-                          "len": 1,
-                          "content": ">",
-                          "position": [
-                            [
-                              63,
-                              16
-                            ],
-                            [
-                              63,
-                              17
-                            ]
-                          ],
-                          "level": 5
-                        }
-                      ],
-                      "level": 5,
-                      "position": [
-                        [
-                          63,
-                          16
-                        ],
-                        [
-                          64,
-                          36
+                          60,
+                          30
                         ]
                       ],
                       "children": [
                         {
                           "tokens": [
                             {
-                              "kind": "Exclamation",
-                              "len": 1,
-                              "content": "!",
+                              "kind": "HashPound",
                               "position": [
                                 [
-                                  64,
-                                  20
+                                  53,
+                                  21
                                 ],
                                 [
-                                  64,
-                                  21
+                                  53,
+                                  22
                                 ]
                               ],
                               "level": 6
                             },
                             {
                               "kind": {
-                                "Identifier": "file"
+                                "Identifier": "ln"
                               },
-                              "len": 4,
-                              "content": "file",
                               "position": [
                                 [
-                                  64,
-                                  21
+                                  53,
+                                  22
                                 ],
                                 [
-                                  64,
-                                  25
+                                  53,
+                                  24
                                 ]
                               ],
                               "level": 6
                             },
                             {
                               "kind": "Colon",
-                              "len": 1,
-                              "content": ":",
                               "position": [
                                 [
-                                  64,
+                                  53,
+                                  24
+                                ],
+                                [
+                                  53,
+                                  25
+                                ]
+                              ],
+                              "level": 6
+                            },
+                            {
+                              "kind": {
+                                "Identifier": "en"
+                              },
+                              "position": [
+                                [
+                                  53,
                                   25
                                 ],
                                 [
-                                  64,
-                                  26
+                                  53,
+                                  27
                                 ]
                               ],
                               "level": 6
                             },
                             {
                               "kind": {
-                                "Identifier": "type"
+                                "ContentBlock": "Step description"
                               },
-                              "len": 4,
-                              "content": "type",
                               "position": [
                                 [
-                                  64,
-                                  26
+                                  53,
+                                  27
                                 ],
                                 [
-                                  64,
-                                  30
-                                ]
-                              ],
-                              "level": 6
-                            },
-                            {
-                              "kind": "Equals",
-                              "len": 1,
-                              "content": "=",
-                              "position": [
-                                [
-                                  64,
-                                  30
-                                ],
-                                [
-                                  64,
-                                  31
-                                ]
-                              ],
-                              "level": 6
-                            },
-                            {
-                              "kind": {
-                                "Identifier": "image"
-                              },
-                              "len": 5,
-                              "content": "image",
-                              "position": [
-                                [
-                                  64,
-                                  31
-                                ],
-                                [
-                                  64,
-                                  36
+                                  55,
+                                  22
                                 ]
                               ],
                               "level": 6
@@ -3571,15 +2812,474 @@ expression: tree
                           "level": 6,
                           "position": [
                             [
-                              64,
-                              20
+                              53,
+                              21
                             ],
                             [
-                              64,
-                              36
+                              55,
+                              22
                             ]
                           ],
                           "children": []
+                        },
+                        {
+                          "tokens": [
+                            {
+                              "kind": "HashPound",
+                              "position": [
+                                [
+                                  56,
+                                  21
+                                ],
+                                [
+                                  56,
+                                  22
+                                ]
+                              ],
+                              "level": 6
+                            },
+                            {
+                              "kind": {
+                                "Identifier": "ln"
+                              },
+                              "position": [
+                                [
+                                  56,
+                                  22
+                                ],
+                                [
+                                  56,
+                                  24
+                                ]
+                              ],
+                              "level": 6
+                            },
+                            {
+                              "kind": "Colon",
+                              "position": [
+                                [
+                                  56,
+                                  24
+                                ],
+                                [
+                                  56,
+                                  25
+                                ]
+                              ],
+                              "level": 6
+                            },
+                            {
+                              "kind": {
+                                "Identifier": "ru"
+                              },
+                              "position": [
+                                [
+                                  56,
+                                  25
+                                ],
+                                [
+                                  56,
+                                  27
+                                ]
+                              ],
+                              "level": 6
+                            },
+                            {
+                              "kind": {
+                                "ContentBlock": "Описание шага"
+                              },
+                              "position": [
+                                [
+                                  56,
+                                  27
+                                ],
+                                [
+                                  58,
+                                  22
+                                ]
+                              ],
+                              "level": 6
+                            }
+                          ],
+                          "level": 6,
+                          "position": [
+                            [
+                              56,
+                              21
+                            ],
+                            [
+                              58,
+                              22
+                            ]
+                          ],
+                          "children": []
+                        },
+                        {
+                          "tokens": [
+                            {
+                              "kind": "Coma",
+                              "position": [
+                                [
+                                  58,
+                                  22
+                                ],
+                                [
+                                  58,
+                                  23
+                                ]
+                              ],
+                              "level": 6
+                            }
+                          ],
+                          "level": 6,
+                          "position": [
+                            [
+                              58,
+                              22
+                            ],
+                            [
+                              58,
+                              23
+                            ]
+                          ],
+                          "children": []
+                        },
+                        {
+                          "tokens": [
+                            {
+                              "kind": "Greater",
+                              "position": [
+                                [
+                                  59,
+                                  21
+                                ],
+                                [
+                                  59,
+                                  22
+                                ]
+                              ],
+                              "level": 6
+                            }
+                          ],
+                          "level": 6,
+                          "position": [
+                            [
+                              59,
+                              21
+                            ],
+                            [
+                              60,
+                              30
+                            ]
+                          ],
+                          "children": [
+                            {
+                              "tokens": [
+                                {
+                                  "kind": "Exclamation",
+                                  "position": [
+                                    [
+                                      60,
+                                      25
+                                    ],
+                                    [
+                                      60,
+                                      26
+                                    ]
+                                  ],
+                                  "level": 7
+                                },
+                                {
+                                  "kind": {
+                                    "Identifier": "text"
+                                  },
+                                  "position": [
+                                    [
+                                      60,
+                                      26
+                                    ],
+                                    [
+                                      60,
+                                      30
+                                    ]
+                                  ],
+                                  "level": 7
+                                }
+                              ],
+                              "level": 7,
+                              "position": [
+                                [
+                                  60,
+                                  25
+                                ],
+                                [
+                                  60,
+                                  30
+                                ]
+                              ],
+                              "children": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tokens": [
+                        {
+                          "kind": {
+                            "Identifier": "picture"
+                          },
+                          "position": [
+                            [
+                              61,
+                              17
+                            ],
+                            [
+                              61,
+                              24
+                            ]
+                          ],
+                          "level": 5
+                        }
+                      ],
+                      "level": 5,
+                      "position": [
+                        [
+                          61,
+                          17
+                        ],
+                        [
+                          64,
+                          41
+                        ]
+                      ],
+                      "children": [
+                        {
+                          "tokens": [
+                            {
+                              "kind": "At",
+                              "position": [
+                                [
+                                  62,
+                                  21
+                                ],
+                                [
+                                  62,
+                                  22
+                                ]
+                              ],
+                              "level": 6
+                            },
+                            {
+                              "kind": {
+                                "Identifier": "resources"
+                              },
+                              "position": [
+                                [
+                                  62,
+                                  22
+                                ],
+                                [
+                                  62,
+                                  31
+                                ]
+                              ],
+                              "level": 6
+                            },
+                            {
+                              "kind": "Dot",
+                              "position": [
+                                [
+                                  62,
+                                  31
+                                ],
+                                [
+                                  62,
+                                  32
+                                ]
+                              ],
+                              "level": 6
+                            },
+                            {
+                              "kind": {
+                                "Identifier": "pictureLabel"
+                              },
+                              "position": [
+                                [
+                                  62,
+                                  32
+                                ],
+                                [
+                                  62,
+                                  44
+                                ]
+                              ],
+                              "level": 6
+                            },
+                            {
+                              "kind": "Coma",
+                              "position": [
+                                [
+                                  62,
+                                  44
+                                ],
+                                [
+                                  62,
+                                  45
+                                ]
+                              ],
+                              "level": 6
+                            }
+                          ],
+                          "level": 6,
+                          "position": [
+                            [
+                              62,
+                              21
+                            ],
+                            [
+                              62,
+                              45
+                            ]
+                          ],
+                          "children": []
+                        },
+                        {
+                          "tokens": [
+                            {
+                              "kind": "Greater",
+                              "position": [
+                                [
+                                  63,
+                                  21
+                                ],
+                                [
+                                  63,
+                                  22
+                                ]
+                              ],
+                              "level": 6
+                            }
+                          ],
+                          "level": 6,
+                          "position": [
+                            [
+                              63,
+                              21
+                            ],
+                            [
+                              64,
+                              41
+                            ]
+                          ],
+                          "children": [
+                            {
+                              "tokens": [
+                                {
+                                  "kind": "Exclamation",
+                                  "position": [
+                                    [
+                                      64,
+                                      25
+                                    ],
+                                    [
+                                      64,
+                                      26
+                                    ]
+                                  ],
+                                  "level": 7
+                                },
+                                {
+                                  "kind": {
+                                    "Identifier": "file"
+                                  },
+                                  "position": [
+                                    [
+                                      64,
+                                      26
+                                    ],
+                                    [
+                                      64,
+                                      30
+                                    ]
+                                  ],
+                                  "level": 7
+                                },
+                                {
+                                  "kind": "Colon",
+                                  "position": [
+                                    [
+                                      64,
+                                      30
+                                    ],
+                                    [
+                                      64,
+                                      31
+                                    ]
+                                  ],
+                                  "level": 7
+                                },
+                                {
+                                  "kind": {
+                                    "Identifier": "type"
+                                  },
+                                  "position": [
+                                    [
+                                      64,
+                                      31
+                                    ],
+                                    [
+                                      64,
+                                      35
+                                    ]
+                                  ],
+                                  "level": 7
+                                },
+                                {
+                                  "kind": "Equals",
+                                  "position": [
+                                    [
+                                      64,
+                                      35
+                                    ],
+                                    [
+                                      64,
+                                      36
+                                    ]
+                                  ],
+                                  "level": 7
+                                },
+                                {
+                                  "kind": {
+                                    "Identifier": "image"
+                                  },
+                                  "position": [
+                                    [
+                                      64,
+                                      36
+                                    ],
+                                    [
+                                      64,
+                                      41
+                                    ]
+                                  ],
+                                  "level": 7
+                                }
+                              ],
+                              "level": 7,
+                              "position": [
+                                [
+                                  64,
+                                  25
+                                ],
+                                [
+                                  64,
+                                  41
+                                ]
+                              ],
+                              "children": []
+                            }
+                          ]
                         }
                       ]
                     }

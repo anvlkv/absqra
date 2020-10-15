@@ -11,9 +11,575 @@ expression: tree
       0
     ],
     [
-      0,
-      0
+      13,
+      7
     ]
   ],
-  "children": []
+  "children": [
+    {
+      "tokens": [
+        {
+          "kind": "Greater",
+          "position": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "level": 1
+        },
+        {
+          "kind": {
+            "Comment": [
+              " simply a text input",
+              false
+            ]
+          },
+          "position": [
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              25
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          25
+        ]
+      ],
+      "children": []
+    },
+    {
+      "tokens": [
+        {
+          "kind": "Plus",
+          "position": [
+            [
+              2,
+              1
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "level": 1
+        },
+        {
+          "kind": "Greater",
+          "position": [
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          "level": 1
+        },
+        {
+          "kind": {
+            "Comment": [
+              " simply an array input",
+              false
+            ]
+          },
+          "position": [
+            [
+              2,
+              4
+            ],
+            [
+              2,
+              28
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          28
+        ]
+      ],
+      "children": []
+    },
+    {
+      "tokens": [
+        {
+          "kind": "Greater",
+          "position": [
+            [
+              3,
+              1
+            ],
+            [
+              3,
+              2
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          3,
+          1
+        ],
+        [
+          5,
+          31
+        ]
+      ],
+      "children": [
+        {
+          "tokens": [
+            {
+              "kind": "Exclamation",
+              "position": [
+                [
+                  4,
+                  5
+                ],
+                [
+                  4,
+                  6
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "type"
+              },
+              "position": [
+                [
+                  4,
+                  6
+                ],
+                [
+                  4,
+                  10
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "Colon",
+              "position": [
+                [
+                  4,
+                  10
+                ],
+                [
+                  4,
+                  11
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "number"
+              },
+              "position": [
+                [
+                  4,
+                  11
+                ],
+                [
+                  4,
+                  17
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Comment": [
+                  " typed input",
+                  false
+                ]
+              },
+              "position": [
+                [
+                  4,
+                  18
+                ],
+                [
+                  4,
+                  32
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              4,
+              5
+            ],
+            [
+              4,
+              32
+            ]
+          ],
+          "children": []
+        },
+        {
+          "tokens": [
+            {
+              "kind": "Exclamation",
+              "position": [
+                [
+                  5,
+                  5
+                ],
+                [
+                  5,
+                  6
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "max"
+              },
+              "position": [
+                [
+                  5,
+                  6
+                ],
+                [
+                  5,
+                  9
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "Colon",
+              "position": [
+                [
+                  5,
+                  9
+                ],
+                [
+                  5,
+                  10
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "IntegerLiteral": 20
+              },
+              "position": [
+                [
+                  5,
+                  10
+                ],
+                [
+                  5,
+                  12
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Comment": [
+                  " max value = 20",
+                  false
+                ]
+              },
+              "position": [
+                [
+                  5,
+                  14
+                ],
+                [
+                  5,
+                  31
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              5,
+              5
+            ],
+            [
+              5,
+              31
+            ]
+          ],
+          "children": []
+        }
+      ]
+    },
+    {
+      "tokens": [
+        {
+          "kind": "Plus",
+          "position": [
+            [
+              7,
+              1
+            ],
+            [
+              7,
+              2
+            ]
+          ],
+          "level": 1
+        },
+        {
+          "kind": "Greater",
+          "position": [
+            [
+              7,
+              2
+            ],
+            [
+              7,
+              3
+            ]
+          ],
+          "level": 1
+        }
+      ],
+      "level": 1,
+      "position": [
+        [
+          7,
+          1
+        ],
+        [
+          13,
+          7
+        ]
+      ],
+      "children": [
+        {
+          "tokens": [
+            {
+              "kind": "Exclamation",
+              "position": [
+                [
+                  8,
+                  5
+                ],
+                [
+                  8,
+                  6
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "type"
+              },
+              "position": [
+                [
+                  8,
+                  6
+                ],
+                [
+                  8,
+                  10
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "Colon",
+              "position": [
+                [
+                  8,
+                  10
+                ],
+                [
+                  8,
+                  11
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "string"
+              },
+              "position": [
+                [
+                  8,
+                  11
+                ],
+                [
+                  8,
+                  17
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              8,
+              5
+            ],
+            [
+              8,
+              17
+            ]
+          ],
+          "children": []
+        },
+        {
+          "tokens": [
+            {
+              "kind": "Exclamation",
+              "position": [
+                [
+                  9,
+                  5
+                ],
+                [
+                  9,
+                  6
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "Identifier": "max_length"
+              },
+              "position": [
+                [
+                  9,
+                  6
+                ],
+                [
+                  9,
+                  16
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": "Colon",
+              "position": [
+                [
+                  9,
+                  16
+                ],
+                [
+                  9,
+                  17
+                ]
+              ],
+              "level": 2
+            },
+            {
+              "kind": {
+                "IntegerLiteral": 3
+              },
+              "position": [
+                [
+                  9,
+                  17
+                ],
+                [
+                  9,
+                  18
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              9,
+              5
+            ],
+            [
+              9,
+              18
+            ]
+          ],
+          "children": []
+        },
+        {
+          "tokens": [
+            {
+              "kind": {
+                "Comment": [
+                  "\narray input of strings\neach string has max length of 3\n",
+                  false
+                ]
+              },
+              "position": [
+                [
+                  10,
+                  5
+                ],
+                [
+                  13,
+                  7
+                ]
+              ],
+              "level": 2
+            }
+          ],
+          "level": 2,
+          "position": [
+            [
+              10,
+              5
+            ],
+            [
+              13,
+              7
+            ]
+          ],
+          "children": []
+        }
+      ]
+    }
+  ]
 }
