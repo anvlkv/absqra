@@ -1,17 +1,17 @@
-use ra_lexer::cursor::Position;
+use ra_lexer::Position;
 use serde::Serialize;
 use super::*;
 
 #[derive(Serialize, Debug, Clone, Default)]
-pub struct RaTree<'a> {
-    tokens: Vec<RaToken<'a>>,
+pub struct RaTree {
+    tokens: Vec<RaToken>,
     level: u16,
     position: (Position, Position),
-    children: Vec<Box<RaTree<'a>>>
+    children: Vec<Box<RaTree>>
 }
 
-impl <'a> RaTree<'a> {
-    fn is_primary(&self, token: &RaToken<'a>) -> bool {
+impl RaTree {
+    fn is_primary(&self, token: &RaToken) -> bool {
         let (Position(start_line, _), _) = self.position;
         let (Position(token_start_line, _), _) = token.position;
         let level = self.level;
@@ -19,12 +19,12 @@ impl <'a> RaTree<'a> {
         start_line == token_start_line && level == token.level
     }
 
-    fn is_sibling(&self, token: &RaToken<'a>) -> bool {
+    fn is_sibling(&self, token: &RaToken) -> bool {
         let level = self.level;
         level == token.level && !self.is_primary(&token)
     }
 
-    fn is_child(&self, token: &RaToken<'a>) -> bool {
+    fn is_child(&self, token: &RaToken) -> bool {
         let level = self.level;
         let (Position(start_line, _), _) = self.position;
         let (Position(token_start_line, _), _) = token.position;
@@ -32,9 +32,10 @@ impl <'a> RaTree<'a> {
         token.level > level && token_start_line > start_line
     }
 
-    pub fn push_token(self, token: RaToken<'a>) -> Result<RaTree<'a>, Vec<TreeParserError>> {
+    pub fn push_token(self, token: RaToken) -> Result<RaTree, Vec<TreeParserError>> {
         let (Position(start_line, start_col), _) = self.position;
         let (_, Position(token_end_line, token_end_col)) = token.position;
+        
         let position = (Position(start_line, start_col), Position(token_end_line, token_end_col));
 
         if self.is_primary(&token) {
@@ -68,10 +69,10 @@ impl <'a> RaTree<'a> {
     }
 }
 
-impl <'a> From<RaToken<'a>> for RaTree<'a> {
-    fn from(token: RaToken<'a>) -> Self { 
+impl <'a> From<RaToken> for RaTree {
+    fn from(token: RaToken) -> Self { 
         Self {
-            tokens: vec![token],
+            tokens: vec![token.clone()],
             level: token.level,
             position: token.position,
             children: Vec::new()

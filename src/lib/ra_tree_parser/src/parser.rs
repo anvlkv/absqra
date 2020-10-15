@@ -4,8 +4,8 @@ use super::errors::TreeParserError;
 use super::tree::RaTree;
 
 pub fn parse<'a>(
-    mut tokens_stream: impl Iterator<Item = Result<RaToken<'a>, LexerError>> + 'a
-) -> Result<RaTree<'a>, (Vec<TreeParserError>, Option<RaTree<'a>>)> {
+    mut tokens_stream: impl Iterator<Item = Result<RaToken, LexerError>>
+) -> Result<RaTree, (Vec<TreeParserError>, Option<RaTree>)> {
     let mut tree = RaTree::default();
 
     let mut errors: Vec<TreeParserError> = Vec::new();
