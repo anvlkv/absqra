@@ -1,0 +1,15 @@
+> // simply a text input
++> // simply an array input
+>
+    !type:number // typed input
+    !max:20  // max value = 20
+
++>
+    !type:string
+    !max_length:3
+    /*
+        array input of strings
+        each string has max length of 3
+    */
+
+    
