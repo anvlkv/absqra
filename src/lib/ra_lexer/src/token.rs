@@ -253,7 +253,7 @@ impl RaToken {
             | ',' => true,
             _ => false
         };
-        let mut end_position = Position(0, 0);
+        let mut end_position = cursor.position.clone();
         cursor.bump();
 
         while cursor.ch.is_some() {
@@ -278,7 +278,7 @@ impl RaToken {
                 }
                 _ => break,
             }
-            end_position = cursor.position;
+            end_position = cursor.position.clone();
             cursor.bump();
         }
 
