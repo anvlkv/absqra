@@ -32,7 +32,7 @@ impl RaTree {
         token.level > level && token_start_line > start_line
     }
 
-    pub fn push_token(self, token: RaToken) -> Result<RaTree, Vec<TreeParserError>> {
+    pub (crate) fn push_token(self, token: RaToken) -> Result<RaTree, Vec<TreeParserError>> {
         let (Position(start_line, start_col), _) = self.position;
         let (_, Position(token_end_line, token_end_col)) = token.position;
         
