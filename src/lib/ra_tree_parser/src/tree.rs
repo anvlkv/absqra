@@ -4,10 +4,10 @@ use super::*;
 
 #[derive(Serialize, Debug, Clone, Default)]
 pub struct RaTree {
-    tokens: Vec<RaToken>,
-    level: u16,
-    position: (Position, Position),
-    children: Vec<Box<RaTree>>
+    pub tokens: Vec<RaToken>,
+    pub level: u16,
+    pub position: (Position, Position),
+    pub children: Vec<Box<RaTree>>
 }
 
 impl RaTree {

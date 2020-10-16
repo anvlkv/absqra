@@ -48,6 +48,9 @@ impl Serialize for RaAST {
 impl From<RaTree> for RaAST {
     fn from(tree: RaTree) -> Self {
         let mut ast = Self::new();
+        let mut cursor = Cursor::new(tree);
+
+        
 
         ast
     }
