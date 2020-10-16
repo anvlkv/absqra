@@ -7,6 +7,7 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+ra_tree_parser = {path = "../ra_tree_parser"}
 ra_lexer = {path = "../ra_lexer"}
 failure = "0.1.8"
 failure_derive = "0.1.8"
