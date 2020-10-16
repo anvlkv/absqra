@@ -1,5 +1,3 @@
-use ra_lexer::Position;
-use serde::Serialize;
 use super::*;
 
 #[derive(Serialize, Debug, Clone, Default)]
@@ -57,7 +55,7 @@ impl RaTree {
                 children.push(Box::new(last_child.push_token(token)?));
             }
             else {
-                return Err(vec![TreeParserError::Error]);
+                return Err(vec![TreeParserError::InvalidTree(token.position.0, Backtrace::new())]);
             }
 
             Ok(Self {

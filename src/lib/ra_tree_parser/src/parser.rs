@@ -1,6 +1,5 @@
 use ra_lexer::errors::LexerError;
 use super::*;
-use super::errors::TreeParserError;
 use super::tree::RaTree;
 
 pub fn parse<'a>(
@@ -18,8 +17,7 @@ pub fn parse<'a>(
                 }
             },
             Err(e) => {
-                println!("{:?}", e);
-                errors.push(TreeParserError::Error);
+                errors.push(TreeParserError::LexerError(e, Backtrace::new()));
             }
         }
     }
