@@ -41,6 +41,50 @@ pub enum TokenKind {
     Tilde,
 }
 
+impl PartialEq for TokenKind {
+    fn eq(&self, other: &Self) -> bool { 
+        match (self, other) {
+            (Self::Ampersand, Self::Ampersand) => true,
+            (Self::Asterisk, Self::Asterisk) => true,
+            (Self::At, Self::At) => true,
+            (Self::CloseCurlyBrace, Self::CloseCurlyBrace) => true,
+            (Self::CloseParentheses, Self::CloseParentheses) => true,
+            (Self::CloseSquareBrace, Self::CloseSquareBrace) => true,
+            (Self::Colon, Self::Colon) => true,
+            (Self::Coma, Self::Coma) => true,
+            (Self::Dollar, Self::Dollar) => true,
+            (Self::Dot, Self::Dot) => true,
+            (Self::Equals, Self::Equals) => true,
+            (Self::Exclamation, Self::Exclamation) => true,
+            (Self::ForwardSlash, Self::ForwardSlash) => true,
+            (Self::Greater, Self::Greater) => true,
+            (Self::HashPound, Self::HashPound) => true,
+            (Self::Less, Self::Less) => true,
+            (Self::Minus, Self::Minus) => true,
+            (Self::OpenCurlyBrace, Self::OpenCurlyBrace) => true,
+            (Self::OpenParentheses, Self::OpenParentheses) => true,
+            (Self::OpenSquareBrace, Self::OpenSquareBrace) => true,
+            (Self::Percent, Self::Percent) => true,
+            (Self::Pipe, Self::Pipe) => true,
+            (Self::Plus, Self::Plus) => true,
+            (Self::Power, Self::Power) => true,
+            (Self::Question, Self::Question) => true,
+            (Self::SemiColon, Self::SemiColon) => true,
+            (Self::Slash, Self::Slash) => true,
+            (Self::Tilde, Self::Tilde) => true,
+            (Self::Comment(a_content, a_fringed), Self::Comment(b_content, b_fringed)) => a_fringed == b_fringed && {
+                a_content == b_content || a_content == "" || b_content == ""
+            },
+            (Self::ContentBlock(a_content), Self::ContentBlock(b_content)) => a_content == b_content || a_content == "" || b_content == "",
+            (Self::FloatLiteral(a_content), Self::FloatLiteral(b_content)) => a_content == b_content || a_content == &0.0f64 || b_content == &0.0f64,
+            (Self::IntegerLiteral(a_content), Self::IntegerLiteral(b_content)) => a_content == b_content || a_content == &0i64 || b_content == &0i64,
+            (Self::Identifier(a_content), Self::Identifier(b_content)) => a_content == b_content || a_content == "" || b_content == "",
+            (Self::StringLiteral(a_content), Self::StringLiteral(b_content)) => a_content == b_content || a_content == "" || b_content == "",
+            _ => false
+        }
+    }
+}
+
 #[derive(Serialize, Debug, Clone)]
 pub struct RaToken {
     pub kind: TokenKind,
@@ -406,3 +450,5 @@ impl<'c> TryFrom<&mut Cursor<'c>> for RaToken {
         }
     }
 }
+
+

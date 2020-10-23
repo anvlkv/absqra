@@ -1,4 +1,5 @@
 use super::*;
+use ra_lexer::TokenKind;
 
 #[derive(Serialize, Debug, Clone, Default)]
 pub struct RaTree {
@@ -63,6 +64,22 @@ impl RaTree {
                 position,
                 ..self
             })
+        }
+    }
+
+    pub fn no_comments(self) -> RaTree {
+        
+        Self {
+            tokens: self.tokens
+            .into_iter()
+            .filter(|t| 
+                t.kind != TokenKind::Comment(String::default(), true) 
+                && t.kind != TokenKind::Comment(String::default(), false)
+            )
+            .collect(),
+            children: self.children.into_iter().map(|c| Box::new(c.no_comments())).collect(),
+            level: self.level,
+            position: self.position
         }
     }
 }

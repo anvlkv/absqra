@@ -5,12 +5,15 @@ pub mod node;
 pub mod block_tree_traverser;
 pub mod errors;
 
-use ra_lexer::{RaToken, Position};
+mod expression;
+
+use ra_lexer::{RaToken, Position, TokenKind};
 use ra_tree_parser::tree::RaTree;
 use serde::Serialize;
 use failure::Backtrace;
 use block_tree_traverser::{BlockTreeTraverser, TreeAddress};
 use errors::ParserError;
+use expression::*;
 
 pub use ast::RaAST;
 pub use node::RaASTNode;
