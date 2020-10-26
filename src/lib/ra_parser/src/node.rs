@@ -16,22 +16,22 @@ impl RaASTNode {
         match tokens.first() {
             Some(token) => {
                 match tokens {
-                    t if AnnotationExpression::can_parse(t) => {
+                    t if AnnotationExpression::accepts_tokens(t) => {
                         Ok(Self::Annotation(AnnotationExpression::parse(tokens)?))
                     },
-                    t if ContentExpression::can_parse(t) => {
+                    t if ContentExpression::accepts_tokens(t) => {
                         Ok(Self::Content(ContentExpression::parse(tokens)?))
                     },
-                    t if ContextExpression::can_parse(t) => {
+                    t if ContextExpression::accepts_tokens(t) => {
                         Ok(Self::Context(ContextExpression::parse(tokens)?))
                     },
-                    t if InputExpression::can_parse(t) => {
+                    t if InputExpression::accepts_tokens(t) => {
                         Ok(Self::Input(InputExpression::parse(tokens)?))
                     },
-                    t if OutputExpression::can_parse(t) => {
+                    t if OutputExpression::accepts_tokens(t) => {
                         Ok(Self::Output(OutputExpression::parse(tokens)?))
                     },
-                    t if ReferenceExpression::can_parse(t) => {
+                    t if ReferenceExpression::accepts_tokens(t) => {
                         Ok(Self::Reference(ReferenceExpression::parse(tokens)?))
                     },
                     _ => Err(vec![ParserError::UnexpectedToken(
