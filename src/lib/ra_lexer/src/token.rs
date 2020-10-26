@@ -451,4 +451,44 @@ impl<'c> TryFrom<&mut Cursor<'c>> for RaToken {
     }
 }
 
+impl std::fmt::Display for TokenKind {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { 
+        match self {
+            Self::Ampersand => write!(f, "&"),
+            Self::Asterisk => write!(f, "*"),
+            Self::At => write!(f, "@"),
+            Self::CloseCurlyBrace => write!(f, "}}"),
+            Self::CloseParentheses => write!(f, ")"),
+            Self::CloseSquareBrace => write!(f, "]"),
+            Self::Colon => write!(f, ":"),
+            Self::Coma => write!(f, ","),
+            Self::Comment(content, fringe) => write!(f,"{} {}", fringe, content),
+            Self::ContentBlock(content) => write!(f, "`{}`", content),
+            Self::Dollar => write!(f, "$"),
+            Self::Dot => write!(f, "."),
+            Self::Equals => write!(f, "="),
+            Self::Exclamation => write!(f, "!"),
+            Self::FloatLiteral(num) => write!(f, "{}", num),
+            Self::ForwardSlash => write!(f, "\\"),
+            Self::Greater => write!(f, ">"),
+            Self::HashPound => write!(f, "#"),
+            Self::Identifier(id) => write!(f, "{}", id),
+            Self::IntegerLiteral(num) => write!(f, "{}", num),
+            Self::Less => write!(f, "<"),
+            Self::Minus => write!(f, "-"),
+            Self::OpenCurlyBrace => write!(f, "{{"),
+            Self::OpenParentheses => write!(f, "("),
+            Self::OpenSquareBrace => write!(f, "["),
+            Self::Percent => write!(f, "%"),
+            Self::Pipe => write!(f, "|"),
+            Self::Plus => write!(f, "+"),
+            Self::Power => write!(f, "^"),
+            Self::Question => write!(f, "?"),
+            Self::SemiColon => write!(f, ";"),
+            Self::Slash => write!(f, "/"),
+            Self::StringLiteral(content) => write!(f, "{}", content),
+            Self::Tilde => write!(f, "~"),
+        }
+     }
+}
 
