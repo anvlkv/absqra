@@ -88,7 +88,7 @@ impl TryFrom<RaTree> for RaAST {
 
         while traverser.head.current.is_some() {
             ast.read(&traverser)?;
-            traverser.next_child();
+            traverser.next_sibling();
         }
 
         Ok(ast)
