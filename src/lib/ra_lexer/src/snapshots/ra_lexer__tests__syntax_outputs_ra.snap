@@ -105,7 +105,7 @@ expression: tokens
   },
   {
     "kind": {
-      "Identifier": "assignment"
+      "IntegerLiteral": 2
     },
     "position": [
       [
@@ -114,6 +114,71 @@ expression: tokens
       ],
       [
         5,
+        2
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": "Minus",
+    "position": [
+      [
+        5,
+        2
+      ],
+      [
+        5,
+        3
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "IntegerLiteral": 1
+    },
+    "position": [
+      [
+        5,
+        3
+      ],
+      [
+        5,
+        4
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Comment": [
+        " test for parsing minus separately",
+        false
+      ]
+    },
+    "position": [
+      [
+        5,
+        5
+      ],
+      [
+        5,
+        41
+      ]
+    ],
+    "level": 1
+  },
+  {
+    "kind": {
+      "Identifier": "assignment"
+    },
+    "position": [
+      [
+        7,
+        1
+      ],
+      [
+        7,
         11
       ]
     ],
@@ -128,11 +193,11 @@ expression: tokens
     },
     "position": [
       [
-        5,
+        7,
         12
       ],
       [
-        5,
+        7,
         51
       ]
     ],
@@ -144,11 +209,11 @@ expression: tokens
     },
     "position": [
       [
-        6,
+        8,
         5
       ],
       [
-        6,
+        8,
         6
       ]
     ],
@@ -160,11 +225,11 @@ expression: tokens
     },
     "position": [
       [
-        8,
+        10,
         1
       ],
       [
-        8,
+        10,
         11
       ]
     ],
@@ -174,11 +239,11 @@ expression: tokens
     "kind": "Plus",
     "position": [
       [
-        8,
+        10,
         12
       ],
       [
-        8,
+        10,
         13
       ]
     ],
@@ -190,11 +255,11 @@ expression: tokens
     },
     "position": [
       [
-        8,
+        10,
         14
       ],
       [
-        8,
+        10,
         15
       ]
     ],
@@ -209,11 +274,11 @@ expression: tokens
     },
     "position": [
       [
-        8,
+        10,
         16
       ],
       [
-        8,
+        10,
         53
       ]
     ],
@@ -225,11 +290,11 @@ expression: tokens
     },
     "position": [
       [
-        10,
+        12,
         1
       ],
       [
-        10,
+        12,
         16
       ]
     ],
@@ -244,11 +309,11 @@ expression: tokens
     },
     "position": [
       [
-        10,
+        12,
         17
       ],
       [
-        10,
+        12,
         55
       ]
     ],
@@ -260,11 +325,11 @@ expression: tokens
     },
     "position": [
       [
-        11,
+        13,
         5
       ],
       [
-        11,
+        13,
         15
       ]
     ],
@@ -274,11 +339,11 @@ expression: tokens
     "kind": "Plus",
     "position": [
       [
-        11,
+        13,
         16
       ],
       [
-        11,
+        13,
         17
       ]
     ],
@@ -290,11 +355,11 @@ expression: tokens
     },
     "position": [
       [
-        11,
+        13,
         18
       ],
       [
-        11,
+        13,
         19
       ]
     ],
@@ -309,11 +374,11 @@ expression: tokens
     },
     "position": [
       [
-        11,
+        13,
         20
       ],
       [
-        11,
+        13,
         57
       ]
     ],
@@ -325,11 +390,11 @@ expression: tokens
     },
     "position": [
       [
-        13,
+        15,
         1
       ],
       [
-        13,
+        15,
         11
       ]
     ],
@@ -339,11 +404,11 @@ expression: tokens
     "kind": "Pipe",
     "position": [
       [
-        13,
+        15,
         12
       ],
       [
-        13,
+        15,
         13
       ]
     ],
@@ -355,11 +420,11 @@ expression: tokens
     },
     "position": [
       [
-        13,
+        15,
         14
       ],
       [
-        13,
+        15,
         29
       ]
     ],
@@ -374,11 +439,11 @@ expression: tokens
     },
     "position": [
       [
-        13,
+        15,
         30
       ],
       [
-        13,
+        15,
         54
       ]
     ],
@@ -390,11 +455,11 @@ expression: tokens
     },
     "position": [
       [
-        15,
+        17,
         1
       ],
       [
-        15,
+        17,
         11
       ]
     ],
@@ -404,11 +469,11 @@ expression: tokens
     "kind": "Greater",
     "position": [
       [
-        15,
+        17,
         12
       ],
       [
-        15,
+        17,
         13
       ]
     ],
@@ -420,11 +485,11 @@ expression: tokens
     },
     "position": [
       [
-        15,
+        17,
         14
       ],
       [
-        15,
+        17,
         29
       ]
     ],
@@ -439,11 +504,11 @@ expression: tokens
     },
     "position": [
       [
-        15,
+        17,
         30
       ],
       [
-        15,
+        17,
         65
       ]
     ],
@@ -453,11 +518,11 @@ expression: tokens
     "kind": "OpenParentheses",
     "position": [
       [
-        17,
+        19,
         1
       ],
       [
-        17,
+        19,
         2
       ]
     ],
@@ -469,11 +534,11 @@ expression: tokens
     },
     "position": [
       [
-        17,
+        19,
         2
       ],
       [
-        17,
+        19,
         3
       ]
     ],
@@ -483,11 +548,11 @@ expression: tokens
     "kind": "Asterisk",
     "position": [
       [
-        17,
+        19,
         3
       ],
       [
-        17,
+        19,
         4
       ]
     ],
@@ -499,11 +564,11 @@ expression: tokens
     },
     "position": [
       [
-        17,
+        19,
         4
       ],
       [
-        17,
+        19,
         5
       ]
     ],
@@ -513,11 +578,11 @@ expression: tokens
     "kind": "CloseParentheses",
     "position": [
       [
-        17,
+        19,
         5
       ],
       [
-        17,
+        19,
         6
       ]
     ],
@@ -527,11 +592,11 @@ expression: tokens
     "kind": "Plus",
     "position": [
       [
-        17,
+        19,
         7
       ],
       [
-        17,
+        19,
         8
       ]
     ],
@@ -543,11 +608,11 @@ expression: tokens
     },
     "position": [
       [
-        17,
+        19,
         9
       ],
       [
-        17,
+        19,
         11
       ]
     ],
@@ -562,11 +627,11 @@ expression: tokens
     },
     "position": [
       [
-        17,
+        19,
         12
       ],
       [
-        17,
+        19,
         58
       ]
     ],
@@ -576,11 +641,11 @@ expression: tokens
     "kind": "OpenParentheses",
     "position": [
       [
-        19,
+        21,
         1
       ],
       [
-        19,
+        21,
         2
       ]
     ],
@@ -592,11 +657,11 @@ expression: tokens
     },
     "position": [
       [
-        19,
+        21,
         2
       ],
       [
-        19,
+        21,
         12
       ]
     ],
@@ -606,11 +671,11 @@ expression: tokens
     "kind": "Pipe",
     "position": [
       [
-        19,
+        21,
         13
       ],
       [
-        19,
+        21,
         14
       ]
     ],
@@ -622,11 +687,11 @@ expression: tokens
     },
     "position": [
       [
-        19,
+        21,
         15
       ],
       [
-        19,
+        21,
         30
       ]
     ],
@@ -636,11 +701,11 @@ expression: tokens
     "kind": "CloseParentheses",
     "position": [
       [
-        19,
+        21,
         30
       ],
       [
-        19,
+        21,
         31
       ]
     ],
@@ -650,11 +715,11 @@ expression: tokens
     "kind": "Plus",
     "position": [
       [
-        19,
+        21,
         32
       ],
       [
-        19,
+        21,
         33
       ]
     ],
@@ -666,11 +731,11 @@ expression: tokens
     },
     "position": [
       [
-        19,
+        21,
         34
       ],
       [
-        19,
+        21,
         35
       ]
     ],
@@ -685,11 +750,11 @@ expression: tokens
     },
     "position": [
       [
-        19,
+        21,
         36
       ],
       [
-        19,
+        21,
         101
       ]
     ],
@@ -701,11 +766,11 @@ expression: tokens
     },
     "position": [
       [
-        21,
+        23,
         1
       ],
       [
-        21,
+        23,
         2
       ]
     ],
@@ -715,11 +780,11 @@ expression: tokens
     "kind": "Plus",
     "position": [
       [
-        21,
+        23,
         3
       ],
       [
-        21,
+        23,
         4
       ]
     ],
@@ -731,11 +796,11 @@ expression: tokens
     },
     "position": [
       [
-        21,
+        23,
         5
       ],
       [
-        21,
+        23,
         6
       ]
     ],
@@ -745,11 +810,11 @@ expression: tokens
     "kind": "Plus",
     "position": [
       [
-        21,
+        23,
         7
       ],
       [
-        21,
+        23,
         8
       ]
     ],
@@ -759,11 +824,11 @@ expression: tokens
     "kind": "OpenParentheses",
     "position": [
       [
-        21,
+        23,
         9
       ],
       [
-        21,
+        23,
         10
       ]
     ],
@@ -775,11 +840,11 @@ expression: tokens
     },
     "position": [
       [
-        21,
+        23,
         10
       ],
       [
-        21,
+        23,
         11
       ]
     ],
@@ -789,11 +854,11 @@ expression: tokens
     "kind": "Asterisk",
     "position": [
       [
-        21,
+        23,
         11
       ],
       [
-        21,
+        23,
         12
       ]
     ],
@@ -805,11 +870,11 @@ expression: tokens
     },
     "position": [
       [
-        21,
+        23,
         12
       ],
       [
-        21,
+        23,
         13
       ]
     ],
@@ -819,11 +884,11 @@ expression: tokens
     "kind": "CloseParentheses",
     "position": [
       [
-        21,
+        23,
         13
       ],
       [
-        21,
+        23,
         14
       ]
     ],
@@ -833,11 +898,11 @@ expression: tokens
     "kind": "Plus",
     "position": [
       [
-        21,
+        23,
         15
       ],
       [
-        21,
+        23,
         16
       ]
     ],
@@ -847,11 +912,11 @@ expression: tokens
     "kind": "OpenParentheses",
     "position": [
       [
-        21,
+        23,
         17
       ],
       [
-        21,
+        23,
         18
       ]
     ],
@@ -863,11 +928,11 @@ expression: tokens
     },
     "position": [
       [
-        21,
+        23,
         18
       ],
       [
-        21,
+        23,
         19
       ]
     ],
@@ -877,11 +942,11 @@ expression: tokens
     "kind": "Asterisk",
     "position": [
       [
-        21,
+        23,
         19
       ],
       [
-        21,
+        23,
         20
       ]
     ],
@@ -891,11 +956,11 @@ expression: tokens
     "kind": "OpenParentheses",
     "position": [
       [
-        21,
+        23,
         20
       ],
       [
-        21,
+        23,
         21
       ]
     ],
@@ -907,11 +972,11 @@ expression: tokens
     },
     "position": [
       [
-        21,
+        23,
         21
       ],
       [
-        21,
+        23,
         22
       ]
     ],
@@ -921,11 +986,11 @@ expression: tokens
     "kind": "Plus",
     "position": [
       [
-        21,
+        23,
         22
       ],
       [
-        21,
+        23,
         23
       ]
     ],
@@ -937,11 +1002,11 @@ expression: tokens
     },
     "position": [
       [
-        21,
+        23,
         23
       ],
       [
-        21,
+        23,
         24
       ]
     ],
@@ -951,11 +1016,11 @@ expression: tokens
     "kind": "CloseParentheses",
     "position": [
       [
-        21,
+        23,
         24
       ],
       [
-        21,
+        23,
         25
       ]
     ],
@@ -965,11 +1030,11 @@ expression: tokens
     "kind": "CloseParentheses",
     "position": [
       [
-        21,
+        23,
         25
       ],
       [
-        21,
+        23,
         26
       ]
     ],
@@ -979,11 +1044,11 @@ expression: tokens
     "kind": "Minus",
     "position": [
       [
-        21,
+        23,
         27
       ],
       [
-        21,
+        23,
         28
       ]
     ],
@@ -995,11 +1060,11 @@ expression: tokens
     },
     "position": [
       [
-        21,
+        23,
         29
       ],
       [
-        21,
+        23,
         31
       ]
     ],
@@ -1014,11 +1079,11 @@ expression: tokens
     },
     "position": [
       [
-        21,
+        23,
         32
       ],
       [
-        21,
+        23,
         72
       ]
     ],

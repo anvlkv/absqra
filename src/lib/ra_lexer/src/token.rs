@@ -96,7 +96,7 @@ impl RaToken {
     fn new_multi_char_token(cursor: &mut Cursor) -> Result<Self, LexerError> {
         assert!(cursor.ch.is_some());
         let ch = cursor.ch.unwrap();
-        match ch {
+        let result = match ch {
             '/' => Self::new_comment(cursor),
             '`' => Self::new_content(cursor),
             '"' | '\'' => Self::new_string(cursor),
@@ -107,7 +107,14 @@ impl RaToken {
             c if c.is_alphabetic() 
             || c == '_'=> Self::new_identifier(cursor),
             _ => Err(LexerError::UnexpectedCharacter(ch, cursor.position, Backtrace::new())),
-        }
+        };
+
+        cursor.last_parsed = match &result {
+            Ok(p) => Some(p.clone()),
+            Err(_) => None
+        };
+
+        result
     }
 
     fn new_single_char_token(cursor: &mut Cursor, kind: TokenKind) -> Result<Self, LexerError> {
@@ -121,6 +128,11 @@ impl RaToken {
         });
 
         cursor.bump();
+
+        cursor.last_parsed = match &result {
+            Ok(p) => Some(p.clone()),
+            Err(_) => None
+        };
 
         result
     }
@@ -407,16 +419,28 @@ impl<'c> TryFrom<&mut Cursor<'c>> for RaToken {
                     '/' | '*' => Self::new_multi_char_token(cursor),
                     _ => Self::new_single_char_token(cursor, TokenKind::Slash),
                 },
-                '-'
+                '-' 
                 |'.'
-                |',' => match cursor.first_ahead() {
-                    c if c.is_numeric() => Self::new_multi_char_token(cursor),
-                    _ => {
-                        match ch {
-                            '-' => Self::new_single_char_token(cursor, TokenKind::Minus),
-                            ',' => Self::new_single_char_token(cursor, TokenKind::Coma),
-                            '.' => Self::new_single_char_token(cursor, TokenKind::Dot),
-                            _ => panic!("what have you done!?")
+                |',' => {
+                    match cursor.first_ahead() {
+                        c if c.is_numeric() => {
+                            if ch == '-' && cursor.last_parsed.is_some() && (cursor.last_parsed.as_ref().unwrap().position.0).0 == cursor.position.0 &&(
+                                cursor.last_parsed.as_ref().unwrap().kind == TokenKind::FloatLiteral(Default::default())
+                                || cursor.last_parsed.as_ref().unwrap().kind == TokenKind::IntegerLiteral(Default::default())
+                            ) {
+                                Self::new_single_char_token(cursor, TokenKind::Minus)
+                            }
+                            else {
+                                Self::new_multi_char_token(cursor)
+                            }
+                        },
+                        _ => {
+                            match ch {
+                                '-' => Self::new_single_char_token(cursor, TokenKind::Minus),
+                                ',' => Self::new_single_char_token(cursor, TokenKind::Coma),
+                                '.' => Self::new_single_char_token(cursor, TokenKind::Dot),
+                                c => Err(LexerError::UnexpectedCharacter(c, cursor.position, Backtrace::new()))
+                            }
                         }
                     }
                 },

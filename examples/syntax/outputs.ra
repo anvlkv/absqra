@@ -2,6 +2,8 @@ single_variable // just an empty variable
 
 1 + 1 // expression that has an output of 2
 
+2-1 // test for parsing minus separately
+
 assignment // expression that has value 1 assigned
     1
 

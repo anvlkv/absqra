@@ -9,6 +9,7 @@ pub (crate) struct Cursor<'char> {
     pub ch: Option<char>,
     pub is_line_start: bool,
     pub ruler: Option<u16>,
+    pub last_parsed: Option<RaToken>,
     indent_width: u8,
     chars: Peekable<Chars<'char>>,
     initial_level: u16
@@ -159,6 +160,7 @@ impl <'c> From<& 'c str> for Cursor<'c> {
             indent_width: 0,
             chars,
             initial_level: 1,
+            last_parsed: None
         }
     }
 }
