@@ -15,7 +15,7 @@ impl AnnotationExpression {
 }
 
 impl Expression for AnnotationExpression {
-    fn accepts_tokens(tokens: &Vec<RaToken>) -> bool {
+    fn accepts_tokens(tokens: &[RaToken]) -> bool {
         tokens.first().is_some()
             && tokens.iter().enumerate().all(|(i, t)| {
                 if i == 0 {
@@ -23,20 +23,30 @@ impl Expression for AnnotationExpression {
                 } else if i % 2 == 0 {
                     t.kind == TokenKind::Colon
                 } else {
-                    t.kind == TokenKind::Identifier(String::default())
+                    Identifier::accepts_tokens(&tokens[i..i+1])
                 }
             })
     }
-    fn parse(tokens: &Vec<RaToken>) -> Result<Self, Vec<ParserError>> {
+
+    fn parse(tokens: &[RaToken]) -> Result<Self, Vec<ParserError>> {
         let mut tokens_iter = tokens.into_iter().enumerate();
 
         let mut parsed: Option<Self> = None;
         let mut first_token = None;
+        let mut errors = Vec::new();
 
         while let Some((i, token)) = tokens_iter.next() {
             match i {
                 0 => {
-                    first_token = Some(token);
+                    match &token.kind {
+                        TokenKind::HashPound => first_token = Some(token),
+                        kind => errors.push(ParserError::ExpectedAGotB(
+                            format!("{}", TokenKind::HashPound),
+                            format!("{}", kind),
+                            token.position.0,
+                            Backtrace::new()
+                        ))
+                    }
                 }
                 i if i % 2 == 0 => {
                     match &token.kind {
@@ -44,44 +54,51 @@ impl Expression for AnnotationExpression {
                             first_token = Some(token);
                         },
                         kind => {
-                            return Err(vec![ParserError::ExpectedAGotB(
+                            errors.push(ParserError::ExpectedAGotB(
                                 format!("{}", TokenKind::Colon),
                                 format!("{}", kind),
                                 token.position.0,
                                 Backtrace::new()
-                            )])
+                            ));
                         }
                     }
                 }
                 _ => {
-                    let ident = Identifier::new(token.clone());
-
-                    match parsed {
-                        Some(mut expression) => {
-                            expression.push_next(AnnotationExpression(ident, None, first_token.unwrap().clone()));
-                            parsed = Some(expression);
+                    match Identifier::parse(&tokens[i..i+1]) {
+                        Ok(ident) => {
+                            match parsed {
+                                Some(mut expression) => {
+                                    expression.push_next(AnnotationExpression(ident, None, first_token.unwrap().clone()));
+                                    parsed = Some(expression);
+                                },
+                                None => {
+                                    parsed = Some(AnnotationExpression(ident, None, first_token.unwrap().clone()))
+                                }
+                            }
                         },
-                        None => {
-                            parsed = Some(AnnotationExpression(ident, None, first_token.unwrap().clone()))
-                        }
+                        Err(e) => errors.extend(e)
                     }
+
                 }
             }
         }
 
-        match parsed {
-            Some(expression) => Ok(expression),
-            None => Err(vec![ParserError::UnexpectedEndOfInput(
-                tokens.last().unwrap().position.0,
-                Backtrace::new(),
-            )]),
+        match (&parsed, &errors) {
+            (p, e) if e.len() == 0  && p.is_some() => Ok(parsed.unwrap()),
+            _ => {
+                errors.push(ParserError::UnexpectedEndOfInput(
+                        tokens.last().unwrap().position.0,
+                        Backtrace::new(),
+                    ));
+                Err(errors)
+            }
         }
-
-        // Ok(parsed.unwrap())
     }
+
     fn level(&self) -> u16 {
         self.2.level
     }
+
     fn position(&self) -> (Position, Position) {
         let AnnotationExpression(ident, next, first_token) = self;
 

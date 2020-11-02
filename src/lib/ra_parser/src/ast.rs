@@ -41,7 +41,7 @@ impl RaAST {
         }
     }
 
-    fn parse(&self, tokens: &Vec<RaToken>) -> Result<Self, Vec<ParserError>> {
+    fn parse(&self, tokens: &[RaToken]) -> Result<Self, Vec<ParserError>> {
         let node = RaASTNode::parse(tokens)?;
         let position = node.position(); 
         let level = node.level();

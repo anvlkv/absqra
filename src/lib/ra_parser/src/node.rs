@@ -12,7 +12,7 @@ pub enum RaASTNode {
 }
 
 impl RaASTNode {
-    pub (crate) fn parse(tokens: &Vec<RaToken>) -> Result<Self, Vec<ParserError>> {
+    pub (crate) fn parse(tokens: &[RaToken]) -> Result<Self, Vec<ParserError>> {
         match tokens.first() {
             Some(token) => {
                 match tokens {

@@ -4,7 +4,6 @@ pub mod ast;
 pub mod node;
 pub mod block_tree_traverser;
 pub mod errors;
-pub mod units;
 
 mod expression;
 
@@ -15,7 +14,7 @@ use failure::Backtrace;
 use block_tree_traverser::{BlockTreeTraverser, TreeAddress};
 use errors::ParserError;
 use expression::*;
-use units::Identifier;
+
 
 pub use ast::RaAST;
 pub use node::RaASTNode;
