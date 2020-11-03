@@ -8,3 +8,9 @@ where Self: Sized
     fn level(&self) -> u16;
     fn position(&self) -> (Position, Position);
 }
+
+// pub trait Finite
+// where Self: Expression
+// {
+//     fn     
+// }

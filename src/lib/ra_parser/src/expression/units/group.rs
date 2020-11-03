@@ -1,5 +1,6 @@
 use super::*;
 
+#[derive(Serialize, Debug, Clone)]
 pub struct Group {
 
 }

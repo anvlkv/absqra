@@ -1,28 +1,34 @@
 use super::*;
 
 
+#[derive(Serialize, Debug, Clone)]
 pub enum Operator {
-    Math,
-    Comparison,
-    Logic
+    Math(MathOperator),
+    Comparison(ComparisonOperator),
+    Logic(LogicOperator)
 }
 
-pub enum MathOperator {
-    
-}
 
-pub enum ComparisonOperator {
-
-}
-
-pub enum LogicOperator {
-
-}
 
 impl Expression for Operator {
     
-fn accepts_tokens(_: &[ra_lexer::RaToken]) -> bool { todo!() }
-fn parse(_: &[RaToken]) -> std::result::Result<Self, std::vec::Vec<errors::ParserError>> { todo!() }
-fn level(&self) -> u16 { todo!() }
-fn position(&self) -> (ra_lexer::Position, ra_lexer::Position) { todo!() }
+    fn accepts_tokens(tokens: &[RaToken]) -> bool { 
+        MathOperator::accepts_tokens(tokens) // || ComparisonOperator::accepts_tokens(tokens) || LogicOperator::accepts_tokens(tokens)
+ }
+fn parse(tokens: &[RaToken]) -> Result<Self, Vec<ParserError>> { 
+    Ok(Self::Math(MathOperator::parse(tokens)?))
+ }
+fn level(&self) -> u16 { 
+    match self {
+        Self::Math(op) => op.level(),
+        _ => todo!()
+    }
+ }
+fn position(&self) -> (Position, Position) { 
+    match self {
+        Self::Math(op) => op.position(),
+        _ => todo!()
+    }
+ }
 }
+

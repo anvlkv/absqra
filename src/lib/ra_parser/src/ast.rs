@@ -79,18 +79,28 @@ impl RaAST {
 // }
 
 impl TryFrom<RaTree> for RaAST {
-    type Error = Vec<ParserError>;
+    type Error = (Vec<ParserError>, RaAST);
 
-    fn try_from(tree: RaTree) -> Result<Self, Vec<ParserError>> {
+    fn try_from(tree: RaTree) -> Result<Self, Self::Error> {
         let mut ast = Self::new();
         let meaningful_tree = tree.no_comments();
         let mut traverser = BlockTreeTraverser::new(&meaningful_tree);
+        let mut errors = Vec::new();
 
         while traverser.head.current.is_some() {
-            ast.read(&traverser)?;
+            match ast.read(&traverser) {
+                Ok(_) => {},
+                Err(e) => errors.extend(e)
+            }
             traverser.next_sibling();
         }
 
-        Ok(ast)
+        if errors.len() > 0 {
+            Err((errors, ast))
+        }
+        else {
+            Ok(ast)
+        }
+
     }
 }

@@ -39,6 +39,7 @@ pub enum TokenKind {
     Slash,
     StringLiteral(String),
     Tilde,
+    NON
 }
 
 impl PartialEq for TokenKind {
@@ -85,7 +86,13 @@ impl PartialEq for TokenKind {
     }
 }
 
-#[derive(Serialize, Debug, Clone)]
+impl Default for TokenKind {
+    fn default() -> Self {
+        TokenKind::NON
+    }
+}
+
+#[derive(Serialize, Debug, Clone, Default)]
 pub struct RaToken {
     pub kind: TokenKind,
     pub position: (Position, Position),
@@ -512,6 +519,7 @@ impl std::fmt::Display for TokenKind {
             Self::Slash => write!(f, "/"),
             Self::StringLiteral(content) => write!(f, "{}", content),
             Self::Tilde => write!(f, "~"),
+            Self::NON => write!(f, "")
         }
      }
 }
