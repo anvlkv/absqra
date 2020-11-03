@@ -1,25 +1,42 @@
-use ra_parser::parser::parse;
+extern crate scrawl;
+use scrawl::{editor};
+use ra_tree_parser::parser::parse;
+use ra_lexer::tokenize;
+use ra_parser::ast::RaAST;
 use std::panic;
-use std::io::{stdin, stdout, Write};
+use std::convert::TryFrom;
 
 fn main() {
+    let mut content = String::from("// :wq");
+
+    let mut output = String::new();
+
     loop {
-        print!("ra_ ");
-        stdout().flush();
 
-        let mut input = String::new();
-        stdin().read_line(&mut input).unwrap();
-
+        let input = editor::new()
+                        .contents(&content)
+                        .open()
+                        .unwrap();
         
 
-        if input.trim().len() > 0 {
-            let result = panic::catch_unwind(|| parse(&input));
+        let trimmed_input = &input[..input.find("==================\n\n\n").unwrap_or(input.len())];
+        
+        
+        if trimmed_input.trim().len() > 0 {
+            let tree = parse(tokenize(trimmed_input));
+            let result = panic::catch_unwind(|| RaAST::try_from(tree.unwrap()));
     
-            match result {
-                Ok(r) => println!("{:?}", r),
-                Err(e) => println!("{:?}", e)
-            }
+            output = match result {
+                Ok(r) => format!("{:#?}", r),
+                Err(e) => format!("{:#?}", e)
+            };
         }
 
+        content = trimmed_input.to_owned();
+
+        content.push_str("==================\n\n\n");
+        content.push_str("/* OUTPUT *");
+        content.push_str(&output);
+        content.push_str("* END OF OUTPUT */");
     }
 }

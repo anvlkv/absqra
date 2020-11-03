@@ -8,3 +8,6 @@ edition = "2018"
 
 [dependencies]
 ra_parser = {path = "../ra_parser"}
+ra_lexer = {path = "../ra_lexer"}
+ra_tree_parser = {path = "../ra_tree_parser"}
+scrawl = "1.1.0"
