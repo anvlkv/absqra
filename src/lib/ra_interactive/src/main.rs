@@ -7,11 +7,13 @@ use std::panic;
 use std::convert::TryFrom;
 
 fn main() {
-    let mut content = String::from("// :wq");
+    let mut content = String::from("// enter ra code after this line \n\n\n // keep this line to quit \n ra_quit");
 
     let mut output = String::new();
 
-    loop {
+    let mut quit = false;
+
+    while !quit {
 
         let input = editor::new()
                         .contents(&content)
@@ -38,5 +40,10 @@ fn main() {
         content.push_str("/* OUTPUT *");
         content.push_str(&output);
         content.push_str("* END OF OUTPUT */");
+
+
+        quit = trimmed_input.find("ra_quit").is_some();
     }
+
+    println!("{}", output);
 }
