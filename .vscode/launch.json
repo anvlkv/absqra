@@ -9,9 +9,28 @@
             "type": "promptString",
             "default": "",
             "description": "Enter test name or leave empty",
+        },
+        {
+            "id": "pickPackage",
+            "type": "pickString",
+            "default": "ra_interactive",
+            "options": [
+                "ra_lexer",
+                "ra_tree_parser",
+                "ra_parser",
+                "ra_interactive",
+                "ra_dev_tools"
+            ],
+            "description": "select package to attach debugger",
         }
     ],
     "configurations": [
+        {
+            "type": "lldb",
+            "request": "attach",
+            "name": "Attach to...",
+            "program": "${workspaceFolder}/src/lib/${input:pickPackage}/target/debug/${input:pickPackage}"
+        },
         {
             "type": "lldb",
             "request": "launch",
