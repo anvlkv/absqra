@@ -30,9 +30,11 @@ impl RaAST {
     pub (crate) fn read(&mut self, mut traverser: &BlockTreeTraverser) -> Result<(), Vec<ParserError>> {
         match traverser.head.current {
             Some(tokens) => {
-                let mut ast = self.parse(tokens)?;
-                // ast.children.
-                self.children.push(Box::new(ast));
+                if tokens.len() > 0 {
+                    let mut ast = self.parse(tokens)?;
+                    // ast.children.
+                    self.children.push(Box::new(ast));
+                }
                 Ok(())
             },
             None => {
