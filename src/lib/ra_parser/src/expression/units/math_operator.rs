@@ -85,9 +85,9 @@ impl Expression for MathOperator {
             Self::Reminder(token) => token.level,
             Self::Multiply(token) => token.level,
             Self::Power(token) => token.level,
+            Self::Assign(token) => token.level,
             Self::AddAssign(token, _) => token.level,
             Self::SubtractAssign(token, _) => token.level,
-            Self::Assign(token) => token.level,
         }
     }
 

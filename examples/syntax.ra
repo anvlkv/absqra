@@ -126,7 +126,7 @@ conditioned_block
 
 switching_block
   !switch // without a parameter will evaluate expressions for each case
-    !case:conditioned_block.count != 0 // :case accepts exactly one argument "case", so the argument assignment can be omitted
+    !case:conditioned_block.count =! 0 // :case accepts exactly one argument "case", so the argument assignment can be omitted
       `Самый неподходящий варинат?`
       >
         !options:conditioned_block

@@ -1695,7 +1695,7 @@ expression: tree
                   "level": 3
                 },
                 {
-                  "kind": "Exclamation",
+                  "kind": "Equals",
                   "position": [
                     [
                       129,
@@ -1709,7 +1709,7 @@ expression: tree
                   "level": 3
                 },
                 {
-                  "kind": "Equals",
+                  "kind": "Exclamation",
                   "position": [
                     [
                       129,
