@@ -80,12 +80,12 @@ impl Expression for Operation {
                 let mut op_end_index = 0;
                 let op = match Operator::parse(&t[1..3]) {
                     Ok(op) => {
-                        op_end_index = 2;
+                        op_end_index = 3;
                         Ok(op)
                     }
                     Err(mut e) => match Operator::parse(&t[1..2]) {
                         Ok(op) => {
-                            op_end_index = 1;
+                            op_end_index = 2;
                             Ok(op)
                         }
                         Err(e2) => {
