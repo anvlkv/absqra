@@ -29,7 +29,8 @@
             "type": "lldb",
             "request": "attach",
             "name": "Attach to...",
-            "program": "${workspaceFolder}/src/lib/${input:pickPackage}/target/debug/${input:pickPackage}"
+            "program": "${workspaceFolder}/src/lib/${input:pickPackage}",
+            "sourceLanguages": ["rust"]
         },
         {
             "type": "lldb",

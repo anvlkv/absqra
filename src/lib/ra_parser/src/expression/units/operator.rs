@@ -5,7 +5,8 @@ use super::*;
 pub enum Operator {
     Math(MathOperator),
     Comparison(ComparisonOperator),
-    Logic(LogicOperator)
+    Logic(LogicOperator),
+    None,
 }
 
 
@@ -31,7 +32,8 @@ fn level(&self) -> u16 {
     match self {
         Self::Math(op) => op.level(),
         Self::Comparison(op) => op.level(),
-        Self::Logic(op) => op.level()
+        Self::Logic(op) => op.level(),
+        Self::None => 0,
     }
  }
 fn position(&self) -> (Position, Position) { 
@@ -39,6 +41,7 @@ fn position(&self) -> (Position, Position) {
         Self::Math(op) => op.position(),
         Self::Comparison(op) => op.position(),
         Self::Logic(op) => op.position(),
+        Self::None => (Position::default(), Position::default()),
     }
  }
 }

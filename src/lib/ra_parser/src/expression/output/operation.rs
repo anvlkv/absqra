@@ -7,11 +7,56 @@ pub struct Operation {
     op: Operator,
 }
 
+impl Operation {
+    fn find_split_index(tokens: &[RaToken]) -> Option<usize> {
+        let mut left_end_index = tokens.len();
+        let mut result = Group::accepts_tokens(tokens);
+
+        while !result {
+            left_end_index = {
+                if left_end_index == tokens.len() {
+                    tokens.len() - 1 - 2
+                }
+                else {
+                    left_end_index
+                }
+            };
+
+            result = {
+                Operand::accepts_tokens(&tokens[..left_end_index])
+                    && ({
+                        Operator::accepts_tokens(&tokens[left_end_index..left_end_index + 1])
+                            && Operand::accepts_tokens(&tokens[left_end_index..left_end_index + 2])
+                    } || {
+                        Operator::accepts_tokens(&tokens[left_end_index..left_end_index + 2])
+                            && tokens.len() >= left_end_index + 4
+                            && Operand::accepts_tokens(&tokens[left_end_index..left_end_index + 3])
+                    })
+            };
+            if left_end_index == 0 {
+                break;
+            } else {
+                left_end_index -= 1;
+            }
+        }
+
+        if result {
+            Some(left_end_index)
+        } else {
+            None
+        }
+    }
+}
+
 impl Expression for Operation {
     fn accepts_tokens(tokens: &[RaToken]) -> bool {
         match tokens {
-            t if t.len() >= 3 && Operator::accepts_tokens(&t[..=1]) => Operand::accepts_tokens(&t[2..]),
-            t if t.len() >= 2 && Operator::accepts_tokens(&t[..=0]) => Operand::accepts_tokens(&t[1..]),
+            t if t.len() >= 3 && Operator::accepts_tokens(&t[..=1]) => {
+                Operand::accepts_tokens(&t[2..])
+            }
+            t if t.len() >= 2 && Operator::accepts_tokens(&t[..=0]) => {
+                Operand::accepts_tokens(&t[1..])
+            }
             t if t.len() >= 3 && Operand::accepts_tokens(&t[..=0]) => {
                 (Operator::accepts_tokens(&t[1..2])
                     && Operand::accepts_tokens(&t[2..])
@@ -20,37 +65,7 @@ impl Expression for Operation {
                         && Operand::accepts_tokens(&t[3..])
                         && t.len() == 4)
             }
-            t if t.len() >= 3 => {
-                let mut left_end_index = tokens.len() - 1 - 2;
-                let mut result = Group::accepts_tokens(tokens);
-
-                while !result {
-                    result = {
-                        Operand::accepts_tokens(&tokens[..left_end_index])
-                            && ({
-                                Operator::accepts_tokens(
-                                    &tokens[left_end_index..left_end_index + 1],
-                                ) && Operand::accepts_tokens(
-                                    &tokens[left_end_index..left_end_index + 2],
-                                )
-                            } || {
-                                Operator::accepts_tokens(
-                                    &tokens[left_end_index..left_end_index + 2],
-                                ) && tokens.len() >= left_end_index + 4
-                                    && Operand::accepts_tokens(
-                                        &tokens[left_end_index..left_end_index + 3],
-                                    )
-                            })
-                    };
-                    if left_end_index == 0 {
-                        break;
-                    } else {
-                        left_end_index -= 1;
-                    }
-                }
-
-                result
-            }
+            t if t.len() >= 3 => Self::find_split_index(tokens).is_some(),
             _ => false,
         }
     }
@@ -98,36 +113,47 @@ impl Expression for Operation {
 
                 Ok(Self { left, op, right })
             }
-            t if t.len() >= 3 => {
-                todo!();
-                // let mut left_end_index = tokens.len() - 1 - 2;
-                // let mut result = Group::accepts_tokens(tokens);
+            t if t.len() >= 3 => match Self::find_split_index(t) {
+                Some(left_end_index) => {
 
-                // while !result {
-                //     result = {
-                //         Operand::accepts_tokens(&tokens[..left_end_index])
-                //         && (
-                //             {
-                //                 Operator::accepts_tokens(&tokens[left_end_index..left_end_index+1])
-                //                 && Operand::accepts_tokens(&tokens[left_end_index..left_end_index+2])
-                //             }
-                //             || {
-                //                 Operator::accepts_tokens(&tokens[left_end_index..left_end_index+2])
-                //                 && tokens.len() >= left_end_index + 4
-                //                 && Operand::accepts_tokens(&tokens[left_end_index..left_end_index+3])
-                //             }
-                //         )
-                //     };
-                //     if left_end_index == 0 {
-                //         break;
-                //     }
-                //     else {
-                //         left_end_index -= 1;
-                //     }
-                // }
+                    if left_end_index == t.len() {
+                        let left = Some(Box::new(Operand::parse(t)?));
 
-                // result
-            }
+                        Ok(Self {
+                            left,
+                            right: None,
+                            op: Operator::None
+                        })
+                    }
+                    else {
+                        todo!();
+                    }
+                    // if Operator::accepts_tokens(&tokens[left_end_index..left_end_index + 1])
+                    //     && Operand::accepts_tokens(&tokens[left_end_index..left_end_index + 2])
+                    // {
+                    //     let op = Operator::parse(&tokens[left_end_index..left_end_index + 1])?;
+                    //     let right = Some(Box::new(Operand::parse(&tokens[left_end_index..left_end_index + 2])?));
+                    //     Ok(Self {
+                    //         op, right,
+                    //         left: None
+                    //     })
+                    // } else if Operator::accepts_tokens(&tokens[left_end_index..left_end_index + 2])
+                    //     && tokens.len() >= left_end_index + 4
+                    //     && Operand::accepts_tokens(&tokens[left_end_index..left_end_index + 3])
+                    // {
+
+                    // } else {
+                    //     Err(vec![ParserError::InvalidExpression(
+                    //         t[0].position.0,
+                    //         Backtrace::new(),
+                    //     )])
+                    // }
+                }
+                None => Err(vec![ParserError::InvalidExpression(
+                    t[0].position.0,
+                    Backtrace::new(),
+                )]),
+            },
             _ => Err(vec![ParserError::ExpectedAGotB(
                 format!("{:?}", Vec::<()>::new()),
                 format!("{:?}", tokens),
