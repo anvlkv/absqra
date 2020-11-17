@@ -31,39 +31,28 @@ impl RaTree {
         token.level > level && token_start_line > start_line
     }
 
-    pub (crate) fn push_token(self, token: RaToken) -> Result<RaTree, Vec<TreeParserError>> {
+    pub (crate) fn push_token(&mut self, token: RaToken) -> Result<(), Vec<TreeParserError>> {
         let (Position(start_line, start_col), _) = self.position;
         let (_, Position(token_end_line, token_end_col)) = token.position;
         
-        let position = (Position(start_line, start_col), Position(token_end_line, token_end_col));
+        self.position = (Position(start_line, start_col), Position(token_end_line, token_end_col));
 
         if self.is_primary(&token) {
-            let mut tokens = self.tokens;
-            tokens.push(token);
-            Ok(Self{
-                tokens,
-                position,
-                ..self
-            })
+            self.tokens.push(token);
+            Ok(())
         }
         else {
-            let mut children = self.children.clone();
-            if children.is_empty() || children.last().unwrap().is_sibling(&token) {
-                children.push(Box::new(RaTree::from(token)));
+            if self.children.is_empty() || self.children.last().unwrap().is_sibling(&token) {
+                self.children.push(Box::new(RaTree::from(token)));
+                Ok(())
             }
             else if self.is_child(&token) {
-                let last_child = children.pop().unwrap();
-                children.push(Box::new(last_child.push_token(token)?));
+                let last_child_index = self.children.len() - 1;
+                self.children[last_child_index].push_token(token)
             }
             else {
-                return Err(vec![TreeParserError::InvalidTree(token.position.0, Backtrace::new())]);
+                Err(vec![TreeParserError::InvalidTree(token.position.0, Backtrace::new())])
             }
-
-            Ok(Self {
-                children,
-                position,
-                ..self
-            })
         }
     }
 

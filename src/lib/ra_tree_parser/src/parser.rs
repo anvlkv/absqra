@@ -11,9 +11,9 @@ pub fn parse<'a>(
     while let Some(token_result) = tokens_stream.next() {
         match token_result {
             Ok(token) => {
-                match tree.clone().push_token(token) {
-                    Ok(t) => tree = t,
-                    Err(e) => errors.extend(e)
+                match tree.push_token(token) {
+                    Err(e) => errors.extend(e),
+                    _ => {}
                 }
             },
             Err(e) => {
