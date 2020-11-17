@@ -26,6 +26,6 @@ impl Expression for Group {
             }
         }
     }
-    fn level(&self) -> u16 { todo!() }
-    fn position(&self) -> (Position, Position) { todo!() }
+    fn level(&self) -> u16 { todo!("level Group") }
+    fn position(&self) -> (Position, Position) { todo!("position Group") }
 }
