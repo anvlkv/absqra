@@ -29,8 +29,8 @@ fn main() {
             let result = panic::catch_unwind(|| RaAST::try_from(tree.unwrap()));
     
             output = match result {
-                Ok(r) => format!("{:#?}", r),
-                Err(e) => format!("{:#?}", e)
+                Ok(r) => format!("OUTPUT: {:#?}", r),
+                Err(e) => format!("ERROR: {:#?}", e)
             };
         }
 
