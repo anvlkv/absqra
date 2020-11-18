@@ -145,6 +145,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9b919933a397b79c37e33b77bb2aa3dc8eb6e165ad809e58ff75bc7db2e34574"
 
 [[package]]
+name = "indextree"
+version = "4.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "990980c3d268c9b99df35e813eca2b8d1ee08606f6d2bb325edbd0b0c68f9ffe"
+
+[[package]]
 name = "insta"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -273,8 +279,7 @@ dependencies = [
 name = "ra_tree_parser"
 version = "0.1.0"
 dependencies = [
- "failure",
- "failure_derive",
+ "indextree",
  "ra_dev_tools",
  "ra_lexer",
  "serde",
