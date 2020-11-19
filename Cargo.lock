@@ -284,6 +284,7 @@ dependencies = [
  "ra_lexer",
  "serde",
  "serde_derive",
+ "serde_indextree",
  "serde_json",
 ]
 
@@ -341,6 +342,16 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
+]
+
+[[package]]
+name = "serde_indextree"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a70e7d58005454b0ba863a8775df0c4391a8128c3a34974001de556d661bf74f"
+dependencies = [
+ "indextree",
+ "serde",
 ]
 
 [[package]]

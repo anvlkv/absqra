@@ -100,6 +100,15 @@ pub struct RaToken {
 }
 
 impl RaToken {
+    pub fn pair(&self) -> Option<TokenKind> {
+        match self.kind {
+            TokenKind::OpenCurlyBrace => Some(TokenKind::CloseCurlyBrace),
+            TokenKind::OpenSquareBrace => Some(TokenKind::CloseSquareBrace),
+            TokenKind::OpenParentheses => Some(TokenKind::CloseParentheses),
+            _ => None,
+        }
+    }
+
     fn new_multi_char_token(cursor: &mut Cursor) -> Result<Self, LexerError> {
         assert!(cursor.ch.is_some());
         let ch = cursor.ch.unwrap();
