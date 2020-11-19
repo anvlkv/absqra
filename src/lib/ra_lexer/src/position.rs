@@ -1,9 +1,19 @@
 use super::*;
 use std::fmt;
 use std::ops::{Add, AddAssign};
+use std::cmp::{PartialOrd, Ordering};
 
 #[derive(Copy, Clone, PartialEq, Serialize)]
 pub struct Position(pub u16, pub u16);
+
+impl Position {
+    pub fn line(&self) -> u16 {
+        self.0
+    }
+    pub fn col(&self) -> u16 {
+        self.1
+    }
+}
 
 impl Default for Position {
     fn default() -> Self {
@@ -35,5 +45,19 @@ impl AddAssign for Position {
         let res = self.clone() + other;
         self.0 = res.0;
         self.1 = res.1;
+    }
+}
+
+impl PartialOrd for Position {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> { 
+        let Self (a_line, a_col) = self;
+        let Self (b_line, b_col) = other;
+
+        match (a_line, b_line) {
+            (a, b) if a == b => {
+                Some(a_col.cmp(b_col))
+            },
+            _ => Some(a_line.cmp(b_line))
+        }
     }
 }
