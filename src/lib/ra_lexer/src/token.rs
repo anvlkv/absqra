@@ -92,7 +92,7 @@ impl Default for TokenKind {
     }
 }
 
-#[derive(Serialize, Debug, Clone, Default)]
+#[derive(Serialize, Debug, Clone, Default, PartialEq)]
 pub struct RaToken {
     pub kind: TokenKind,
     pub position: (Position, Position),
