@@ -1,6 +1,5 @@
-
 mod lib {
-    use ra_dev_tools::insta::{assert_snapshot, assert_debug_snapshot};    
+    use ra_dev_tools::insta::{assert_json_snapshot, assert_snapshot};    
     use ra_dev_tools::{make_example_tests};
     use ra_lexer::tokenize;
     use crate::parser::parse;
@@ -20,15 +19,16 @@ mod lib {
                     let formatted_errors: String = {
                         errors.into_iter().map(|e| format!("{}", e)).collect::<Vec<String>>().join("\n")
                     };
+
                     
                     assert_snapshot!(err_messages_file_name, formatted_errors);
-                    assert_debug_snapshot!(errors_file_name, parsed);
+                    assert_json_snapshot!(errors_file_name, parsed);
 
 
                     panic!("failed to parse example {:?}", file_name);
                 }
             }
         };
-        assert_debug_snapshot!(file_name, tree)       
+        assert_json_snapshot!(file_name, tree)       
     }
 }
