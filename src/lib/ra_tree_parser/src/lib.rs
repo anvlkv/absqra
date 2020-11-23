@@ -1,5 +1,3 @@
-#[macro_use] extern crate serde_derive;
-
 pub mod tree;
 pub mod parser;
 
