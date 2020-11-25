@@ -2,189 +2,135 @@
 source: src/lib/ra_tree_parser/src/tests.rs
 expression: tree
 ---
-{
-  "node": [],
-  "level": 0,
-  "position": [
+[
+  [
+    "Root",
     [
-      0,
-      0
-    ],
-    [
-      18,
-      2
+      [
+        "Block",
+        [
+          [
+            {
+              "Token": {
+                "kind": {
+                  "ContentBlock": "one line"
+                },
+                "position": [
+                  [
+                    1,
+                    1
+                  ],
+                  [
+                    1,
+                    11
+                  ]
+                ],
+                "level": 1
+              }
+            }
+          ]
+        ]
+      ],
+      [
+        "Block",
+        [
+          [
+            {
+              "Token": {
+                "kind": {
+                  "ContentBlock": "multiple \nlines"
+                },
+                "position": [
+                  [
+                    2,
+                    1
+                  ],
+                  [
+                    5,
+                    2
+                  ]
+                ],
+                "level": 1
+              }
+            }
+          ]
+        ]
+      ],
+      [
+        "Block",
+        [
+          [
+            {
+              "Token": {
+                "kind": {
+                  "ContentBlock": "multiple\nlines\n    keeping\n        indents"
+                },
+                "position": [
+                  [
+                    6,
+                    1
+                  ],
+                  [
+                    11,
+                    2
+                  ]
+                ],
+                "level": 1
+              }
+            }
+          ]
+        ]
+      ],
+      [
+        "Block",
+        [
+          [
+            {
+              "Token": {
+                "kind": {
+                  "ContentBlock": "with some characters\n!@#$%^&*()_+"
+                },
+                "position": [
+                  [
+                    12,
+                    1
+                  ],
+                  [
+                    15,
+                    2
+                  ]
+                ],
+                "level": 1
+              }
+            }
+          ]
+        ]
+      ],
+      [
+        "Block",
+        [
+          [
+            {
+              "Token": {
+                "kind": {
+                  "ContentBlock": "with templates {{var}}"
+                },
+                "position": [
+                  [
+                    16,
+                    1
+                  ],
+                  [
+                    18,
+                    2
+                  ]
+                ],
+                "level": 1
+              }
+            }
+          ]
+        ]
+      ]
     ]
-  ],
-  "children": [
-    {
-      "node": [
-        {
-          "Token": {
-            "kind": {
-              "ContentBlock": "one line"
-            },
-            "position": [
-              [
-                1,
-                1
-              ],
-              [
-                1,
-                11
-              ]
-            ],
-            "level": 1
-          }
-        }
-      ],
-      "level": 1,
-      "position": [
-        [
-          1,
-          1
-        ],
-        [
-          1,
-          11
-        ]
-      ],
-      "children": []
-    },
-    {
-      "node": [
-        {
-          "Token": {
-            "kind": {
-              "ContentBlock": "multiple \nlines"
-            },
-            "position": [
-              [
-                2,
-                1
-              ],
-              [
-                5,
-                2
-              ]
-            ],
-            "level": 1
-          }
-        }
-      ],
-      "level": 1,
-      "position": [
-        [
-          2,
-          1
-        ],
-        [
-          5,
-          2
-        ]
-      ],
-      "children": []
-    },
-    {
-      "node": [
-        {
-          "Token": {
-            "kind": {
-              "ContentBlock": "multiple\nlines\n    keeping\n        indents"
-            },
-            "position": [
-              [
-                6,
-                1
-              ],
-              [
-                11,
-                2
-              ]
-            ],
-            "level": 1
-          }
-        }
-      ],
-      "level": 1,
-      "position": [
-        [
-          6,
-          1
-        ],
-        [
-          11,
-          2
-        ]
-      ],
-      "children": []
-    },
-    {
-      "node": [
-        {
-          "Token": {
-            "kind": {
-              "ContentBlock": "with some characters\n!@#$%^&*()_+"
-            },
-            "position": [
-              [
-                12,
-                1
-              ],
-              [
-                15,
-                2
-              ]
-            ],
-            "level": 1
-          }
-        }
-      ],
-      "level": 1,
-      "position": [
-        [
-          12,
-          1
-        ],
-        [
-          15,
-          2
-        ]
-      ],
-      "children": []
-    },
-    {
-      "node": [
-        {
-          "Token": {
-            "kind": {
-              "ContentBlock": "with templates {{var}}"
-            },
-            "position": [
-              [
-                16,
-                1
-              ],
-              [
-                18,
-                2
-              ]
-            ],
-            "level": 1
-          }
-        }
-      ],
-      "level": 1,
-      "position": [
-        [
-          16,
-          1
-        ],
-        [
-          18,
-          2
-        ]
-      ],
-      "children": []
-    }
   ]
-}
+]

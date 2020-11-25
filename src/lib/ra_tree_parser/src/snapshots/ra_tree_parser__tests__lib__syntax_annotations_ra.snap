@@ -2,381 +2,375 @@
 source: src/lib/ra_tree_parser/src/tests.rs
 expression: tree
 ---
-{
-  "node": [],
-  "level": 0,
-  "position": [
+[
+  [
+    "Root",
     [
-      0,
-      0
-    ],
-    [
-      5,
-      48
+      [
+        "Block",
+        [
+          [
+            {
+              "Token": {
+                "kind": "HashPound",
+                "position": [
+                  [
+                    1,
+                    1
+                  ],
+                  [
+                    1,
+                    2
+                  ]
+                ],
+                "level": 1
+              }
+            }
+          ],
+          [
+            {
+              "Token": {
+                "kind": {
+                  "Identifier": "annotation"
+                },
+                "position": [
+                  [
+                    1,
+                    2
+                  ],
+                  [
+                    1,
+                    12
+                  ]
+                ],
+                "level": 1
+              }
+            }
+          ],
+          [
+            {
+              "Token": {
+                "kind": {
+                  "Comment": [
+                    " this is annotation",
+                    false
+                  ]
+                },
+                "position": [
+                  [
+                    1,
+                    13
+                  ],
+                  [
+                    1,
+                    34
+                  ]
+                ],
+                "level": 1
+              }
+            }
+          ]
+        ]
+      ],
+      [
+        "Block",
+        [
+          [
+            {
+              "Token": {
+                "kind": "HashPound",
+                "position": [
+                  [
+                    3,
+                    1
+                  ],
+                  [
+                    3,
+                    2
+                  ]
+                ],
+                "level": 1
+              }
+            }
+          ],
+          [
+            {
+              "Token": {
+                "kind": {
+                  "Identifier": "media_context"
+                },
+                "position": [
+                  [
+                    3,
+                    2
+                  ],
+                  [
+                    3,
+                    15
+                  ]
+                ],
+                "level": 1
+              }
+            }
+          ],
+          [
+            {
+              "Token": {
+                "kind": "Colon",
+                "position": [
+                  [
+                    3,
+                    15
+                  ],
+                  [
+                    3,
+                    16
+                  ]
+                ],
+                "level": 1
+              }
+            }
+          ],
+          [
+            {
+              "Token": {
+                "kind": {
+                  "Identifier": "media_option"
+                },
+                "position": [
+                  [
+                    3,
+                    16
+                  ],
+                  [
+                    3,
+                    28
+                  ]
+                ],
+                "level": 1
+              }
+            }
+          ],
+          [
+            {
+              "Token": {
+                "kind": {
+                  "Comment": [
+                    " ...[:media_option] more options possible",
+                    false
+                  ]
+                },
+                "position": [
+                  [
+                    3,
+                    29
+                  ],
+                  [
+                    3,
+                    72
+                  ]
+                ],
+                "level": 1
+              }
+            }
+          ]
+        ]
+      ],
+      [
+        "Block",
+        [
+          [
+            {
+              "Token": {
+                "kind": "HashPound",
+                "position": [
+                  [
+                    5,
+                    1
+                  ],
+                  [
+                    5,
+                    2
+                  ]
+                ],
+                "level": 1
+              }
+            }
+          ],
+          [
+            {
+              "Token": {
+                "kind": {
+                  "Identifier": "annotation"
+                },
+                "position": [
+                  [
+                    5,
+                    2
+                  ],
+                  [
+                    5,
+                    12
+                  ]
+                ],
+                "level": 1
+              }
+            }
+          ],
+          [
+            {
+              "Token": {
+                "kind": "Colon",
+                "position": [
+                  [
+                    5,
+                    12
+                  ],
+                  [
+                    5,
+                    13
+                  ]
+                ],
+                "level": 1
+              }
+            }
+          ],
+          [
+            {
+              "Token": {
+                "kind": {
+                  "Identifier": "option_a"
+                },
+                "position": [
+                  [
+                    5,
+                    13
+                  ],
+                  [
+                    5,
+                    21
+                  ]
+                ],
+                "level": 1
+              }
+            }
+          ],
+          [
+            {
+              "Token": {
+                "kind": "Colon",
+                "position": [
+                  [
+                    5,
+                    21
+                  ],
+                  [
+                    5,
+                    22
+                  ]
+                ],
+                "level": 1
+              }
+            }
+          ],
+          [
+            {
+              "Token": {
+                "kind": {
+                  "Identifier": "option_b"
+                },
+                "position": [
+                  [
+                    5,
+                    22
+                  ],
+                  [
+                    5,
+                    30
+                  ]
+                ],
+                "level": 1
+              }
+            }
+          ],
+          [
+            {
+              "Token": {
+                "kind": "Colon",
+                "position": [
+                  [
+                    5,
+                    30
+                  ],
+                  [
+                    5,
+                    31
+                  ]
+                ],
+                "level": 1
+              }
+            }
+          ],
+          [
+            {
+              "Token": {
+                "kind": {
+                  "Identifier": "option_c"
+                },
+                "position": [
+                  [
+                    5,
+                    31
+                  ],
+                  [
+                    5,
+                    39
+                  ]
+                ],
+                "level": 1
+              }
+            }
+          ],
+          [
+            {
+              "Token": {
+                "kind": "Colon",
+                "position": [
+                  [
+                    5,
+                    39
+                  ],
+                  [
+                    5,
+                    40
+                  ]
+                ],
+                "level": 1
+              }
+            }
+          ],
+          [
+            {
+              "Token": {
+                "kind": {
+                  "Identifier": "option_d"
+                },
+                "position": [
+                  [
+                    5,
+                    40
+                  ],
+                  [
+                    5,
+                    48
+                  ]
+                ],
+                "level": 1
+              }
+            }
+          ]
+        ]
+      ]
     ]
-  ],
-  "children": [
-    {
-      "node": [
-        {
-          "Token": {
-            "kind": "HashPound",
-            "position": [
-              [
-                1,
-                1
-              ],
-              [
-                1,
-                2
-              ]
-            ],
-            "level": 1
-          }
-        },
-        {
-          "Token": {
-            "kind": {
-              "Identifier": "annotation"
-            },
-            "position": [
-              [
-                1,
-                2
-              ],
-              [
-                1,
-                12
-              ]
-            ],
-            "level": 1
-          }
-        },
-        {
-          "Token": {
-            "kind": {
-              "Comment": [
-                " this is annotation",
-                false
-              ]
-            },
-            "position": [
-              [
-                1,
-                13
-              ],
-              [
-                1,
-                34
-              ]
-            ],
-            "level": 1
-          }
-        }
-      ],
-      "level": 1,
-      "position": [
-        [
-          1,
-          1
-        ],
-        [
-          1,
-          34
-        ]
-      ],
-      "children": []
-    },
-    {
-      "node": [
-        {
-          "Token": {
-            "kind": "HashPound",
-            "position": [
-              [
-                3,
-                1
-              ],
-              [
-                3,
-                2
-              ]
-            ],
-            "level": 1
-          }
-        },
-        {
-          "Token": {
-            "kind": {
-              "Identifier": "media_context"
-            },
-            "position": [
-              [
-                3,
-                2
-              ],
-              [
-                3,
-                15
-              ]
-            ],
-            "level": 1
-          }
-        },
-        {
-          "Token": {
-            "kind": "Colon",
-            "position": [
-              [
-                3,
-                15
-              ],
-              [
-                3,
-                16
-              ]
-            ],
-            "level": 1
-          }
-        },
-        {
-          "Token": {
-            "kind": {
-              "Identifier": "media_option"
-            },
-            "position": [
-              [
-                3,
-                16
-              ],
-              [
-                3,
-                28
-              ]
-            ],
-            "level": 1
-          }
-        },
-        {
-          "Token": {
-            "kind": {
-              "Comment": [
-                " ...[:media_option] more options possible",
-                false
-              ]
-            },
-            "position": [
-              [
-                3,
-                29
-              ],
-              [
-                3,
-                72
-              ]
-            ],
-            "level": 1
-          }
-        }
-      ],
-      "level": 1,
-      "position": [
-        [
-          3,
-          1
-        ],
-        [
-          3,
-          72
-        ]
-      ],
-      "children": []
-    },
-    {
-      "node": [
-        {
-          "Token": {
-            "kind": "HashPound",
-            "position": [
-              [
-                5,
-                1
-              ],
-              [
-                5,
-                2
-              ]
-            ],
-            "level": 1
-          }
-        },
-        {
-          "Token": {
-            "kind": {
-              "Identifier": "annotation"
-            },
-            "position": [
-              [
-                5,
-                2
-              ],
-              [
-                5,
-                12
-              ]
-            ],
-            "level": 1
-          }
-        },
-        {
-          "Token": {
-            "kind": "Colon",
-            "position": [
-              [
-                5,
-                12
-              ],
-              [
-                5,
-                13
-              ]
-            ],
-            "level": 1
-          }
-        },
-        {
-          "Token": {
-            "kind": {
-              "Identifier": "option_a"
-            },
-            "position": [
-              [
-                5,
-                13
-              ],
-              [
-                5,
-                21
-              ]
-            ],
-            "level": 1
-          }
-        },
-        {
-          "Token": {
-            "kind": "Colon",
-            "position": [
-              [
-                5,
-                21
-              ],
-              [
-                5,
-                22
-              ]
-            ],
-            "level": 1
-          }
-        },
-        {
-          "Token": {
-            "kind": {
-              "Identifier": "option_b"
-            },
-            "position": [
-              [
-                5,
-                22
-              ],
-              [
-                5,
-                30
-              ]
-            ],
-            "level": 1
-          }
-        },
-        {
-          "Token": {
-            "kind": "Colon",
-            "position": [
-              [
-                5,
-                30
-              ],
-              [
-                5,
-                31
-              ]
-            ],
-            "level": 1
-          }
-        },
-        {
-          "Token": {
-            "kind": {
-              "Identifier": "option_c"
-            },
-            "position": [
-              [
-                5,
-                31
-              ],
-              [
-                5,
-                39
-              ]
-            ],
-            "level": 1
-          }
-        },
-        {
-          "Token": {
-            "kind": "Colon",
-            "position": [
-              [
-                5,
-                39
-              ],
-              [
-                5,
-                40
-              ]
-            ],
-            "level": 1
-          }
-        },
-        {
-          "Token": {
-            "kind": {
-              "Identifier": "option_d"
-            },
-            "position": [
-              [
-                5,
-                40
-              ],
-              [
-                5,
-                48
-              ]
-            ],
-            "level": 1
-          }
-        }
-      ],
-      "level": 1,
-      "position": [
-        [
-          5,
-          1
-        ],
-        [
-          5,
-          48
-        ]
-      ],
-      "children": []
-    }
   ]
-}
+]

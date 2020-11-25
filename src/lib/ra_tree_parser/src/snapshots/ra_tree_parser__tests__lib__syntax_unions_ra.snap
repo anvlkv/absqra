@@ -2,18 +2,8 @@
 source: src/lib/ra_tree_parser/src/tests.rs
 expression: tree
 ---
-{
-  "node": [],
-  "level": 0,
-  "position": [
-    [
-      0,
-      0
-    ],
-    [
-      0,
-      0
-    ]
-  ],
-  "children": []
-}
+[
+  [
+    "Root"
+  ]
+]
