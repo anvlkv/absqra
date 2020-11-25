@@ -1,0 +1,10 @@
+() // empty group expression
+[] // empty grouping
+{} // empty context group
+
+((10 + 2 * 3) * abc + 222)
+[
+    L1
+        L2
+            42
+]
