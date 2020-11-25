@@ -58,6 +58,9 @@ impl RaTree {
 
         let mut iter_up = last_child_id.ancestors(&self.arena);
 
+        println!("token{:?}", token);
+        println!("last_child_id{:?}", self.arena.get(last_child_id).unwrap().get());
+
         let mut added = false;
 
         while let Some(parent_id) = iter_up.next() {
@@ -65,15 +68,24 @@ impl RaTree {
             if self.is_child(&token, &parent) {
                 parent_id.append(inserted_id, &mut self.arena);
                 added = true;
+                println!("parent_id_1{:?}", self.arena.get(parent_id).unwrap().get());
                 break;
             }
             else if parent_id == self.root_id || self.is_sibling(&token, &parent) {
-                let block_id = self.arena.new_node(RaBlock::Block);
-                block_id.append(inserted_id, &mut self.arena);
+                match parent.get() {
+                    RaBlock::Root | RaBlock::Block | RaBlock::Group => {
+                        let block_id = self.arena.new_node(RaBlock::Block);
+                        block_id.append(inserted_id, &mut self.arena);
+                        inserted_id = block_id;
+                    },
+                    _ => {}
+                }
                 if self.is_sibling(&token, &parent) {
-                    parent_id.insert_after(block_id, &mut self.arena);
+                    parent_id.insert_after(inserted_id, &mut self.arena);
+                    println!("parent_id_2{:?}", self.arena.get(parent_id).unwrap().get());
                 } else {
-                    parent_id.append(block_id, &mut self.arena);
+                    parent_id.append(inserted_id, &mut self.arena);
+                    println!("parent_id_3{:?}", self.arena.get(parent_id).unwrap().get());
                 }
                 added = true;
                 break;
@@ -134,14 +146,14 @@ impl RaTree {
     fn is_sibling(&self, token: &RaToken, node: &Node<RaBlock>) -> bool {
         let compare_node = node.get();
         let node_id = self.arena.get_node_id(node).unwrap();
-        // let mut node_descendants = node_id.descendants(&self.arena).skip(1);
+        let mut node_descendants = node_id.descendants(&self.arena).skip(1);
 
         match compare_node {
             RaBlock::Root => false,
             RaBlock::Token(compare_token) => {
                 compare_token.level == token.level
                     && (compare_token.position.0).line() == (token.position.0).line()
-            }
+            },
             RaBlock::Block => {
                 while let Some(child_node_id) = node_descendants.next() {
                     match self.arena.get(child_node_id).unwrap().get() {
