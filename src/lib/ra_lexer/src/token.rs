@@ -100,7 +100,7 @@ pub struct RaToken {
 }
 
 impl RaToken {
-    pub fn pair(&self) -> Option<TokenKind> {
+    pub fn closing_pair(&self) -> Option<TokenKind> {
         match self.kind {
             TokenKind::OpenCurlyBrace => Some(TokenKind::CloseCurlyBrace),
             TokenKind::OpenSquareBrace => Some(TokenKind::CloseSquareBrace),
