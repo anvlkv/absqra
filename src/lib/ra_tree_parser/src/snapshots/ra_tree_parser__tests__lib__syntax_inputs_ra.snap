@@ -135,217 +135,215 @@ expression: tree
                 ],
                 "level": 1
               }
-            },
+            }
+          ],
+          [
+            "Block",
             [
               [
-                "Block",
-                [
-                  [
-                    {
-                      "Token": {
-                        "kind": "Exclamation",
-                        "position": [
-                          [
-                            4,
-                            5
-                          ],
-                          [
-                            4,
-                            6
-                          ]
-                        ],
-                        "level": 2
-                      }
-                    }
-                  ],
-                  [
-                    {
-                      "Token": {
-                        "kind": {
-                          "Identifier": "type"
-                        },
-                        "position": [
-                          [
-                            4,
-                            6
-                          ],
-                          [
-                            4,
-                            10
-                          ]
-                        ],
-                        "level": 2
-                      }
-                    }
-                  ],
-                  [
-                    {
-                      "Token": {
-                        "kind": "Colon",
-                        "position": [
-                          [
-                            4,
-                            10
-                          ],
-                          [
-                            4,
-                            11
-                          ]
-                        ],
-                        "level": 2
-                      }
-                    }
-                  ],
-                  [
-                    {
-                      "Token": {
-                        "kind": {
-                          "Identifier": "number"
-                        },
-                        "position": [
-                          [
-                            4,
-                            11
-                          ],
-                          [
-                            4,
-                            17
-                          ]
-                        ],
-                        "level": 2
-                      }
-                    }
-                  ],
-                  [
-                    {
-                      "Token": {
-                        "kind": {
-                          "Comment": [
-                            " typed input",
-                            false
-                          ]
-                        },
-                        "position": [
-                          [
-                            4,
-                            18
-                          ],
-                          [
-                            4,
-                            32
-                          ]
-                        ],
-                        "level": 2
-                      }
-                    }
-                  ]
-                ]
+                {
+                  "Token": {
+                    "kind": "Exclamation",
+                    "position": [
+                      [
+                        4,
+                        5
+                      ],
+                      [
+                        4,
+                        6
+                      ]
+                    ],
+                    "level": 2
+                  }
+                }
               ],
               [
-                "Block",
-                [
-                  [
-                    {
-                      "Token": {
-                        "kind": "Exclamation",
-                        "position": [
-                          [
-                            5,
-                            5
-                          ],
-                          [
-                            5,
-                            6
-                          ]
-                        ],
-                        "level": 2
-                      }
-                    }
-                  ],
-                  [
-                    {
-                      "Token": {
-                        "kind": {
-                          "Identifier": "max"
-                        },
-                        "position": [
-                          [
-                            5,
-                            6
-                          ],
-                          [
-                            5,
-                            9
-                          ]
-                        ],
-                        "level": 2
-                      }
-                    }
-                  ],
-                  [
-                    {
-                      "Token": {
-                        "kind": "Colon",
-                        "position": [
-                          [
-                            5,
-                            9
-                          ],
-                          [
-                            5,
-                            10
-                          ]
-                        ],
-                        "level": 2
-                      }
-                    }
-                  ],
-                  [
-                    {
-                      "Token": {
-                        "kind": {
-                          "IntegerLiteral": 20
-                        },
-                        "position": [
-                          [
-                            5,
-                            10
-                          ],
-                          [
-                            5,
-                            12
-                          ]
-                        ],
-                        "level": 2
-                      }
-                    }
-                  ],
-                  [
-                    {
-                      "Token": {
-                        "kind": {
-                          "Comment": [
-                            " max value = 20",
-                            false
-                          ]
-                        },
-                        "position": [
-                          [
-                            5,
-                            14
-                          ],
-                          [
-                            5,
-                            31
-                          ]
-                        ],
-                        "level": 2
-                      }
-                    }
-                  ]
-                ]
+                {
+                  "Token": {
+                    "kind": {
+                      "Identifier": "type"
+                    },
+                    "position": [
+                      [
+                        4,
+                        6
+                      ],
+                      [
+                        4,
+                        10
+                      ]
+                    ],
+                    "level": 2
+                  }
+                }
+              ],
+              [
+                {
+                  "Token": {
+                    "kind": "Colon",
+                    "position": [
+                      [
+                        4,
+                        10
+                      ],
+                      [
+                        4,
+                        11
+                      ]
+                    ],
+                    "level": 2
+                  }
+                }
+              ],
+              [
+                {
+                  "Token": {
+                    "kind": {
+                      "Identifier": "number"
+                    },
+                    "position": [
+                      [
+                        4,
+                        11
+                      ],
+                      [
+                        4,
+                        17
+                      ]
+                    ],
+                    "level": 2
+                  }
+                }
+              ],
+              [
+                {
+                  "Token": {
+                    "kind": {
+                      "Comment": [
+                        " typed input",
+                        false
+                      ]
+                    },
+                    "position": [
+                      [
+                        4,
+                        18
+                      ],
+                      [
+                        4,
+                        32
+                      ]
+                    ],
+                    "level": 2
+                  }
+                }
               ]
             ]
+          ]
+        ]
+      ],
+      [
+        "Block",
+        [
+          [
+            {
+              "Token": {
+                "kind": "Exclamation",
+                "position": [
+                  [
+                    5,
+                    5
+                  ],
+                  [
+                    5,
+                    6
+                  ]
+                ],
+                "level": 2
+              }
+            }
+          ],
+          [
+            {
+              "Token": {
+                "kind": {
+                  "Identifier": "max"
+                },
+                "position": [
+                  [
+                    5,
+                    6
+                  ],
+                  [
+                    5,
+                    9
+                  ]
+                ],
+                "level": 2
+              }
+            }
+          ],
+          [
+            {
+              "Token": {
+                "kind": "Colon",
+                "position": [
+                  [
+                    5,
+                    9
+                  ],
+                  [
+                    5,
+                    10
+                  ]
+                ],
+                "level": 2
+              }
+            }
+          ],
+          [
+            {
+              "Token": {
+                "kind": {
+                  "IntegerLiteral": 20
+                },
+                "position": [
+                  [
+                    5,
+                    10
+                  ],
+                  [
+                    5,
+                    12
+                  ]
+                ],
+                "level": 2
+              }
+            }
+          ],
+          [
+            {
+              "Token": {
+                "kind": {
+                  "Comment": [
+                    " max value = 20",
+                    false
+                  ]
+                },
+                "position": [
+                  [
+                    5,
+                    14
+                  ],
+                  [
+                    5,
+                    31
+                  ]
+                ],
+                "level": 2
+              }
+            }
           ]
         ]
       ],
@@ -386,199 +384,197 @@ expression: tree
                 ],
                 "level": 1
               }
-            },
+            }
+          ],
+          [
+            "Block",
             [
               [
-                "Block",
-                [
-                  [
-                    {
-                      "Token": {
-                        "kind": "Exclamation",
-                        "position": [
-                          [
-                            8,
-                            5
-                          ],
-                          [
-                            8,
-                            6
-                          ]
-                        ],
-                        "level": 2
-                      }
-                    }
-                  ],
-                  [
-                    {
-                      "Token": {
-                        "kind": {
-                          "Identifier": "type"
-                        },
-                        "position": [
-                          [
-                            8,
-                            6
-                          ],
-                          [
-                            8,
-                            10
-                          ]
-                        ],
-                        "level": 2
-                      }
-                    }
-                  ],
-                  [
-                    {
-                      "Token": {
-                        "kind": "Colon",
-                        "position": [
-                          [
-                            8,
-                            10
-                          ],
-                          [
-                            8,
-                            11
-                          ]
-                        ],
-                        "level": 2
-                      }
-                    }
-                  ],
-                  [
-                    {
-                      "Token": {
-                        "kind": {
-                          "Identifier": "string"
-                        },
-                        "position": [
-                          [
-                            8,
-                            11
-                          ],
-                          [
-                            8,
-                            17
-                          ]
-                        ],
-                        "level": 2
-                      }
-                    }
-                  ]
-                ]
+                {
+                  "Token": {
+                    "kind": "Exclamation",
+                    "position": [
+                      [
+                        8,
+                        5
+                      ],
+                      [
+                        8,
+                        6
+                      ]
+                    ],
+                    "level": 2
+                  }
+                }
               ],
               [
-                "Block",
-                [
-                  [
-                    {
-                      "Token": {
-                        "kind": "Exclamation",
-                        "position": [
-                          [
-                            9,
-                            5
-                          ],
-                          [
-                            9,
-                            6
-                          ]
-                        ],
-                        "level": 2
-                      }
-                    }
-                  ],
-                  [
-                    {
-                      "Token": {
-                        "kind": {
-                          "Identifier": "max_length"
-                        },
-                        "position": [
-                          [
-                            9,
-                            6
-                          ],
-                          [
-                            9,
-                            16
-                          ]
-                        ],
-                        "level": 2
-                      }
-                    }
-                  ],
-                  [
-                    {
-                      "Token": {
-                        "kind": "Colon",
-                        "position": [
-                          [
-                            9,
-                            16
-                          ],
-                          [
-                            9,
-                            17
-                          ]
-                        ],
-                        "level": 2
-                      }
-                    }
-                  ],
-                  [
-                    {
-                      "Token": {
-                        "kind": {
-                          "IntegerLiteral": 3
-                        },
-                        "position": [
-                          [
-                            9,
-                            17
-                          ],
-                          [
-                            9,
-                            18
-                          ]
-                        ],
-                        "level": 2
-                      }
-                    }
-                  ]
-                ]
+                {
+                  "Token": {
+                    "kind": {
+                      "Identifier": "type"
+                    },
+                    "position": [
+                      [
+                        8,
+                        6
+                      ],
+                      [
+                        8,
+                        10
+                      ]
+                    ],
+                    "level": 2
+                  }
+                }
               ],
               [
-                "Block",
-                [
-                  [
-                    {
-                      "Token": {
-                        "kind": {
-                          "Comment": [
-                            "\narray input of strings\neach string has max length of 3\n",
-                            false
-                          ]
-                        },
-                        "position": [
-                          [
-                            10,
-                            5
-                          ],
-                          [
-                            13,
-                            7
-                          ]
-                        ],
-                        "level": 2
-                      }
-                    }
-                  ]
-                ]
+                {
+                  "Token": {
+                    "kind": "Colon",
+                    "position": [
+                      [
+                        8,
+                        10
+                      ],
+                      [
+                        8,
+                        11
+                      ]
+                    ],
+                    "level": 2
+                  }
+                }
+              ],
+              [
+                {
+                  "Token": {
+                    "kind": {
+                      "Identifier": "string"
+                    },
+                    "position": [
+                      [
+                        8,
+                        11
+                      ],
+                      [
+                        8,
+                        17
+                      ]
+                    ],
+                    "level": 2
+                  }
+                }
               ]
             ]
+          ]
+        ]
+      ],
+      [
+        "Block",
+        [
+          [
+            {
+              "Token": {
+                "kind": "Exclamation",
+                "position": [
+                  [
+                    9,
+                    5
+                  ],
+                  [
+                    9,
+                    6
+                  ]
+                ],
+                "level": 2
+              }
+            }
+          ],
+          [
+            {
+              "Token": {
+                "kind": {
+                  "Identifier": "max_length"
+                },
+                "position": [
+                  [
+                    9,
+                    6
+                  ],
+                  [
+                    9,
+                    16
+                  ]
+                ],
+                "level": 2
+              }
+            }
+          ],
+          [
+            {
+              "Token": {
+                "kind": "Colon",
+                "position": [
+                  [
+                    9,
+                    16
+                  ],
+                  [
+                    9,
+                    17
+                  ]
+                ],
+                "level": 2
+              }
+            }
+          ],
+          [
+            {
+              "Token": {
+                "kind": {
+                  "IntegerLiteral": 3
+                },
+                "position": [
+                  [
+                    9,
+                    17
+                  ],
+                  [
+                    9,
+                    18
+                  ]
+                ],
+                "level": 2
+              }
+            }
+          ]
+        ]
+      ],
+      [
+        "Block",
+        [
+          [
+            {
+              "Token": {
+                "kind": {
+                  "Comment": [
+                    "\narray input of strings\neach string has max length of 3\n",
+                    false
+                  ]
+                },
+                "position": [
+                  [
+                    10,
+                    5
+                  ],
+                  [
+                    13,
+                    7
+                  ]
+                ],
+                "level": 2
+              }
+            }
           ]
         ]
       ]
