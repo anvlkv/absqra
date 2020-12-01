@@ -13,7 +13,7 @@ fn it_should_match_snapshots(contents: String, file_name: String) {
 
     match RaAST::try_from(tree.unwrap()) {
         Ok(ast) => assert_json_snapshot!(file_name, ast),
-        Err((errors, parsed)) => {
+        Err((parsed, errors)) => {
             let formatted_errors: String = {
                 errors.into_iter().map(|e| format!("{}", e)).collect::<Vec<String>>().join("\n")
             };

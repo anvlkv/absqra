@@ -1,17 +1,16 @@
 #[macro_use] extern crate serde_derive;
+extern crate indextree;
 
 pub mod ast;
 pub mod node;
-pub mod block_tree_traverser;
 pub mod errors;
 
 mod expression;
 
 use ra_lexer::{RaToken, Position, TokenKind};
-use ra_tree_parser::tree::RaTree;
+use ra_tree_parser::tree::{RaTree, RaBlock};
 use serde::Serialize;
 use failure::Backtrace;
-use block_tree_traverser::{BlockTreeTraverser, TreeAddress};
 use errors::ParserError;
 use expression::*;
 

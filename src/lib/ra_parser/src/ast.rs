@@ -1,108 +1,50 @@
 use super::*;
-// use serde::ser::{Serialize, SerializeStruct, Serializer};
-use std::convert::TryFrom;
+use indextree::{Arena, NodeId};
+use std::convert::{TryFrom};
+use ra_tree_parser::serialize_tree::SerializeTree;
+use serde::ser::{Serialize, Serializer};
 
-#[derive(Debug, Clone, Serialize)]
 pub struct RaAST {
-    node: RaASTNode,
-    children: Vec<Box<RaAST>>,
-    position: (Position, Position),
-    level: u16,
-
-    // /// non-serializable field parent
-    // parent: Option<Box<RaAST>>,
-    // /// non-serializable field root
-    // root: Option<Box<RaAST>>,
+    arena: Arena<RaASTNode>,
+    root_id: NodeId
 }
 
-impl RaAST {
-    pub (crate) fn new() -> Self {
-        Self {
-            node: RaASTNode::Root,
-            children: Vec::new(),
-            position: (Position::default(), Position::default()),
-            level: 0,
-            // parent: None,
-            // root: None,
-        }
-    }
+impl TryFrom<RaTree> for RaAST {
+    type Error = (Option<RaAST>, Vec<ParserError>);
+    fn try_from(tree: RaTree) -> Result<RaAST, Self::Error> {
+        let mut arena = Arena::new();
+        let mut traverse_iter = tree.traverse();
+        assert!(traverse_iter.next().unwrap().get() == &RaBlock::Root);
+        let root_id = arena.new_node(RaASTNode::Root);
 
-    pub (crate) fn read(&mut self, mut traverser: &BlockTreeTraverser) -> Result<(), Vec<ParserError>> {
-        match traverser.head.current {
-            Some(tokens) => {
-                if tokens.len() > 0 {
-                    let mut ast = self.parse(tokens)?;
-                    // ast.children.
-                    self.children.push(Box::new(ast));
+        while let Some(block_node) = traverse_iter.next() {
+            match block_node.get() {
+                RaBlock::Block => {
+
+                },
+                RaBlock::Group => {
+                    
+                },
+                RaBlock::Token(_) => {
+
                 }
-                Ok(())
-            },
-            None => {
-                Err(vec![ParserError::UnexpectedEndOfInput(self.position.1, Backtrace::new())])
+                _ => panic!("invalid tree")
             }
         }
-    }
-
-    fn parse(&self, tokens: &[RaToken]) -> Result<Self, Vec<ParserError>> {
-        let node = RaASTNode::parse(tokens)?;
-        let position = node.position(); 
-        let level = node.level();
 
         Ok(Self {
-            node,
-            position,
-            level,
-            // root: Some(Box::from(self)),
-            // parent: Some(Box::from(self)),
-            children: Vec::new()
+            arena,
+            root_id
         })
     }
 }
 
-// impl Serialize for RaAST {
-//     fn serialize<S>(&self, serializer: S) -> Result<<S as Serializer>::Ok, <S as Serializer>::Error>
-//     where
-//         S: Serializer,
-//     {
-//         let mut state = serializer.serialize_struct("RaAST", 2)?;
-//         state.serialize_field("node", &self.node)?;
-//         state.serialize_field(
-//             "children",
-//             &self
-//                 .children
-//                 .iter()
-//                 .map(|cr| cr.as_ref())
-//                 .collect::<Vec<&RaAST>>(),
-//         )?;
-//         state.serialize_field("position", &self.position)?;
-//         state.serialize_field("level", &self.level)?;
-//         state.end()
-//     }
-// }
-
-impl TryFrom<RaTree> for RaAST {
-    type Error = (Vec<ParserError>, RaAST);
-
-    fn try_from(tree: RaTree) -> Result<Self, Self::Error> {
-        let mut ast = Self::new();
-        let meaningful_tree = tree.no_comments();
-        let mut traverser = BlockTreeTraverser::new(&meaningful_tree);
-        let mut errors = Vec::new();
-
-        while traverser.head.current.is_some() {
-            match ast.read(&traverser) {
-                Ok(_) => {},
-                Err(e) => errors.extend(e)
-            }
-            traverser.next_sibling();
-        }
-
-        if errors.len() > 0 {
-            Err((errors, ast))
-        }
-        else {
-            Ok(ast)
-        }
-
+impl Serialize for RaAST {
+    fn serialize<S>(&self, serializer: S) -> Result<<S as Serializer>::Ok, <S as Serializer>::Error>
+    where
+        S: Serializer,
+    {
+        let ser_node = SerializeTree::new(self.root_id, &self.arena);
+        ser_node.serialize(serializer)
     }
 }
