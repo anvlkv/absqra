@@ -267,6 +267,7 @@ version = "0.1.0"
 dependencies = [
  "failure",
  "failure_derive",
+ "indextree",
  "ra_dev_tools",
  "ra_lexer",
  "ra_tree_parser",
