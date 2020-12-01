@@ -1,5 +1,5 @@
 use super::*;
-use indextree::{Arena, NodeId};
+use indextree::{Arena, NodeId, Node};
 use serde::{Serialize, Serializer};
 
 #[derive(Serialize, Debug, Clone, PartialEq)]
@@ -18,6 +18,10 @@ pub struct RaTree {
 }
 
 impl RaTree {
+    pub fn traverse(&self) -> impl Iterator<Item = &Node<RaBlock>> {
+        self.root_id.descendants(&self.arena).map(move |d_id| self.arena.get(d_id).unwrap())
+    }
+
     pub(crate) fn new() -> Self {
         let mut arena = Arena::new();
         let root_id = arena.new_node(RaBlock::Root);

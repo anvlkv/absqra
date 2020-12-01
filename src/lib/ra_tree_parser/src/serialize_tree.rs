@@ -1,18 +1,17 @@
 use indextree::{NodeId, Arena};
-use super::*;
 use serde::{Serialize, Serializer};
 use serde::ser::{SerializeSeq};
 
 
 #[derive(Serialize)]
-pub struct SerializeNode<'a> (
-    &'a RaBlock, 
+pub struct SerializeNode<'a, T>(
+    &'a T, 
     #[serde(skip_serializing_if = "Option::is_none")]
-    Option<SerializeTree<'a>>
+    Option<SerializeTree<'a, T>>
 );
 
-impl<'a> SerializeNode<'a> {
-    pub fn new(id: NodeId, arena: &'a Arena<RaBlock>) -> Self {
+impl<'a, T> SerializeNode<'a, T> {
+    pub fn new(id: NodeId, arena: &'a Arena<T>) -> Self {
         let node = &arena[id];
         SerializeNode (&node.get(), node
         .first_child()
@@ -20,19 +19,18 @@ impl<'a> SerializeNode<'a> {
     }
 }
 
-/// Convenience wrapper struct for serializing a node and its siblings.
-pub struct SerializeTree<'a> {
+pub struct SerializeTree<'a, T> {
     first: NodeId,
-    arena: &'a Arena<RaBlock>,
+    arena: &'a Arena<T>,
 }
 
-impl<'a> SerializeTree<'a> {
-    pub fn new(id: NodeId, arena: &'a Arena<RaBlock>) -> Self {
+impl<'a, T> SerializeTree<'a, T> {
+    pub fn new(id: NodeId, arena: &'a Arena<T>) -> Self {
         SerializeTree { first: id, arena }
     }
 }
 
-impl Serialize for SerializeTree<'_> {
+impl<T> Serialize for SerializeTree<'_, T> where T: Serialize {
     fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
         let mut seq = serializer.serialize_seq(None)?;
         for node in self.first.following_siblings(&self.arena) {
