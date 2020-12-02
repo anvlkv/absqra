@@ -5,10 +5,11 @@ pub mod ast;
 pub mod node;
 pub mod errors;
 
+mod block_tree;
 mod expression;
 
 use ra_lexer::{RaToken, Position, TokenKind};
-use ra_tree_parser::tree::{RaTree, RaBlock};
+use block_tree::tree::{RaTree, RaBlock};
 use serde::Serialize;
 use failure::Backtrace;
 use errors::ParserError;

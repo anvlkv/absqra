@@ -1,12 +1,8 @@
-#[macro_use] extern crate serde_derive;
-
 pub mod serialize_tree;
 pub mod tree;
 pub mod parser;
 
 use ra_lexer::{RaToken, TokenKind};
-use tree::*;
+pub use tree::*;
 use serialize_tree::SerializeTree;
-
-#[cfg(test)]
-mod tests;
+pub use parser::parse;
