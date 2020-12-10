@@ -4,7 +4,7 @@ use ra_dev_tools::make_example_tests;
 use ra_lexer::tokenize;
 use std::convert::TryFrom;
 use std::panic::catch_unwind;
-use block_tree::parser::parse;
+use block_tree::parse;
 
 #[make_example_tests]
 #[test]
@@ -12,10 +12,7 @@ fn it_should_match_snapshots(contents: String, file_name: String) {
     let tree = parse(tokenize(&contents));
 
     match RaAST::try_from(tree.unwrap()) {
-        Ok(ast) => {
-            assert_json_snapshot!(file_name, ast);
-            panic!("failed to parse example {:?}", file_name);
-        },
+        Ok(ast) => assert_json_snapshot!(file_name, ast),
         Err((parsed, errors)) => {
             let formatted_errors: String = {
                 errors.into_iter().map(|e| format!("{}", e)).collect::<Vec<String>>().join("\n")

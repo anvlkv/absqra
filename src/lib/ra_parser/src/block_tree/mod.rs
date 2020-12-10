@@ -3,5 +3,6 @@ pub mod tree;
 pub mod parser;
 
 use ra_lexer::{RaToken, TokenKind};
-use tree::*;
+pub use tree::*;
 use serialize_tree::SerializeTree;
+pub use parser::parse;

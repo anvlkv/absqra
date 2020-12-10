@@ -1,7 +1,7 @@
 use super::*;
 use ra_lexer::errors::LexerError;
 
-pub(crate) fn parse<'a>(
+pub fn parse<'a>(
     mut tokens_stream: impl Iterator<Item = Result<RaToken, LexerError>>
 ) -> Result<RaTree, (Vec<LexerError>, Option<RaTree>)> {
 
