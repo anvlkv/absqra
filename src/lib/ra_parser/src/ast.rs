@@ -4,6 +4,7 @@ use std::convert::{TryFrom};
 use block_tree::serialize_tree::SerializeTree;
 use serde::ser::{Serialize, Serializer};
 
+#[derive(Debug)]
 pub struct RaAST {
     arena: Arena<RaASTNode>,
     root_id: NodeId
@@ -12,30 +13,39 @@ pub struct RaAST {
 impl TryFrom<RaTree> for RaAST {
     type Error = (Option<RaAST>, Vec<ParserError>);
     fn try_from(tree: RaTree) -> Result<RaAST, Self::Error> {
+        let mut errors = vec![];
         let mut arena = Arena::new();
         let mut traverse_iter = tree.traverse();
-        assert!(traverse_iter.next().unwrap().get() == &RaBlock::Root);
         let root_id = arena.new_node(RaASTNode::Root);
 
         while let Some(block_node) = traverse_iter.next() {
-            match block_node.get() {
-                RaBlock::Block => {
-                    
+            match RaASTNode::try_from(block_node) {
+                Ok(data) => {
+                    let id = arena.new_node(data);
                 },
-                RaBlock::Group => {
-                    
-                },
-                RaBlock::Token(_) => {
-
+                Err((parsed, err)) => {
+                    errors.extend(err.into_iter());
+                    match parsed {
+                        Some(data) => {
+                            let id = arena.new_node(data);
+                        }
+                        None => {}
+                    }
                 }
-                _ => panic!("invalid tree")
             }
         }
 
-        Ok(Self {
+        let result = Self {
             arena,
             root_id
-        })
+        };
+
+        if errors.len() == 0 {
+            Ok(result)
+        }
+        else {
+            Err((Some(result), errors))
+        }
     }
 }
 

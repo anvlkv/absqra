@@ -1,5 +1,5 @@
 use super::*;
-use indextree::{Arena, NodeId, Node};
+use indextree::{Arena, Node, NodeId};
 use serde::{Serialize, Serializer};
 
 #[derive(Serialize, Debug, Clone, PartialEq)]
@@ -17,9 +17,42 @@ pub struct RaTree {
     root_id: NodeId,
 }
 
+#[derive(Debug)]
+pub struct RaTreeBlock<'a> {
+    pub block: RaBlock,
+    pub siblings: Vec<&'a RaBlock>,
+    pub children: Vec<&'a RaBlock>,
+    pub parent: &'a RaBlock,
+}
+
 impl RaTree {
-    pub fn traverse(&self) -> impl Iterator<Item = &Node<RaBlock>> {
-        self.root_id.descendants(&self.arena).map(move |d_id| self.arena.get(d_id).unwrap())
+    pub fn traverse(&self) -> impl Iterator<Item = RaTreeBlock> {
+        self.root_id
+            .descendants(&self.arena)
+            .skip(1)
+            .map(move |d_id| {
+                let block = self.arena.get(d_id).unwrap().get().clone();
+                let siblings: Vec<&RaBlock> = d_id
+                    .following_siblings(&self.arena)
+                    .map(|id| self.arena.get(id).unwrap().get())
+                    .collect();
+                let children: Vec<&RaBlock> = d_id
+                    .children(&self.arena)
+                    .map(|id| self.arena.get(id).unwrap().get())
+                    .collect();
+                let parent = self
+                    .arena
+                    .get(d_id.ancestors(&self.arena).skip(1).take(1).nth(0).unwrap())
+                    .unwrap()
+                    .get();
+
+                RaTreeBlock {
+                    block,
+                    siblings,
+                    children,
+                    parent,
+                }
+            })
     }
 
     pub(crate) fn new() -> Self {
