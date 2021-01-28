@@ -1,5 +1,5 @@
 ---
-source: src/lib/ra_parser/src/tests.rs
+source: src/lib/ra_parser/src/block_tree/tests.rs
 expression: tree
 ---
 [
@@ -13,7 +13,10 @@ expression: tree
             {
               "Token": {
                 "kind": {
-                  "ContentBlock": "one line"
+                  "Comment": [
+                    " simply a one line comment",
+                    false
+                  ]
                 },
                 "position": [
                   [
@@ -22,7 +25,7 @@ expression: tree
                   ],
                   [
                     1,
-                    11
+                    29
                   ]
                 ],
                 "level": 1
@@ -38,41 +41,47 @@ expression: tree
             {
               "Token": {
                 "kind": {
-                  "ContentBlock": "multiple \nlines"
+                  "Comment": [
+                    " fancy one line comment",
+                    true
+                  ]
                 },
                 "position": [
                   [
-                    2,
+                    3,
                     1
                   ],
+                  [
+                    3,
+                    27
+                  ]
+                ],
+                "level": 1
+              }
+            }
+          ]
+        ]
+      ],
+      [
+        "Block",
+        [
+          [
+            {
+              "Token": {
+                "kind": {
+                  "Comment": [
+                    "\n fancy multi line comment\n \n",
+                    true
+                  ]
+                },
+                "position": [
                   [
                     5,
-                    2
-                  ]
-                ],
-                "level": 1
-              }
-            }
-          ]
-        ]
-      ],
-      [
-        "Block",
-        [
-          [
-            {
-              "Token": {
-                "kind": {
-                  "ContentBlock": "multiple\nlines\n    keeping\n        indents"
-                },
-                "position": [
-                  [
-                    6,
                     1
                   ],
                   [
-                    11,
-                    2
+                    8,
+                    4
                   ]
                 ],
                 "level": 1
@@ -88,16 +97,19 @@ expression: tree
             {
               "Token": {
                 "kind": {
-                  "ContentBlock": "with some characters\n!@#$%^&*()_+"
+                  "Comment": [
+                    "\nsimply \na multi line\ncomment\n",
+                    false
+                  ]
                 },
                 "position": [
                   [
-                    12,
+                    10,
                     1
                   ],
                   [
-                    15,
-                    2
+                    14,
+                    3
                   ]
                 ],
                 "level": 1
@@ -113,7 +125,10 @@ expression: tree
             {
               "Token": {
                 "kind": {
-                  "ContentBlock": "with templates {{var}}"
+                  "Comment": [
+                    " на этом всё, ребята! 😇",
+                    false
+                  ]
                 },
                 "position": [
                   [
@@ -121,8 +136,8 @@ expression: tree
                     1
                   ],
                   [
-                    18,
-                    2
+                    16,
+                    26
                   ]
                 ],
                 "level": 1

@@ -1,9 +1,0 @@
----
-source: src/lib/ra_parser/src/tests.rs
-expression: tree
----
-[
-  [
-    "Root"
-  ]
-]
