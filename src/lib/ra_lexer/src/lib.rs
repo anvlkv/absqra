@@ -6,7 +6,7 @@ pub mod position;
 pub mod token;
 pub mod cursor;
 
-use errors::LexerError;
+pub use errors::LexerError;
 pub use position::Position;
 pub use token::{TokenKind, RaToken};
 pub use tokenize::tokenize;
